@@ -183,6 +183,10 @@
       background: #fff3e0;
       color: #e65100;
     }
+    .label-pilot {
+      background: #ede7f6;
+      color: #5e35b1;
+    }
     .label-new {
       background: #fce4ec;
       color: #c62828;
@@ -548,6 +552,75 @@
     }
     .role-tag.eng { background: #1565c0; }
     .role-tag.biz { background: #e65100; }
+    .role-tag.pilot { background: #5e35b1; }
+
+    /* ===========================
+       3ロール体制セクション
+       =========================== */
+    .roles-overview {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 1px 8px rgba(0,0,0,0.05);
+      padding: 28px;
+      margin-bottom: 24px;
+    }
+    .roles-overview h3 {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .roles-overview > p {
+      font-size: 14px;
+      color: #666;
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+    .roles-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .role-detail-card {
+      border-radius: 14px;
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    .role-detail-card h4 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .role-detail-card .role-subtitle {
+      font-size: 12px;
+      opacity: 0.7;
+      margin-bottom: 12px;
+    }
+    .role-detail-card ul {
+      list-style: none;
+      padding: 0;
+      font-size: 13px;
+      line-height: 2;
+    }
+    .role-detail-card .role-grow {
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(0,0,0,0.08);
+      font-size: 12px;
+      opacity: 0.8;
+      font-style: italic;
+    }
+    @media (max-width: 900px) {
+      .roles-grid {
+        grid-template-columns: 1fr;
+      }
+    }
     .workflow-card p {
       font-size: 13px;
       line-height: 1.7;
@@ -705,6 +778,10 @@
     .branch-role-eng {
       background: #e3f2fd;
       color: #1565c0;
+    }
+    .branch-role-pilot {
+      background: #ede7f6;
+      color: #5e35b1;
     }
     .branch-card-body {
       padding: 0 20px 18px;
@@ -1226,7 +1303,7 @@
       <div class="workflow-section">
         <h2>🔄 このダッシュボードの使い方</h2>
         <p style="font-size: 14px; opacity: 0.8; margin-bottom: 24px; line-height: 1.7;">
-          エンジニアもビジネスサイドも、自分のCursorからこのダッシュボードの情報を確認し、<br>
+          3つの役割のメンバーが、自分のCursorからこのダッシュボードの情報を確認し、<br>
           AIと対話しながらプロジェクトを進めます。GitHubの使い方を知る必要はありません。
         </p>
 
@@ -1245,13 +1322,25 @@
 
           <!-- ビジネス: フィードバックを送る -->
           <div class="workflow-card">
-            <h3><span class="role-tag biz">ビジネス</span> フィードバックを送る</h3>
-            <p>テキストでの指摘や、AIと一緒にコード改善案を作成できます。</p>
+            <h3><span class="role-tag biz">ビジネス</span> フィードバック & 改善案</h3>
+            <p>テキストでの指摘や、AIと一緒にコード改善案を作成してブランチに保存。</p>
             <div class="example-prompt">
               <strong>💬 Cursorに話しかける例:</strong>
               「ポイントバッジの色をティールグリーンに変えたい」<br>
               「このボタンのデザインを改善したコードを作って」<br>
-              「フィードバックを書いて送りたい」
+              「保存してGitHubに送って」
+            </div>
+          </div>
+
+          <!-- パイロット: レビュー＆統合 -->
+          <div class="workflow-card" style="border-left: 3px solid #5e35b1;">
+            <h3><span class="role-tag pilot">パイロット</span> レビュー & mainへ統合</h3>
+            <p>各ブランチの変更をレビューし、問題なければmainに統合します。全体の品質管理を担います。</p>
+            <div class="example-prompt">
+              <strong>💬 Cursorに話しかける例:</strong>
+              「各ブランチの変更内容を見せて」<br>
+              「taikiブランチの変更をmainに統合して」<br>
+              「レビュー結果を記録して」
             </div>
           </div>
 
@@ -1278,6 +1367,18 @@
               「質問をまとめて送って」
             </div>
           </div>
+
+          <!-- パイロット: 進行管理 -->
+          <div class="workflow-card" style="border-left: 3px solid #5e35b1;">
+            <h3><span class="role-tag pilot">パイロット</span> プロジェクト進行管理</h3>
+            <p>全体の進捗を把握し、ビジネスとエンジニアの橋渡しをします。</p>
+            <div class="example-prompt">
+              <strong>💬 Cursorに話しかける例:</strong>
+              「プロジェクト全体の進捗をまとめて」<br>
+              「ビジネスの要望をエンジニアに整理して伝えて」<br>
+              「今週のブランチ状況を整理して」
+            </div>
+          </div>
         </div>
       </div>
 
@@ -1287,30 +1388,32 @@
           <h2>🔁 やり取りの流れ</h2>
         </div>
         <div class="card-body">
-          <div style="display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; padding: 20px 0;">
-            <div style="background: #e3f2fd; color: #1565c0; padding: 14px 20px; border-radius: 12px; font-weight: 600; font-size: 14px; text-align: center;">
+          <div style="display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; padding: 20px 0;">
+            <div style="background: #fff3e0; color: #e65100; padding: 14px 18px; border-radius: 12px; font-weight: 600; font-size: 13px; text-align: center;">
+              🏢 ビジネス<br>
+              <span style="font-size: 11px; font-weight: 400;">要望 & 改善案を作成</span>
+            </div>
+            <div style="font-size: 24px; color: #ccc;">→</div>
+            <div style="background: #f3f0ff; color: #5e35b1; padding: 14px 18px; border-radius: 12px; font-weight: 600; font-size: 13px; text-align: center; border: 2px solid #d1c4e9;">
+              🧭 パイロット<br>
+              <span style="font-size: 11px; font-weight: 400;">レビュー & main統合</span>
+            </div>
+            <div style="font-size: 24px; color: #ccc;">→</div>
+            <div style="background: #e3f2fd; color: #1565c0; padding: 14px 18px; border-radius: 12px; font-weight: 600; font-size: 13px; text-align: center;">
               💻 エンジニア<br>
-              <span style="font-size: 12px; font-weight: 400;">自分のブランチでコード開発</span>
-            </div>
-            <div style="font-size: 28px; color: #ccc;">→</div>
-            <div style="background: #e8f5e9; color: #2e7d32; padding: 14px 20px; border-radius: 12px; font-weight: 600; font-size: 14px; text-align: center;">
-              📋 このダッシュボード<br>
-              <span style="font-size: 12px; font-weight: 400;">ブランチ状況 + 最新版 + 提案</span>
-            </div>
-            <div style="font-size: 28px; color: #ccc;">→</div>
-            <div style="background: #fff3e0; color: #e65100; padding: 14px 20px; border-radius: 12px; font-weight: 600; font-size: 14px; text-align: center;">
-              🏢 ビジネスサイド<br>
-              <span style="font-size: 12px; font-weight: 400;">自分のブランチでFB & 改善案</span>
+              <span style="font-size: 11px; font-weight: 400;">コード開発 & 実装</span>
             </div>
           </div>
           <div style="text-align: center; margin-top: 8px;">
             <div style="font-size: 28px; color: #ccc;">↻</div>
-            <div style="font-size: 13px; color: #999;">全員が自分のブランチで作業 → レビュー後にmainに統合 — Cursorで完結</div>
+            <div style="font-size: 13px; color: #999;">
+              全員が自分のブランチで作業 → パイロットがレビューしてmainに統合 — 全てCursorで完結
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- ブランチ運用の説明 -->
+      <!-- ブランチ運用の説明（3ロール体制） -->
       <div class="card">
         <div class="card-header">
           <h2>🌿 ブランチ運用について</h2>
@@ -1321,22 +1424,27 @@
               <strong>ブランチ</strong>とは、プロジェクトの「作業用コピー」です。<br>
               各メンバーが自分専用のブランチを持ち、そこで安心して変更を行います。
             </p>
-            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px;">
               <div style="background: #f8f9fa; padding: 16px; border-radius: 10px; border-left: 3px solid #2e7d32;">
                 <strong style="color: #2e7d32;">👑 main（本番）</strong><br>
-                確認済みの安定版。全員が見る「正式版」
+                パイロットが管理する安定版
               </div>
               <div style="background: #f8f9fa; padding: 16px; border-radius: 10px; border-left: 3px solid #e65100;">
-                <strong style="color: #e65100;">🧑‍💼 taiki（ビジネス）</strong><br>
-                中村さんの作業用。改善案やFBを作成
+                <strong style="color: #e65100;">🧑‍💼 taiki 等</strong><br>
+                ビジネス側の作業用
+              </div>
+              <div style="background: #f8f9fa; padding: 16px; border-radius: 10px; border-left: 3px solid #5e35b1;">
+                <strong style="color: #5e35b1;">🧭 pilot/review</strong><br>
+                パイロットの統合作業用
               </div>
               <div style="background: #f8f9fa; padding: 16px; border-radius: 10px; border-left: 3px solid #1565c0;">
-                <strong style="color: #1565c0;">👨‍💻 feature/xxx（エンジニア）</strong><br>
-                エンジニアの開発用。新機能やバグ修正
+                <strong style="color: #1565c0;">👨‍💻 feature/xxx</strong><br>
+                エンジニアの開発用
               </div>
             </div>
             <p style="margin-top: 16px; color: #999; font-size: 13px;">
-              💡 Cursorに「ブランチ状況タブ」で各メンバーの作業状況をいつでも確認できます。
+              💡 「ブランチ状況」タブで各メンバーの作業状況をいつでも確認できます。<br>
+              🧭 パイロットがmainへの統合を判断し、プロジェクト全体の品質を守ります。
             </p>
           </div>
         </div>
@@ -1381,6 +1489,59 @@
         <span class="branch-name-tag" id="current-branch-name">taiki</span>
       </div>
 
+      <!-- 3ロール体制の説明 -->
+      <div class="roles-overview">
+        <h3>🎯 プロジェクトの3つの役割</h3>
+        <p>
+          このプロジェクトでは3つの役割でチームを構成します。<br>
+          ビジネスとエンジニアが自分のブランチで作業し、パイロットが全体を見て本番に統合します。
+        </p>
+        <div class="roles-grid">
+          <!-- ビジネス -->
+          <div class="role-detail-card" style="background: #fff8f0; border: 1px solid #ffe0b2;">
+            <h4>🏢 ビジネスサイド</h4>
+            <div class="role-subtitle">プロダクトの方向性を決め、フィードバックを返す</div>
+            <ul>
+              <li>📋 要件・方針の策定</li>
+              <li>💬 コードへのフィードバック</li>
+              <li>💻 AIと改善コードを作成</li>
+              <li>✅ 意思決定の最終判断</li>
+            </ul>
+            <div class="role-grow">
+              🚀 成長パス: パイロットも兼ねられるようになる
+            </div>
+          </div>
+          <!-- パイロット -->
+          <div class="role-detail-card" style="background: #f3f0ff; border: 1px solid #d1c4e9;">
+            <h4>🧭 プロジェクトパイロット</h4>
+            <div class="role-subtitle">全体を操縦し、mainへの統合を判断する</div>
+            <ul>
+              <li>🔍 各ブランチの変更をレビュー</li>
+              <li>🔀 mainへの統合を実行</li>
+              <li>⚖️ ビジネスとエンジニアの橋渡し</li>
+              <li>🛡️ 品質とプロジェクト進行の管理</li>
+            </ul>
+            <div class="role-grow">
+              💡 エンジニアでもビジネスでも担える役割
+            </div>
+          </div>
+          <!-- エンジニア -->
+          <div class="role-detail-card" style="background: #f0f5ff; border: 1px solid #bbdefb;">
+            <h4>💻 エンジニア</h4>
+            <div class="role-subtitle">コードを開発し、技術的な課題を解決する</div>
+            <ul>
+              <li>🔧 app/ のコード開発</li>
+              <li>📊 進捗報告・技術設計</li>
+              <li>❓ ビジネスへの質問・相談</li>
+              <li>🔄 改善案の本番反映</li>
+            </ul>
+            <div class="role-grow">
+              🚀 パイロットも兼ねる場合あり
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- アクティブなブランチ一覧 -->
       <div class="card" style="margin-bottom: 24px;">
         <div class="card-header">
@@ -1389,8 +1550,8 @@
         </div>
         <div class="card-body" style="padding: 16px 24px;">
           <p style="font-size: 14px; color: #666; line-height: 1.7; margin-bottom: 8px;">
-            各メンバーが自分のブランチで作業し、準備ができたらmain（本番）に反映します。<br>
-            <strong>直接mainを変更しない</strong>ため、お互いの作業が衝突しません。
+            ビジネスとエンジニアが自分のブランチで作業 → パイロットがレビューしてmainに統合。<br>
+            <strong>main は誰も直接変更しない</strong>ため、安全にプロジェクトを進められます。
           </p>
         </div>
       </div>
@@ -1403,11 +1564,11 @@
             <div class="branch-card-name">
               👑 <code>main</code>
             </div>
-            <span class="branch-role-tag" style="background: #e8f5e9; color: #2e7d32;">本番</span>
+            <span class="branch-role-tag branch-role-pilot">パイロット管理</span>
           </div>
           <div class="branch-card-body">
             <div class="branch-card-meta">
-              <span>🔒 レビュー済みのコードのみ</span>
+              <span>🔒 パイロットのみが統合を実行</span>
             </div>
             <ul class="branch-card-tasks">
               <li>✅ プロジェクト初期セットアップ完了</li>
@@ -1416,7 +1577,7 @@
             </ul>
             <div class="branch-card-status">
               <span class="branch-status-dot branch-status-active"></span>
-              <span style="color: #4caf50; font-weight: 600;">安定版 — 常に動く状態</span>
+              <span style="color: #4caf50; font-weight: 600;">安定版 — パイロットがレビュー済み</span>
             </div>
           </div>
         </div>
@@ -1437,7 +1598,7 @@
             <ul class="branch-card-tasks">
               <li>🔄 ポイントバッジのティールグリーン化を提案</li>
               <li>🔄 ボタンカラーのブランド統一を提案</li>
-              <li>🔄 ダッシュボードにブランチ管理機能を追加</li>
+              <li>🔄 ダッシュボードに3ロール体制を導入</li>
             </ul>
             <div class="branch-card-status">
               <span class="branch-status-dot branch-status-active"></span>
@@ -1446,8 +1607,33 @@
           </div>
         </div>
 
+        <!-- パイロット用ブランチ例 -->
+        <div class="branch-card" style="opacity: 0.6; border: 2px dashed #d1c4e9;">
+          <div class="branch-card-head">
+            <div class="branch-card-name">
+              🧭 <code>pilot/review</code>
+            </div>
+            <span class="branch-role-tag branch-role-pilot">パイロット</span>
+          </div>
+          <div class="branch-card-body">
+            <div class="branch-card-meta">
+              <span>👤 （シニアエンジニア名）</span>
+              <span>📅 未作成</span>
+            </div>
+            <ul class="branch-card-tasks">
+              <li>⬜ 各ブランチの変更をレビュー</li>
+              <li>⬜ テスト・品質チェック</li>
+              <li>⬜ mainへの統合判断</li>
+            </ul>
+            <div class="branch-card-status">
+              <span class="branch-status-dot" style="background: #ccc;"></span>
+              <span style="color: #999;">まだ作成されていません</span>
+            </div>
+          </div>
+        </div>
+
         <!-- エンジニア用ブランチ例 -->
-        <div class="branch-card" style="opacity: 0.6; border: 2px dashed #ddd;">
+        <div class="branch-card" style="opacity: 0.6; border: 2px dashed #bbdefb;">
           <div class="branch-card-head">
             <div class="branch-card-name">
               👨‍💻 <code>feature/point-api</code>
@@ -1473,12 +1659,12 @@
 
       </div>
 
-      <!-- マージフロー解説 -->
+      <!-- マージフロー解説（パイロット中心） -->
       <div class="branch-merge-flow">
         <h3>🔁 ブランチからmainへの流れ</h3>
         <div class="merge-flow-steps">
           <div class="merge-flow-step" style="background: #fff3e0; color: #e65100;">
-            ① 自分のブランチで<br>変更を作成
+            ① ビジネス/エンジニア<br>自分のブランチで作業
           </div>
           <span class="merge-flow-arrow">→</span>
           <div class="merge-flow-step" style="background: #e3f2fd; color: #1565c0;">
@@ -1486,44 +1672,48 @@
             <span style="font-size: 11px; font-weight: 400;">「保存して送って」とCursorに言う</span>
           </div>
           <span class="merge-flow-arrow">→</span>
-          <div class="merge-flow-step" style="background: #fce4ec; color: #c62828;">
-            ③ レビュー依頼<br>
-            <span style="font-size: 11px; font-weight: 400;">他のメンバーが内容を確認</span>
+          <div class="merge-flow-step" style="background: #f3f0ff; color: #5e35b1;">
+            ③ 🧭 パイロットがレビュー<br>
+            <span style="font-size: 11px; font-weight: 400;">内容を確認・テスト</span>
           </div>
           <span class="merge-flow-arrow">→</span>
           <div class="merge-flow-step" style="background: #e8f5e9; color: #2e7d32;">
-            ④ mainに統合<br>
-            <span style="font-size: 11px; font-weight: 400;">確認OKなら本番に反映</span>
+            ④ 🧭 パイロットがmainに統合<br>
+            <span style="font-size: 11px; font-weight: 400;">OKなら本番に反映</span>
           </div>
         </div>
         <p style="text-align: center; font-size: 13px; color: #999; margin-top: 16px;">
-          💡 ビジネスサイドはCursorに「保存して送って」と言うだけ。レビューと統合はGitHub上で行われます。
+          💡 ビジネス・エンジニアは「保存して送って」だけ。レビューと統合はパイロットが責任を持って行います。
         </p>
       </div>
 
-      <!-- Cursorでの操作ガイド -->
+      <!-- Cursorでの操作ガイド（ロール別） -->
       <div class="branch-how-card">
-        <h3>💬 Cursorでの操作ガイド</h3>
+        <h3>💬 ロール別 Cursorでの操作ガイド</h3>
         <div class="branch-prompt-list">
-          <div class="branch-prompt-item">
-            <strong>ブランチの作業を保存して送る</strong>
-            「変更を保存してGitHubに送って」<br>
-            「今の作業をアップして」
+          <div class="branch-prompt-item" style="border-left-color: #e65100;">
+            <strong style="color: #e65100;">🏢 ビジネスサイド</strong>
+            「フィードバックを書いて送りたい」<br>
+            「この部分の改善コードを作って」<br>
+            「保存してGitHubに送って」
+          </div>
+          <div class="branch-prompt-item" style="border-left-color: #1565c0;">
+            <strong style="color: #1565c0;">💻 エンジニア</strong>
+            「ビジネスからのFBを確認したい」<br>
+            「改善案のコードを取り込んで反映して」<br>
+            「進捗報告を書いて送りたい」
+          </div>
+          <div class="branch-prompt-item" style="border-left-color: #5e35b1;">
+            <strong style="color: #5e35b1;">🧭 パイロット</strong>
+            「各ブランチの変更内容を見せて」<br>
+            「taikiブランチの変更をmainに統合して」<br>
+            「全ブランチの状況を整理して」
           </div>
           <div class="branch-prompt-item">
-            <strong>mainの最新を自分に取り込む</strong>
+            <strong>共通の操作</strong>
             「mainの最新を取り込んで」<br>
-            「他の人の変更を反映して」
-          </div>
-          <div class="branch-prompt-item">
-            <strong>他のブランチの状況を確認</strong>
             「他の人のブランチ状況を教えて」<br>
-            「エンジニアの最新の作業は？」
-          </div>
-          <div class="branch-prompt-item">
-            <strong>mainへの反映をリクエスト</strong>
-            「この変更をmainに入れてほしい」<br>
-            「レビューをお願いしたい」
+            「デモを確認したい」
           </div>
         </div>
       </div>
