@@ -1,0 +1,1287 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VALUE BOOKS - あなたの本棚を、もっと賢く。</title>
+<style>
+/* ====== Reset & Base ====== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif;
+  color: #2d3436;
+  background: #ffffff;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+a { text-decoration: none; color: inherit; }
+img { max-width: 100%; display: block; }
+button { cursor: pointer; border: none; font-family: inherit; }
+
+/* ====== CSS Variables ====== */
+:root {
+  --primary: #00a199;
+  --primary-dark: #008f88;
+  --primary-light: #e0f5f4;
+  --accent: #f08300;
+  --accent-light: #fff3e0;
+  --bg: #ffffff;
+  --bg-gray: #f7f8fa;
+  --bg-dark: #1a1a2e;
+  --text: #2d3436;
+  --text-light: #636e72;
+  --text-muted: #b2bec3;
+  --border: #e9ecef;
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
+  --shadow-md: 0 4px 20px rgba(0,0,0,0.08);
+  --shadow-lg: 0 8px 40px rgba(0,0,0,0.12);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --max-width: 1200px;
+}
+
+/* ====== Header ====== */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 24px;
+}
+.header-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+}
+.logo {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: var(--text);
+}
+.logo span { font-weight: 400; }
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.nav-links a {
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-light);
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.nav-links a:hover { color: var(--primary); background: var(--primary-light); }
+.nav-links a.active { color: var(--primary); font-weight: 600; }
+.nav-btn {
+  background: var(--primary);
+  color: #fff !important;
+  border-radius: var(--radius-xl) !important;
+  padding: 8px 20px !important;
+  font-weight: 600 !important;
+  transition: all 0.2s !important;
+}
+.nav-btn:hover { background: var(--primary-dark) !important; transform: translateY(-1px); }
+.nav-icons {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.nav-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: var(--text-light);
+  transition: all 0.2s;
+  font-size: 18px;
+}
+.nav-icon:hover { background: var(--bg-gray); color: var(--text); }
+
+/* ====== Hero Section ====== */
+.hero {
+  background: linear-gradient(135deg, #e0f7f5 0%, #f0fffe 50%, #fff 100%);
+  padding: 60px 24px 80px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -200px;
+  right: -200px;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(0,161,153,0.08) 0%, transparent 70%);
+  border-radius: 50%;
+}
+.hero-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+.hero-text h1 {
+  font-size: 40px;
+  font-weight: 800;
+  line-height: 1.3;
+  margin-bottom: 12px;
+}
+.hero-text h1 .highlight {
+  background: linear-gradient(135deg, var(--primary), #00c9a7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-greeting {
+  font-size: 16px;
+  color: var(--text-light);
+  margin-bottom: 8px;
+}
+.hero-subtitle {
+  font-size: 17px;
+  color: var(--text-light);
+  margin-bottom: 36px;
+  line-height: 1.8;
+}
+
+/* AI Chat Entry */
+.ai-chat-entry {
+  background: #fff;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 560px;
+  border: 2px solid transparent;
+  transition: border-color 0.3s;
+}
+.ai-chat-entry:focus-within {
+  border-color: var(--primary);
+}
+.ai-chat-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 15px;
+  padding: 14px 16px;
+  color: var(--text);
+  background: transparent;
+}
+.ai-chat-input::placeholder { color: var(--text-muted); }
+.ai-chat-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.ai-chat-icon-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-gray);
+  color: var(--text-light);
+  font-size: 18px;
+  transition: all 0.2s;
+}
+.ai-chat-icon-btn:hover { background: var(--primary-light); color: var(--primary); }
+.ai-chat-send {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary);
+  color: #fff;
+  font-size: 18px;
+  transition: all 0.2s;
+}
+.ai-chat-send:hover { background: var(--primary-dark); transform: scale(1.05); }
+.ai-hints {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+.ai-hint {
+  background: rgba(255,255,255,0.8);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 8px 16px;
+  font-size: 13px;
+  color: var(--text-light);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.ai-hint:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-light); }
+
+/* Hero Visual */
+.hero-visual {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+.hero-card-stack {
+  position: relative;
+  width: 380px;
+  height: 420px;
+}
+.hero-card {
+  position: absolute;
+  background: #fff;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+  transition: all 0.4s ease;
+}
+.hero-card:nth-child(1) {
+  width: 200px;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  transform: rotate(-3deg);
+}
+.hero-card:nth-child(2) {
+  width: 180px;
+  top: 40px;
+  right: 20px;
+  z-index: 2;
+  transform: rotate(2deg);
+}
+.hero-card:nth-child(3) {
+  width: 160px;
+  bottom: 20px;
+  left: 40px;
+  z-index: 1;
+  transform: rotate(-1deg);
+}
+.hero-card-img {
+  width: 100%;
+  aspect-ratio: 3/4;
+  background: linear-gradient(135deg, var(--primary-light), #d4f1ef);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+}
+.hero-card-info {
+  padding: 12px;
+}
+.hero-card-title {
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.hero-card-price {
+  font-size: 12px;
+  color: var(--accent);
+  font-weight: 600;
+  margin-top: 4px;
+}
+.hero-ai-badge {
+  position: absolute;
+  bottom: 40px;
+  right: 0;
+  background: var(--primary);
+  color: #fff;
+  border-radius: var(--radius-lg);
+  padding: 16px 20px;
+  box-shadow: var(--shadow-lg);
+  z-index: 10;
+  animation: float 3s ease-in-out infinite;
+}
+.hero-ai-badge-title {
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.hero-ai-badge-desc {
+  font-size: 11px;
+  opacity: 0.9;
+  margin-top: 4px;
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* ====== Quick Actions ====== */
+.quick-actions {
+  padding: 60px 24px;
+  background: var(--bg);
+}
+.section-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 32px;
+}
+.section-title {
+  font-size: 24px;
+  font-weight: 700;
+}
+.section-title small {
+  display: block;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text-light);
+  margin-top: 4px;
+}
+.section-more {
+  font-size: 14px;
+  color: var(--primary);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.quick-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+.quick-card {
+  background: var(--bg-gray);
+  border-radius: var(--radius-lg);
+  padding: 28px 24px;
+  transition: all 0.3s;
+  border: 2px solid transparent;
+  cursor: pointer;
+  text-align: center;
+}
+.quick-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--primary);
+}
+.quick-card-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  margin: 0 auto 16px;
+}
+.quick-card:nth-child(1) .quick-card-icon { background: linear-gradient(135deg, #e0f5f4, #b8ece8); }
+.quick-card:nth-child(2) .quick-card-icon { background: linear-gradient(135deg, #fff3e0, #ffe0b2); }
+.quick-card:nth-child(3) .quick-card-icon { background: linear-gradient(135deg, #e8f5e9, #c8e6c9); }
+.quick-card:nth-child(4) .quick-card-icon { background: linear-gradient(135deg, #e3f2fd, #bbdefb); }
+.quick-card-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.quick-card-desc {
+  font-size: 13px;
+  color: var(--text-light);
+  line-height: 1.6;
+}
+
+/* ====== Personalized Recommendations ====== */
+.recommendations {
+  padding: 60px 24px;
+  background: var(--bg-gray);
+}
+.rec-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 28px;
+}
+.rec-tab {
+  padding: 10px 20px;
+  border-radius: var(--radius-xl);
+  font-size: 14px;
+  font-weight: 500;
+  background: #fff;
+  color: var(--text-light);
+  border: 1px solid var(--border);
+  transition: all 0.2s;
+}
+.rec-tab:hover { border-color: var(--primary); color: var(--primary); }
+.rec-tab.active {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+.rec-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 20px;
+}
+.book-card {
+  background: #fff;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+.book-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-md);
+}
+.book-cover {
+  aspect-ratio: 3/4;
+  background: linear-gradient(135deg, #ddd, #eee);
+  position: relative;
+  overflow: hidden;
+}
+.book-cover-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  color: #bbb;
+}
+.book-badge {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+}
+.book-fav {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 32px;
+  height: 32px;
+  background: rgba(255,255,255,0.9);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: var(--text-muted);
+  transition: all 0.2s;
+}
+.book-fav:hover { color: #e74c3c; transform: scale(1.1); }
+.book-info {
+  padding: 12px;
+}
+.book-title {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.book-author {
+  font-size: 11px;
+  color: var(--text-light);
+  margin-top: 4px;
+}
+.book-ai-reason {
+  margin-top: 8px;
+  padding: 6px 10px;
+  background: var(--primary-light);
+  border-radius: var(--radius-sm);
+  font-size: 11px;
+  color: var(--primary-dark);
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+/* ====== Library Highlights ====== */
+.library-section {
+  padding: 60px 24px;
+  background: var(--bg);
+}
+.lib-collections {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.lib-collection {
+  background: var(--bg-gray);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.lib-collection:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+.lib-collection-covers {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  height: 160px;
+}
+.lib-collection-cover {
+  background: linear-gradient(135deg, #ddd, #eee);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  color: #bbb;
+}
+.lib-collection-cover:nth-child(1) { background: linear-gradient(135deg, #e8d5b7, #f0e6d3); }
+.lib-collection-cover:nth-child(2) { background: linear-gradient(135deg, #b8d4e3, #d4e8f0); }
+.lib-collection-cover:nth-child(3) { background: linear-gradient(135deg, #c8e6c9, #e0f2e1); }
+.lib-collection-info {
+  padding: 16px 20px;
+}
+.lib-collection-title {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.lib-collection-meta {
+  font-size: 12px;
+  color: var(--text-light);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.lib-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 32px;
+}
+.lib-stat {
+  background: var(--bg-gray);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  text-align: center;
+}
+.lib-stat-num {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--primary);
+}
+.lib-stat-label {
+  font-size: 12px;
+  color: var(--text-light);
+  margin-top: 4px;
+}
+
+/* ====== Kaitori Section ====== */
+.kaitori-section {
+  padding: 60px 24px;
+  background: linear-gradient(135deg, var(--primary) 0%, #00c9a7 100%);
+  color: #fff;
+}
+.kaitori-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+.kaitori-text h2 {
+  font-size: 32px;
+  font-weight: 800;
+  margin-bottom: 16px;
+}
+.kaitori-text p {
+  font-size: 16px;
+  opacity: 0.9;
+  line-height: 1.8;
+  margin-bottom: 24px;
+}
+.kaitori-amount {
+  background: rgba(255,255,255,0.15);
+  border-radius: var(--radius-md);
+  padding: 20px 24px;
+  margin-bottom: 24px;
+  backdrop-filter: blur(10px);
+}
+.kaitori-amount-label {
+  font-size: 13px;
+  opacity: 0.8;
+}
+.kaitori-amount-value {
+  font-size: 36px;
+  font-weight: 800;
+  margin-top: 4px;
+}
+.kaitori-amount-value small {
+  font-size: 16px;
+  font-weight: 400;
+  opacity: 0.8;
+}
+.kaitori-btn {
+  background: #fff;
+  color: var(--primary);
+  font-size: 16px;
+  font-weight: 700;
+  padding: 16px 32px;
+  border-radius: var(--radius-xl);
+  transition: all 0.3s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.kaitori-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+.kaitori-features {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.kaitori-feature {
+  background: rgba(255,255,255,0.1);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  backdrop-filter: blur(10px);
+}
+.kaitori-feature-icon {
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+.kaitori-feature-title {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.kaitori-feature-desc {
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+/* ====== Activity Feed ====== */
+.activity-section {
+  padding: 60px 24px;
+  background: var(--bg-gray);
+}
+.activity-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 700px;
+}
+.activity-item {
+  background: #fff;
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: all 0.2s;
+}
+.activity-item:hover { box-shadow: var(--shadow-sm); }
+.activity-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+.activity-icon.green { background: var(--primary-light); }
+.activity-icon.orange { background: var(--accent-light); }
+.activity-icon.blue { background: #e3f2fd; }
+.activity-content { flex: 1; }
+.activity-title {
+  font-size: 14px;
+  font-weight: 600;
+}
+.activity-desc {
+  font-size: 12px;
+  color: var(--text-light);
+  margin-top: 2px;
+}
+.activity-time {
+  font-size: 12px;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+/* ====== Footer ====== */
+.footer {
+  background: var(--bg-dark);
+  color: #fff;
+  padding: 60px 24px 40px;
+}
+.footer-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+.footer-top {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  gap: 40px;
+  margin-bottom: 40px;
+}
+.footer-brand .logo { color: #fff; font-size: 24px; margin-bottom: 12px; }
+.footer-brand p { font-size: 13px; color: rgba(255,255,255,0.6); line-height: 1.8; }
+.footer-col-title {
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: rgba(255,255,255,0.4);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.footer-col a {
+  display: block;
+  font-size: 14px;
+  color: rgba(255,255,255,0.7);
+  padding: 4px 0;
+  transition: color 0.2s;
+}
+.footer-col a:hover { color: #fff; }
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding-top: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.footer-copy {
+  font-size: 12px;
+  color: rgba(255,255,255,0.4);
+}
+.footer-badges {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.footer-badge {
+  background: rgba(255,255,255,0.1);
+  border-radius: var(--radius-sm);
+  padding: 8px 16px;
+  font-size: 12px;
+  color: rgba(255,255,255,0.7);
+}
+
+/* ====== AI Floating Button ====== */
+.ai-float {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 50;
+}
+.ai-float-btn {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), #00c9a7);
+  color: #fff;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(0,161,153,0.4);
+  transition: all 0.3s;
+}
+.ai-float-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 30px rgba(0,161,153,0.5);
+}
+.ai-float-label {
+  position: absolute;
+  right: 70px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #fff;
+  border-radius: var(--radius-sm);
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  box-shadow: var(--shadow-md);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+.ai-float:hover .ai-float-label { opacity: 1; }
+
+/* ====== Responsive ====== */
+@media (max-width: 768px) {
+  .hero-inner { grid-template-columns: 1fr; }
+  .hero-visual { display: none; }
+  .hero-text h1 { font-size: 28px; }
+  .quick-grid { grid-template-columns: repeat(2, 1fr); }
+  .rec-grid { grid-template-columns: repeat(3, 1fr); }
+  .lib-collections { grid-template-columns: 1fr; }
+  .lib-stats { grid-template-columns: repeat(2, 1fr); }
+  .kaitori-inner { grid-template-columns: 1fr; }
+  .footer-top { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+  <div class="header-inner">
+    <a href="index.html" class="logo">VALUE <span>BOOKS</span></a>
+    <nav class="nav-links">
+      <a href="index.html" class="active">🏠 ホーム</a>
+      <a href="ai-chat.html">✨ VB AI</a>
+      <a href="library.html">📚 ライブラリ</a>
+      <a href="kaitori.html" class="nav-btn">📦 買取はこちら</a>
+    </nav>
+    <div class="nav-icons">
+      <a href="#" class="nav-icon">🔍</a>
+      <a href="#" class="nav-icon">👤</a>
+      <a href="#" class="nav-icon">🛒</a>
+    </div>
+  </div>
+</header>
+
+<!-- Hero Section -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <p class="hero-greeting">おかえりなさい、中村さん 👋</p>
+      <h1>
+        あなたの本棚を、<br>
+        <span class="highlight">もっと賢く。</span>
+      </h1>
+      <p class="hero-subtitle">
+        写真を撮るだけで買取査定、ライブラリ登録、おすすめ本の発見。<br>
+        AIがあなたの読書体験をもっと豊かにします。
+      </p>
+      <div class="ai-chat-entry">
+        <input type="text" class="ai-chat-input" placeholder="本について何でも聞いてみてください..." />
+        <div class="ai-chat-actions">
+          <button class="ai-chat-icon-btn" title="写真をアップロード" onclick="location.href='ai-chat.html'">📷</button>
+          <button class="ai-chat-send" onclick="location.href='ai-chat.html'">→</button>
+        </div>
+      </div>
+      <div class="ai-hints">
+        <button class="ai-hint" onclick="location.href='ai-chat.html'">📸 本棚をスキャンする</button>
+        <button class="ai-hint" onclick="location.href='ai-chat.html'">💡 おすすめの本を教えて</button>
+        <button class="ai-hint" onclick="location.href='ai-chat.html'">📊 読書傾向を分析</button>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-card-stack">
+        <div class="hero-card">
+          <div class="hero-card-img">📖</div>
+          <div class="hero-card-info">
+            <div class="hero-card-title">森のフライフィッシング</div>
+            <div class="hero-card-price">¥ 1,164〜</div>
+          </div>
+        </div>
+        <div class="hero-card">
+          <div class="hero-card-img">📚</div>
+          <div class="hero-card-info">
+            <div class="hero-card-title">68歳、つつましく贅沢な暮らし</div>
+            <div class="hero-card-price">¥ 656〜</div>
+          </div>
+        </div>
+        <div class="hero-card">
+          <div class="hero-card-img">🌿</div>
+          <div class="hero-card-info">
+            <div class="hero-card-title">土を喰ふ日々</div>
+            <div class="hero-card-price">¥ 273〜</div>
+          </div>
+        </div>
+        <div class="hero-ai-badge">
+          <div class="hero-ai-badge-title">✨ VB AI</div>
+          <div class="hero-ai-badge-desc">写真1枚で本を認識・査定</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Quick Actions -->
+<section class="quick-actions">
+  <div class="section-inner">
+    <div class="section-header">
+      <h2 class="section-title">
+        クイックアクション
+        <small>すべての機能にかんたんアクセス</small>
+      </h2>
+    </div>
+    <div class="quick-grid">
+      <a href="ai-chat.html" class="quick-card">
+        <div class="quick-card-icon">✨</div>
+        <div class="quick-card-title">VB AI に聞く</div>
+        <div class="quick-card-desc">写真やテキストで本について何でも。査定・おすすめ・登録がAIひとつで。</div>
+      </a>
+      <a href="kaitori.html" class="quick-card">
+        <div class="quick-card-icon">📦</div>
+        <div class="quick-card-title">本を売る</div>
+        <div class="quick-card-desc">読み終えた本を送って暮らしを軽やかに。送料無料で簡単買取。</div>
+      </a>
+      <a href="library.html" class="quick-card">
+        <div class="quick-card-icon">📚</div>
+        <div class="quick-card-title">ライブラリ</div>
+        <div class="quick-card-desc">あなたの本棚をオンラインで管理。コレクションを作って共有も。</div>
+      </a>
+      <a href="#" class="quick-card">
+        <div class="quick-card-icon">🏪</div>
+        <div class="quick-card-title">本を買う</div>
+        <div class="quick-card-desc">厳選された古書から新刊まで。あなたの好みに合った一冊を。</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Personalized Recommendations -->
+<section class="recommendations">
+  <div class="section-inner">
+    <div class="section-header">
+      <h2 class="section-title">
+        🎯 あなたへのおすすめ
+        <small>AIがあなたの読書傾向から選びました</small>
+      </h2>
+      <a href="ai-chat.html" class="section-more">もっと探す →</a>
+    </div>
+    <div class="rec-tabs">
+      <button class="rec-tab active">すべて</button>
+      <button class="rec-tab">エッセイ・暮らし</button>
+      <button class="rec-tab">自然・アウトドア</button>
+      <button class="rec-tab">ビジネス</button>
+      <button class="rec-tab">文芸</button>
+    </div>
+    <div class="rec-grid">
+      <div class="book-card">
+        <div class="book-cover" style="background: linear-gradient(135deg, #a8d8a8, #c8e6c9);">
+          <div class="book-cover-placeholder">🌲</div>
+          <span class="book-badge">¥ 393〜</span>
+          <button class="book-fav">♡</button>
+        </div>
+        <div class="book-info">
+          <div class="book-title">森の生活 上 ウォールデン</div>
+          <div class="book-author">ヘンリー D.ソロー</div>
+          <div class="book-ai-reason">✨ 「森とフライフィッシング」の趣味に合いそう</div>
+        </div>
+      </div>
+      <div class="book-card">
+        <div class="book-cover" style="background: linear-gradient(135deg, #f5deb3, #ffe4c4);">
+          <div class="book-cover-placeholder">🏔</div>
+          <span class="book-badge">¥ 707〜</span>
+          <button class="book-fav">♡</button>
+        </div>
+        <div class="book-info">
+          <div class="book-title">中島デコのサステナブルライフ</div>
+          <div class="book-author">中島デコ</div>
+          <div class="book-ai-reason">✨ 田舎暮らし系の本をよく読まれています</div>
+        </div>
+      </div>
+      <div class="book-card">
+        <div class="book-cover" style="background: linear-gradient(135deg, #b0c4de, #d4e4f7);">
+          <div class="book-cover-placeholder">🎣</div>
+          <span class="book-badge">¥ 469〜</span>
+          <button class="book-fav">♡</button>
+        </div>
+        <div class="book-info">
+          <div class="book-title">田舎暮らし毒本</div>
+          <div class="book-author">樋口明雄</div>
+          <div class="book-ai-reason">✨ 最近のスキャンに自然系が多いです</div>
+        </div>
+      </div>
+      <div class="book-card">
+        <div class="book-cover" style="background: linear-gradient(135deg, #d4a5a5, #e8c4c4);">
+          <div class="book-cover-placeholder">🍳</div>
+          <span class="book-badge">¥ 254〜</span>
+          <button class="book-fav">♡</button>
+        </div>
+        <div class="book-info">
+          <div class="book-title">畑ごはん</div>
+          <div class="book-author">小田晶房</div>
+          <div class="book-ai-reason">✨ スローライフ系がお好きなようです</div>
+        </div>
+      </div>
+      <div class="book-card">
+        <div class="book-cover" style="background: linear-gradient(135deg, #c9b8d9, #e0d4ee);">
+          <div class="book-cover-placeholder">📖</div>
+          <span class="book-badge">¥ 1,058〜</span>
+          <button class="book-fav">♡</button>
+        </div>
+        <div class="book-info">
+          <div class="book-title">ちいさなくらしのたねレシピ</div>
+          <div class="book-author">小鳥来</div>
+          <div class="book-ai-reason">✨ 暮らし系エッセイのファンに人気</div>
+        </div>
+      </div>
+      <div class="book-card">
+        <div class="book-cover" style="background: linear-gradient(135deg, #a8c8a8, #c0dcc0);">
+          <div class="book-cover-placeholder">🌳</div>
+          <span class="book-badge">¥ 615〜</span>
+          <button class="book-fav">♡</button>
+        </div>
+        <div class="book-info">
+          <div class="book-title">TAKASU TILE 自分をHAPPYにする暮らし方</div>
+          <div class="book-author">高須賀活良</div>
+          <div class="book-ai-reason">✨ ライフスタイル系の人気タイトル</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Library Highlights -->
+<section class="library-section">
+  <div class="section-inner">
+    <div class="section-header">
+      <h2 class="section-title">
+        📚 あなたのライブラリ
+        <small>6,852冊の本を管理中</small>
+      </h2>
+      <a href="library.html" class="section-more">すべて見る →</a>
+    </div>
+    <div class="lib-stats">
+      <div class="lib-stat">
+        <div class="lib-stat-num">6,852</div>
+        <div class="lib-stat-label">登録冊数</div>
+      </div>
+      <div class="lib-stat">
+        <div class="lib-stat-num">23</div>
+        <div class="lib-stat-label">コレクション</div>
+      </div>
+      <div class="lib-stat">
+        <div class="lib-stat-num">¥42,560</div>
+        <div class="lib-stat-label">推定買取総額</div>
+      </div>
+      <div class="lib-stat">
+        <div class="lib-stat-num">+12</div>
+        <div class="lib-stat-label">今月追加</div>
+      </div>
+    </div>
+    <div class="lib-collections">
+      <a href="library.html" class="lib-collection">
+        <div class="lib-collection-covers">
+          <div class="lib-collection-cover">🌿</div>
+          <div class="lib-collection-cover">🎣</div>
+          <div class="lib-collection-cover">🏔</div>
+        </div>
+        <div class="lib-collection-info">
+          <div class="lib-collection-title">森とフライフィッシングのライフスタイル</div>
+          <div class="lib-collection-meta">
+            <span>23冊</span>
+            <span>最終更新: 2日前</span>
+          </div>
+        </div>
+      </a>
+      <a href="library.html" class="lib-collection">
+        <div class="lib-collection-covers">
+          <div class="lib-collection-cover" style="background: linear-gradient(135deg, #f5deb3, #ffe4c4);">💼</div>
+          <div class="lib-collection-cover" style="background: linear-gradient(135deg, #ddd, #eee);">📊</div>
+          <div class="lib-collection-cover" style="background: linear-gradient(135deg, #c9b8d9, #e0d4ee);">🎯</div>
+        </div>
+        <div class="lib-collection-info">
+          <div class="lib-collection-title">経営・ビジネス戦略</div>
+          <div class="lib-collection-meta">
+            <span>156冊</span>
+            <span>最終更新: 1週間前</span>
+          </div>
+        </div>
+      </a>
+      <a href="library.html" class="lib-collection">
+        <div class="lib-collection-covers">
+          <div class="lib-collection-cover" style="background: linear-gradient(135deg, #e8c4c4, #f0d4d4);">📖</div>
+          <div class="lib-collection-cover" style="background: linear-gradient(135deg, #b0c4de, #d4e4f7);">✍️</div>
+          <div class="lib-collection-cover" style="background: linear-gradient(135deg, #c8e6c9, #e0f2e1);">🖊</div>
+        </div>
+        <div class="lib-collection-info">
+          <div class="lib-collection-title">文芸・エッセイ</div>
+          <div class="lib-collection-meta">
+            <span>89冊</span>
+            <span>最終更新: 3日前</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Kaitori Banner -->
+<section class="kaitori-section">
+  <div class="kaitori-inner">
+    <div class="kaitori-text">
+      <h2>読み終えた本を、<br>次の読者へ届けよう</h2>
+      <p>本棚の写真を撮るだけで一括査定。<br>送料無料・自宅にいたまま買取完了。</p>
+      <div class="kaitori-amount">
+        <div class="kaitori-amount-label">あなたのライブラリの推定買取額</div>
+        <div class="kaitori-amount-value">¥42,560 <small>（6,852冊中 査定可能 2,340冊）</small></div>
+      </div>
+      <a href="kaitori.html" class="kaitori-btn">📦 買取をはじめる</a>
+    </div>
+    <div class="kaitori-features">
+      <div class="kaitori-feature">
+        <div class="kaitori-feature-icon">📷</div>
+        <div class="kaitori-feature-title">写真で一括査定</div>
+        <div class="kaitori-feature-desc">本棚の写真を撮るだけでAIが本を認識し、まとめて査定します</div>
+      </div>
+      <div class="kaitori-feature">
+        <div class="kaitori-feature-icon">🚚</div>
+        <div class="kaitori-feature-title">送料無料</div>
+        <div class="kaitori-feature-desc">ダンボールに詰めて送るだけ。集荷もお任せください</div>
+      </div>
+      <div class="kaitori-feature">
+        <div class="kaitori-feature-icon">⚡</div>
+        <div class="kaitori-feature-title">ソクフリ対応</div>
+        <div class="kaitori-feature-desc">査定前にお支払い。すぐにお金が受け取れます</div>
+      </div>
+      <div class="kaitori-feature">
+        <div class="kaitori-feature-icon">🎁</div>
+        <div class="kaitori-feature-title">ポイント還元20%</div>
+        <div class="kaitori-feature-desc">ソクフリ選択で査定額の20%をポイント還元</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Activity Feed -->
+<section class="activity-section">
+  <div class="section-inner">
+    <div class="section-header">
+      <h2 class="section-title">
+        📋 最近のアクティビティ
+      </h2>
+    </div>
+    <div class="activity-list">
+      <div class="activity-item">
+        <div class="activity-icon green">📸</div>
+        <div class="activity-content">
+          <div class="activity-title">本棚スキャンで15冊を検出</div>
+          <div class="activity-desc">合計買取額: ¥2,779 · ライブラリに登録可能</div>
+        </div>
+        <div class="activity-time">2時間前</div>
+      </div>
+      <div class="activity-item">
+        <div class="activity-icon orange">📦</div>
+        <div class="activity-content">
+          <div class="activity-title">買取申請が完了しました</div>
+          <div class="activity-desc">8冊 · 査定額 ¥3,652 · 集荷予定: 2/18</div>
+        </div>
+        <div class="activity-time">昨日</div>
+      </div>
+      <div class="activity-item">
+        <div class="activity-icon blue">📚</div>
+        <div class="activity-content">
+          <div class="activity-title">コレクション「森とフライフィッシング」に3冊追加</div>
+          <div class="activity-desc">「山奥ニート」やってます。、畑ごはん、ほか1冊</div>
+        </div>
+        <div class="activity-time">3日前</div>
+      </div>
+      <div class="activity-item">
+        <div class="activity-icon green">✨</div>
+        <div class="activity-content">
+          <div class="activity-title">VB AIが新しいおすすめを更新</div>
+          <div class="activity-desc">あなたの読書傾向に合った6冊を見つけました</div>
+        </div>
+        <div class="activity-time">1週間前</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="logo">VALUE <span>BOOKS</span></div>
+        <p>
+          本を売りたい人、買いたい人、読みたい人。<br>
+          すべての本好きのためのプラットフォーム。<br>
+          上田市から本の循環を届けます。
+        </p>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">サービス</div>
+        <a href="kaitori.html">おためし査定</a>
+        <a href="ai-chat.html">VB AI</a>
+        <a href="library.html">ライブラリ</a>
+        <a href="#">読みもの</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">サポート</div>
+        <a href="#">はじめての方へ</a>
+        <a href="#">よくある質問</a>
+        <a href="#">お問い合わせ</a>
+        <a href="#">ご利用方法</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">その他</div>
+        <a href="#">Vaboo / バブー</a>
+        <a href="#">charibon / チャリボン</a>
+        <a href="#">本と茶 NABO</a>
+        <a href="#">パートナーシップ</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© VALUE BOOKS ALL RIGHTS RESERVED.</div>
+      <div class="footer-badges">
+        <div class="footer-badge">Certified B Corporation</div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- AI Floating Button -->
+<div class="ai-float">
+  <div class="ai-float-label">VB AI に聞く</div>
+  <a href="ai-chat.html" class="ai-float-btn">✨</a>
+</div>
+
+<script>
+// Tab switching
+document.querySelectorAll('.rec-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.rec-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+  });
+});
+
+// Chat input redirect
+document.querySelector('.ai-chat-input').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' && e.target.value.trim()) {
+    location.href = 'ai-chat.html';
+  }
+});
+
+// Favorite toggle
+document.querySelectorAll('.book-fav').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    btn.textContent = btn.textContent === '♡' ? '♥' : '♡';
+    btn.style.color = btn.textContent === '♥' ? '#e74c3c' : '';
+  });
+});
+</script>
+</body>
+</html>

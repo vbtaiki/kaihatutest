@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>プロジェクト④：SKYPOD倉庫革命 | VALUE BOOKS 2026</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Sans", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif; line-height: 1.7; color: #333; background: #f5f5f5; }
+        .header { background: linear-gradient(135deg, #2c5f2d 0%, #1a4d2e 100%); color: white; padding: 40px 20px; }
+        .header-content { max-width: 1000px; margin: 0 auto; }
+        .project-number { display: inline-block; width: 50px; height: 50px; background: #00a99d; color: white; border-radius: 50%; text-align: center; line-height: 50px; font-weight: bold; font-size: 1.5rem; margin-bottom: 15px; }
+        .header h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        .header .subtitle { font-size: 1.1rem; opacity: 0.9; }
+        .nav { background: white; padding: 15px 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100; }
+        .nav a { color: #2c5f2d; text-decoration: none; margin-right: 20px; font-weight: 500; }
+        .nav a:hover { text-decoration: underline; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 40px 20px; }
+        .card { background: white; border-radius: 8px; padding: 30px; margin-bottom: 25px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        h2 { font-size: 1.8rem; color: #2c5f2d; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 3px solid #2c5f2d; }
+        h3 { font-size: 1.3rem; color: #333; margin: 20px 0 12px; }
+        .overview-box { background: linear-gradient(135deg, #FFE066 0%, #FFD700 100%); padding: 25px; border-radius: 8px; margin-bottom: 20px; }
+        .overview-box h3 { font-size: 1.5rem; margin-top: 0; margin-bottom: 15px; }
+        .overview-box p { font-size: 1.1rem; line-height: 1.8; }
+        .problem-solution { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-top: 15px; }
+        .problem-solution > div { padding: 15px; border-radius: 6px; }
+        .problem { background: #ffe6e6; border-left: 4px solid #e74c3c; }
+        .solution { background: #e6f7e6; border-left: 4px solid #2c5f2d; }
+        .effect { background: #e6f3ff; border-left: 4px solid #00a99d; }
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+        table th { background: #2c5f2d; color: white; padding: 12px; text-align: left; font-weight: 500; }
+        table td { padding: 12px; border-bottom: 1px solid #e0e0e0; }
+        table tr:hover { background: #f5f9f6; }
+        .flow-diagram { background: #f5f9f6; padding: 25px; border-radius: 8px; font-family: 'Courier New', monospace; white-space: pre-line; line-height: 2; border-left: 4px solid #00a99d; margin: 15px 0; }
+        .system-diagram { background: #f5f9f6; padding: 25px; border-radius: 8px; font-family: 'Courier New', monospace; white-space: pre; line-height: 1.6; border-left: 4px solid #2c5f2d; margin: 15px 0; overflow-x: auto; }
+        .tag { display: inline-block; background: #00a99d; color: white; padding: 4px 12px; border-radius: 3px; font-size: 0.85rem; margin-right: 8px; margin-bottom: 8px; }
+        .comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
+        .comparison-card { padding: 20px; border-radius: 8px; }
+        .comparison-card.before { background: #ffe6e6; border-left: 4px solid #e74c3c; }
+        .comparison-card.after { background: #e6f7e6; border-left: 4px solid #2c5f2d; }
+        .comparison-card h4 { margin-bottom: 15px; }
+        .risk-card { background: #fff3cd; padding: 20px; border-radius: 8px; border-left: 4px solid #ffc107; margin-bottom: 15px; }
+        .risk-card h4 { color: #856404; margin-bottom: 10px; }
+        .success-criteria { background: #e8f5e9; padding: 20px; border-radius: 8px; border-left: 4px solid #2c5f2d; }
+        .success-criteria ul { list-style: none; padding-left: 0; }
+        .success-criteria li { padding: 8px 0; padding-left: 30px; position: relative; }
+        .success-criteria li:before { content: "✓"; position: absolute; left: 0; color: #2c5f2d; font-weight: bold; font-size: 1.2rem; }
+        .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px; }
+        .team-member { background: #f5f9f6; padding: 15px; border-radius: 6px; text-align: center; }
+        .team-member .role { font-weight: bold; color: #2c5f2d; margin-bottom: 5px; }
+        .cta-section { background: linear-gradient(135deg, #2c5f2d 0%, #1a4d2e 100%); color: white; padding: 35px; border-radius: 8px; text-align: center; margin-top: 30px; }
+        .cta-section h2 { color: white; border-bottom: none; margin-bottom: 15px; }
+        .highlight-box { background: #e6f3ff; padding: 20px; border-radius: 8px; border-left: 4px solid #00a99d; margin: 20px 0; }
+        @media (max-width: 768px) { .header h1 { font-size: 1.8rem; } table { font-size: 0.85rem; } .comparison { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="project-number">④</div>
+            <h1>SKYPOD倉庫革命</h1>
+            <p class="subtitle">ロボットが本を運んでくる自動化倉庫で、検品作業を1/4に削減</p>
+        </div>
+    </div>
+    
+    <div class="nav">
+        <a href="index.html">← トップに戻る</a>
+        <a href="00_全体戦略_みんなの作戦会議ノート.html">全体戦略</a>
+    </div>
+    
+    <div class="container">
+        <div class="card">
+            <h2>📋 プロジェクト概要</h2>
+            <div class="overview-box">
+                <h3>何を作る？（一言で）</h3>
+                <p><strong>ロボットが本を運んでくる自動化倉庫で、検品作業を1/4に削減</strong></p>
+            </div>
+            
+            <h3>なぜ作る？</h3>
+            <div class="problem-solution">
+                <div class="problem">
+                    <strong>📉 課題</strong>
+                    <p>人手での検品・ピッキングに限界、人件費も高騰</p>
+                </div>
+                <div class="solution">
+                    <strong>💡 解決策</strong>
+                    <p>SKYPODで自動化＆協力型買取の事前データで効率化</p>
+                </div>
+                <div class="effect">
+                    <strong>✨ 効果</strong>
+                    <p>処理能力 <strong>3倍</strong>、人件費 <strong>半減</strong></p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2>🎯 目標数値（KPI）</h2>
+            <table>
+                <thead>
+                    <tr><th>項目</th><th>現状</th><th>目標（1年後）</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>検品作業比率</td><td>100%</td><td><strong>25%（75%削減）</strong></td></tr>
+                    <tr><td>1日の処理能力</td><td>3,000冊</td><td><strong>10,000冊</strong></td></tr>
+                    <tr><td>ピッキング速度</td><td>100冊/時</td><td><strong>300冊/時</strong></td></tr>
+                    <tr><td>人件費（月）</td><td>¥3,000,000</td><td><strong>¥1,500,000</strong></td></tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="card">
+            <h2>👥 誰が使う？（ターゲット）</h2>
+            <ul style="line-height: 2;">
+                <li><strong>メインユーザー:</strong> 倉庫スタッフ（15名 → 8名に削減可能）</li>
+                <li><strong>利用シーン:</strong> 毎日の入庫・出庫作業</li>
+                <li><strong>効果を受ける:</strong> 全ユーザー（発送が早くなる）</li>
+            </ul>
+        </div>
+        
+        <div class="card">
+            <h2>🔄 作業の流れ（変化）</h2>
+            <div class="comparison">
+                <div class="comparison-card before">
+                    <h4>❌ 従来</h4>
+                    <div class="flow-diagram">本が到着
+  ↓ 人が歩いて棚まで移動
+全部の本を開封・検品
+  ↓ 時間かかる...
+手作業でピッキング
+  ↓ 疲れる...
+梱包・発送</div>
+                </div>
+                <div class="comparison-card after">
+                    <h4>✅ SKYPOD導入後</h4>
+                    <div class="flow-diagram">本が到着
+  ↓ リスクスコアで自動判定
+【低リスク】→ そのままGO（検品省略）
+【高リスク】→ 簡易検品のみ
+  ↓ 検品75%削減！
+ロボットが本棚ごと運んでくる
+  ↓ もう歩かない！
+梱包・発送</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2>💻 システム構成</h2>
+            <div class="system-diagram">┌──────────────────────────┐
+│  協力型買取からの事前データ │
+│  ・本の状態                │
+│  ・ユーザー信頼度          │
+└─────────┬────────────────┘
+          │
+┌─────────▼────────────────┐
+│  中間アプリ（Go言語）       │
+│  ・リスクスコア計算        │
+│  ・SKYPODへ指示            │
+└─────────┬────────────────┘
+          │
+┌─────────▼────────────────┐
+│  SKYPOD制御システム        │
+│  ・ロボット制御            │
+│  ・在庫管理                │
+└────────────────────────────┘</div>
+            
+            <h3>使う技術</h3>
+            <table>
+                <thead><tr><th>部分</th><th>技術</th><th>理由</th></tr></thead>
+                <tbody>
+                    <tr><td>中間アプリ</td><td><span class="tag">Go</span></td><td>高速、並行処理強い</td></tr>
+                    <tr><td>SKYPOD</td><td><span class="tag">ベンダー提供</span></td><td>実績あり、保守付き</td></tr>
+                    <tr><td>リスクスコア</td><td><span class="tag">Python</span></td><td>データ分析に強い</td></tr>
+                    <tr><td>既存WMS連携</td><td><span class="tag">API</span></td><td>最小限の改修</td></tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="card">
+            <h2>📅 スケジュール</h2>
+            <h3>Month 1-3: 準備・設計</h3>
+            <ul>
+                <li>SKYPODベンダー契約（Month 1）</li>
+                <li>倉庫レイアウト設計（Month 1-2）</li>
+                <li>中間アプリ設計（Month 2）</li>
+                <li>エースチーム専任化（Month 3）</li>
+            </ul>
+            
+            <h3>Month 4-6: 工事・開発</h3>
+            <ul>
+                <li>倉庫工事・SKYPOD設置（Month 4-5）</li>
+                <li>中間アプリ開発（Month 4-6）</li>
+                <li>統合テスト（Month 6）</li>
+            </ul>
+            
+            <h3>Month 7-9: 本番稼働</h3>
+            <ul>
+                <li>段階的稼働開始（Month 7）</li>
+                <li>調整・最適化（Month 8-9）</li>
+                <li>全面稼働（Month 9）</li>
+            </ul>
+        </div>
+        
+        <div class="card">
+            <h2>💰 コスト見積もり</h2>
+            <table>
+                <thead><tr><th>項目</th><th>金額</th></tr></thead>
+                <tbody>
+                    <tr><td>SKYPOD導入費用</td><td>¥50,000,000</td></tr>
+                    <tr><td>倉庫工事</td><td>¥5,000,000</td></tr>
+                    <tr><td>中間アプリ開発</td><td>¥4,000,000</td></tr>
+                    <tr><td>テスト・検証</td><td>¥2,000,000</td></tr>
+                    <tr style="background: #f5f9f6;"><td><strong>合計（初期）</strong></td><td><strong>¥61,000,000</strong></td></tr>
+                    <tr style="background: #f5f9f6;"><td><strong>合計（月額運用）</strong></td><td><strong>¥1,000,000</strong></td></tr>
+                </tbody>
+            </table>
+            
+            <div class="highlight-box">
+                <h3>💡 投資回収</h3>
+                <ul style="line-height: 2;">
+                    <li>削減できる人件費：<strong>¥1,500,000/月</strong></li>
+                    <li>差引き：¥500,000/月のプラス</li>
+                    <li><strong>回収期間：約10年</strong>（但し処理能力3倍の効果含めると5年程度）</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2>👨‍💻 チーム体制</h2>
+            <div class="team-grid">
+                <div class="team-member"><div class="role">PM</div><div>1名</div><small>全体管理、ベンダー調整</small></div>
+                <div class="team-member"><div class="role">エースエンジニアA</div><div>1名（専任）</div><small>中間アプリ設計・実装</small></div>
+                <div class="team-member"><div class="role">エースエンジニアB</div><div>1名（専任）</div><small>システム統合・テスト</small></div>
+                <div class="team-member"><div class="role">倉庫マネージャー</div><div>1名</div><small>現場調整、運用設計</small></div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2>⚠️ リスクと対策</h2>
+            <div class="risk-card">
+                <h4>リスク1: ロボットの故障・停止</h4>
+                <strong>対策:</strong>
+                <ul><li>24時間保守契約</li><li>手作業へのフォールバック手順整備</li><li>予備機の確保</li></ul>
+            </div>
+            <div class="risk-card">
+                <h4>リスク2: 中間アプリのバグ</h4>
+                <strong>対策:</strong>
+                <ul><li>エースチームによる慎重な開発</li><li>徹底的なテスト</li><li>本番投入後1ヶ月は常駐体制</li></ul>
+            </div>
+            <div class="risk-card">
+                <h4>リスク3: スタッフの不安（仕事奪われる？）</h4>
+                <strong>対策:</strong>
+                <ul><li>丁寧な説明会（雇用は守る）</li><li>新しい業務へのトレーニング</li><li>判断業務にシフト（やりがいUP）</li></ul>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2>✅ 成功の条件</h2>
+            <div class="success-criteria">
+                <ul>
+                    <li>システム稼働率 99.5%以上</li>
+                    <li>検品作業 75%削減達成</li>
+                    <li>処理能力 3倍達成</li>
+                    <li>エラー率 0.1%未満</li>
+                    <li>スタッフの満足度維持</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="cta-section">
+            <h2>🚀 次のアクション</h2>
+            <h3 style="color: white; border: none; margin-bottom: 15px;">今週</h3>
+            <ul style="list-style: none; padding: 0; text-align: left; max-width: 600px; margin: 0 auto 30px;">
+                <li>☐ SKYPODベンダー最終選定</li>
+                <li>☐ エースチームへの説明・合意</li>
+                <li>☐ 他業務の引き継ぎ計画</li>
+            </ul>
+            <h3 style="color: white; border: none; margin-bottom: 15px;">今月</h3>
+            <ul style="list-style: none; padding: 0; text-align: left; max-width: 600px; margin: 0 auto 30px;">
+                <li>☐ ベンダー契約締結</li>
+                <li>☐ キックオフミーティング</li>
+                <li>☐ 倉庫レイアウト案確定</li>
+            </ul>
+            <p style="font-size: 1.3rem; font-weight: bold; margin-top: 30px;">最大の投資だけど、最大のリターン！効率化の要です🤖</p>
+        </div>
+    </div>
+</body>
+</html>
+

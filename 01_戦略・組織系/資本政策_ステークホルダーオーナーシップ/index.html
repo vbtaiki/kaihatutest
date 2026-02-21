@@ -1,0 +1,1326 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>バリューブックス 資本政策構想 — Community Capital IPO</title>
+<style>
+  :root {
+    --primary: #1a2a3a;
+    --accent: #c8a45c;
+    --accent-light: #e8d49c;
+    --bg: #faf8f5;
+    --bg-dark: #1a2a3a;
+    --text: #2c2c2c;
+    --text-light: #6b6b6b;
+    --card-bg: #ffffff;
+    --border: #e8e4de;
+    --green: #2d8a56;
+    --red: #c0392b;
+    --blue: #2c6fbb;
+    --orange: #d4782f;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.8;
+    font-size: 15px;
+  }
+
+  /* ── Navigation ── */
+  nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: rgba(26, 42, 58, 0.97);
+    backdrop-filter: blur(12px);
+    z-index: 100;
+    padding: 0 2rem;
+    border-bottom: 1px solid rgba(200, 164, 92, 0.2);
+  }
+  nav .nav-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+  }
+  nav .logo {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+  }
+  nav .nav-links {
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+  }
+  nav .nav-links a {
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    transition: color 0.3s;
+  }
+  nav .nav-links a:hover { color: var(--accent); }
+
+  /* ── Hero ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #1a2a3a 0%, #2a3f55 40%, #3a5570 100%);
+    color: #fff;
+    text-align: center;
+    padding: 6rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(ellipse at 30% 50%, rgba(200, 164, 92, 0.08) 0%, transparent 60%);
+    animation: float 20s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(3%, -3%); }
+  }
+  .hero-content { position: relative; z-index: 1; max-width: 800px; }
+  .hero-label {
+    display: inline-block;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    padding: 4px 16px;
+    border-radius: 20px;
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+  }
+  .hero h1 {
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 300;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.02em;
+  }
+  .hero h1 strong {
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .hero p {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.65);
+    max-width: 600px;
+    margin: 0 auto 2rem;
+    line-height: 2;
+  }
+  .hero-stats {
+    display: flex;
+    gap: 3rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 3rem;
+  }
+  .hero-stat {
+    text-align: center;
+  }
+  .hero-stat .num {
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1.2;
+  }
+  .hero-stat .label {
+    font-size: 11px;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.1em;
+    margin-top: 4px;
+  }
+
+  /* ── Sections ── */
+  section {
+    padding: 5rem 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .section-dark {
+    background: var(--bg-dark);
+    color: #fff;
+    max-width: 100%;
+    padding: 5rem 2rem;
+  }
+  .section-dark .inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .section-accent {
+    background: linear-gradient(135deg, #f7f3ec 0%, #ede7db 100%);
+    max-width: 100%;
+    padding: 5rem 2rem;
+  }
+  .section-accent .inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+  .section-dark .section-label { color: var(--accent-light); }
+
+  h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    line-height: 1.4;
+  }
+  .section-dark h2 { color: #fff; }
+
+  h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    color: var(--primary);
+  }
+  .section-dark h3 { color: var(--accent-light); }
+
+  .section-desc {
+    color: var(--text-light);
+    max-width: 700px;
+    margin-bottom: 3rem;
+    line-height: 2;
+  }
+  .section-dark .section-desc { color: rgba(255,255,255,0.6); }
+
+  /* ── Cards ── */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+  }
+  .card-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+  }
+  .card-icon.gold { background: rgba(200, 164, 92, 0.15); }
+  .card-icon.blue { background: rgba(44, 111, 187, 0.12); }
+  .card-icon.green { background: rgba(45, 138, 86, 0.12); }
+  .card-icon.orange { background: rgba(212, 120, 47, 0.12); }
+
+  .card h4 {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--primary);
+  }
+  .card p {
+    font-size: 0.88rem;
+    color: var(--text-light);
+    line-height: 1.8;
+  }
+
+  /* ── Chart (CSS bars) ── */
+  .chart-container {
+    margin: 2rem 0;
+    overflow-x: auto;
+  }
+  .bar-chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 6px;
+    height: 260px;
+    padding: 0 0 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .bar-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    min-width: 44px;
+  }
+  .bar {
+    width: 100%;
+    max-width: 36px;
+    border-radius: 4px 4px 0 0;
+    position: relative;
+    transition: height 0.8s ease;
+    cursor: pointer;
+  }
+  .bar.sales { background: linear-gradient(180deg, var(--accent), #b8944c); }
+  .bar.profit-pos { background: linear-gradient(180deg, var(--green), #248a4a); }
+  .bar.profit-neg { background: linear-gradient(180deg, var(--red), #a02020); }
+  .bar-label {
+    font-size: 9px;
+    color: var(--text-light);
+    margin-top: 8px;
+    text-align: center;
+    white-space: nowrap;
+  }
+  .bar-tooltip {
+    display: none;
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--primary);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    white-space: nowrap;
+    z-index: 10;
+  }
+  .bar:hover .bar-tooltip { display: block; }
+
+  /* ── Timeline ── */
+  .timeline {
+    position: relative;
+    padding: 2rem 0;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 24px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg, var(--accent), rgba(200,164,92,0.2));
+  }
+  .tl-item {
+    position: relative;
+    padding-left: 60px;
+    margin-bottom: 2.5rem;
+  }
+  .tl-dot {
+    position: absolute;
+    left: 16px;
+    top: 4px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 3px solid var(--bg);
+  }
+  .section-dark .tl-dot { border-color: var(--bg-dark); }
+  .tl-dot.big {
+    width: 24px;
+    height: 24px;
+    left: 13px;
+    top: 0;
+    box-shadow: 0 0 0 4px rgba(200,164,92,0.25);
+  }
+  .tl-year {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    margin-bottom: 4px;
+  }
+  .tl-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .section-dark .tl-title { color: #fff; }
+  .tl-desc {
+    font-size: 0.88rem;
+    color: var(--text-light);
+    line-height: 1.8;
+  }
+  .section-dark .tl-desc { color: rgba(255,255,255,0.55); }
+
+  /* ── Story chapters ── */
+  .chapter {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2.5rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .chapter::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+  }
+  .chapter.ch1::before { background: var(--accent); }
+  .chapter.ch2::before { background: var(--blue); }
+  .chapter.ch3::before { background: var(--red); }
+  .chapter.ch4::before { background: var(--green); }
+  .chapter.ch5::before { background: var(--orange); }
+
+  .chapter-num {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    margin-bottom: 0.5rem;
+  }
+  .chapter.ch1 .chapter-num { color: var(--accent); }
+  .chapter.ch2 .chapter-num { color: var(--blue); }
+  .chapter.ch3 .chapter-num { color: var(--red); }
+  .chapter.ch4 .chapter-num { color: var(--green); }
+  .chapter.ch5 .chapter-num { color: var(--orange); }
+
+  .chapter h3 { margin-bottom: 1rem; }
+  .chapter p { font-size: 0.92rem; color: var(--text-light); }
+
+  .data-highlight {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(200, 164, 92, 0.1);
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 0.88rem;
+    color: var(--primary);
+    margin: 0.5rem 0.5rem 0.5rem 0;
+  }
+
+  /* ── Ownership diagram ── */
+  .ownership-diagram {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 2rem 0;
+  }
+  .ownership-stage {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    min-width: 260px;
+    flex: 1;
+    max-width: 320px;
+  }
+  .section-dark .ownership-stage {
+    background: rgba(255,255,255,0.05);
+    border-color: rgba(255,255,255,0.1);
+  }
+  .ownership-stage h4 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+  .section-dark .ownership-stage h4 { color: var(--accent-light); }
+  .pie-visual {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    margin: 0 auto 1rem;
+    position: relative;
+  }
+  .pie-legend {
+    font-size: 0.78rem;
+    line-height: 2;
+  }
+  .pie-legend span {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 3px;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+  .section-dark .pie-legend { color: rgba(255,255,255,0.7); }
+
+  /* ── Partner grid ── */
+  .partner-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    margin: 2rem 0;
+  }
+  .partner-card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    padding: 1.2rem;
+    text-align: center;
+    transition: transform 0.3s, background 0.3s;
+  }
+  .partner-card:hover {
+    transform: translateY(-2px);
+    background: rgba(255,255,255,0.1);
+  }
+  .partner-card .partner-type {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+  .partner-card .partner-name {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 4px;
+  }
+  .partner-card .partner-role {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.5);
+  }
+
+  /* ── Case study ── */
+  .case-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+  .case-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+  }
+  .case-flag {
+    font-size: 1.6rem;
+    margin-bottom: 0.5rem;
+  }
+  .case-card h4 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+  }
+  .case-card .case-type {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+  .case-card p {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    line-height: 1.8;
+    flex: 1;
+  }
+  .case-takeaway {
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.82rem;
+    color: var(--green);
+    font-weight: 600;
+  }
+
+  /* ── Quote ── */
+  .quote-block {
+    background: linear-gradient(135deg, #1a2a3a, #2a4060);
+    color: #fff;
+    border-radius: 16px;
+    padding: 3rem;
+    margin: 3rem 0;
+    position: relative;
+  }
+  .quote-block::before {
+    content: '"';
+    position: absolute;
+    top: 1rem;
+    left: 2rem;
+    font-size: 5rem;
+    color: rgba(200, 164, 92, 0.2);
+    font-family: Georgia, serif;
+    line-height: 1;
+  }
+  .quote-block p {
+    font-size: 1.05rem;
+    line-height: 2.2;
+    position: relative;
+    z-index: 1;
+  }
+  .quote-block strong { color: var(--accent); }
+
+  /* ── Legal risk table ── */
+  .risk-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+    font-size: 0.88rem;
+  }
+  .risk-table th {
+    text-align: left;
+    padding: 10px 12px;
+    background: rgba(200, 164, 92, 0.08);
+    border-bottom: 2px solid var(--accent);
+    font-weight: 700;
+    color: var(--primary);
+    font-size: 0.82rem;
+    letter-spacing: 0.05em;
+  }
+  .risk-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  .risk-table tr:last-child td { border-bottom: none; }
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+  .badge.high { background: rgba(192, 57, 43, 0.1); color: var(--red); }
+  .badge.mid { background: rgba(212, 120, 47, 0.1); color: var(--orange); }
+  .badge.low { background: rgba(45, 138, 86, 0.1); color: var(--green); }
+
+  /* ── Metrics row ── */
+  .metrics-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+  .metric-box {
+    text-align: center;
+    padding: 1.5rem;
+  }
+  .metric-box .metric-num {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1.2;
+  }
+  .section-dark .metric-box .metric-num { color: var(--accent-light); }
+  .metric-box .metric-unit {
+    font-size: 0.9rem;
+    color: var(--text);
+    font-weight: 400;
+  }
+  .section-dark .metric-box .metric-unit { color: rgba(255,255,255,0.8); }
+  .metric-box .metric-label {
+    font-size: 0.75rem;
+    color: var(--text-light);
+    margin-top: 4px;
+    letter-spacing: 0.05em;
+  }
+  .section-dark .metric-box .metric-label { color: rgba(255,255,255,0.4); }
+
+  /* ── Footer ── */
+  footer {
+    background: var(--bg-dark);
+    color: rgba(255,255,255,0.4);
+    text-align: center;
+    padding: 3rem 2rem;
+    font-size: 0.8rem;
+    border-top: 1px solid rgba(200, 164, 92, 0.15);
+  }
+  footer .footer-note {
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.8;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 768px) {
+    nav .nav-links { display: none; }
+    .hero-stats { gap: 1.5rem; }
+    .ownership-diagram { flex-direction: column; align-items: center; }
+    section { padding: 3rem 1.2rem; }
+    .card-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ── Animations ── */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── Misc ── */
+  .divider {
+    width: 48px;
+    height: 3px;
+    background: var(--accent);
+    border-radius: 2px;
+    margin: 1rem 0 2rem;
+  }
+  .section-dark .divider { background: var(--accent-light); }
+
+  .bb-highlight {
+    background: linear-gradient(135deg, rgba(200,164,92,0.08), rgba(200,164,92,0.15));
+    border: 1px solid rgba(200,164,92,0.3);
+    border-radius: 12px;
+    padding: 2rem;
+    margin: 2rem 0;
+  }
+
+  .arrow-connector {
+    text-align: center;
+    font-size: 1.5rem;
+    color: var(--accent);
+    margin: 1rem 0;
+  }
+</style>
+</head>
+<body>
+
+<!-- ── Navigation ── -->
+<nav>
+  <div class="nav-inner">
+    <div class="logo">VALUE BOOKS — CAPITAL STRATEGY</div>
+    <ul class="nav-links">
+      <li><a href="#story">成長ストーリー</a></li>
+      <li><a href="#concept">構想</a></li>
+      <li><a href="#roadmap">ロードマップ</a></li>
+      <li><a href="#partners">パートナー</a></li>
+      <li><a href="#cases">先行事例</a></li>
+      <li><a href="#legal">論点</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ── Hero ── -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-label">Capital Strategy 2026</div>
+    <h1>
+      本を愛する人たちが、<br>
+      この会社の<strong>オーナー</strong>になる。
+    </h1>
+    <p>
+      バリューブックスは、著者・書店・出版社・読者と共に会社を所有する<br>
+      「Community Capital IPO」を構想しています。
+    </p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="num">18</div>
+        <div class="label">年間の独立経営</div>
+      </div>
+      <div class="hero-stat">
+        <div class="num">39億</div>
+        <div class="label">直近売上高</div>
+      </div>
+      <div class="hero-stat">
+        <div class="num">100%</div>
+        <div class="label">株主構成の設計自由度</div>
+      </div>
+      <div class="hero-stat">
+        <div class="num">400億</div>
+        <div class="label">目標時価総額</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Growth Story ── -->
+<section id="story">
+  <div class="section-label fade-in">Growth Story</div>
+  <h2 class="fade-in">成長、葛藤、そして「三方よし」の実現へ</h2>
+  <p class="section-desc fade-in">18期分の財務データが語る、バリューブックスの進化の物語。</p>
+
+  <!-- Simple bar chart -->
+  <div class="chart-container fade-in">
+    <div class="bar-chart" id="salesChart"></div>
+  </div>
+
+  <div class="chapter ch1 fade-in">
+    <div class="chapter-num">CHAPTER 01 — 1〜10期（2007〜2017）</div>
+    <h3>熱狂と「異次元」の10年</h3>
+    <p>自己資本だけで駆け抜けた、奇跡の25倍成長。結果として、株主構成を自由に設計できる稀有なポジションを手にした。</p>
+    <div style="margin-top: 1rem;">
+      <span class="data-highlight">📈 売上25倍</span>
+      <span class="data-highlight">📊 CAGR 43%</span>
+      <span class="data-highlight">💰 自己資本経営</span>
+    </div>
+    <p style="margin-top: 1rem;">年率40%超の成長を自己資金で達成。「自分たちで稼ぎ、自分たちで再投資する」サイクルを回し続けた10年。1,000社に1社の稀有な軌跡。</p>
+  </div>
+
+  <div class="chapter ch2 fade-in">
+    <div class="chapter-num">CHAPTER 02 — 11〜13期前半（2017〜2019）</div>
+    <h3>「売上拡大はやめる」という決断</h3>
+    <p>10周年。社内のメンバーは幸せか、社会にとって良い機能か、そして「かっこいい」か——。<br>
+    出版社への利益還元、自律分散型組織、NABO実店舗、ブックバス。数字よりも「意味」を問い直す実験の日々。</p>
+    <div style="margin-top: 1rem;">
+      <span class="data-highlight">📉 売上横ばい 22〜23億</span>
+      <span class="data-highlight">⚡ 利益率1%未満</span>
+    </div>
+  </div>
+
+  <div class="chapter ch3 fade-in">
+    <div class="chapter-num">CHAPTER 03 — 13期後半〜14期（2020〜2021）</div>
+    <h3>コロナ禍の試練と、利益の「再定義」</h3>
+    <p>「無理に出勤しなくていい。家族を優先してほしい」——その判断には今も満足している。<br>しかし、2期連続で計1.4億円の営業赤字。利益は「防波堤」だと痛感した。</p>
+    <div style="margin-top: 1rem;">
+      <span class="data-highlight" style="background: rgba(192,57,43,0.1);">🔴 ▲7,513万円（13期）</span>
+      <span class="data-highlight" style="background: rgba(192,57,43,0.1);">🔴 ▲6,474万円（14期）</span>
+    </div>
+  </div>
+
+  <div class="chapter ch4 fade-in">
+    <div class="chapter-num">CHAPTER 04 — 15〜17期（2021〜2024）</div>
+    <h3>量から質へ、V字回復の実現</h3>
+    <p>買取の本の質を上げ、システム開発とオペレーション改善に集中。限られたスペースで最大の成果を出す「質の経営」。</p>
+    <div style="margin-top: 1rem;">
+      <span class="data-highlight" style="background: rgba(45,138,86,0.1);">🟢 営業利益2億円突破</span>
+      <span class="data-highlight" style="background: rgba(45,138,86,0.1);">🟢 利益率6.1%</span>
+      <span class="data-highlight" style="background: rgba(45,138,86,0.1);">🟢 売上36億（過去最高）</span>
+    </div>
+  </div>
+
+  <div class="chapter ch5 fade-in">
+    <div class="chapter-num">CHAPTER 05 — 18期〜（2024〜）</div>
+    <h3>社会性・成長性・収益性のすべてを</h3>
+    <p>埼玉新倉庫＋SKYPOD。社運を賭けた投資。<br>そしてここから、<strong>「所有の分散」</strong>という新しい章が始まる。</p>
+    <div style="margin-top: 1rem;">
+      <span class="data-highlight">🏗️ 埼玉新倉庫決定</span>
+      <span class="data-highlight">🎯 売上100億へ</span>
+      <span class="data-highlight">🤝 ステークホルダー所有へ</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── Concept ── -->
+<div class="section-accent" id="concept">
+  <div class="inner">
+    <div class="section-label fade-in">Core Concept</div>
+    <h2 class="fade-in">Community Capital IPO とは</h2>
+    <div class="divider fade-in"></div>
+
+    <div class="card-grid fade-in">
+      <div class="card">
+        <div class="card-icon gold">🔓</div>
+        <h4>株主構成を自由に設計できる</h4>
+        <p>18年間の自己資本経営の結果、「誰に株を持ってもらうか」を白紙から設計できる。この自由度こそが、Community Capital IPOを可能にする最大の前提条件。</p>
+      </div>
+      <div class="card">
+        <div class="card-icon blue">🏛️</div>
+        <h4>IPOを「コミュニティ形成」に使う</h4>
+        <p>資金調達に加えて、著者・出版社・書店・読者を株主として迎え入れる手段としてIPOを活用。「成長資金」と「コミュニティ形成」を同時に実現する。</p>
+      </div>
+      <div class="card">
+        <div class="card-icon green">🌱</div>
+        <h4>プロアカウントが「器」になる</h4>
+        <p>サプライヤー・プロモーター・バイヤー。プロアカウントを通じて事業に貢献するパートナーに、株式という形で所有権を移譲する仕組み。</p>
+      </div>
+    </div>
+
+    <div class="quote-block fade-in">
+      <p>
+        18年間、自己資本で走り続けてきました。<br>
+        しかし、100億、300億という規模で「本のエコシステム」を作るには、<br>私ひとりの手では足りません。<br><br>
+        <strong>24周年、バリューブックスは上場します。</strong><br>
+        成長のための資金を集めると同時に、<br>
+        著者、出版社、書店、そして本を愛する皆さんを<br>
+        <strong>この会社のオーナーとして迎え入れるためです。</strong>
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ── Ownership Transition ── -->
+<div class="section-dark" id="ownership">
+  <div class="inner">
+    <div class="section-label fade-in">Ownership Transition</div>
+    <h2 class="fade-in">株式の段階的開放</h2>
+    <p class="section-desc fade-in">「私の会社」から「私たちの会社」へ。創業者の持株を段階的にパートナーへ開放する。</p>
+
+    <div class="ownership-diagram fade-in">
+      <div class="ownership-stage">
+        <h4>現在</h4>
+        <div class="pie-visual" style="background: conic-gradient(var(--accent) 0deg 353deg, var(--blue) 353deg 360deg);"></div>
+        <div class="pie-legend">
+          <span style="background: var(--accent);"></span>中村 98%<br>
+          <span style="background: var(--blue);"></span>清水 2%
+        </div>
+      </div>
+
+      <div class="ownership-stage">
+        <h4>上場直前（23周年）</h4>
+        <div class="pie-visual" style="background: conic-gradient(var(--accent) 0deg 230deg, var(--green) 230deg 284deg, var(--orange) 284deg 320deg, var(--blue) 320deg 327deg, #888 327deg 360deg);"></div>
+        <div class="pie-legend">
+          <span style="background: var(--accent);"></span>中村 60〜65%<br>
+          <span style="background: var(--green);"></span>経営メンバー・社員 10〜15%<br>
+          <span style="background: var(--orange);"></span>外部パートナー 5〜10%<br>
+          <span style="background: var(--blue);"></span>清水 2%
+        </div>
+      </div>
+
+      <div class="ownership-stage">
+        <h4>上場後（長期目標）</h4>
+        <div class="pie-visual" style="background: conic-gradient(var(--accent) 0deg 120deg, var(--orange) 120deg 252deg, #5a8ab5 252deg 342deg, var(--blue) 342deg 349deg, #888 349deg 360deg);"></div>
+        <div class="pie-legend">
+          <span style="background: var(--accent);"></span>中村 30〜35%<br>
+          <span style="background: var(--orange);"></span>ステークホルダー 35〜40%<br>
+          <span style="background: #5a8ab5;"></span>市場 25〜35%<br>
+          <span style="background: var(--blue);"></span>清水 2%
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── B&B Partnership ── -->
+<section id="bb" class="fade-in">
+  <div class="section-label">First Step</div>
+  <h2>先行事例：本屋B&Bとの業務資本提携</h2>
+  <div class="divider"></div>
+  <p class="section-desc">構想の第一歩として、下北沢の本屋B&B（内沼晋太郎氏）との業務資本提携を検討。独立系書店がバリューブックスのオーナーになる、初めての事例を作る。</p>
+
+  <div class="bb-highlight">
+    <div class="card-grid">
+      <div style="flex:1;">
+        <h3 style="color: var(--accent); margin-bottom: 1rem;">📎 提携スキーム</h3>
+        <p style="font-size: 0.9rem; line-height: 2; color: var(--text);">
+          <strong>株式交換：</strong>VB → B&B株式 X% を取得 ／ B&B → VB株式 Y% を取得<br>
+          <strong>業務提携：</strong>バイヤー機能での仕入れ（古本＋新刊）、EC連携、共同イベント<br>
+          <strong>象徴的意味：</strong>「独立系書店がテクノロジー企業のオーナーになる」前例
+        </p>
+      </div>
+      <div style="flex:1;">
+        <h3 style="color: var(--accent); margin-bottom: 1rem;">🎯 この提携が開く扉</h3>
+        <p style="font-size: 0.9rem; line-height: 2; color: var(--text);">
+          ① プロアカウント・バイヤー機能の実証<br>
+          ② 株式交換の法務・税務フローの確立<br>
+          ③ 経産省「書店振興」の実証データ取得<br>
+          ④ 他の書店・出版社を巻き込む最大の営業ツール
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Roadmap ── -->
+<div class="section-dark" id="roadmap">
+  <div class="inner">
+    <div class="section-label fade-in">Roadmap</div>
+    <h2 class="fade-in">実行ロードマップ</h2>
+    <div class="divider fade-in"></div>
+
+    <div class="timeline fade-in">
+      <div class="tl-item">
+        <div class="tl-dot big"></div>
+        <div class="tl-year">2027年 ─ 20周年</div>
+        <div class="tl-title">「100億が見えた」と宣言</div>
+        <div class="tl-desc">B&Bとの業務資本提携を発表。ステークホルダー所有への転換を宣言。IPO準備開始（監査法人選定）。埼玉倉庫本格稼働。</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-year">2028年 ─ 21周年</div>
+        <div class="tl-title">パートナーへのSO付与本格化</div>
+        <div class="tl-desc">プロアカウント50パートナー達成。主幹事証券会社の選定。社内メンバーへのストックオプション本格付与。</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-year">2029年 ─ 22周年</div>
+        <div class="tl-title">出版社・書店との資本提携拡大</div>
+        <div class="tl-desc">売上90億円。2〜3社目の書店との株式交換。ミシマ社等の出版社との資本業務提携。</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-year">2030年 ─ 23周年</div>
+        <div class="tl-title">売上100億円突破</div>
+        <div class="tl-desc">上場申請準備。「パートナー持株会」の組成。全社一丸でIPOへの最終準備。</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot big"></div>
+        <div class="tl-year">2031年 ─ 24周年 ★</div>
+        <div class="tl-title">Community Capital IPO</div>
+        <div class="tl-desc">東証グロースへ上場。親引けでパートナーを株主に。「日本初、ファンとパートナーが主要株主のIPO」として話題に。目標：売上200億、利益20億、時価総額400億円。</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-year">2032年〜 ─ 25周年以降</div>
+        <div class="tl-title">出版文化連邦の形成</div>
+        <div class="tl-desc">貢献連動型株主優待の開始。第三者割当による仲間づくり。売上300億円、東証プライムへ。「バリューブックス・ホールディングス」化。</div>
+      </div>
+    </div>
+
+    <div class="metrics-row fade-in">
+      <div class="metric-box">
+        <div class="metric-num">200<span class="metric-unit">億円</span></div>
+        <div class="metric-label">IPO時売上高</div>
+      </div>
+      <div class="metric-box">
+        <div class="metric-num">20<span class="metric-unit">億円</span></div>
+        <div class="metric-label">IPO時営業利益</div>
+      </div>
+      <div class="metric-box">
+        <div class="metric-num">400<span class="metric-unit">億円</span></div>
+        <div class="metric-label">想定時価総額</div>
+      </div>
+      <div class="metric-box">
+        <div class="metric-num">PER20<span class="metric-unit">倍</span></div>
+        <div class="metric-label">バリュエーション</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Partners ── -->
+<div class="section-dark" id="partners" style="background: linear-gradient(180deg, var(--bg-dark) 0%, #243546 100%);">
+  <div class="inner">
+    <div class="section-label fade-in">Partner Strategy</div>
+    <h2 class="fade-in">巻き込むパートナー</h2>
+    <p class="section-desc fade-in">影響力を持った個人やインディペンデントな組織と「運命共同体」を作る。パートナーの発信力×バリューブックスのインフラで、エコシステム全体を成長させる。</p>
+
+    <div class="partner-grid fade-in">
+      <div class="partner-card">
+        <div class="partner-type">CREATOR</div>
+        <div class="partner-name">ゆる言語学ラジオ</div>
+        <div class="partner-role">有償新株予約権 → 集客・紹介</div>
+      </div>
+      <div class="partner-card">
+        <div class="partner-type">CREATOR</div>
+        <div class="partner-name">古典ラジオ</div>
+        <div class="partner-role">有償新株予約権 → 集客・紹介</div>
+      </div>
+      <div class="partner-card">
+        <div class="partner-type">AUTHOR</div>
+        <div class="partner-name">三宅夏帆</div>
+        <div class="partner-role">有償新株予約権 → 著者プロモーション</div>
+      </div>
+      <div class="partner-card">
+        <div class="partner-type">AUTHOR</div>
+        <div class="partner-name">ジェーン・スー</div>
+        <div class="partner-role">有償新株予約権 → 著者プロモーション</div>
+      </div>
+      <div class="partner-card">
+        <div class="partner-type">BOOKSTORE</div>
+        <div class="partner-name">本屋B&B</div>
+        <div class="partner-role">株式交換 → 業務資本提携</div>
+      </div>
+      <div class="partner-card">
+        <div class="partner-type">PRODUCER</div>
+        <div class="partner-name">内沼晋太郎</div>
+        <div class="partner-role">株式交換 → 顧問的関与</div>
+      </div>
+      <div class="partner-card">
+        <div class="partner-type">PUBLISHER</div>
+        <div class="partner-name">ミシマ社</div>
+        <div class="partner-role">業務資本提携 → サプライヤー</div>
+      </div>
+      <div class="partner-card">
+        <div class="partner-type">PUBLISHER</div>
+        <div class="partner-name">エイジ出版</div>
+        <div class="partner-role">業務資本提携 → サプライヤー</div>
+      </div>
+      <div class="partner-card">
+        <div class="partner-type">MANAGEMENT</div>
+        <div class="partner-name">飯田光平</div>
+        <div class="partner-role">ストックオプション → 経営牽引</div>
+      </div>
+      <div class="partner-card">
+        <div class="partner-type">STAFF</div>
+        <div class="partner-name">コミット社員</div>
+        <div class="partner-role">持株会 + SO → 長期定着</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Case Studies ── -->
+<section id="cases">
+  <div class="section-label fade-in">Reference Cases</div>
+  <h2 class="fade-in">先行事例が証明する実現可能性</h2>
+  <p class="section-desc fade-in">バリューブックスの構想は「前例がない」ように見えるが、部分的にはすでに世界中で成功事例がある。</p>
+
+  <div class="case-grid fade-in">
+    <div class="case-card">
+      <div class="case-flag">🇯🇵</div>
+      <div class="case-type">自己資本成長→ファン株主型上場</div>
+      <h4>株式会社ほぼ日</h4>
+      <p>糸井重里氏の会社。自己資本で成長し、「場」の永続性のために上場。ファンが株主となり、独自の企業文化を維持しながら公開市場で成長。</p>
+      <div class="case-takeaway">→ VBと最も近い境遇の成功前例</div>
+    </div>
+    <div class="case-card">
+      <div class="case-flag">🇺🇸</div>
+      <div class="case-type">ステークホルダーへのIPO株優先割当</div>
+      <h4>Airbnb</h4>
+      <p>2020年上場時、株式の約7%（約2.3億ドル）をホスト（家主）のために確保。サービス供給者にIPO株を優先割当した世界的先例。</p>
+      <div class="case-takeaway">→ Community Capital IPOの最も直接的な参照モデル</div>
+    </div>
+    <div class="case-card">
+      <div class="case-flag">🇺🇸</div>
+      <div class="case-type">ユーザー・ボランティアの株主化</div>
+      <h4>Duolingo</h4>
+      <p>語学学習アプリ。ユーザーやコース作成ボランティアにIPO株の購入優先権を付与。貢献者を株主として迎え入れた。</p>
+      <div class="case-takeaway">→ 「貢献＝所有権」の先例</div>
+    </div>
+    <div class="case-card">
+      <div class="case-flag">🇯🇵</div>
+      <div class="case-type">ユーザー＝株主のコミュニティ</div>
+      <h4>スノーピーク</h4>
+      <p>キャンプイベントでユーザーと直接対話。熱狂的ファンが株主に。株主総会を「ファンミーティング」化した先駆者。</p>
+      <div class="case-takeaway">→ 株主総会を「本のフェス」にするモデル</div>
+    </div>
+    <div class="case-card">
+      <div class="case-flag">🇺🇸</div>
+      <div class="case-type">スチュワード・オーナーシップ</div>
+      <h4>パタゴニア</h4>
+      <p>イヴォン・シュイナードが全株式を環境保護団体に譲渡。年間利益の全額が地球環境保護に。「企業は地球のもの」という思想。</p>
+      <div class="case-takeaway">→ 「運を分かち合う」哲学の原点</div>
+    </div>
+    <div class="case-card">
+      <div class="case-flag">🇺🇸</div>
+      <div class="case-type">独立系書店のプラットフォーム</div>
+      <h4>Bookshop.org</h4>
+      <p>3,000以上の独立系書店が参加。累計35億円以上を書店に還元。B Corp認証取得済み。VBのプロアカウントと同コンセプト。</p>
+      <div class="case-takeaway">→ VBは「業務提携」を「資本提携」に昇華させる</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Legal & Risks ── -->
+<div class="section-accent" id="legal">
+  <div class="inner">
+    <div class="section-label fade-in">Legal & Practical Issues</div>
+    <h2 class="fade-in">上場審査上の主要論点</h2>
+    <div class="divider fade-in"></div>
+    <p class="section-desc fade-in">監査法人の予備調査に基づく、法的・実務的ハードルと対応策。</p>
+
+    <table class="risk-table fade-in">
+      <thead>
+        <tr>
+          <th style="width:25%;">論点</th>
+          <th style="width:12%;">深刻度</th>
+          <th style="width:33%;">ハードル</th>
+          <th style="width:30%;">推奨対応策</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>外部パートナーへのSO付与</strong></td>
+          <td><span class="badge mid">中〜高</span></td>
+          <td>反社チェック（KYC）の負担が膨大。数百〜数千人規模は証券会社が極端に嫌う</td>
+          <td>重要パートナー30〜50名に限定。著者向けは「ファントム・ストック（仮想株式）」で対応</td>
+        </tr>
+        <tr>
+          <td><strong>株式交換による業務資本提携</strong></td>
+          <td><span class="badge low">低〜中</span></td>
+          <td>現物出資規制。企業価値評価の妥当性が監査で問われる</td>
+          <td>第三者による株価算定を必ず取得。弁護士監修の契約書整備</td>
+        </tr>
+        <tr>
+          <td><strong>親引け（IPO時の優先割当）</strong></td>
+          <td><span class="badge mid">中</span></td>
+          <td>個人への大量親引けはシステム的に対応不能。証券会社が嫌がる</td>
+          <td>BtoBパートナー（書店・出版社）に絞る。ファン個人は株主優待で優遇</td>
+        </tr>
+        <tr>
+          <td><strong>ガン・ジャンピング規制</strong></td>
+          <td><span class="badge high">高</span></td>
+          <td>上場承認前に投資意欲を刺激する勧誘行為は厳禁。書籍等の内容次第で抵触リスク</td>
+          <td>書籍は「ビジョン」に留め、ファイナンスへの言及は排除。弁護士の事前チェック必須</td>
+        </tr>
+        <tr>
+          <td><strong>黄金株（種類株式）</strong></td>
+          <td><span class="badge high">高</span></td>
+          <td>東証は原則禁止。CYBERDYNE以外に成功例なし</td>
+          <td>普通株で34%以上を財団が保有する「安定保有」スキームに転換</td>
+        </tr>
+        <tr>
+          <td><strong>SO付与の税務</strong></td>
+          <td><span class="badge mid">中</span></td>
+          <td>外部協力者へのSOは税制適格外。権利行使時に課税→現金がない問題</td>
+          <td>有償新株予約権 or ファントムストックの採用。税理士との事前設計</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="card fade-in" style="margin-top: 2rem; border-left: 4px solid var(--accent);">
+      <h4>🔑 最重要マイルストーン</h4>
+      <p>主幹事証券会社の選定において、この「面倒くさいプラン」を面白がってくれる担当者を見つけること。Community Capital IPOは前例がない。しかし「前例がないからやらない」のであれば、バリューブックスの存在意義はない。</p>
+    </div>
+  </div>
+</div>
+
+<!-- ── Why Only VB ── -->
+<section class="fade-in">
+  <div class="section-label">Why Only VALUE BOOKS</div>
+  <h2>なぜバリューブックスにしかできないのか</h2>
+  <div class="divider"></div>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-icon gold">🏆</div>
+      <h4>自己資本で40億円企業</h4>
+      <p>株主構成を白紙から設計できるという稀有な立場。上場時の株主構成を、事業戦略と一体で最適化できる。</p>
+    </div>
+    <div class="card">
+      <div class="card-icon blue">🏗️</div>
+      <h4>物流インフラ（SKYPOD）</h4>
+      <p>埼玉新倉庫×自動化ロボット。テクノロジーの「堀」がある。出版流通の「日本版イングラム」を目指す。</p>
+    </div>
+    <div class="card">
+      <div class="card-icon green">🌍</div>
+      <h4>B Corp認証</h4>
+      <p>社会的企業としての国際的信用。ESG投資家にとって魅力的なストーリー。Bookshop.orgと同じ認証。</p>
+    </div>
+    <div class="card">
+      <div class="card-icon orange">📺</div>
+      <h4>メディア（積読チャンネル等）</h4>
+      <p>自社でファンコミュニティを持つ。プロモーション力を内製化しており、パートナーの発信力と組み合わせて相乗効果を生む。</p>
+    </div>
+    <div class="card">
+      <div class="card-icon gold">🤝</div>
+      <h4>プロアカウント構想</h4>
+      <p>サプライヤー・プロモーター・バイヤー。パートナーを巻き込む「仕組み」がすでに設計されている。</p>
+    </div>
+    <div class="card">
+      <div class="card-icon blue">🏛️</div>
+      <h4>経産省書店振興との連動</h4>
+      <p>出版流通改革は国策。バリューブックスは「独立系書店の味方」として、政策連動した成長が可能。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── Closing ── -->
+<div class="section-dark">
+  <div class="inner" style="text-align: center; padding: 4rem 0;">
+    <div class="section-label fade-in" style="text-align:center;">The Next Chapter</div>
+    <h2 class="fade-in" style="max-width: 600px; margin: 0 auto 1.5rem;">
+      「私が」守り育ててきた会社を、<br>
+      「私たちが」所有する会社へ。
+    </h2>
+    <div class="divider fade-in" style="margin: 1rem auto 2rem;"></div>
+    <p class="fade-in" style="color: rgba(255,255,255,0.5); max-width: 550px; margin: 0 auto; line-height: 2;">
+      100億が見えた20周年のタイミングで、「この会社をみんなのものにするための具体的なロードマップ」を発表する。<br>
+      これが、創業者として最大の、そして最後の「起業」になる。
+    </p>
+  </div>
+</div>
+
+<!-- ── Footer ── -->
+<footer>
+  <div class="footer-note">
+    本資料は社内および関係者向けの構想共有を目的としています。<br>
+    株式会社バリューブックス ｜ 2026年2月作成<br><br>
+    <span style="color: var(--accent); font-size: 11px; letter-spacing: 0.1em;">CONFIDENTIAL — FOR INTERNAL USE ONLY</span>
+  </div>
+</footer>
+
+<script>
+// ── Scroll animation ──
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// ── Sales chart data ──
+const salesData = [
+  { year: '1期', sales: 0.88, profit: 0.09 },
+  { year: '2期', sales: 1.57, profit: 0.07 },
+  { year: '3期', sales: 1.83, profit: 0.03 },
+  { year: '4期', sales: 3.03, profit: 0.20 },
+  { year: '5期', sales: 4.12, profit: -0.03 },
+  { year: '6期', sales: 6.83, profit: 0.09 },
+  { year: '7期', sales: 9.31, profit: 0.42 },
+  { year: '8期', sales: 10.88, profit: -0.12 },
+  { year: '9期', sales: 16.44, profit: 0.10 },
+  { year: '10期', sales: 22.28, profit: 0.07 },
+  { year: '11期', sales: 22.76, profit: 0.09 },
+  { year: '12期', sales: 23.73, profit: 0.18 },
+  { year: '13期', sales: 20.94, profit: -0.75 },
+  { year: '14期', sales: 21.78, profit: -0.65 },
+  { year: '15期', sales: 27.94, profit: 1.00 },
+  { year: '16期', sales: 33.60, profit: 2.05 },
+  { year: '17期', sales: 36.22, profit: 2.07 },
+  { year: '18期', sales: 39.17, profit: 1.18 },
+];
+
+const maxSales = Math.max(...salesData.map(d => d.sales));
+const chart = document.getElementById('salesChart');
+
+salesData.forEach(d => {
+  const group = document.createElement('div');
+  group.className = 'bar-group';
+
+  const bar = document.createElement('div');
+  const h = (d.sales / maxSales) * 220;
+  bar.className = 'bar sales';
+  bar.style.height = h + 'px';
+
+  const tooltip = document.createElement('div');
+  tooltip.className = 'bar-tooltip';
+  const profitStr = d.profit >= 0 
+    ? `利益 ${d.profit.toFixed(1)}億` 
+    : `赤字 ${Math.abs(d.profit).toFixed(1)}億`;
+  tooltip.textContent = `売上 ${d.sales.toFixed(1)}億 ／ ${profitStr}`;
+  bar.appendChild(tooltip);
+
+  // profit indicator
+  if (d.profit < -0.3) {
+    bar.style.background = 'linear-gradient(180deg, #c0392b, #a02020)';
+  } else if (d.profit > 1.0) {
+    bar.style.background = 'linear-gradient(180deg, #2d8a56, #248a4a)';
+  }
+
+  const label = document.createElement('div');
+  label.className = 'bar-label';
+  label.textContent = d.year;
+
+  group.appendChild(bar);
+  group.appendChild(label);
+  chart.appendChild(group);
+});
+
+// Smooth scroll for nav
+document.querySelectorAll('nav a').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+</script>
+
+</body>
+</html>

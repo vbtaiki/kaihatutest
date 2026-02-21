@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026年ビジョン | Value Books OS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00BFA5;
+            --primary-light: #E0F7F4;
+            --primary-dark: #00A896;
+            --bg: #FAFBFC;
+            --white: #FFFFFF;
+            --text: #1A1A1A;
+            --text-secondary: #666666;
+            --text-muted: #999999;
+            --border: #E8E8E8;
+            --shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            --accent-gold: #F59E0B;
+            --accent-gold-light: #FEF3C7;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Noto Sans JP', sans-serif;
+            min-height: 100vh;
+            line-height: 1.8;
+        }
+
+        a { color: inherit; text-decoration: none; }
+
+        .header {
+            background: var(--white);
+            border-bottom: 1px solid var(--border);
+            padding: 0 2rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 64px;
+        }
+
+        .logo { display: flex; align-items: center; gap: 0.5rem; }
+
+        .logo-text {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .logo-text span { color: var(--primary); }
+
+        .nav { display: flex; gap: 0.5rem; }
+
+        .nav a {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            transition: all 0.2s ease;
+        }
+
+        .nav a:hover {
+            background: var(--primary-light);
+            color: var(--primary);
+        }
+
+        .main {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 88px 2rem 2rem;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .back-link:hover { opacity: 0.7; }
+
+        .doc-header {
+            background: linear-gradient(135deg, var(--accent-gold) 0%, #FBBF24 100%);
+            color: white;
+            padding: 2.5rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .doc-year {
+            font-family: 'Outfit', sans-serif;
+            font-size: 4rem;
+            font-weight: 700;
+            opacity: 0.3;
+            position: absolute;
+            right: 2rem;
+            top: 1rem;
+        }
+
+        .doc-header-inner {
+            position: relative;
+        }
+
+        .doc-subtitle-tag {
+            font-size: 0.75rem;
+            background: rgba(255,255,255,0.2);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .doc-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .doc-subtitle {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        /* Priority Box */
+        .priority-box {
+            background: #FEF3C7;
+            border: 2px solid var(--accent-gold);
+            padding: 2rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .priority-label {
+            font-size: 0.8rem;
+            color: var(--accent-gold);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .priority-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 1rem;
+        }
+
+        .priority-desc {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .priority-desc strong {
+            color: var(--accent-gold);
+        }
+
+        /* Value Box */
+        .value-box {
+            background: var(--primary-light);
+            border-left: 4px solid var(--primary);
+            padding: 1.5rem;
+            border-radius: 0 12px 12px 0;
+            margin-bottom: 2rem;
+        }
+
+        .value-label {
+            font-size: 0.8rem;
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .value-text {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .value-note {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+        }
+
+        .section {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+        }
+
+        .section-header {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-icon {
+            font-size: 1.5rem;
+        }
+
+        .section-title { font-size: 1.1rem; font-weight: 600; }
+
+        .section-body { padding: 1.5rem; }
+
+        /* Automation Philosophy */
+        .philosophy-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .philosophy-card {
+            padding: 1.25rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .philosophy-card.why {
+            background: #FEE2E2;
+            border: 1px solid #FECACA;
+        }
+
+        .philosophy-card.what {
+            background: var(--primary-light);
+            border: 1px solid var(--primary);
+        }
+
+        .philosophy-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .philosophy-card.why .philosophy-label { color: #DC2626; }
+        .philosophy-card.what .philosophy-label { color: var(--primary-dark); }
+
+        .philosophy-text {
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        /* Challenge List */
+        .challenge-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin: 1rem 0;
+        }
+
+        .challenge-tag {
+            padding: 0.5rem 1rem;
+            background: var(--accent-gold-light);
+            border: 1px solid var(--accent-gold);
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #92400E;
+        }
+
+        /* Success Definition */
+        .success-list {
+            list-style: none;
+        }
+
+        .success-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1rem;
+            background: #F9F9F9;
+            border-radius: 8px;
+            margin-bottom: 0.75rem;
+        }
+
+        .success-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            color: white;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .success-content { flex: 1; }
+
+        .success-title {
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .success-desc {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* Risk Box */
+        .risk-box {
+            background: #FEE2E2;
+            border: 1px solid #FECACA;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+        }
+
+        .risk-label {
+            font-size: 0.8rem;
+            color: #DC2626;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .risk-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #DC2626;
+            margin-bottom: 0.5rem;
+        }
+
+        .risk-desc {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* Priority Flow */
+        .priority-flow {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .priority-step {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: #F9F9F9;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .priority-step::after {
+            content: '↓';
+            position: absolute;
+            bottom: -1.25rem;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--text-muted);
+            font-size: 1.25rem;
+        }
+
+        .priority-step:last-child::after { display: none; }
+
+        .priority-step-rank {
+            width: 32px;
+            height: 32px;
+            background: var(--accent-gold);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .priority-step.secondary .priority-step-rank {
+            background: var(--primary);
+        }
+
+        .priority-step.future .priority-step-rank {
+            background: var(--text-muted);
+        }
+
+        .priority-step-content { flex: 1; }
+
+        .priority-step-title {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .priority-step-desc {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        /* Summary */
+        .summary-quote {
+            background: linear-gradient(135deg, var(--accent-gold-light) 0%, #FEF9C3 100%);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .summary-quote p {
+            font-size: 1.2rem;
+            font-weight: 600;
+            line-height: 1.8;
+            color: var(--text);
+        }
+
+        .summary-quote strong {
+            color: var(--accent-gold);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            border-top: 1px solid var(--border);
+            margin-top: 2rem;
+            background: var(--white);
+        }
+
+        .footer a { color: var(--primary); }
+
+        @media (max-width: 700px) {
+            .philosophy-grid { grid-template-columns: 1fr; }
+            .header-content { flex-direction: column; gap: 0.75rem; height: auto; padding: 0.75rem 0; }
+            .main { padding-top: 120px; }
+            .doc-year { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <a href="index.html" class="logo">
+                <span class="logo-text">VALUE <span>BOOKS</span> OS</span>
+            </a>
+            <nav class="nav">
+                <a href="index.html">ダッシュボード</a>
+                <a href="teams.html">チーム</a>
+                <a href="members.html">メンバー</a>
+                <a href="projects.html">プロジェクト</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        <a href="index.html" class="back-link">← ダッシュボードに戻る</a>
+
+        <div class="doc-header">
+            <div class="doc-header-inner">
+                <span class="doc-year">2026</span>
+                <span class="doc-subtitle-tag">Founder's Vision</span>
+                <h1 class="doc-title">中村大樹の2026年ビジョン</h1>
+                <p class="doc-subtitle">SKYPODを動かし、人を解放し、新しい挑戦を始める年</p>
+            </div>
+        </div>
+
+        <div class="priority-box">
+            <div class="priority-label">🎯 2026年 一点突破</div>
+            <div class="priority-title">SKYPOD稼働</div>
+            <p class="priority-desc">
+                <strong>ここが動かなければ、何も始まらない。</strong><br>
+                <strong>ここが動けば、すべてが動き出す。</strong>
+            </p>
+        </div>
+
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🤖</span>
+                <h2 class="section-title">自動化の思想</h2>
+            </div>
+            <div class="section-body">
+                <div class="philosophy-grid">
+                    <div class="philosophy-card why">
+                        <div class="philosophy-label">❌ なぜ自動化するのか</div>
+                        <div class="philosophy-text">効率化のため<br>ではない</div>
+                    </div>
+                    <div class="philosophy-card what">
+                        <div class="philosophy-label">✅ 本当の目的</div>
+                        <div class="philosophy-text">人を「解放」<br>するため</div>
+                    </div>
+                </div>
+
+                <p style="margin-bottom: 0.75rem; font-weight: 600;">人がやらなくていいものは、全て人がやらない</p>
+                <p style="margin-bottom: 1rem; color: var(--text-secondary);">余った人は首にしない。新たなことにチャレンジしていく。</p>
+
+                <p style="margin-bottom: 0.5rem; font-weight: 600;">チャレンジしたい領域：</p>
+                <div class="challenge-list">
+                    <span class="challenge-tag">🔍 古書の買取（目利き・価値判断）</span>
+                    <span class="challenge-tag">📚 自社出版（企画・編集・著者協働）</span>
+                    <span class="challenge-tag">🎁 MD（商品開発・ブランディング）</span>
+                    <span class="challenge-tag">🌟 まだ見えていない新領域</span>
+                </div>
+
+                <div style="margin-top: 1rem; padding: 1rem; background: var(--primary-light); border-radius: 8px;">
+                    <p style="font-size: 0.9rem; color: var(--primary-dark);">
+                        👉 <strong>最初は人が頑張って開拓する → 自動化できることは順次自動化 → 繰り返す</strong>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">✅</span>
+                <h2 class="section-title">2026年末「成功」の定義</h2>
+            </div>
+            <div class="section-body">
+                <ul class="success-list">
+                    <li class="success-item">
+                        <div class="success-icon">🏭</div>
+                        <div class="success-content">
+                            <div class="success-title">埼玉倉庫が本格稼働している</div>
+                            <div class="success-desc">SKYPODが安定稼働、オペレーションが回っている、現場に余裕がある</div>
+                        </div>
+                    </li>
+                    <li class="success-item">
+                        <div class="success-icon">📦</div>
+                        <div class="success-content">
+                            <div class="success-title">買取が伸びている</div>
+                            <div class="success-desc">スマート買取の浸透、ポイント受取率の向上、リピーターの増加</div>
+                        </div>
+                    </li>
+                    <li class="success-item">
+                        <div class="success-icon">🚀</div>
+                        <div class="success-content">
+                            <div class="success-title">新規事業が伸びている</div>
+                            <div class="success-desc">プロアカウントの成功事例、MD商品の展開、自社出版の種まき</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="risk-box">
+            <div class="risk-label">⚠️ 最大のリスク</div>
+            <div class="risk-title">SKYPODがうまく稼働せず、埼玉倉庫を活かせない</div>
+            <div class="risk-desc">
+                これが起きた場合：全戦略の土台が崩れる / 新事業への人員シフトができない / 投資回収ができない<br>
+                <strong>→ 2026年前半はSKYPOD稼働に全リソースを集中する</strong>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🎯</span>
+                <h2 class="section-title">プロアカウント「最初の成功事例」</h2>
+            </div>
+            <div class="section-body">
+                <p style="margin-bottom: 1rem;">
+                    <strong style="color: var(--accent-gold);">ターゲット：影響力のある著者</strong>
+                </p>
+                <p style="margin-bottom: 1rem; color: var(--text-secondary);">
+                    なぜ著者か：
+                </p>
+                <ul style="margin: 0 0 1rem 1.5rem; color: var(--text-secondary);">
+                    <li>「作る人」の声は最も説得力がある</li>
+                    <li>業界への波及効果が大きい</li>
+                    <li>ストーリーが生まれやすい</li>
+                </ul>
+                <p style="margin-bottom: 0.5rem; font-weight: 600;">成功の定義：</p>
+                <ul style="margin: 0 0 0 1.5rem;">
+                    <li>その著者が「バリューブックスと組んで良かった」と公言する</li>
+                    <li>具体的な数字（売上、還元額など）が出せる</li>
+                    <li>他の著者・出版社が「うちも」と言い出す</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📊</span>
+                <h2 class="section-title">戦略の優先順位（2026年）</h2>
+            </div>
+            <div class="section-body">
+                <div class="priority-flow">
+                    <div class="priority-step">
+                        <div class="priority-step-rank">1</div>
+                        <div class="priority-step-content">
+                            <div class="priority-step-title">SKYPOD稼働（埼玉倉庫）</div>
+                            <div class="priority-step-desc">最優先。ここが動かなければ何も始まらない</div>
+                        </div>
+                    </div>
+                    <div class="priority-step secondary">
+                        <div class="priority-step-rank">2</div>
+                        <div class="priority-step-content">
+                            <div class="priority-step-title">買取部門の強化</div>
+                            <div class="priority-step-desc">スマート買取、ポイント経済圏（並行推進）</div>
+                        </div>
+                    </div>
+                    <div class="priority-step secondary">
+                        <div class="priority-step-rank">3</div>
+                        <div class="priority-step-content">
+                            <div class="priority-step-title">プロアカウント成功事例</div>
+                            <div class="priority-step-desc">影響力のある著者との協働（種まき）</div>
+                        </div>
+                    </div>
+                    <div class="priority-step future">
+                        <div class="priority-step-rank">→</div>
+                        <div class="priority-step-content">
+                            <div class="priority-step-title">自社出版、MD本格展開</div>
+                            <div class="priority-step-desc">SKYPOD稼働後、解放された人員で本格推進</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="summary-quote">
+            <p>
+                2026年は<br>
+                <strong>「SKYPODを動かし、人を解放し、新しい挑戦を始める年」</strong><br>
+                である。
+            </p>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>VALUE BOOKS OS | <a href="index.html">ダッシュボードに戻る</a></p>
+        <p style="margin-top: 0.5rem;">関連: <a href="teams.html#warehouse">倉庫チーム</a> | <a href="strategy-pro-account.html">プロアカウント構想</a></p>
+    </footer>
+</body>
+</html>
+

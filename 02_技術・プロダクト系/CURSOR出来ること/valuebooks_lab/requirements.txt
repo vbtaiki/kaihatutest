@@ -1,0 +1,20 @@
+# バリューブックス 統合開発環境
+# 依存パッケージ一覧
+
+# ==== 共通 ====
+pandas>=2.0.0
+numpy>=1.24.0
+
+# ==== 01_custom_crm ====
+streamlit>=1.28.0
+
+# ==== 05_warehouse_visualizer ====
+matplotlib>=3.7.0
+
+# ==== オプション: 本格的なRAG実装時 ====
+# openai>=1.0.0
+# sentence-transformers>=2.2.0
+# chromadb>=0.4.0
+
+
+

@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>インパクト — VALUE BOOKS</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700;900&family=Noto+Sans+JP:wght@400;500;700&display=swap');
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Noto Sans JP', sans-serif; color: #2c2c2c; background: #f5f0e8; line-height: 1.8; -webkit-font-smoothing: antialiased; }
+a { text-decoration: none; color: inherit; }
+button { cursor: pointer; border: none; font-family: inherit; }
+:root {
+  --forest: #2d4a3e; --forest-light: #3d6b5a; --cream: #f5f0e8;
+  --cream-dark: #ebe4d6; --warm-white: #faf8f4; --terra: #c75c2a;
+  --terra-light: #e8a87c; --text: #2c2c2c; --text-light: #6b6b6b;
+  --text-muted: #a0a0a0; --border: #e0d8cc;
+  --shadow-sm: 0 2px 8px rgba(45,74,62,0.06); --shadow-md: 0 4px 24px rgba(45,74,62,0.1);
+  --shadow-lg: 0 12px 48px rgba(45,74,62,0.15);
+  --radius-sm: 6px; --radius-md: 12px; --radius-lg: 20px;
+  --max-width: 1200px; --serif: 'Noto Serif JP', serif;
+}
+
+.header { position: sticky; top: 0; z-index: 100; background: rgba(245,240,232,0.92); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+.header-inner { max-width: var(--max-width); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 72px; padding: 0 32px; }
+.logo { font-family: var(--serif); font-size: 22px; font-weight: 900; color: var(--forest); letter-spacing: 2px; }
+.nav-links { display: flex; align-items: center; }
+.nav-links a { padding: 8px 18px; font-size: 13px; font-weight: 500; color: var(--text-light); transition: color 0.2s; position: relative; }
+.nav-links a:hover { color: var(--forest); }
+.nav-links a.active { color: var(--forest); font-weight: 700; }
+.nav-links a.active::after { content: ''; position: absolute; bottom: -1px; left: 18px; right: 18px; height: 2px; background: var(--forest); }
+.nav-cta { background: var(--forest) !important; color: #fff !important; border-radius: 100px !important; padding: 10px 24px !important; font-weight: 700 !important; }
+.header-right { display: flex; align-items: center; gap: 16px; }
+.header-icon { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 16px; color: var(--text-light); }
+.avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--forest); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; }
+
+/* Hero */
+.impact-hero {
+  background: var(--forest);
+  color: #fff;
+  padding: 100px 32px 80px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.impact-hero::before {
+  content: '';
+  position: absolute;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(199,92,42,0.15) 0%, transparent 70%);
+  top: -200px; right: -100px; border-radius: 50%;
+}
+.impact-hero-label { font-size: 11px; font-weight: 700; letter-spacing: 4px; opacity: 0.6; margin-bottom: 16px; }
+.impact-hero h1 { font-family: var(--serif); font-size: 48px; font-weight: 900; margin-bottom: 16px; position: relative; z-index: 1; }
+.impact-hero p { font-size: 17px; opacity: 0.7; max-width: 700px; margin: 0 auto 48px; line-height: 2; position: relative; z-index: 1; }
+
+/* Big Stats */
+.big-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+.big-stat {
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(10px);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  text-align: center;
+}
+.big-stat-icon { font-size: 36px; margin-bottom: 12px; }
+.big-stat-num { font-family: var(--serif); font-size: 36px; font-weight: 900; }
+.big-stat-label { font-size: 13px; opacity: 0.7; margin-top: 4px; }
+
+/* Section */
+.section { padding: 80px 32px; }
+.section-inner { max-width: var(--max-width); margin: 0 auto; }
+.section-label { font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--terra); margin-bottom: 12px; }
+.section-title { font-family: var(--serif); font-size: 32px; font-weight: 900; color: var(--forest); margin-bottom: 12px; }
+.section-desc { font-size: 15px; color: var(--text-light); max-width: 600px; line-height: 1.9; margin-bottom: 48px; }
+
+/* Your Impact */
+.your-impact { background: var(--warm-white); }
+.my-impact-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 48px;
+}
+.my-impact-card {
+  background: var(--cream);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  text-align: center;
+  transition: all 0.3s;
+}
+.my-impact-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-sm); }
+.my-impact-icon { font-size: 48px; margin-bottom: 16px; }
+.my-impact-num { font-family: var(--serif); font-size: 32px; font-weight: 900; color: var(--forest); }
+.my-impact-label { font-size: 14px; color: var(--text-light); margin-top: 4px; margin-bottom: 12px; }
+.my-impact-detail { font-size: 12px; color: var(--text-muted); line-height: 1.7; }
+
+/* Timeline */
+.impact-timeline {
+  max-width: 700px;
+}
+.timeline-item {
+  display: flex;
+  gap: 24px;
+  padding-bottom: 32px;
+  position: relative;
+}
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: 23px;
+  top: 48px;
+  bottom: 0;
+  width: 2px;
+  background: var(--border);
+}
+.timeline-item:last-child::before { display: none; }
+.timeline-dot {
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; flex-shrink: 0; z-index: 1;
+}
+.timeline-dot.green { background: #e8f5e9; }
+.timeline-dot.blue { background: #e3f2fd; }
+.timeline-dot.orange { background: #fff3e0; }
+.timeline-dot.purple { background: #f3e5f5; }
+.timeline-info { flex: 1; }
+.timeline-title { font-size: 15px; font-weight: 700; color: var(--forest); }
+.timeline-desc { font-size: 13px; color: var(--text-light); margin-top: 4px; }
+.timeline-date { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+
+/* Charibon */
+.charibon-section { background: var(--cream); }
+.charibon-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.charibon-card {
+  background: var(--warm-white);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: all 0.3s;
+}
+.charibon-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+.charibon-visual {
+  height: 160px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 56px;
+}
+.charibon-content { padding: 24px; }
+.charibon-org { font-size: 10px; font-weight: 700; letter-spacing: 2px; color: var(--terra); margin-bottom: 8px; }
+.charibon-title { font-family: var(--serif); font-size: 17px; font-weight: 700; margin-bottom: 8px; line-height: 1.4; }
+.charibon-desc { font-size: 13px; color: var(--text-light); line-height: 1.7; margin-bottom: 12px; }
+.charibon-amount {
+  display: flex; align-items: center; gap: 8px;
+}
+.charibon-amount-num { font-family: var(--serif); font-size: 20px; font-weight: 900; color: var(--forest); }
+.charibon-amount-label { font-size: 12px; color: var(--text-muted); }
+
+/* Community Impact */
+.community-impact { background: var(--forest); color: #fff; text-align: center; }
+.community-impact .section-label { color: var(--terra-light); }
+.community-impact .section-title { color: #fff; }
+.community-impact .section-desc { color: rgba(255,255,255,0.7); margin: 0 auto 48px; }
+.community-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin-bottom: 48px;
+}
+.community-stat {
+  background: rgba(255,255,255,0.08);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+}
+.community-stat-num { font-family: var(--serif); font-size: 32px; font-weight: 900; }
+.community-stat-label { font-size: 13px; opacity: 0.7; margin-top: 4px; }
+.community-quote {
+  max-width: 600px;
+  margin: 0 auto;
+  font-family: var(--serif);
+  font-size: 20px;
+  font-style: italic;
+  line-height: 2;
+  opacity: 0.85;
+}
+.community-quote-attr {
+  margin-top: 16px;
+  font-family: var(--sans, sans-serif);
+  font-size: 13px;
+  font-style: normal;
+  opacity: 0.5;
+}
+
+/* CTA */
+.impact-cta {
+  padding: 80px 32px;
+  background: var(--warm-white);
+  text-align: center;
+}
+.impact-cta h2 { font-family: var(--serif); font-size: 32px; font-weight: 900; color: var(--forest); margin-bottom: 16px; }
+.impact-cta p { font-size: 16px; color: var(--text-light); margin-bottom: 32px; line-height: 2; }
+.cta-buttons { display: flex; gap: 16px; justify-content: center; }
+.btn-primary {
+  background: var(--forest); color: #fff; padding: 16px 36px;
+  border-radius: 100px; font-size: 15px; font-weight: 700;
+  transition: all 0.3s; display: inline-flex; align-items: center; gap: 8px;
+}
+.btn-primary:hover { background: var(--forest-light); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.btn-secondary {
+  color: var(--forest); padding: 16px 36px;
+  border-radius: 100px; font-size: 15px; font-weight: 700;
+  border: 2px solid var(--forest);
+  background: transparent; transition: all 0.3s;
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.btn-secondary:hover { background: var(--forest); color: #fff; }
+
+.footer { background: #1a2e25; color: #fff; padding: 40px 32px; }
+.footer-inner { max-width: var(--max-width); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+.footer-logo { font-family: var(--serif); font-size: 18px; font-weight: 900; }
+.footer-copy { font-size: 11px; opacity: 0.3; }
+
+@media (max-width: 768px) {
+  .big-stats { grid-template-columns: repeat(2, 1fr); }
+  .my-impact-grid { grid-template-columns: 1fr; }
+  .charibon-grid { grid-template-columns: 1fr; }
+  .community-stats { grid-template-columns: repeat(2, 1fr); }
+  .impact-hero h1 { font-size: 28px; }
+  .cta-buttons { flex-direction: column; align-items: center; }
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="index.html" class="logo">VALUE BOOKS</a>
+    <nav class="nav-links">
+      <a href="index.html">ホーム</a>
+      <a href="journey.html">本の旅路</a>
+      <a href="community.html">コミュニティ</a>
+      <a href="#">読みもの</a>
+      <a href="impact.html" class="active">インパクト</a>
+      <a href="#" class="nav-cta">本を送る</a>
+    </nav>
+    <div class="header-right">
+      <a href="#" class="header-icon">🔍</a>
+      <div class="avatar">中</div>
+    </div>
+  </div>
+</header>
+
+<section class="impact-hero">
+  <div class="impact-hero-label">Social Impact</div>
+  <h1>本を循環させる力</h1>
+  <p>
+    バリューブックスは本の売買を通じて、<br>
+    環境保全・文化振興・地域貢献を実現しています。<br>
+    あなたが本を送るたびに、世界は少し良くなります。
+  </p>
+  <div class="big-stats">
+    <div class="big-stat">
+      <div class="big-stat-icon">📚</div>
+      <div class="big-stat-num">2,430,821</div>
+      <div class="big-stat-label">2026年に循環した冊数</div>
+    </div>
+    <div class="big-stat">
+      <div class="big-stat-icon">🌲</div>
+      <div class="big-stat-num">8,204</div>
+      <div class="big-stat-label">守った木の本数</div>
+    </div>
+    <div class="big-stat">
+      <div class="big-stat-icon">💚</div>
+      <div class="big-stat-num">¥23.4M</div>
+      <div class="big-stat-label">charibon 寄付総額</div>
+    </div>
+    <div class="big-stat">
+      <div class="big-stat-icon">🏘</div>
+      <div class="big-stat-num">128,492</div>
+      <div class="big-stat-label">コミュニティメンバー</div>
+    </div>
+  </div>
+</section>
+
+<!-- Your Impact -->
+<section class="section your-impact">
+  <div class="section-inner">
+    <div class="section-label">Your Impact</div>
+    <h2 class="section-title">中村さんのインパクト</h2>
+    <p class="section-desc">
+      あなたがバリューブックスを通じて生み出した社会的インパクトです。
+    </p>
+    <div class="my-impact-grid">
+      <div class="my-impact-card">
+        <div class="my-impact-icon">📚</div>
+        <div class="my-impact-num">342</div>
+        <div class="my-impact-label">循環させた冊数</div>
+        <div class="my-impact-detail">あなたが送った342冊の本が、<br>次の読者の元へ届きました</div>
+      </div>
+      <div class="my-impact-card">
+        <div class="my-impact-icon">🌲</div>
+        <div class="my-impact-num">1.2</div>
+        <div class="my-impact-label">守った木の本数</div>
+        <div class="my-impact-detail">新しい本を作るために必要だった<br>パルプの量に換算すると約1.2本分</div>
+      </div>
+      <div class="my-impact-card">
+        <div class="my-impact-icon">💚</div>
+        <div class="my-impact-num">¥4,200</div>
+        <div class="my-impact-label">charibon寄付額</div>
+        <div class="my-impact-detail">あなたの買取金額の一部が<br>NPO/NGOに寄付されました</div>
+      </div>
+    </div>
+
+    <div class="section-label">Activity Log</div>
+    <h3 style="font-family: var(--serif); font-size: 20px; font-weight: 700; color: var(--forest); margin-bottom: 24px;">あなたのインパクト年表</h3>
+    <div class="impact-timeline">
+      <div class="timeline-item">
+        <div class="timeline-dot green">🌱</div>
+        <div class="timeline-info">
+          <div class="timeline-title">買取で42冊を循環</div>
+          <div class="timeline-desc">「森とフライフィッシング」コレクションの一部を含む42冊を次の読者へ。木0.15本分を守りました。</div>
+          <div class="timeline-date">2026年2月</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot blue">📖</div>
+        <div class="timeline-info">
+          <div class="timeline-title">あなたの本が7人目の読者へ</div>
+          <div class="timeline-desc">2年前に売った「センス・オブ・ワンダー」が、東京で7人目の読者の手に渡りました。</div>
+          <div class="timeline-date">2026年2月</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot orange">💰</div>
+        <div class="timeline-info">
+          <div class="timeline-title">charibon寄付 ¥1,200</div>
+          <div class="timeline-desc">買取金額の一部が「子ども食堂ネットワーク」に寄付されました。</div>
+          <div class="timeline-date">2026年1月</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot purple">🏆</div>
+        <div class="timeline-info">
+          <div class="timeline-title">年間100冊循環を達成！</div>
+          <div class="timeline-desc">2025年にあなたが循環させた本の数が100冊を超えました。「本の循環者」バッジを獲得。</div>
+          <div class="timeline-date">2025年12月</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Charibon -->
+<section class="section charibon-section">
+  <div class="section-inner">
+    <div class="section-label">Charibon</div>
+    <h2 class="section-title">本が届ける支援</h2>
+    <p class="section-desc">
+      charibonは、買取金額の全額または一部を、<br>
+      社会貢献団体に寄付できるサービスです。
+    </p>
+    <div class="charibon-grid">
+      <div class="charibon-card">
+        <div class="charibon-visual" style="background: linear-gradient(135deg, #e8f5e9, #c8e6c9);">🏫</div>
+        <div class="charibon-content">
+          <div class="charibon-org">教育支援</div>
+          <div class="charibon-title">子ども食堂ネットワーク</div>
+          <div class="charibon-desc">全国の子ども食堂を運営するネットワーク。本の買取金額で、子どもたちの食事と居場所を支えます。</div>
+          <div class="charibon-amount">
+            <div class="charibon-amount-num">¥3,240,000</div>
+            <div class="charibon-amount-label">累計寄付額</div>
+          </div>
+        </div>
+      </div>
+      <div class="charibon-card">
+        <div class="charibon-visual" style="background: linear-gradient(135deg, #e3f2fd, #bbdefb);">🌍</div>
+        <div class="charibon-content">
+          <div class="charibon-org">国際支援</div>
+          <div class="charibon-title">世界の図書館を作る会</div>
+          <div class="charibon-desc">アジア・アフリカの学校に図書館を設立。日本から旅立った本の価値が、海を越えて届きます。</div>
+          <div class="charibon-amount">
+            <div class="charibon-amount-num">¥5,670,000</div>
+            <div class="charibon-amount-label">累計寄付額</div>
+          </div>
+        </div>
+      </div>
+      <div class="charibon-card">
+        <div class="charibon-visual" style="background: linear-gradient(135deg, #f3e5f5, #e1bee7);">🏔</div>
+        <div class="charibon-content">
+          <div class="charibon-org">地域貢献</div>
+          <div class="charibon-title">上田市みんなの図書室</div>
+          <div class="charibon-desc">バリューブックスの地元・上田市に無料の図書室を運営。地域の読書文化を育てます。</div>
+          <div class="charibon-amount">
+            <div class="charibon-amount-num">¥1,890,000</div>
+            <div class="charibon-amount-label">累計寄付額</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Community Impact -->
+<section class="section community-impact">
+  <div class="section-inner">
+    <div class="section-label">Together</div>
+    <h2 class="section-title">みんなで作るインパクト</h2>
+    <p class="section-desc">
+      バリューブックスのコミュニティ全体が<br>
+      生み出している社会的インパクトの全体像。
+    </p>
+    <div class="community-stats">
+      <div class="community-stat">
+        <div class="community-stat-num">12.8M</div>
+        <div class="community-stat-label">創業以来の累計循環冊数</div>
+      </div>
+      <div class="community-stat">
+        <div class="community-stat-num">43,200</div>
+        <div class="community-stat-label">守った木の本数</div>
+      </div>
+      <div class="community-stat">
+        <div class="community-stat-num">¥128M</div>
+        <div class="community-stat-label">charibon累計寄付額</div>
+      </div>
+      <div class="community-stat">
+        <div class="community-stat-num">87</div>
+        <div class="community-stat-label">上田市の雇用</div>
+      </div>
+    </div>
+    <div class="community-quote">
+      「一冊の本が、人から人へ渡るたびに、<br>
+      新しい木が生まれ、新しい物語が生まれる。<br>
+      私たちは、本の循環を通じて<br>
+      世界を少しずつ良くしていく。」
+      <div class="community-quote-attr">— バリューブックス 創業理念</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="impact-cta">
+  <h2>あなたも、本の循環に参加しませんか？</h2>
+  <p>読み終えた本を送ることは、次の読者への贈り物であり、<br>地球への優しさであり、社会への貢献です。</p>
+  <div class="cta-buttons">
+    <a href="#" class="btn-primary">📦 本を送る</a>
+    <a href="#" class="btn-secondary">💚 charibonで寄付する</a>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-logo">VALUE BOOKS</div>
+    <div class="footer-copy">© 2026 VALUE BOOKS ALL RIGHTS RESERVED.</div>
+  </div>
+</footer>
+</body>
+</html>
