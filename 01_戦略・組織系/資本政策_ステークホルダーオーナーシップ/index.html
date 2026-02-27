@@ -259,15 +259,17 @@
   /* ── Chart (CSS bars) ── */
   .chart-container {
     margin: 2rem 0;
-    overflow-x: auto;
+    overflow: visible;
+    position: relative;
   }
   .bar-chart {
     display: flex;
     align-items: flex-end;
     gap: 6px;
     height: 260px;
-    padding: 0 0 2rem;
+    padding: 3rem 0 2rem;
     border-bottom: 1px solid var(--border);
+    position: relative;
   }
   .bar-group {
     display: flex;
@@ -297,7 +299,7 @@
   .bar-tooltip {
     display: none;
     position: absolute;
-    bottom: calc(100% + 8px);
+    top: -32px;
     left: 50%;
     transform: translateX(-50%);
     background: var(--primary);
@@ -306,7 +308,18 @@
     border-radius: 6px;
     font-size: 11px;
     white-space: nowrap;
-    z-index: 10;
+    z-index: 50;
+    pointer-events: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+  .bar-tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: var(--primary);
   }
   .bar:hover .bar-tooltip { display: block; }
 

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Value Books OS Dashboard</title>
+    <title>Value Books OS — 永久進化エンジン</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -20,17 +20,19 @@
             --border: #E8E8E8;
             --shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
             --shadow-hover: 0 4px 16px rgba(0, 0, 0, 0.1);
-            --accent-orange: #FF9800;
-            --accent-blue: #2196F3;
-            --accent-purple: #9C27B0;
-            --accent-red: #F44336;
+            /* Layer colors */
+            --innovation: #7C3AED;
+            --innovation-light: #F3E8FF;
+            --pm: #2563EB;
+            --pm-light: #DBEAFE;
+            --member: #059669;
+            --member-light: #D1FAE5;
+            --ops: #D97706;
+            --ops-light: #FEF3C7;
+            --accent-red: #EF4444;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             background: var(--bg);
@@ -40,15 +42,15 @@
             line-height: 1.7;
         }
 
+        a { color: inherit; text-decoration: none; }
+
         /* Header */
         .header {
             background: var(--white);
             border-bottom: 1px solid var(--border);
             padding: 0 2rem;
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
+            top: 0; left: 0; right: 0;
             z-index: 100;
         }
 
@@ -61,13 +63,7 @@
             height: 64px;
         }
 
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            text-decoration: none;
-            color: var(--text);
-        }
+        .logo { display: flex; align-items: center; gap: 0.5rem; }
 
         .logo-text {
             font-family: 'Outfit', sans-serif;
@@ -76,14 +72,9 @@
             letter-spacing: -0.02em;
         }
 
-        .logo-text span {
-            color: var(--primary);
-        }
+        .logo-text span { color: var(--primary); }
 
-        .nav {
-            display: flex;
-            gap: 0.5rem;
-        }
+        .nav { display: flex; gap: 0.5rem; }
 
         .nav a {
             padding: 0.5rem 1rem;
@@ -91,19 +82,11 @@
             font-size: 0.9rem;
             font-weight: 500;
             color: var(--text-secondary);
-            text-decoration: none;
             transition: all 0.2s ease;
         }
 
-        .nav a:hover {
-            background: var(--primary-light);
-            color: var(--primary);
-        }
-
-        .nav a.active {
-            background: var(--primary);
-            color: white;
-        }
+        .nav a:hover { background: var(--primary-light); color: var(--primary); }
+        .nav a.active { background: var(--primary); color: white; }
 
         /* Main */
         .main {
@@ -112,11 +95,11 @@
             padding: 88px 2rem 2rem;
         }
 
-        /* Hero Section */
+        /* Hero */
         .hero {
-            background: linear-gradient(135deg, var(--primary) 0%, #26D0B8 100%);
-            border-radius: 16px;
-            padding: 2.5rem;
+            background: linear-gradient(135deg, #1E1B4B 0%, #4C1D95 50%, #7C3AED 100%);
+            border-radius: 20px;
+            padding: 3rem;
             margin-bottom: 2rem;
             color: white;
             position: relative;
@@ -126,58 +109,63 @@
         .hero::before {
             content: '';
             position: absolute;
-            top: -50%;
-            right: -10%;
-            width: 400px;
-            height: 400px;
-            background: rgba(255, 255, 255, 0.1);
+            top: -60%;
+            right: -15%;
+            width: 500px;
+            height: 500px;
+            background: rgba(255, 255, 255, 0.05);
             border-radius: 50%;
         }
 
         .hero::after {
             content: '';
             position: absolute;
-            bottom: -30%;
-            right: 20%;
-            width: 200px;
-            height: 200px;
-            background: rgba(255, 255, 255, 0.08);
+            bottom: -40%;
+            left: 10%;
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.03);
             border-radius: 50%;
         }
 
-        .hero-content {
-            position: relative;
-            z-index: 1;
-        }
+        .hero-content { position: relative; z-index: 1; }
 
         .hero-eyebrow {
             font-size: 0.8rem;
             font-weight: 500;
-            opacity: 0.9;
+            opacity: 0.8;
             margin-bottom: 0.5rem;
+            letter-spacing: 1px;
         }
 
         .hero-title {
-            font-size: 1.75rem;
+            font-size: 2rem;
             font-weight: 700;
-            line-height: 1.4;
-            margin-bottom: 0.75rem;
+            line-height: 1.3;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero-title .en {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1rem;
+            opacity: 0.6;
+            display: block;
+            margin-top: 0.25rem;
         }
 
         .hero-subtitle {
             font-size: 0.95rem;
-            opacity: 0.9;
-            max-width: 500px;
+            opacity: 0.85;
+            max-width: 600px;
+            line-height: 1.8;
         }
 
         .hero-stats {
             display: flex;
             gap: 2.5rem;
-            margin-top: 1.5rem;
-        }
-
-        .hero-stat {
-            text-align: left;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.15);
         }
 
         .hero-stat-value {
@@ -186,56 +174,615 @@
             font-weight: 700;
         }
 
+        .hero-stat-value span {
+            font-size: 0.9rem;
+            margin-left: 0.15rem;
+            opacity: 0.7;
+        }
+
         .hero-stat-label {
-            font-size: 0.8rem;
-            opacity: 0.85;
+            font-size: 0.75rem;
+            opacity: 0.7;
         }
 
-        .view-selector-container {
-            position: absolute;
-            top: 2rem;
-            right: 2rem;
-            z-index: 2;
-        }
-
-        .view-selector {
-            padding: 0.5rem 1rem;
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 8px;
-            font-family: inherit;
-            font-size: 0.85rem;
-            cursor: pointer;
-            backdrop-filter: blur(4px);
-        }
-
-        .view-selector:focus {
-            outline: none;
-            border-color: white;
-        }
-
-        .view-selector option {
-            color: var(--text);
-            background: white;
-        }
-
-        /* Section */
-        .section {
-            margin-bottom: 2rem;
+        /* Core Concept */
+        .concept-section {
+            margin-bottom: 2.5rem;
         }
 
         .section-header {
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            margin-bottom: 1rem;
+            margin-bottom: 1.25rem;
         }
 
         .section-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .section-subtitle {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-left: 0.5rem;
+        }
+
+        /* Cycle Diagram */
+        .cycle-container {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2.5rem;
+            position: relative;
+        }
+
+        .cycle-flow {
+            display: flex;
+            align-items: stretch;
+            gap: 0;
+            position: relative;
+        }
+
+        .cycle-step {
+            flex: 1;
+            position: relative;
+            padding: 1.5rem;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .cycle-step:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .cycle-step.innovation { background: var(--innovation-light); border: 2px solid var(--innovation); }
+        .cycle-step.pm { background: var(--pm-light); border: 2px solid var(--pm); }
+        .cycle-step.new-member { background: var(--member-light); border: 2px solid var(--member); }
+        .cycle-step.ops { background: var(--ops-light); border: 2px solid var(--ops); }
+
+        .cycle-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            flex-shrink: 0;
+            font-size: 1.5rem;
+            color: var(--text-muted);
+        }
+
+        .cycle-step-number {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            opacity: 0.6;
+            letter-spacing: 1px;
+        }
+
+        .cycle-step.innovation .cycle-step-number { color: var(--innovation); }
+        .cycle-step.pm .cycle-step-number { color: var(--pm); }
+        .cycle-step.new-member .cycle-step-number { color: var(--member); }
+        .cycle-step.ops .cycle-step-number { color: var(--ops); }
+
+        .cycle-step-icon {
+            font-size: 2rem;
+        }
+
+        .cycle-step-title {
             font-size: 1rem;
+            font-weight: 700;
+        }
+
+        .cycle-step.innovation .cycle-step-title { color: var(--innovation); }
+        .cycle-step.pm .cycle-step-title { color: var(--pm); }
+        .cycle-step.new-member .cycle-step-title { color: var(--member); }
+        .cycle-step.ops .cycle-step-title { color: var(--ops); }
+
+        .cycle-step-desc {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .cycle-step-members {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.3rem;
+            margin-top: auto;
+        }
+
+        .cycle-member {
+            font-size: 0.7rem;
+            padding: 0.15rem 0.5rem;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.7);
+            color: var(--text-secondary);
+        }
+
+        .cycle-return {
+            text-align: center;
+            padding: 1rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            position: relative;
+        }
+
+        .cycle-return-arrow {
+            display: block;
+            font-size: 0.8rem;
+            margin-top: 0.25rem;
+            color: var(--innovation);
             font-weight: 600;
+        }
+
+        /* Key Insight */
+        .key-insight {
+            background: linear-gradient(90deg, var(--innovation-light) 0%, var(--white) 100%);
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--innovation);
+            border-radius: 12px;
+            padding: 1.5rem 2rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .key-insight-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--innovation);
+            margin-bottom: 0.35rem;
+        }
+
+        .key-insight p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .key-insight strong {
             color: var(--text);
+        }
+
+        /* Graduation System */
+        .graduation-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .graduation-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .graduation-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.2s ease;
+        }
+
+        .graduation-card:hover {
+            border-color: var(--primary);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .graduation-card-header {
+            padding: 1.25rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .graduation-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .graduation-card-header h3 {
+            font-size: 1rem;
+            font-weight: 700;
+        }
+
+        .graduation-card-header p {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .graduation-card-body {
+            padding: 1.25rem 1.5rem;
+        }
+
+        .graduation-req {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #f5f5f5;
+        }
+
+        .graduation-req:last-child { border-bottom: none; }
+
+        .graduation-req-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            flex-shrink: 0;
+            background: #F5F5F5;
+        }
+
+        .graduation-req-text {
+            flex: 1;
+        }
+
+        .graduation-req-text h4 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.1rem;
+        }
+
+        .graduation-req-text p {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        /* Dual Path */
+        .path-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .path-card {
+            background: var(--white);
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .path-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .path-card.innovator { border-color: var(--innovation); }
+        .path-card.specialist { border-color: var(--primary); }
+
+        .path-card-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto 1rem;
+        }
+
+        .path-card.innovator .path-card-icon { background: var(--innovation-light); }
+        .path-card.specialist .path-card-icon { background: var(--primary-light); }
+
+        .path-card h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .path-card.innovator h3 { color: var(--innovation); }
+        .path-card.specialist h3 { color: var(--primary); }
+
+        .path-card .path-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 0.75rem;
+        }
+
+        .path-card p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* Layer Detail Cards */
+        .layer-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .layer-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .layer-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.2s ease;
+        }
+
+        .layer-card:hover {
+            border-color: var(--primary);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .layer-card-top {
+            display: flex;
+            align-items: stretch;
+        }
+
+        .layer-card-stripe {
+            width: 6px;
+            flex-shrink: 0;
+        }
+
+        .layer-card.innovation .layer-card-stripe { background: var(--innovation); }
+        .layer-card.pm .layer-card-stripe { background: var(--pm); }
+        .layer-card.new-member .layer-card-stripe { background: var(--member); }
+        .layer-card.ops .layer-card-stripe { background: var(--ops); }
+
+        .layer-card-main {
+            flex: 1;
+            padding: 1.5rem;
+        }
+
+        .layer-card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .layer-card-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .layer-card.innovation .layer-card-icon { background: var(--innovation-light); }
+        .layer-card.pm .layer-card-icon { background: var(--pm-light); }
+        .layer-card.new-member .layer-card-icon { background: var(--member-light); }
+        .layer-card.ops .layer-card-icon { background: var(--ops-light); }
+
+        .layer-card-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .layer-card-subtitle {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .layer-card-badge {
+            margin-left: auto;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 0.3rem 0.75rem;
+            border-radius: 20px;
+        }
+
+        .layer-card.innovation .layer-card-badge { background: var(--innovation-light); color: var(--innovation); }
+        .layer-card.pm .layer-card-badge { background: var(--pm-light); color: var(--pm); }
+        .layer-card.new-member .layer-card-badge { background: var(--member-light); color: var(--member); }
+        .layer-card.ops .layer-card-badge { background: var(--ops-light); color: var(--ops); }
+
+        .layer-card-body {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .layer-card-section h4 {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .layer-member-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.35rem;
+        }
+
+        .layer-member {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.3rem 0.65rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            border: 1px solid var(--border);
+            background: #F9F9F9;
+            transition: all 0.2s ease;
+        }
+
+        .layer-member:hover {
+            border-color: var(--primary);
+            background: var(--primary-light);
+        }
+
+        .layer-member.leader {
+            font-weight: 600;
+        }
+
+        .layer-card.innovation .layer-member.leader { background: var(--innovation-light); border-color: var(--innovation); color: var(--innovation); }
+        .layer-card.pm .layer-member.leader { background: var(--pm-light); border-color: var(--pm); color: var(--pm); }
+
+        .layer-mission-list {
+            list-style: none;
+        }
+
+        .layer-mission-list li {
+            position: relative;
+            padding-left: 1rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.35rem;
+            line-height: 1.5;
+        }
+
+        .layer-mission-list li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-size: 0.75rem;
+        }
+
+        /* Roadmap */
+        .roadmap-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .roadmap {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .roadmap::before {
+            content: '';
+            position: absolute;
+            left: 8px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, var(--innovation) 0%, var(--pm) 33%, var(--member) 66%, var(--ops) 100%);
+        }
+
+        .roadmap-phase {
+            position: relative;
+            padding: 1.5rem;
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1.25rem;
+            margin-left: 1rem;
+            transition: all 0.2s ease;
+        }
+
+        .roadmap-phase:hover {
+            border-color: var(--primary);
+            box-shadow: var(--shadow);
+        }
+
+        .roadmap-dot {
+            position: absolute;
+            left: -2.15rem;
+            top: 1.75rem;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            border: 3px solid var(--white);
+            box-shadow: 0 0 0 2px var(--primary);
+        }
+
+        .roadmap-phase:nth-child(1) .roadmap-dot { background: var(--innovation); box-shadow: 0 0 0 2px var(--innovation); }
+        .roadmap-phase:nth-child(2) .roadmap-dot { background: var(--pm); box-shadow: 0 0 0 2px var(--pm); }
+        .roadmap-phase:nth-child(3) .roadmap-dot { background: var(--member); box-shadow: 0 0 0 2px var(--member); }
+        .roadmap-phase:nth-child(4) .roadmap-dot { background: var(--ops); box-shadow: 0 0 0 2px var(--ops); }
+
+        .roadmap-phase-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 0.25rem;
+        }
+
+        .roadmap-phase:nth-child(1) .roadmap-phase-label { color: var(--innovation); }
+        .roadmap-phase:nth-child(2) .roadmap-phase-label { color: var(--pm); }
+        .roadmap-phase:nth-child(3) .roadmap-phase-label { color: var(--member); }
+        .roadmap-phase:nth-child(4) .roadmap-phase-label { color: var(--ops); }
+
+        .roadmap-phase h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .roadmap-tasks {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .roadmap-task {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.3rem 0.75rem;
+            background: #F5F5F5;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        /* References */
+        .ref-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .ref-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.2s ease;
+        }
+
+        .ref-card:hover {
+            border-color: var(--primary);
+            box-shadow: var(--shadow);
+            transform: translateY(-2px);
+        }
+
+        .ref-card-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .ref-card h4 {
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .ref-card p {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            line-height: 1.5;
         }
 
         /* Quick Links */
@@ -243,7 +790,7 @@
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 1rem;
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
         }
 
         .quick-link {
@@ -254,7 +801,6 @@
             background: var(--white);
             border: 1px solid var(--border);
             border-radius: 12px;
-            text-decoration: none;
             transition: all 0.2s ease;
         }
 
@@ -274,265 +820,9 @@
             font-size: 1.25rem;
         }
 
-        .quick-link-text {
-            flex: 1;
-        }
-
-        .quick-link-label {
-            font-size: 0.9rem;
-            color: var(--text);
-            font-weight: 500;
-        }
-
-        .quick-link-count {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-        }
-
-        .quick-link-arrow {
-            color: var(--primary);
-            font-size: 1.25rem;
-        }
-
-        /* Teams Grid */
-        .teams-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1rem;
-        }
-
-        /* Team Card */
-        .team-card {
-            background: var(--white);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 1.25rem;
-            transition: all 0.2s ease;
-            position: relative;
-        }
-
-        .team-card:hover {
-            box-shadow: var(--shadow-hover);
-            border-color: var(--primary);
-            cursor: pointer;
-        }
-
-        .team-card-link {
-            text-decoration: none;
-            color: inherit;
-            display: block;
-        }
-
-        .team-card-header {
-            display: flex;
-            align-items: flex-start;
-            gap: 0.75rem;
-            margin-bottom: 0.75rem;
-        }
-
-        .team-icon {
-            width: 44px;
-            height: 44px;
-            background: var(--primary-light);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.25rem;
-        }
-
-        .team-info {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .team-id {
-            font-size: 0.65rem;
-            font-weight: 500;
-            color: var(--text-muted);
-            text-transform: uppercase;
-        }
-
-        .team-name {
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--text);
-            margin-bottom: 0.25rem;
-        }
-
-        .team-mission {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            line-height: 1.5;
-        }
-
-        /* Expectation Block */
-        .team-expectation {
-            background: var(--primary-light);
-            border-left: 3px solid var(--primary);
-            padding: 0.75rem 1rem;
-            border-radius: 0 8px 8px 0;
-            margin: 0.75rem 0;
-            display: none;
-        }
-
-        .team-expectation-label {
-            font-size: 0.7rem;
-            color: var(--primary);
-            font-weight: 600;
-            margin-bottom: 0.35rem;
-        }
-
-        .team-expectation p {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            line-height: 1.6;
-        }
-
-        /* Projects in Card */
-        .team-projects {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.35rem;
-            margin-top: 0.75rem;
-        }
-
-        .team-project-tag {
-            padding: 0.2rem 0.6rem;
-            background: #F5F5F5;
-            border-radius: 4px;
-            font-size: 0.7rem;
-            color: var(--text-secondary);
-        }
-
-        /* Strategy Section */
-        .strategy-section {
-            margin-bottom: 2.5rem;
-        }
-
-        .strategy-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-        }
-
-        .strategy-card {
-            background: linear-gradient(135deg, #f0faf8 0%, #ffffff 100%);
-            border: 1px solid var(--border);
-            border-left: 4px solid var(--primary);
-            border-radius: 12px;
-            padding: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-            transition: all 0.2s ease;
-            text-decoration: none;
-            color: inherit;
-        }
-
-        .strategy-card:hover {
-            border-color: var(--primary);
-            box-shadow: var(--shadow-hover);
-            transform: translateY(-2px);
-        }
-
-        .strategy-card-header {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .strategy-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
-            background: var(--primary);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            flex-shrink: 0;
-        }
-
-        .strategy-info { flex: 1; }
-
-        .strategy-label {
-            font-size: 0.7rem;
-            color: var(--primary);
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .strategy-title {
-            font-size: 1rem;
-            font-weight: 600;
-            margin: 0;
-        }
-
-        .strategy-desc {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            line-height: 1.5;
-        }
-
-        .strategy-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
-        .strategy-tag {
-            font-size: 0.7rem;
-            padding: 0.2rem 0.6rem;
-            background: var(--primary-light);
-            color: var(--primary-dark);
-            border-radius: 4px;
-        }
-
-        .strategy-arrow {
-            color: var(--primary);
-            font-size: 1.25rem;
-            margin-left: auto;
-        }
-
-        @media (max-width: 700px) {
-            .strategy-grid { grid-template-columns: 1fr; }
-        }
-
-        /* Focused Team Card */
-        .team-card.focused {
-            grid-column: span 2;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px var(--primary-light);
-        }
-
-        .team-card.focused .team-name {
-            color: var(--primary);
-        }
-
-        .team-card.focused .team-expectation {
-            display: block;
-        }
-
-        .team-card.focused .team-project-tag {
-            background: var(--primary-light);
-            color: var(--primary-dark);
-        }
-
-        /* Blurred Team Card */
-        .team-card.blurred {
-            opacity: 0.5;
-        }
-
-        .team-card.blurred:hover {
-            opacity: 0.8;
-        }
-
-        .team-card.blurred .team-projects {
-            display: none;
-        }
+        .quick-link-label { font-size: 0.9rem; font-weight: 500; }
+        .quick-link-count { font-size: 0.75rem; color: var(--text-muted); }
+        .quick-link-arrow { color: var(--primary); font-size: 1.25rem; margin-left: auto; }
 
         /* Footer */
         .footer {
@@ -545,28 +835,25 @@
             background: var(--white);
         }
 
-        .footer a {
-            color: var(--primary);
-            text-decoration: none;
-        }
-
-        .footer a:hover {
-            text-decoration: underline;
-        }
+        .footer a { color: var(--primary); }
 
         /* Responsive */
         @media (max-width: 900px) {
+            .cycle-flow { flex-direction: column; }
+            .cycle-arrow { transform: rotate(90deg); width: auto; height: 30px; }
+            .graduation-grid { grid-template-columns: 1fr; }
+            .path-grid { grid-template-columns: 1fr; }
+            .layer-card-body { grid-template-columns: 1fr; }
+            .ref-grid { grid-template-columns: 1fr; }
             .quick-links { grid-template-columns: 1fr; }
-            .team-card.focused { grid-column: span 1; }
         }
 
         @media (max-width: 600px) {
             .header-content { flex-direction: column; gap: 0.75rem; height: auto; padding: 0.75rem 0; }
             .main { padding-top: 120px; }
-            .hero { padding: 1.5rem; }
-            .hero-title { font-size: 1.25rem; }
+            .hero { padding: 2rem 1.5rem; }
+            .hero-title { font-size: 1.5rem; }
             .hero-stats { flex-direction: column; gap: 1rem; }
-            .view-selector-container { position: static; margin-top: 1rem; }
         }
     </style>
 </head>
@@ -577,270 +864,531 @@
                 <span class="logo-text">VALUE <span>BOOKS</span> OS</span>
             </a>
             <nav class="nav">
-                <a href="index.html" class="active">ダッシュボード</a>
-                <a href="teams.html">チーム</a>
+                <a href="index.html" class="active">組織戦略</a>
+                <a href="teams.html">4レイヤー</a>
                 <a href="members.html">メンバー</a>
-                <a href="projects.html">プロジェクト</a>
+                <a href="roadmap.html">ロードマップ</a>
             </nav>
         </div>
     </header>
 
     <main class="main">
-        <!-- Hero Section -->
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- HERO: 永久進化エンジン                    -->
+        <!-- ═══════════════════════════════════════ -->
         <section class="hero">
             <div class="hero-content">
-                <div class="hero-eyebrow">📖 2026-2028 全社ビジョン</div>
-                <h2 class="hero-title">100億・100億・100億。<br>人間的幸福のリーダーへ</h2>
-                <p class="hero-subtitle">古本・新刊・MD。3つの柱で300億を達成し、本を通じて人間をアナログな幸せに引き戻す</p>
-                
+                <div class="hero-eyebrow">🔄 AI時代の組織戦略 2026</div>
+                <h1 class="hero-title">
+                    永久進化エンジン
+                    <span class="en">Perpetual Evolution Engine</span>
+                </h1>
+                <p class="hero-subtitle">
+                    AIで「拡張」した構想を、人間とシステムが「維持」に変換する。<br>
+                    このサイクルを高速で回し続けることで、変化のスピードそのものを加速させる。
+                </p>
                 <div class="hero-stats">
-                    <div class="hero-stat">
-                        <div class="hero-stat-value">300<span>億</span></div>
-                        <div class="hero-stat-label">売上目標</div>
+                    <div>
+                        <div class="hero-stat-value">4<span>層</span></div>
+                        <div class="hero-stat-label">組織レイヤー</div>
                     </div>
-                    <div class="hero-stat">
-                        <div class="hero-stat-value">3<span>柱</span></div>
-                        <div class="hero-stat-label">古本・新刊・MD</div>
+                    <div>
+                        <div class="hero-stat-value">10<span>倍</span></div>
+                        <div class="hero-stat-label">開発スピード目標</div>
                     </div>
-                    <div class="hero-stat">
-                        <div class="hero-stat-value">17</div>
-                        <div class="hero-stat-label">プロジェクト</div>
+                    <div>
+                        <div class="hero-stat-value">2<span>週</span></div>
+                        <div class="hero-stat-label">マイクロ・フリーズ周期</div>
+                    </div>
+                    <div>
+                        <div class="hero-stat-value">∞</div>
+                        <div class="hero-stat-label">循環回数</div>
                     </div>
                 </div>
             </div>
+        </section>
 
-            <div class="view-selector-container">
-                <select class="view-selector" id="viewSelect" onchange="changeView()">
-                    <option value="all">全チーム概要</option>
-                    <option value="0-governance">0. ガバナンス & 文化</option>
-                    <option value="1-warehouse">1. 倉庫部門</option>
-                    <option value="2-purchase">2. 買取部門</option>
-                    <option value="3-logistics">3. ロジ・オペ</option>
-                    <option value="4-web-dev">4. Web開発</option>
-                    <option value="5-pro-account">5. Pro/MD</option>
-                </select>
+        <!-- ═══════════════════════════════════════ -->
+        <!-- CORE CONCEPT: 循環サイクル図               -->
+        <!-- ═══════════════════════════════════════ -->
+        <section class="concept-section">
+            <div class="section-header">
+                <h2 class="section-title">🔄 組織の循環モデル</h2>
+                <span class="section-subtitle">4つのレイヤーが高速で回り続ける「永久機関」</span>
+            </div>
+
+            <div class="cycle-container">
+                <div class="cycle-flow">
+                    <div class="cycle-step innovation">
+                        <div class="cycle-step-number">LAYER 01</div>
+                        <div class="cycle-step-icon">🚀</div>
+                        <div class="cycle-step-title">イノベーション推進チーム</div>
+                        <div class="cycle-step-desc">0→1を創出。AIをフル活用し、納品可能なプロトタイプを量産する</div>
+                        <div class="cycle-step-members">
+                            <span class="cycle-member">中村大樹</span>
+                            <span class="cycle-member">システム×3</span>
+                            <span class="cycle-member">経営人材×2</span>
+                        </div>
+                    </div>
+
+                    <div class="cycle-arrow">→</div>
+
+                    <div class="cycle-step pm">
+                        <div class="cycle-step-number">LAYER 02</div>
+                        <div class="cycle-step-icon">🎯</div>
+                        <div class="cycle-step-title">プロジェクトマネージャー</div>
+                        <div class="cycle-step-desc">1→10の自律化。AI/RAGを組み込み「自分がいなくても回る」状態を作る</div>
+                        <div class="cycle-step-members">
+                            <span class="cycle-member">約10名</span>
+                            <span class="cycle-member">既存PJ責任者</span>
+                        </div>
+                    </div>
+
+                    <div class="cycle-arrow">→</div>
+
+                    <div class="cycle-step new-member">
+                        <div class="cycle-step-number">LAYER 03</div>
+                        <div class="cycle-step-icon">🌱</div>
+                        <div class="cycle-step-title">新規プロジェクトメンバー</div>
+                        <div class="cycle-step-desc">PMを支えながら次世代PMとしてのスキルを習得する</div>
+                        <div class="cycle-step-members">
+                            <span class="cycle-member">新規アサイン</span>
+                            <span class="cycle-member">PM候補</span>
+                        </div>
+                    </div>
+
+                    <div class="cycle-arrow">→</div>
+
+                    <div class="cycle-step ops">
+                        <div class="cycle-step-number">LAYER 04</div>
+                        <div class="cycle-step-icon">⚙️</div>
+                        <div class="cycle-step-title">オペレーション・チーム</div>
+                        <div class="cycle-step-desc">構築された「最強の現状」を安定運用し、利益を確定させる</div>
+                        <div class="cycle-step-members">
+                            <span class="cycle-member">パートタイム</span>
+                            <span class="cycle-member">システム+AI</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cycle-return">
+                    PMが「卒業」→ 次の新規プロジェクトへアサイン → イノベーション室と合流
+                    <span class="cycle-return-arrow">← 卒業したPMは再びイノベーション側へ ←</span>
+                </div>
             </div>
         </section>
 
-        <!-- Quick Links -->
+        <!-- ═══════════════════════════════════════ -->
+        <!-- KEY INSIGHT                             -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="key-insight">
+            <div class="key-insight-label">💡 核心となる考え方</div>
+            <p>
+                <strong>「自分の仕事をAIとシステムに奪わせる（卒業する）ことこそが、最も評価される」</strong>という新しい価値観。<br>
+                今の仕事を一生懸命守っている人ではなく、<strong>今の仕事をシステム化して手放した人</strong>が次のステージに進める。<br>
+                一度形を作ってしまえば「維持」の力が働く。その性質を利用して、拡大速度を最大化する。
+            </p>
+        </div>
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- GRADUATION SYSTEM                       -->
+        <!-- ═══════════════════════════════════════ -->
+        <section class="graduation-section">
+            <div class="section-header">
+                <h2 class="section-title">🎓 セル・グラジュエーション（卒業）制度</h2>
+                <span class="section-subtitle">次のステージへの挑戦権を得るための3要件</span>
+            </div>
+
+            <div class="graduation-grid">
+                <!-- 卒業要件 -->
+                <div class="graduation-card">
+                    <div class="graduation-card-header">
+                        <div class="graduation-icon" style="background: var(--pm-light);">📋</div>
+                        <div>
+                            <h3>卒業の3要件</h3>
+                            <p>PMが「自分を不要にする」ための必達条件</p>
+                        </div>
+                    </div>
+                    <div class="graduation-card-body">
+                        <div class="graduation-req">
+                            <div class="graduation-req-icon">🤖</div>
+                            <div class="graduation-req-text">
+                                <h4>1. AI/RAGによるナレッジ外部化</h4>
+                                <p>自分の判断基準やノウハウをAIに学習させ、スタッフがAIに聞けば解決できる状態にする</p>
+                            </div>
+                        </div>
+                        <div class="graduation-req">
+                            <div class="graduation-req-icon">⚡</div>
+                            <div class="graduation-req-text">
+                                <h4>2. システムの自動化</h4>
+                                <p>ルーチンワークをシステム改良によって完全に自動化、または極小化する</p>
+                            </div>
+                        </div>
+                        <div class="graduation-req">
+                            <div class="graduation-req-icon">👥</div>
+                            <div class="graduation-req-text">
+                                <h4>3. チーム・採用の最適化</h4>
+                                <p>パートタイムスタッフと少数メンバーでPDCAが回る体制（マニュアル・責任範囲）を構築</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 判定基準 -->
+                <div class="graduation-card">
+                    <div class="graduation-card-header">
+                        <div class="graduation-icon" style="background: var(--innovation-light);">✅</div>
+                        <div>
+                            <h3>卒業の判定基準</h3>
+                            <p>「自分が1ヶ月不在でもKPIが維持・向上する状態」</p>
+                        </div>
+                    </div>
+                    <div class="graduation-card-body">
+                        <div class="graduation-req">
+                            <div class="graduation-req-icon">📊</div>
+                            <div class="graduation-req-text">
+                                <h4>KPI自動モニタリング</h4>
+                                <p>数値が乖離した時だけ通知が飛ぶ仕組みが稼働している</p>
+                            </div>
+                        </div>
+                        <div class="graduation-req">
+                            <div class="graduation-req-icon">🔄</div>
+                            <div class="graduation-req-text">
+                                <h4>PDCA自走</h4>
+                                <p>改善サイクルがPM不在でもチーム内で回り続ける</p>
+                            </div>
+                        </div>
+                        <div class="graduation-req">
+                            <div class="graduation-req-icon">🎯</div>
+                            <div class="graduation-req-text">
+                                <h4>例外処理の仕組み化</h4>
+                                <p>想定外の事態にも対処できるエスカレーションルートが確立</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- DUAL PATH                               -->
+        <!-- ═══════════════════════════════════════ -->
+        <section>
+            <div class="section-header">
+                <h2 class="section-title">🛤️ 2つのプロフェッショナル・パス</h2>
+                <span class="section-subtitle">卒業後の選択肢</span>
+            </div>
+
+            <div class="path-grid">
+                <div class="path-card innovator">
+                    <div class="path-card-icon">🚀</div>
+                    <h3>イノベーター・パス</h3>
+                    <div class="path-label">Path A — 常に変化の最前線</div>
+                    <p>新規プロジェクトのPMとして、0→1で作られた「種」を受け取り、再び「自分がいなくても回る仕組み」へと高速で育て上げる。変化と創造を繰り返す。</p>
+                </div>
+                <div class="path-card specialist">
+                    <div class="path-card-icon">💎</div>
+                    <h3>スペシャリスト・パス</h3>
+                    <div class="path-label">Path B — 維持発展のプロフェッショナル</div>
+                    <p>既存プロジェクトの精度を極限まで高める職人。AIの精度向上、現場の満足度、コスト効率を追求し続ける。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- 4 LAYERS DETAIL                         -->
+        <!-- ═══════════════════════════════════════ -->
+        <section class="layer-section">
+            <div class="section-header">
+                <h2 class="section-title">🏗️ 4レイヤーの詳細</h2>
+                <span class="section-subtitle">各レイヤーの役割とメンバー構成</span>
+            </div>
+
+            <div class="layer-cards">
+                <!-- Layer 1: Innovation -->
+                <div class="layer-card innovation">
+                    <div class="layer-card-top">
+                        <div class="layer-card-stripe"></div>
+                        <div class="layer-card-main">
+                            <div class="layer-card-header">
+                                <div class="layer-card-icon">🚀</div>
+                                <div>
+                                    <div class="layer-card-title">イノベーション推進チーム</div>
+                                    <div class="layer-card-subtitle">Expansion Core — 未来の設計・実験</div>
+                                </div>
+                                <span class="layer-card-badge">約6名</span>
+                            </div>
+                            <div class="layer-card-body">
+                                <div class="layer-card-section">
+                                    <h4>👥 構成メンバー</h4>
+                                    <div class="layer-member-list">
+                                        <span class="layer-member leader">👑 中村大樹</span>
+                                        <span class="layer-member">システム担当①</span>
+                                        <span class="layer-member">システム担当②</span>
+                                        <span class="layer-member">システム担当③</span>
+                                        <span class="layer-member">経営人材①</span>
+                                        <span class="layer-member">経営人材②</span>
+                                    </div>
+                                </div>
+                                <div class="layer-card-section">
+                                    <h4>🎯 ミッション</h4>
+                                    <ul class="layer-mission-list">
+                                        <li>AIをフル活用した市場シミュレーション</li>
+                                        <li>新規サービスのプロトタイプ作成</li>
+                                        <li>「納品可能状態」まで仕上げてPMに渡す</li>
+                                        <li>組織モデル・制度の設計</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Layer 2: PM -->
+                <div class="layer-card pm">
+                    <div class="layer-card-top">
+                        <div class="layer-card-stripe"></div>
+                        <div class="layer-card-main">
+                            <div class="layer-card-header">
+                                <div class="layer-card-icon">🎯</div>
+                                <div>
+                                    <div class="layer-card-title">プロジェクトマネージャー（PM）</div>
+                                    <div class="layer-card-subtitle">Maintenance Builders — 1→10の自律化</div>
+                                </div>
+                                <span class="layer-card-badge">約10名</span>
+                            </div>
+                            <div class="layer-card-body">
+                                <div class="layer-card-section">
+                                    <h4>👥 想定メンバー（現PM層）</h4>
+                                    <div class="layer-member-list">
+                                        <span class="layer-member">清水（倉庫）</span>
+                                        <span class="layer-member">中村和義（Pro/MD）</span>
+                                        <span class="layer-member">鳥居（ガバナンス）</span>
+                                        <span class="layer-member">林（上田原）</span>
+                                        <span class="layer-member">セト（ミヨシ）</span>
+                                        <span class="layer-member">聖徳（新規買取）</span>
+                                        <span class="layer-member">小平（リピート）</span>
+                                        <span class="layer-member">ササキ（ロジ）</span>
+                                        <span class="layer-member">ヨシダ（Web）</span>
+                                        <span class="layer-member">片山（Web）</span>
+                                    </div>
+                                </div>
+                                <div class="layer-card-section">
+                                    <h4>🎯 ミッション</h4>
+                                    <ul class="layer-mission-list">
+                                        <li>既存プロジェクトの組織化・改善・AI組み込み</li>
+                                        <li>自分がいなくても仕組みが動くようにする</li>
+                                        <li>RAGによるナレッジの外部化</li>
+                                        <li>「卒業」したら次の新規PJへアサイン</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Layer 3: New Project Members -->
+                <div class="layer-card new-member">
+                    <div class="layer-card-top">
+                        <div class="layer-card-stripe"></div>
+                        <div class="layer-card-main">
+                            <div class="layer-card-header">
+                                <div class="layer-card-icon">🌱</div>
+                                <div>
+                                    <div class="layer-card-title">新規プロジェクトメンバー</div>
+                                    <div class="layer-card-subtitle">Next Generation — PMを支え、次世代を育てる</div>
+                                </div>
+                                <span class="layer-card-badge">流動的</span>
+                            </div>
+                            <div class="layer-card-body">
+                                <div class="layer-card-section">
+                                    <h4>👥 対象者</h4>
+                                    <div class="layer-member-list">
+                                        <span class="layer-member">新規PJにアサインされたメンバー</span>
+                                        <span class="layer-member">将来のPM候補</span>
+                                        <span class="layer-member">内沼</span>
+                                        <span class="layer-member">飯田</span>
+                                        <span class="layer-member">水野恵魅</span>
+                                        <span class="layer-member">相澤</span>
+                                        <span class="layer-member">クツカケ</span>
+                                    </div>
+                                </div>
+                                <div class="layer-card-section">
+                                    <h4>🎯 ミッション</h4>
+                                    <ul class="layer-mission-list">
+                                        <li>PMと並走し、現場への実装をサポート</li>
+                                        <li>PMのスキル・思考パターンを吸収する</li>
+                                        <li>次世代PMとしての能力を養成</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Layer 4: Operations -->
+                <div class="layer-card ops">
+                    <div class="layer-card-top">
+                        <div class="layer-card-stripe"></div>
+                        <div class="layer-card-main">
+                            <div class="layer-card-header">
+                                <div class="layer-card-icon">⚙️</div>
+                                <div>
+                                    <div class="layer-card-title">オペレーション・チーム</div>
+                                    <div class="layer-card-subtitle">Maintenance Shell — 現状の守護・自動化</div>
+                                </div>
+                                <span class="layer-card-badge">パートタイム中心</span>
+                            </div>
+                            <div class="layer-card-body">
+                                <div class="layer-card-section">
+                                    <h4>👥 構成</h4>
+                                    <div class="layer-member-list">
+                                        <span class="layer-member">パートタイムスタッフ</span>
+                                        <span class="layer-member">倉庫自動化システム</span>
+                                        <span class="layer-member">AIエージェント</span>
+                                        <span class="layer-member">ルールベースシステム</span>
+                                    </div>
+                                </div>
+                                <div class="layer-card-section">
+                                    <h4>🎯 ミッション</h4>
+                                    <ul class="layer-mission-list">
+                                        <li>決められたルール（現状）を正確に遂行する</li>
+                                        <li>サービス品質の安定維持</li>
+                                        <li>現場ならではの微細なエラー検知</li>
+                                        <li>利益の確定・ステークホルダーへの還元</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- ROADMAP                                 -->
+        <!-- ═══════════════════════════════════════ -->
+        <section class="roadmap-section">
+            <div class="section-header">
+                <h2 class="section-title">🗺️ ロードマップ 2026–2027</h2>
+                <span class="section-subtitle">段階的に「永久進化エンジン」を起動する</span>
+            </div>
+
+            <div class="roadmap">
+                <div class="roadmap-phase">
+                    <div class="roadmap-dot"></div>
+                    <div class="roadmap-phase-label">PHASE 1 — 2026 Q1–Q2</div>
+                    <h3>基盤固定 ＆ PM解放宣言</h3>
+                    <div class="roadmap-tasks">
+                        <span class="roadmap-task">🤖 AI開発環境の完全整備</span>
+                        <span class="roadmap-task">📋 PMのタスク棚卸し</span>
+                        <span class="roadmap-task">📐 「卒業基準」のモデルケース作成</span>
+                        <span class="roadmap-task">🏗️ イノベーション推進チーム発足</span>
+                    </div>
+                </div>
+
+                <div class="roadmap-phase">
+                    <div class="roadmap-dot"></div>
+                    <div class="roadmap-phase-label">PHASE 2 — 2026 Q3</div>
+                    <h3>パイプライン稼働 ＆ PMの流動化</h3>
+                    <div class="roadmap-tasks">
+                        <span class="roadmap-task">🚀 月1ペースで新規PJ「納品」</span>
+                        <span class="roadmap-task">🎓 最初のPM「卒業生」輩出</span>
+                        <span class="roadmap-task">📚 RAG/AIナレッジ移行の実証</span>
+                        <span class="roadmap-task">👥 PMへ「自律化ミッション」発令</span>
+                    </div>
+                </div>
+
+                <div class="roadmap-phase">
+                    <div class="roadmap-dot"></div>
+                    <div class="roadmap-phase-label">PHASE 3 — 2026 Q4</div>
+                    <h3>拡大と自動化</h3>
+                    <div class="roadmap-tasks">
+                        <span class="roadmap-task">🏭 倉庫フルオートメーション加速</span>
+                        <span class="roadmap-task">💰 利益構造の固定化</span>
+                        <span class="roadmap-task">🔄 組織の流動化本格化</span>
+                        <span class="roadmap-task">📊 「卒業→新PJ」成功事例の文化定着</span>
+                    </div>
+                </div>
+
+                <div class="roadmap-phase">
+                    <div class="roadmap-dot"></div>
+                    <div class="roadmap-phase-label">PHASE 4 — 2027〜</div>
+                    <h3>自律進化型組織 ＆ ステークホルダー所有</h3>
+                    <div class="roadmap-tasks">
+                        <span class="roadmap-task">🌐 ステークホルダー所有型組織への移行</span>
+                        <span class="roadmap-task">🧠 プロジェクトの「代謝」AI判断</span>
+                        <span class="roadmap-task">👑 経営者の完全解放</span>
+                        <span class="roadmap-task">🎯 300億（100-100-100）の実現</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- REFERENCES                              -->
+        <!-- ═══════════════════════════════════════ -->
+        <section>
+            <div class="section-header">
+                <h2 class="section-title">🌍 先行事例</h2>
+                <span class="section-subtitle">同様の考えで成功している組織</span>
+            </div>
+
+            <div class="ref-grid">
+                <div class="ref-card">
+                    <div class="ref-card-icon">🏢</div>
+                    <h4>ハイアール — 人単合一</h4>
+                    <p>巨大企業を数千の「マイクロエンタープライズ」に解体。各ユニットが自律した組織として成果を出し、メンバーは次の投資へ自由に移動できる。</p>
+                </div>
+                <div class="ref-card">
+                    <div class="ref-card-icon">📦</div>
+                    <h4>Amazon — セルフサービスの思想</h4>
+                    <p>「人にお願いする」ではなく「システムを使う」状態を徹底的にAPI化。プラットフォーム思想がスピードの源泉。</p>
+                </div>
+                <div class="ref-card">
+                    <div class="ref-card-icon">🎬</div>
+                    <h4>Netflix — コンテクスト経営</h4>
+                    <p>細かい承認をなくし、戦略だけを共有して現場に判断を任せる。属人性の排除と自律の最先端。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- QUICK LINKS                             -->
+        <!-- ═══════════════════════════════════════ -->
         <div class="quick-links">
             <a href="teams.html" class="quick-link">
-                <div class="quick-link-icon">🏢</div>
-                <div class="quick-link-text">
-                    <div class="quick-link-label">チーム詳細</div>
-                    <div class="quick-link-count">6チーム × Founder's Expectation</div>
+                <div class="quick-link-icon">🏗️</div>
+                <div>
+                    <div class="quick-link-label">4レイヤー詳細</div>
+                    <div class="quick-link-count">各レイヤーの役割と構成</div>
                 </div>
                 <span class="quick-link-arrow">→</span>
             </a>
             <a href="members.html" class="quick-link">
                 <div class="quick-link-icon">👥</div>
-                <div class="quick-link-text">
-                    <div class="quick-link-label">メンバー一覧</div>
-                    <div class="quick-link-count">17名のプロファイル</div>
+                <div>
+                    <div class="quick-link-label">メンバー配置</div>
+                    <div class="quick-link-count">17名の新ポジション</div>
                 </div>
                 <span class="quick-link-arrow">→</span>
             </a>
-            <a href="projects.html" class="quick-link">
-                <div class="quick-link-icon">📂</div>
-                <div class="quick-link-text">
-                    <div class="quick-link-label">プロジェクト</div>
-                    <div class="quick-link-count">17プロジェクト</div>
+            <a href="roadmap.html" class="quick-link">
+                <div class="quick-link-icon">🗺️</div>
+                <div>
+                    <div class="quick-link-label">ロードマップ</div>
+                    <div class="quick-link-count">2026–2027 実行計画</div>
                 </div>
                 <span class="quick-link-arrow">→</span>
             </a>
         </div>
 
-        <!-- 2026 Vision Banner -->
-        <a href="strategy-2026-vision.html" class="vision-banner" style="display: block; background: linear-gradient(135deg, #F59E0B 0%, #FBBF24 100%); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; color: white; text-decoration: none; transition: all 0.2s ease; box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                    <div style="font-size: 0.75rem; opacity: 0.9; margin-bottom: 0.25rem;">🎯 100億・100億・100億 構想</div>
-                    <div style="font-size: 1.25rem; font-weight: 700;">AI時代の「人間的幸福」を本とMDで実装する</div>
-                    <div style="font-size: 0.85rem; opacity: 0.9; margin-top: 0.25rem;">中村大樹の300億ビジョンを見る →</div>
-                </div>
-                <div style="font-family: 'Outfit', sans-serif; font-size: 3rem; font-weight: 700; opacity: 0.3;">300B</div>
-            </div>
-        </a>
-
-        <!-- Strategy Section -->
-        <section class="section strategy-section">
-            <div class="section-header">
-                <h2 class="section-title">📜 戦略構想文書</h2>
-            </div>
-            <div class="strategy-grid">
-                <a href="strategy-pro-account.html" class="strategy-card">
-                    <div class="strategy-card-header">
-                        <div class="strategy-icon">🎯</div>
-                        <div class="strategy-info">
-                            <div class="strategy-label">North Star</div>
-                            <h3 class="strategy-title">プロアカウント構想</h3>
-                        </div>
-                        <span class="strategy-arrow">→</span>
-                    </div>
-                    <p class="strategy-desc">作り手・売り手・ファンが自分たちの意思で流通を設計できる「ステークホルダー所有型プラットフォーム」</p>
-                    <div class="strategy-tags">
-                        <span class="strategy-tag">フェーズ1: 局地戦</span>
-                        <span class="strategy-tag">フェーズ2: ネットワーク化</span>
-                        <span class="strategy-tag">フェーズ3: プラットフォーム</span>
-                    </div>
-                </a>
-                <a href="strategy-cooperative.html" class="strategy-card">
-                    <div class="strategy-card-header">
-                        <div class="strategy-icon">🤝</div>
-                        <div class="strategy-info">
-                            <div class="strategy-label">技術実現性</div>
-                            <h3 class="strategy-title">協力型買取構想</h3>
-                        </div>
-                        <span class="strategy-arrow">→</span>
-                    </div>
-                    <p class="strategy-desc">画像認識・AI・自動化倉庫で「簡単なのに高い」新しい二次流通を実現する</p>
-                    <div class="strategy-tags">
-                        <span class="strategy-tag">本棚スキャン</span>
-                        <span class="strategy-tag">予測価格</span>
-                        <span class="strategy-tag">ポイント還元</span>
-                    </div>
-                </a>
-                <a href="strategy-bcorp.html" class="strategy-card" style="border-left-color: #7C3AED;">
-                    <div class="strategy-card-header">
-                        <div class="strategy-icon" style="background: #7C3AED;">🌱</div>
-                        <div class="strategy-info">
-                            <div class="strategy-label" style="color: #7C3AED;">経営思想</div>
-                            <h3 class="strategy-title">B Corp統合戦略</h3>
-                        </div>
-                        <span class="strategy-arrow">→</span>
-                    </div>
-                    <p class="strategy-desc">多様な弱さを抱えた人が長く、無理なく、誇りを持って働けるビジネス構造の設計</p>
-                    <div class="strategy-tags">
-                        <span class="strategy-tag" style="background: #F3E8FF; color: #7C3AED;">ジェンダーギャップ</span>
-                        <span class="strategy-tag" style="background: #F3E8FF; color: #7C3AED;">従業員満足度</span>
-                        <span class="strategy-tag" style="background: #F3E8FF; color: #7C3AED;">賃金構造</span>
-                    </div>
-                </a>
-            </div>
-        </section>
-
-        <!-- Teams Grid -->
-        <section class="section">
-            <div class="section-header">
-                <h2 class="section-title">🏢 チーム（自チームを選択で詳細表示）</h2>
-            </div>
-            <div class="teams-grid" id="teamGrid"></div>
-        </section>
     </main>
 
     <footer class="footer">
-        <p>VALUE BOOKS OS | Organization as Code</p>
-        <p style="margin-top: 0.5rem;">Last updated: 2026-01-16 11:30</p>
+        <p>VALUE BOOKS OS — Perpetual Evolution Engine</p>
+        <p style="margin-top: 0.5rem;">Last updated: 2026-02-24</p>
     </footer>
-
-    <style>
-        .hero-stat-value span {
-            font-size: 1rem;
-            margin-left: 0.2rem;
-            opacity: 0.8;
-        }
-    </style>
-
-    <script>
-        const teams = [
-            {
-                id: '0-governance',
-                name: 'ガバナンス & 文化',
-                icon: '🏛️',
-                mission: 'People（人）の健全な働きと尊厳を守り、組織の生態系を保つ',
-                projects: ['ジェンダーギャップ解消', 'B Corp浸透', 'ピープル・ガバナンス設計'],
-                expect: '「舗装道路」を作る裏方ではなく、人が健全に働ける「土壌」の守護者。プロフィットは現場に任せ、このチームは「構造的に誰かを排除しない」ピープル・ガバナンスに専念する。'
-            },
-            {
-                id: '1-warehouse',
-                name: '倉庫部門',
-                icon: '🏭',
-                mission: 'SKYPOD導入による「検品工数 1/4」への革命',
-                projects: ['SKYPOD導入', 'ダイレクト入庫', '外部コスト削減'],
-                expect: '自動化で外部コスト（派遣・タイミー）を削減し、本業拡大へリソースをシフト。希望する10〜20名のキャリア転換を全力でサポートする。'
-            },
-            {
-                id: '2-purchase',
-                name: '買取部門',
-                icon: '📦',
-                mission: 'スマート買取とポイント受取の最大化',
-                projects: ['スマート買取', 'ポイント受取率50%', 'CRM強化'],
-                expect: 'ポイント受取50%（将来的に80%）が必達目標。UIの工夫とインセンティブ設計で「迷わずポイント」を選ぶ体験を。ポイントは循環型経済圏の血流。'
-            },
-            {
-                id: '3-logistics',
-                name: 'ロジ・オペレーション',
-                icon: '🚚',
-                mission: '世界最高効率の物流工程の設計とスループット最大化',
-                projects: ['物流アルゴリズム最適化', '工程の標準化', 'スループット最大化'],
-                expect: '「通訳」ではなく「工程の設計者（アーキテクト）」。SKYPODと人の動きを最適化し、スループット最大化に全責任を持つ。1件あたりコスト30%削減が必達指標。'
-            },
-            {
-                id: '4-web-dev',
-                name: '自社サイト開発',
-                icon: '💻',
-                mission: 'ポイント経済圏の実装と自社サイト月商2億円への成長',
-                projects: ['本棚スキャン v2', 'ポイントシステム基盤', '月商2億円UX設計'],
-                expect: '買取（7,400万円/月）の80%をポイント化し、自社サイト売上を5,200万円から2億円に引き上げるエンジンを作る。機能ではなく「経済圏」を作ること。'
-            },
-            {
-                id: '5-pro-account',
-                name: 'Pro/MD',
-                icon: '🤝',
-                mission: '人間的幸福を実装するプロダクト開発とメディア運営',
-                projects: ['オリジナルMD開発', '名物書店員・ファンダム', '本の惑星'],
-                expect: '「100億・100億・100億」構想の牽引役。ファングッズではなく、本好きが唸る「本当に良い製品」を開発し、メディアの共鳴とAIの効率を掛け合わせ、人間をアナログな読書体験に引き戻す。'
-            }
-        ];
-
-        function render() {
-            const grid = document.getElementById('teamGrid');
-            const selected = document.getElementById('viewSelect').value;
-            grid.innerHTML = '';
-
-            teams.forEach(team => {
-                const link = document.createElement('a');
-                link.href = `teams.html#${team.id.split('-')[1] || team.id}`;
-                link.className = 'team-card-link';
-
-                const div = document.createElement('div');
-                div.className = 'team-card';
-
-                if (selected !== 'all') {
-                    if (team.id === selected) {
-                        div.classList.add('focused');
-                    } else {
-                        div.classList.add('blurred');
-                    }
-                }
-
-                div.innerHTML = `
-                    <div class="team-card-header">
-                        <div class="team-icon">${team.icon}</div>
-                        <div class="team-info">
-                            <span class="team-id">${team.id}</span>
-                            <h3 class="team-name">${team.name}</h3>
-                            <p class="team-mission">${team.mission}</p>
-                        </div>
-                    </div>
-                    <div class="team-expectation">
-                        <div class="team-expectation-label">💭 Founder's Expectation</div>
-                        <p>${team.expect}</p>
-                    </div>
-                    <div class="team-projects">
-                        ${team.projects.map(p => `<span class="team-project-tag">${p}</span>`).join('')}
-                    </div>
-                `;
-                link.appendChild(div);
-                grid.appendChild(link);
-            });
-        }
-
-        render();
-
-        function changeView() {
-            render();
-        }
-    </script>
 </body>
 </html>
