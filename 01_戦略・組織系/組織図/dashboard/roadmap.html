@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ロードマップ | Value Books OS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00BFA5;
+            --primary-light: #E0F7F4;
+            --primary-dark: #00A896;
+            --bg: #FAFBFC;
+            --white: #FFFFFF;
+            --text: #1A1A1A;
+            --text-secondary: #666666;
+            --text-muted: #999999;
+            --border: #E8E8E8;
+            --shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            --shadow-hover: 0 4px 16px rgba(0, 0, 0, 0.1);
+            --innovation: #7C3AED;
+            --innovation-light: #F3E8FF;
+            --pm: #2563EB;
+            --pm-light: #DBEAFE;
+            --member: #059669;
+            --member-light: #D1FAE5;
+            --ops: #D97706;
+            --ops-light: #FEF3C7;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Noto Sans JP', sans-serif;
+            min-height: 100vh;
+            line-height: 1.7;
+        }
+
+        a { color: inherit; text-decoration: none; }
+
+        .header {
+            background: var(--white);
+            border-bottom: 1px solid var(--border);
+            padding: 0 2rem;
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 64px;
+        }
+
+        .logo { display: flex; align-items: center; gap: 0.5rem; }
+
+        .logo-text {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .logo-text span { color: var(--primary); }
+
+        .nav { display: flex; gap: 0.5rem; }
+
+        .nav a {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            transition: all 0.2s ease;
+        }
+
+        .nav a:hover { background: var(--primary-light); color: var(--primary); }
+        .nav a.active { background: var(--primary); color: white; }
+
+        .main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 88px 2rem 2rem;
+        }
+
+        .page-header { margin-bottom: 2rem; }
+
+        .page-eyebrow {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .page-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .page-subtitle {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 14px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg,
+                var(--innovation) 0%,
+                var(--pm) 33%,
+                var(--member) 66%,
+                var(--ops) 100%
+            );
+            border-radius: 2px;
+        }
+
+        /* Phase */
+        .phase {
+            position: relative;
+            margin-bottom: 3rem;
+        }
+
+        .phase-dot {
+            position: absolute;
+            left: -2.65rem;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 4px solid var(--white);
+            z-index: 1;
+        }
+
+        .phase.p1 .phase-dot { background: var(--innovation); box-shadow: 0 0 0 3px var(--innovation), 0 0 12px rgba(124, 58, 237, 0.3); }
+        .phase.p2 .phase-dot { background: var(--pm); box-shadow: 0 0 0 3px var(--pm), 0 0 12px rgba(37, 99, 235, 0.3); }
+        .phase.p3 .phase-dot { background: var(--member); box-shadow: 0 0 0 3px var(--member), 0 0 12px rgba(5, 150, 105, 0.3); }
+        .phase.p4 .phase-dot { background: var(--ops); box-shadow: 0 0 0 3px var(--ops), 0 0 12px rgba(217, 119, 6, 0.3); }
+
+        .phase-header {
+            padding: 1.5rem 2rem;
+            border-radius: 16px 16px 0 0;
+            color: white;
+        }
+
+        .phase.p1 .phase-header { background: linear-gradient(135deg, var(--innovation) 0%, #9F67FF 100%); }
+        .phase.p2 .phase-header { background: linear-gradient(135deg, var(--pm) 0%, #60A5FA 100%); }
+        .phase.p3 .phase-header { background: linear-gradient(135deg, var(--member) 0%, #34D399 100%); }
+        .phase.p4 .phase-header { background: linear-gradient(135deg, var(--ops) 0%, #FBBF24 100%); }
+
+        .phase-label {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            opacity: 0.8;
+            margin-bottom: 0.25rem;
+        }
+
+        .phase-header h2 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .phase-header p {
+            font-size: 0.85rem;
+            opacity: 0.85;
+        }
+
+        .phase-timing {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.2rem 0.6rem;
+            background: rgba(255,255,255,0.2);
+            border-radius: 4px;
+            font-size: 0.7rem;
+            margin-top: 0.75rem;
+        }
+
+        /* Phase Body */
+        .phase-body {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-top: none;
+            border-radius: 0 0 16px 16px;
+            padding: 1.5rem 2rem;
+        }
+
+        .phase-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .phase-section h3 {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        /* Task items */
+        .task-list {
+            list-style: none;
+        }
+
+        .task-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            background: #F9F9F9;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            transition: all 0.2s ease;
+        }
+
+        .task-item:hover {
+            background: var(--primary-light);
+        }
+
+        .task-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            flex-shrink: 0;
+            background: var(--white);
+        }
+
+        .task-text h4 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.1rem;
+        }
+
+        .task-text p {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* KPI */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+        }
+
+        .kpi-card {
+            text-align: center;
+            padding: 1rem;
+            background: #F9F9F9;
+            border-radius: 8px;
+        }
+
+        .kpi-value {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .phase.p1 .kpi-value { color: var(--innovation); }
+        .phase.p2 .kpi-value { color: var(--pm); }
+        .phase.p3 .kpi-value { color: var(--member); }
+        .phase.p4 .kpi-value { color: var(--ops); }
+
+        .kpi-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        /* Success Criteria */
+        .success-box {
+            background: var(--primary-light);
+            border: 1px solid var(--primary);
+            border-radius: 12px;
+            padding: 1.5rem 2rem;
+            margin-top: 1rem;
+        }
+
+        .success-box h4 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .success-box p {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Vision section */
+        .vision-section {
+            background: linear-gradient(135deg, #1E1B4B 0%, #4C1D95 100%);
+            border-radius: 16px;
+            padding: 3rem;
+            color: white;
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .vision-section h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .vision-section p {
+            font-size: 0.95rem;
+            opacity: 0.85;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .vision-metrics {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+
+        .vision-metric-value {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        .vision-metric-value span {
+            font-size: 1rem;
+            opacity: 0.7;
+        }
+
+        .vision-metric-label {
+            font-size: 0.75rem;
+            opacity: 0.7;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            border-top: 1px solid var(--border);
+            margin-top: 2rem;
+            background: var(--white);
+        }
+
+        .footer a { color: var(--primary); }
+
+        @media (max-width: 900px) {
+            .phase-grid { grid-template-columns: 1fr; }
+            .kpi-grid { grid-template-columns: 1fr 1fr; }
+            .vision-metrics { flex-direction: column; gap: 1.5rem; }
+        }
+
+        @media (max-width: 600px) {
+            .header-content { flex-direction: column; gap: 0.75rem; height: auto; padding: 0.75rem 0; }
+            .main { padding-top: 120px; }
+            .timeline { padding-left: 2rem; }
+            .phase-dot { left: -1.65rem; width: 16px; height: 16px; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <a href="index.html" class="logo">
+                <span class="logo-text">VALUE <span>BOOKS</span> OS</span>
+            </a>
+            <nav class="nav">
+                <a href="index.html">組織戦略</a>
+                <a href="teams.html">4レイヤー</a>
+                <a href="members.html">メンバー</a>
+                <a href="roadmap.html" class="active">ロードマップ</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="page-header">
+            <div class="page-eyebrow">🗺️ Evolution Roadmap</div>
+            <h1 class="page-title">ロードマップ 2026–2027</h1>
+            <p class="page-subtitle">「永久進化エンジン」を段階的に起動し、ステークホルダー所有型組織へ移行するまでの実行計画</p>
+        </div>
+
+        <div class="timeline">
+
+            <!-- ═══════════════════════════════════ -->
+            <!-- PHASE 1                             -->
+            <!-- ═══════════════════════════════════ -->
+            <div class="phase p1">
+                <div class="phase-dot"></div>
+                <div class="phase-header">
+                    <div class="phase-label">PHASE 1</div>
+                    <h2>基盤固定 ＆ PM解放宣言</h2>
+                    <p>制度の枠を作り、イノベーション推進チームを発足させる</p>
+                    <div class="phase-timing">📅 2026年 Q1–Q2（現在〜3ヶ月）</div>
+                </div>
+                <div class="phase-body">
+                    <div class="phase-grid">
+                        <div class="phase-section">
+                            <h3>🎯 主要アクション</h3>
+                            <div class="task-list">
+                                <div class="task-item">
+                                    <div class="task-icon">🏗️</div>
+                                    <div class="task-text">
+                                        <h4>イノベーション推進チーム発足</h4>
+                                        <p>中村 + システム3名 + 経営人材2名の体制を確立</p>
+                                    </div>
+                                </div>
+                                <div class="task-item">
+                                    <div class="task-icon">🤖</div>
+                                    <div class="task-text">
+                                        <h4>AI開発環境の完全整備</h4>
+                                        <p>Cursor / RAG基盤 / AIツールを整備し、10倍速の開発体制へ</p>
+                                    </div>
+                                </div>
+                                <div class="task-item">
+                                    <div class="task-icon">📋</div>
+                                    <div class="task-text">
+                                        <h4>PMのタスク棚卸し</h4>
+                                        <p>10名のPMが「何に時間を使っているか」をAIで分析</p>
+                                    </div>
+                                </div>
+                                <div class="task-item">
+                                    <div class="task-icon">🎓</div>
+                                    <div class="task-text">
+                                        <h4>「卒業基準」のモデルケース作成</h4>
+                                        <p>1つの既存PJを対象に「PMが完全に抜ける状態」を実証</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="phase-section">
+                            <h3>📊 達成指標（KPI）</h3>
+                            <div class="kpi-grid">
+                                <div class="kpi-card">
+                                    <div class="kpi-value">1</div>
+                                    <div class="kpi-label">卒業モデルケース完成</div>
+                                </div>
+                                <div class="kpi-card">
+                                    <div class="kpi-value">10</div>
+                                    <div class="kpi-label">PMタスク棚卸し完了</div>
+                                </div>
+                                <div class="kpi-card">
+                                    <div class="kpi-value">100%</div>
+                                    <div class="kpi-label">AI開発環境整備率</div>
+                                </div>
+                                <div class="kpi-card">
+                                    <div class="kpi-value">発足</div>
+                                    <div class="kpi-label">イノベーション室稼働</div>
+                                </div>
+                            </div>
+                            <div class="success-box" style="margin-top: 1rem;">
+                                <h4>✅ Phase 1 完了の定義</h4>
+                                <p>「これが卒業の定義だ」と背中を見せるモデルケースが1件完成し、全PMが自分のプロジェクトの卒業プランを提出している状態。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══════════════════════════════════ -->
+            <!-- PHASE 2                             -->
+            <!-- ═══════════════════════════════════ -->
+            <div class="phase p2">
+                <div class="phase-dot"></div>
+                <div class="phase-header">
+                    <div class="phase-label">PHASE 2</div>
+                    <h2>パイプライン稼働 ＆ PMの流動化</h2>
+                    <p>月1で新規PJを「納品」し、最初のPM卒業生を輩出する</p>
+                    <div class="phase-timing">📅 2026年 Q3（4ヶ月〜6ヶ月）</div>
+                </div>
+                <div class="phase-body">
+                    <div class="phase-grid">
+                        <div class="phase-section">
+                            <h3>🎯 主要アクション</h3>
+                            <div class="task-list">
+                                <div class="task-item">
+                                    <div class="task-icon">🚀</div>
+                                    <div class="task-text">
+                                        <h4>月1ペースで新規PJ「納品」</h4>
+                                        <p>イノベーション室が動くプロトタイプを毎月PMに引き渡し</p>
+                                    </div>
+                                </div>
+                                <div class="task-item">
+                                    <div class="task-icon">🎓</div>
+                                    <div class="task-text">
+                                        <h4>最初のPM「卒業生」輩出</h4>
+                                        <p>最もシステム化が進んだPJから卒業→新規PJへアサイン</p>
+                                    </div>
+                                </div>
+                                <div class="task-item">
+                                    <div class="task-icon">📚</div>
+                                    <div class="task-text">
+                                        <h4>RAG/AIナレッジ移行の実証</h4>
+                                        <p>PMの判断基準をAIに移植し、現場が自律的に動けることを確認</p>
+                                    </div>
+                                </div>
+                                <div class="task-item">
+                                    <div class="task-icon">📣</div>
+                                    <div class="task-text">
+                                        <h4>PMへ「自律化ミッション」発令</h4>
+                                        <p>「半年以内に自分を不要にする仕組みを作れ」をミッションに</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="phase-section">
+                            <h3>📊 達成指標（KPI）</h3>
+                            <div class="kpi-grid">
+                                <div class="kpi-card">
+                                    <div class="kpi-value">3+</div>
+                                    <div class="kpi-label">新規PJ納品数</div>
+                                </div>
+                                <div class="kpi-card">
+                                    <div class="kpi-value">1+</div>
+                                    <div class="kpi-label">PM卒業生数</div>
+                                </div>
+                                <div class="kpi-card">
+                                    <div class="kpi-value">50%</div>
+                                    <div class="kpi-label">RAG移行率</div>
+                                </div>
+                                <div class="kpi-card">
+                                    <div class="kpi-value">10</div>
+                                    <div class="kpi-label">自律化プラン提出</div>
+                                </div>
+                            </div>
+                            <div class="success-box" style="margin-top: 1rem;">
+                                <h4>✅ Phase 2 完了の定義</h4>
+                                <p>「仕事を抱え込むより、手放したほうが面白い仕事ができる」という成功体験が1件以上生まれている。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══════════════════════════════════ -->
+            <!-- PHASE 3                             -->
+            <!-- ═══════════════════════════════════ -->
+            <div class="phase p3">
+                <div class="phase-dot"></div>
+                <div class="phase-header">
+                    <div class="phase-label">PHASE 3</div>
+                    <h2>拡大と自動化</h2>
+                    <p>組織の流動化を本格化し、倉庫フルオートメーションを加速</p>
+                    <div class="phase-timing">📅 2026年 Q4（7ヶ月〜12ヶ月）</div>
+                </div>
+                <div class="phase-body">
+                    <div class="phase-grid">
+                        <div class="phase-section">
+                            <h3>🎯 主要アクション</h3>
+                            <div class="task-list">
+                                <div class="task-item">
+                                    <div class="task-icon">🏭</div>
+                                    <div class="task-text">
+                                        <h4>倉庫フルオートメーション加速</h4>
+                                        <p>AIシミュレーション結果を物理的な「維持」へ転換</p>
+                                    </div>
+                                </div>
+                                <div class="task-item">
+                                    <div class="task-icon">💰</div>
+                                    <div class="task-text">
+                                        <h4>利益構造の固定化</h4>
+                                        <p>効率化による利益をステークホルダー還元のルールに組み込み</p>
+                                    </div>
+                                </div>
+                                <div class="task-item">
+                                    <div class="task-icon">🔄</div>
+                                    <div class="task-text">
+                                        <h4>組織の流動化本格化</h4>
+                                        <p>複数のPM卒業 → 新規PJアサインの循環が定常化</p>
+                                    </div>
+                                </div>
+                                <div class="task-item">
+                                    <div class="task-icon">🌱</div>
+                                    <div class="task-text">
+                                        <h4>「卒業→新PJ」の文化定着</h4>
+                                        <p>成功事例を社内で共有し、組織カルチャーとして根付かせる</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="phase-section">
+                            <h3>📊 達成指標（KPI）</h3>
+                            <div class="kpi-grid">
+                                <div class="kpi-card">
+                                    <div class="kpi-value">5+</div>
+                                    <div class="kpi-label">PM卒業生累計</div>
+                                </div>
+                                <div class="kpi-card">
+                                    <div class="kpi-value">30%↓</div>
+                                    <div class="kpi-label">倉庫コスト削減</div>
+                                </div>
+                                <div class="kpi-card">
+                                    <div class="kpi-value">80%</div>
+                                    <div class="kpi-label">PJ自律化率</div>
+                                </div>
+                                <div class="kpi-card">
+                                    <div class="kpi-value">月1</div>
+                                    <div class="kpi-label">PJ循環ペース</div>
+                                </div>
+                            </div>
+                            <div class="success-box" style="margin-top: 1rem;">
+                                <h4>✅ Phase 3 完了の定義</h4>
+                                <p>組織が「代謝」を始めている。新規PJの創出→自律化→維持→次の創出というサイクルが自然に回っている状態。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══════════════════════════════════ -->
+            <!-- PHASE 4                             -->
+            <!-- ═══════════════════════════════════ -->
+            <div class="phase p4">
+                <div class="phase-dot"></div>
+                <div class="phase-header">
+                    <div class="phase-label">PHASE 4</div>
+                    <h2>自律進化型組織 ＆ ステークホルダー所有</h2>
+                    <p>経営者の完全解放と、「全員が所有者」の組織形態へ</p>
+                    <div class="phase-timing">📅 2027年〜</div>
+                </div>
+                <div class="phase-body">
+                    <div class="phase-grid">
+                        <div class="phase-section">
+                            <h3>🎯 主要アクション</h3>
+                            <div class="task-list">
+                                <div class="task-item">
+                                    <div class="task-icon">🌐</div>
+                                    <div class="task-text">
+                                        <h4>ステークホルダー所有型への移行</h4>
+                                        <p>従業員・地域が株主となり、「維持される」ことが全員の利益に</p>
+                                    </div>
+                                </div>
+                                <div class="task-item">
+                                    <div class="task-icon">🧠</div>
+                                    <div class="task-text">
+                                        <h4>プロジェクトの「代謝」AI判断</h4>
+                                        <p>収益性やコストをAIが判断し、統廃合を提案する仕組み</p>
+                                    </div>
+                                </div>
+                                <div class="task-item">
+                                    <div class="task-icon">👑</div>
+                                    <div class="task-text">
+                                        <h4>経営者の完全解放</h4>
+                                        <p>現場の「維持」が完璧に回り、中村代表はAIとの「拡張」に100%没頭</p>
+                                    </div>
+                                </div>
+                                <div class="task-item">
+                                    <div class="task-icon">🎯</div>
+                                    <div class="task-text">
+                                        <h4>300億（100-100-100）の実現</h4>
+                                        <p>古本100億・新刊100億・MD100億の3本柱を確立</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="phase-section">
+                            <h3>📊 達成指標（KPI）</h3>
+                            <div class="kpi-grid">
+                                <div class="kpi-card">
+                                    <div class="kpi-value">300<span>億</span></div>
+                                    <div class="kpi-label">売上目標</div>
+                                </div>
+                                <div class="kpi-card">
+                                    <div class="kpi-value">100%</div>
+                                    <div class="kpi-label">PJ自律化率</div>
+                                </div>
+                                <div class="kpi-card">
+                                    <div class="kpi-value">所有</div>
+                                    <div class="kpi-label">ステークホルダー型</div>
+                                </div>
+                                <div class="kpi-card">
+                                    <div class="kpi-value">∞</div>
+                                    <div class="kpi-label">永久進化エンジン</div>
+                                </div>
+                            </div>
+                            <div class="success-box" style="margin-top: 1rem;">
+                                <h4>✅ Phase 4 完了の定義</h4>
+                                <p>バリューブックスが「永久進化エンジン」として自律的に動き、中村代表がAIと共に「次のバリューブックスの定義」を書き換える拡張作業に100%没頭できている状態。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Vision Banner -->
+        <div class="vision-section">
+            <h2>AI時代の「人間的幸福」を本とMDで実装する</h2>
+            <p>人間とルールベースが一度形を作ってしまえば「現状」となり維持する。<br>その性質を利用して、構想→実装→維持→次の構想を高速で回し、拡大速度を上げる。</p>
+            <div class="vision-metrics">
+                <div>
+                    <div class="vision-metric-value">100<span>億</span></div>
+                    <div class="vision-metric-label">古本</div>
+                </div>
+                <div>
+                    <div class="vision-metric-value">100<span>億</span></div>
+                    <div class="vision-metric-label">新刊</div>
+                </div>
+                <div>
+                    <div class="vision-metric-value">100<span>億</span></div>
+                    <div class="vision-metric-label">MD</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>VALUE BOOKS OS — Perpetual Evolution Engine | <a href="index.html">組織戦略に戻る</a></p>
+    </footer>
+</body>
+</html>
