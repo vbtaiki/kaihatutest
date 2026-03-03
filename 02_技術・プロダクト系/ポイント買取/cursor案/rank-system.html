@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ランクシステム | VALUE BOOKS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .header {
+            background-color: #fff;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .version-badge {
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            color: white;
+            padding: 0.35rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 2rem;
+        }
+
+        .current-rank {
+            background: linear-gradient(135deg, #c0c0c0 0%, #e0e0e0 100%);
+            border-radius: 16px;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .current-rank::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(180deg); }
+        }
+
+        .rank-badge {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 1.5rem;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+            position: relative;
+            z-index: 1;
+        }
+
+        .rank-title {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #333;
+            position: relative;
+            z-index: 1;
+        }
+
+        .rank-subtitle {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .points-display {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #d68000;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .points-label {
+            font-size: 1rem;
+            color: #666;
+            position: relative;
+            z-index: 1;
+        }
+
+        .progress-section {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .progress-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .progress-bar-container {
+            background: #f0f0f0;
+            height: 40px;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #00a0e9 0%, #0088cc 100%);
+            border-radius: 20px;
+            transition: width 1s ease-out;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 1rem;
+            color: white;
+            font-weight: bold;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.95rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .next-rank-box {
+            background: linear-gradient(135deg, #fffbea 0%, #fff9e6 100%);
+            border: 2px solid #ffd700;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .next-rank-box strong {
+            color: #d68000;
+            font-size: 1.2rem;
+        }
+
+        .ranks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .rank-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            text-align: center;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .rank-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        }
+
+        .rank-card.current {
+            border: 3px solid #00a0e9;
+        }
+
+        .rank-card.locked {
+            opacity: 0.6;
+        }
+
+        .rank-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .rank-name {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .rank-requirement {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+
+        .rank-benefits {
+            text-align: left;
+            font-size: 0.9rem;
+        }
+
+        .benefit-item {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .benefit-item:last-child {
+            border-bottom: none;
+        }
+
+        .benefits-summary {
+            background: linear-gradient(135deg, #e6f7ff 0%, #cceeff 100%);
+            border: 2px solid #00a0e9;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .benefits-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #0088cc;
+            margin-bottom: 1.5rem;
+        }
+
+        .benefits-list {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .benefit-box {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .benefit-icon {
+            font-size: 2.5rem;
+            flex-shrink: 0;
+        }
+
+        .benefit-content {
+            flex: 1;
+        }
+
+        .benefit-title {
+            font-weight: bold;
+            margin-bottom: 0.3rem;
+            color: #333;
+        }
+
+        .benefit-desc {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .ranks-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .points-display {
+                font-size: 2rem;
+            }
+
+            .rank-badge {
+                width: 80px;
+                height: 80px;
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <a href="../index.html" class="logo">
+                VALUE BOOKS
+                <span class="version-badge">CURSOR案</span>
+            </a>
+            <nav class="nav">
+                <a href="mypage.html">マイページ</a>
+                <a href="recommendations.html">本を探す</a>
+                <a href="rank-system.html">🏆 ランク</a>
+                <div class="point-badge">💰 21,154pt</div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div style="text-align: center; margin-bottom: 2rem;">
+            <h1 style="font-size: 2.5rem; margin-bottom: 0.5rem;">🏆 ランクシステム</h1>
+            <p style="font-size: 1.1rem; color: #666;">
+                ポイントを貯めてランクアップ！特典が増えていきます
+            </p>
+        </div>
+
+        <div class="current-rank">
+            <div class="rank-badge">🥈</div>
+            <div class="rank-title">シルバーランク</div>
+            <div class="rank-subtitle">あなたの現在のランク</div>
+            <div class="points-display">17,901pt</div>
+            <div class="points-label">累計獲得ポイント</div>
+        </div>
+
+        <div class="progress-section">
+            <div class="progress-title">
+                🎯 次のランクまで
+            </div>
+            <div class="progress-info">
+                <span>現在：17,901pt</span>
+                <span>ゴールドまで：12,099pt</span>
+            </div>
+            <div class="progress-bar-container">
+                <div class="progress-bar" style="width: 59.67%;">
+                    59.67%
+                </div>
+            </div>
+            <div class="next-rank-box">
+                あと<strong>12,099ポイント</strong>で<strong style="color: #ffd700;">ゴールドランク</strong>に！<br>
+                <span style="font-size: 0.9rem; color: #666;">
+                    本を約60冊買取に出すと達成できます
+                </span>
+            </div>
+        </div>
+
+        <div class="benefits-summary">
+            <div class="benefits-title">✨ あなたの現在の特典（シルバー）</div>
+            <div class="benefits-list">
+                <div class="benefit-box">
+                    <div class="benefit-icon">🚚</div>
+                    <div class="benefit-content">
+                        <div class="benefit-title">送料無料 年3回</div>
+                        <div class="benefit-desc">月に一度、送料無料で本を購入できます</div>
+                    </div>
+                </div>
+
+                <div class="benefit-box">
+                    <div class="benefit-icon">🎁</div>
+                    <div class="benefit-content">
+                        <div class="benefit-title">誕生月ポイント2倍</div>
+                        <div class="benefit-desc">誕生月の買取でポイントが2倍になります</div>
+                    </div>
+                </div>
+
+                <div class="benefit-box">
+                    <div class="benefit-icon">⚡</div>
+                    <div class="benefit-content">
+                        <div class="benefit-title">先行セール案内</div>
+                        <div class="benefit-desc">限定セールの24時間前にメールでお知らせ</div>
+                    </div>
+                </div>
+
+                <div class="benefit-box">
+                    <div class="benefit-icon">📧</div>
+                    <div class="benefit-content">
+                        <div class="benefit-title">専用サポート</div>
+                        <div class="benefit-desc">優先対応窓口をご利用いただけます</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2 style="font-size: 2rem; margin-bottom: 2rem; text-align: center;">
+            📊 全ランク一覧
+        </h2>
+
+        <div class="ranks-grid">
+            <div class="rank-card">
+                <div class="rank-icon">🥉</div>
+                <div class="rank-name">ブロンズ</div>
+                <div class="rank-requirement">0pt 〜 9,999pt</div>
+                <div class="rank-benefits">
+                    <div class="benefit-item">
+                        <span>✓</span>
+                        <span>基本特典</span>
+                    </div>
+                    <div class="benefit-item">
+                        <span>✓</span>
+                        <span>ポイント受け取り+10%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rank-card current">
+                <div style="position: absolute; top: 1rem; right: 1rem; background: #00a0e9; color: white; padding: 0.3rem 0.8rem; border-radius: 12px; font-size: 0.75rem; font-weight: bold;">
+                    現在
+                </div>
+                <div class="rank-icon">🥈</div>
+                <div class="rank-name">シルバー</div>
+                <div class="rank-requirement">10,000pt 〜 29,999pt</div>
+                <div class="rank-benefits">
+                    <div class="benefit-item">
+                        <span>✓</span>
+                        <span>送料無料 年3回</span>
+                    </div>
+                    <div class="benefit-item">
+                        <span>✓</span>
+                        <span>誕生月ポイント2倍</span>
+                    </div>
+                    <div class="benefit-item">
+                        <span>✓</span>
+                        <span>先行セール案内</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rank-card locked">
+                <div style="position: absolute; top: 1rem; right: 1rem; background: #999; color: white; padding: 0.3rem 0.8rem; border-radius: 12px; font-size: 0.75rem; font-weight: bold;">
+                    🔒
+                </div>
+                <div class="rank-icon">🥇</div>
+                <div class="rank-name">ゴールド</div>
+                <div class="rank-requirement">30,000pt 〜 49,999pt</div>
+                <div class="rank-benefits">
+                    <div class="benefit-item">
+                        <span>✓</span>
+                        <span>送料無料 年6回</span>
+                    </div>
+                    <div class="benefit-item">
+                        <span>✓</span>
+                        <span>ポイント有効期限延長</span>
+                    </div>
+                    <div class="benefit-item">
+                        <span>✓</span>
+                        <span>限定グッズ交換権</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rank-card locked">
+                <div style="position: absolute; top: 1rem; right: 1rem; background: #999; color: white; padding: 0.3rem 0.8rem; border-radius: 12px; font-size: 0.75rem; font-weight: bold;">
+                    🔒
+                </div>
+                <div class="rank-icon">💎</div>
+                <div class="rank-name">プラチナ</div>
+                <div class="rank-requirement">50,000pt 〜</div>
+                <div class="rank-benefits">
+                    <div class="benefit-item">
+                        <span>✓</span>
+                        <span>送料常時無料</span>
+                    </div>
+                    <div class="benefit-item">
+                        <span>✓</span>
+                        <span>ポイント受け取り+15%</span>
+                    </div>
+                    <div class="benefit-item">
+                        <span>✓</span>
+                        <span>特別イベント招待</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="background: white; border-radius: 12px; padding: 2rem; margin-bottom: 2rem;">
+            <h3 style="font-size: 1.5rem; margin-bottom: 1.5rem;">💡 ランクアップのコツ</h3>
+            <div style="display: grid; gap: 1rem;">
+                <div style="background: #f9f9f9; padding: 1.5rem; border-radius: 8px;">
+                    <div style="font-weight: bold; margin-bottom: 0.5rem;">1. 定期的に買取に出す</div>
+                    <div style="font-size: 0.9rem; color: #666;">
+                        読み終わった本を定期的に買取に出すことで、着実にポイントが貯まります
+                    </div>
+                </div>
+                <div style="background: #f9f9f9; padding: 1.5rem; border-radius: 8px;">
+                    <div style="font-weight: bold; margin-bottom: 0.5rem;">2. ポイント受け取りを選択</div>
+                    <div style="font-size: 0.9rem; color: #666;">
+                        現金振込よりポイント受け取りの方が+10%お得で、早くランクアップできます
+                    </div>
+                </div>
+                <div style="background: #f9f9f9; padding: 1.5rem; border-radius: 8px;">
+                    <div style="font-weight: bold; margin-bottom: 0.5rem;">3. 誕生月を活用</div>
+                    <div style="font-size: 0.9rem; color: #666;">
+                        シルバー以上なら誕生月はポイント2倍！まとめて買取に出すチャンスです
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; background: white; border-radius: 12px; padding: 3rem 2rem;">
+            <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">🚀 もっとポイントを貯めよう</h3>
+            <p style="font-size: 1rem; color: #666; margin-bottom: 2rem;">
+                読み終わった本はありませんか？<br>
+                今すぐ買取に出して、ランクアップを目指しましょう！
+            </p>
+            <a href="offer.html" style="display: inline-block; background: linear-gradient(135deg, #00a0e9 0%, #0088cc 100%); color: white; padding: 1.2rem 3rem; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 1.1rem; box-shadow: 0 4px 12px rgba(0, 160, 233, 0.3); transition: all 0.3s;">
+                買取を申し込む
+            </a>
+        </div>
+    </div>
+
+    <footer style="text-align: center; padding: 2rem; color: #666;">
+        <p>&copy; 2026 VALUE BOOKS ALL RIGHTS RESERVED.</p>
+    </footer>
+</body>
+</html>
+

@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>買取申込完了 | VALUE BOOKS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .header {
+            background-color: #fff;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .version-badge {
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            color: white;
+            padding: 0.35rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+        }
+
+        .success-banner {
+            background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+            color: white;
+            padding: 3rem 2rem;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(76, 175, 80, 0.3);
+        }
+
+        .success-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: bounce 1s ease-in-out;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .success-title {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .success-message {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        .point-preview {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            border: 3px solid #ff6b35;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(255, 215, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .point-preview::before {
+            content: '🎁';
+            position: absolute;
+            font-size: 10rem;
+            opacity: 0.1;
+            top: -2rem;
+            right: -2rem;
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .point-preview-label {
+            font-size: 0.95rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        .point-preview-amount {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #d68000;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .point-preview-note {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .bonus-section {
+            background: linear-gradient(135deg, #e6f7ff 0%, #cceeff 100%);
+            border: 2px solid #00a0e9;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .bonus-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #0088cc;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .bonus-items {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .bonus-item {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .bonus-icon {
+            font-size: 2.5rem;
+            flex-shrink: 0;
+        }
+
+        .bonus-content {
+            flex: 1;
+        }
+
+        .bonus-content-title {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+            color: #333;
+        }
+
+        .bonus-content-desc {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .bonus-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #d68000;
+            flex-shrink: 0;
+        }
+
+        .cta-section {
+            display: grid;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .cta-button {
+            padding: 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: white;
+        }
+
+        .cta-button.primary {
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+        }
+
+        .cta-button.primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
+        }
+
+        .cta-button.secondary {
+            background: linear-gradient(135deg, #00a0e9 0%, #0088cc 100%);
+            box-shadow: 0 4px 12px rgba(0, 160, 233, 0.3);
+        }
+
+        .cta-button.secondary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 160, 233, 0.4);
+        }
+
+        .info-box {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .info-title {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .info-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .info-list li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .info-list li:last-child {
+            border-bottom: none;
+        }
+
+        .social-proof {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .social-proof-icon {
+            font-size: 2rem;
+        }
+
+        .social-proof-text {
+            flex: 1;
+            font-size: 0.95rem;
+            color: #856404;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .point-preview-amount {
+                font-size: 2rem;
+            }
+
+            .success-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <a href="../index.html" class="logo">
+                VALUE BOOKS
+                <span class="version-badge">CURSOR案</span>
+            </a>
+            <nav class="nav">
+                <a href="mypage.html">マイページ</a>
+                <a href="recommendations.html">本を探す</a>
+                <a href="rank-system.html">🏆 ランク</a>
+                <div class="point-badge">💰 21,154pt</div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="success-banner">
+            <div class="success-icon">🎉</div>
+            <div class="success-title">買取申込が完了しました！</div>
+            <div class="success-message">
+                ご指定の日時に集荷に伺います<br>
+                査定完了までしばらくお待ちください
+            </div>
+        </div>
+
+        <div class="social-proof">
+            <div class="social-proof-icon">👥</div>
+            <div class="social-proof-text">
+                <strong>85%のユーザーがポイント受け取りを選択しています</strong><br>
+                先月2,450人が買取ポイントで新しい本を購入しました
+            </div>
+        </div>
+
+        <div class="point-preview">
+            <div class="point-preview-label">獲得予定ポイント（査定完了後に確定）</div>
+            <div class="point-preview-amount">約 21,154pt</div>
+            <div class="point-preview-note">
+                ※実際の査定結果により変動する場合があります<br>
+                <span style="color: #d68000; font-weight: bold;">ソクフリ+ポイント受け取りで+30%！</span>
+            </div>
+        </div>
+
+        <div class="bonus-section">
+            <div class="bonus-title">
+                🎁 特別ボーナス
+            </div>
+            <div class="bonus-items">
+                <div class="bonus-item">
+                    <div class="bonus-icon">⚡</div>
+                    <div class="bonus-content">
+                        <div class="bonus-content-title">ソクフリボーナス</div>
+                        <div class="bonus-content-desc">査定結果確認なしで+10%！</div>
+                    </div>
+                    <div class="bonus-value">+1,627pt</div>
+                </div>
+
+                <div class="bonus-item">
+                    <div class="bonus-icon">💰</div>
+                    <div class="bonus-content">
+                        <div class="bonus-content-title">ポイント受け取りボーナス</div>
+                        <div class="bonus-content-desc">現金振込より+20%お得！</div>
+                    </div>
+                    <div class="bonus-value">+3,254pt</div>
+                </div>
+
+                <div class="bonus-item">
+                    <div class="bonus-icon">🎁</div>
+                    <div class="bonus-content">
+                        <div class="bonus-content-title">初回購入ボーナス</div>
+                        <div class="bonus-content-desc">ポイントで初めて購入すると追加でもらえる！</div>
+                    </div>
+                    <div class="bonus-value">+1,000pt</div>
+                </div>
+
+                <div class="bonus-item" style="background: linear-gradient(135deg, #fff9e6 0%, #fff3cd 100%);">
+                    <div class="bonus-icon">🎉</div>
+                    <div class="bonus-content">
+                        <div class="bonus-content-title">合計獲得可能ポイント</div>
+                        <div class="bonus-content-desc">査定完了＋初回購入で</div>
+                    </div>
+                    <div class="bonus-value" style="font-size: 2rem;">22,154pt</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="cta-section">
+            <a href="reserve-cart.html" class="cta-button primary">
+                <span>🛒 今すぐ欲しい本を予約する</span>
+                <span>→</span>
+            </a>
+            <a href="recommendations.html" class="cta-button secondary">
+                <span>📚 あなたにおすすめの本を見る</span>
+                <span>→</span>
+            </a>
+        </div>
+
+        <div style="background: #e8f5e9; border-left: 4px solid #4caf50; padding: 1.5rem; border-radius: 4px; margin-bottom: 2rem;">
+            <div style="font-weight: bold; margin-bottom: 0.5rem; color: #2e7d32;">
+                💡 査定前でも本を予約できます！
+            </div>
+            <div style="font-size: 0.9rem; color: #1b5e20;">
+                予約カート機能を使えば、査定が完了する前に欲しい本をカートに入れておけます。<br>
+                査定完了後、自動でポイントが使えるようになります。
+            </div>
+        </div>
+
+        <div class="info-box">
+            <div class="info-title">📋 申込内容</div>
+            <ul class="info-list">
+                <li>
+                    <span>申込日</span>
+                    <span>2026年1月7日</span>
+                </li>
+                <li>
+                    <span>集荷予定日</span>
+                    <span>2026年1月10日 18時〜21時</span>
+                </li>
+                <li>
+                    <span>個数</span>
+                    <span>1個</span>
+                </li>
+                <li>
+                    <span>受取方法</span>
+                    <span style="color: #00a0e9; font-weight: bold;">ポイント受け取り（+10%）</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="info-box">
+            <div class="info-title">📧 今後の流れ</div>
+            <ul class="info-list">
+                <li>
+                    <span>1. 集荷</span>
+                    <span>指定日時に伺います</span>
+                </li>
+                <li>
+                    <span>2. 査定</span>
+                    <span>到着後2〜5営業日</span>
+                </li>
+                <li>
+                    <span>3. 結果通知</span>
+                    <span>メールでお知らせ</span>
+                </li>
+                <li>
+                    <span>4. ポイント付与</span>
+                    <span>即座にご利用可能</span>
+                </li>
+            </ul>
+        </div>
+
+        <div style="text-align: center; padding: 2rem; background: white; border-radius: 8px;">
+            <p style="color: #666; margin-bottom: 1rem;">
+                ご不明な点がございましたら、お気軽にお問い合わせください
+            </p>
+            <a href="../index.html" style="color: #00a0e9; text-decoration: none; font-weight: bold;">
+                トップページに戻る →
+            </a>
+        </div>
+    </div>
+
+    <footer style="text-align: center; padding: 2rem; color: #666;">
+        <p>&copy; 2026 VALUE BOOKS ALL RIGHTS RESERVED.</p>
+    </footer>
+</body>
+</html>
+

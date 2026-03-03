@@ -1,0 +1,73 @@
+# MacOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Thumbnails
+._*
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.aDbk
+
+# Editor files
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# Cursor specific
+.cursor/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Backup files
+*.bak
+*.backup
+*_backup.md
+
+# Private notes (if you want to keep some notes private)
+# PRIVATE_*.md
+# *_PRIVATE.md
+
+# Build/Output files (if you generate PDF/EPUB later)
+output/
+build/
+dist/
+*.pdf
+*.epub
+*.mobi
+
+# Node modules (if you use any JavaScript tools)
+node_modules/
+
+# Python (if you use any Python scripts)
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+env/
+
+# Log files
+*.log
+
+# OS generated files
+Thumbs.db
+ehthumbs.db
+

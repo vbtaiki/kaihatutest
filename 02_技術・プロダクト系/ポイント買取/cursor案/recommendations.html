@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>あなたへのおすすめ | VALUE BOOKS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .header {
+            background-color: #fff;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .version-badge {
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            color: white;
+            padding: 0.35rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+
+        .nav {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .nav a {
+            color: #666;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .nav a:hover {
+            color: #00a0e9;
+        }
+
+        .point-badge {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            color: #d68000;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 16px;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .book-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .book-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        .book-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .book-cover {
+            background: #e0e0e0;
+            height: 300px;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+
+        .book-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .book-author {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .book-price {
+            color: #00a0e9;
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #00a0e9 0%, #0088cc 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 160, 233, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <a href="../index.html" class="logo">
+                VALUE BOOKS
+                <span class="version-badge">CURSOR案</span>
+            </a>
+            <nav class="nav">
+                <a href="mypage.html">マイページ</a>
+                <a href="recommendations.html">本を探す</a>
+                <a href="rank-system.html">🏆 ランク</a>
+                <div class="point-badge">💰 21,154pt</div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="hero">
+            <h1>📚 あなたへのおすすめ</h1>
+            <p style="font-size: 1.2rem; opacity: 0.95;">
+                現在 <strong style="font-size: 1.5rem;">21,154ポイント</strong> をご利用いただけます
+            </p>
+        </div>
+
+        <h2 style="font-size: 1.8rem; margin-bottom: 2rem;">🎯 AIが選んだあなたにぴったりの本</h2>
+
+        <div class="book-grid">
+            <div class="book-card">
+                <div class="book-cover">📘</div>
+                <div class="book-title">ビジネス思考の教科書</div>
+                <div class="book-author">山田 太郎 著</div>
+                <div class="book-price">1,680pt</div>
+                <a href="quick-purchase.html" class="btn">ワンクリック購入</a>
+            </div>
+
+            <div class="book-card">
+                <div class="book-cover">📗</div>
+                <div class="book-title">デザインパターン入門</div>
+                <div class="book-author">佐藤 花子 著</div>
+                <div class="book-price">2,180pt</div>
+                <a href="quick-purchase.html" class="btn">ワンクリック購入</a>
+            </div>
+
+            <div class="book-card">
+                <div class="book-cover">📙</div>
+                <div class="book-title">データサイエンス実践</div>
+                <div class="book-author">鈴木 一郎 著</div>
+                <div class="book-price">2,980pt</div>
+                <a href="quick-purchase.html" class="btn">ワンクリック購入</a>
+            </div>
+
+            <div class="book-card">
+                <div class="book-cover">📕</div>
+                <div class="book-title">マーケティング戦略論</div>
+                <div class="book-author">田中 美咲 著</div>
+                <div class="book-price">1,980pt</div>
+                <a href="quick-purchase.html" class="btn">ワンクリック購入</a>
+            </div>
+
+            <div class="book-card">
+                <div class="book-cover">📔</div>
+                <div class="book-title">プロジェクトマネジメント</div>
+                <div class="book-author">高橋 健太 著</div>
+                <div class="book-price">2,480pt</div>
+                <a href="quick-purchase.html" class="btn">ワンクリック購入</a>
+            </div>
+
+            <div class="book-card">
+                <div class="book-cover">📒</div>
+                <div class="book-title">人生を変える読書術</div>
+                <div class="book-author">渡辺 恵子 著</div>
+                <div class="book-price">1,480pt</div>
+                <a href="quick-purchase.html" class="btn">ワンクリック購入</a>
+            </div>
+        </div>
+
+        <div style="text-align: center;">
+            <a href="mypage.html" style="display: inline-block; background: white; border: 2px solid #00a0e9; color: #00a0e9; padding: 1rem 2rem; border-radius: 8px; text-decoration: none; font-weight: bold; margin-right: 1rem;">
+                マイページへ
+            </a>
+            <a href="offer.html" style="display: inline-block; background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%); color: white; padding: 1rem 2rem; border-radius: 8px; text-decoration: none; font-weight: bold;">
+                もっと本を売る
+            </a>
+        </div>
+    </div>
+
+    <footer style="text-align: center; padding: 3rem 1rem; color: #666;">
+        <p>&copy; 2026 VALUE BOOKS ALL RIGHTS RESERVED.</p>
+    </footer>
+</body>
+</html>
+

@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>買取サービスの進行状況 | VALUE BOOKS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .header {
+            background-color: #fff;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .version-badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.35rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+
+        .nav {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .nav a {
+            color: #666;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .nav a:hover {
+            color: #00a0e9;
+        }
+
+        .point-badge {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            color: #d68000;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .banner {
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            padding: 2rem;
+            text-align: center;
+            color: white;
+        }
+
+        .banner h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .banner p {
+            font-size: 1rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .breadcrumb {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .breadcrumb a {
+            color: #00a0e9;
+            text-decoration: none;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 2rem;
+        }
+
+        .sidebar {
+            background-color: #fff;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            height: fit-content;
+        }
+
+        .sidebar h3 {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+        }
+
+        .sidebar-nav li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .sidebar-nav li.active {
+            background-color: #00a0e9;
+            color: white;
+            margin: 0 -1.5rem;
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+        }
+
+        .sidebar-nav a {
+            text-decoration: none;
+            color: #333;
+            font-size: 0.9rem;
+        }
+
+        .sidebar-nav li.active a {
+            color: white;
+        }
+
+        .content {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+        }
+
+        .progress-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+        }
+
+        .progress-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            position: relative;
+        }
+
+        .progress-step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            top: 25px;
+            left: 60%;
+            width: 80%;
+            height: 3px;
+            background-color: #e0e0e0;
+        }
+
+        .progress-step.completed::after {
+            background-color: #00a0e9;
+        }
+
+        .progress-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .progress-step.completed .progress-icon {
+            background-color: #00a0e9;
+            color: white;
+        }
+
+        .progress-step.active .progress-icon {
+            background-color: #00a0e9;
+            color: white;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 0 0 0 rgba(0, 160, 233, 0.7);
+            }
+            50% {
+                box-shadow: 0 0 0 10px rgba(0, 160, 233, 0);
+            }
+        }
+
+        .progress-label {
+            font-size: 0.85rem;
+            text-align: center;
+            color: #666;
+        }
+
+        .progress-step.active .progress-label {
+            color: #00a0e9;
+            font-weight: bold;
+        }
+
+        .info-section {
+            background-color: #fafafa;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+
+        .info-section h2 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            color: #333;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 150px 1fr;
+            gap: 1rem;
+        }
+
+        .info-label {
+            font-weight: 500;
+            color: #666;
+        }
+
+        .info-value {
+            color: #333;
+        }
+
+        .summary-box {
+            background: linear-gradient(135deg, #e6f7ff 0%, #cceeff 100%);
+            border: 2px solid #00a0e9;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+
+        .summary-box h2 {
+            font-size: 1.2rem;
+            color: #0088cc;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .summary-item {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 1rem;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .summary-label {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        .summary-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #0088cc;
+        }
+
+        .point-info {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-top: 1rem;
+        }
+
+        .point-info strong {
+            color: #d68000;
+        }
+
+        .message-box {
+            background-color: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-top: 2rem;
+        }
+
+        .message-box p {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            color: #666;
+            font-size: 0.85rem;
+        }
+
+        /* ポイント変更オファー */
+        .point-offer-banner {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            border: 3px solid #ff6b35;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(255, 107, 53, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .point-offer-banner::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -5%;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .point-offer-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .point-offer-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #d32f2f;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .urgent-badge {
+            background-color: #d32f2f;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            animation: blink 1.5s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .deadline-timer {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .deadline-label {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 0.3rem;
+        }
+
+        .deadline-time {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #d32f2f;
+            font-family: 'Courier New', monospace;
+        }
+
+        .point-offer-content {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .point-offer-content h3 {
+            color: #d68000;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .benefit-list {
+            list-style: none;
+            margin-bottom: 1rem;
+        }
+
+        .benefit-list li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            color: #333;
+            font-size: 0.95rem;
+        }
+
+        .benefit-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #4caf50;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .bonus-calculation {
+            background-color: #fff3cd;
+            border-left: 4px solid #ff6b35;
+            padding: 1rem;
+            margin-top: 1rem;
+            border-radius: 4px;
+        }
+
+        .bonus-calculation-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .bonus-calculation-row.total {
+            border-top: 2px solid #ff6b35;
+            padding-top: 0.5rem;
+            margin-top: 0.5rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #d68000;
+        }
+
+        .point-offer-actions {
+            display: flex;
+            gap: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .change-to-point-btn {
+            flex: 1;
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            color: white;
+            padding: 1.2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+        }
+
+        .change-to-point-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
+        }
+
+        .change-to-point-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .dismiss-btn {
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #666;
+            padding: 1.2rem 2rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .dismiss-btn:hover {
+            background-color: #f5f5f5;
+            border-color: #999;
+        }
+
+        /* フローティングサイドオファー */
+        .floating-side-offer {
+            position: fixed;
+            right: 2rem;
+            bottom: 2rem;
+            width: 320px;
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(255, 107, 53, 0.4);
+            z-index: 1000;
+            animation: slideInRight 0.5s ease-out;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .floating-side-offer.hidden {
+            display: none;
+        }
+
+        .floating-close-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: rgba(255, 255, 255, 0.3);
+            border: none;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            line-height: 1;
+            transition: all 0.3s;
+        }
+
+        .floating-close-btn:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        .floating-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .floating-deadline {
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #d32f2f;
+            padding: 0.5rem;
+            border-radius: 6px;
+            text-align: center;
+            margin-bottom: 1rem;
+            font-weight: bold;
+        }
+
+        .floating-benefit {
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 0.8rem;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .floating-cta-btn {
+            width: 100%;
+            background-color: white;
+            color: #ff6b35;
+            padding: 1rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .floating-cta-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        @media (max-width: 1024px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                display: none;
+            }
+
+            .floating-side-offer {
+                right: 1rem;
+                bottom: 1rem;
+                width: calc(100% - 2rem);
+                max-width: 320px;
+            }
+        }
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .content {
+                padding: 1rem;
+            }
+
+            .progress-bar {
+                padding: 1rem;
+            }
+
+            .progress-label {
+                font-size: 0.75rem;
+            }
+
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <a href="../index.html" class="logo">
+                VALUE BOOKS
+                <span class="version-badge">オリジナル案</span>
+            </a>
+            <nav class="nav">
+                <a href="mypage.html">マイページ</a>
+                <a href="recommendations.html">本を探す</a>
+                <a href="rank-system.html">🏆 ランク</a>
+                <div class="point-badge">💰 21,154pt</div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="banner">
+        <h2>🎉 新春大宴王キャンペーン</h2>
+        <p>キャンペーン期間：2026.1.1-1.31 | お買い物ごとにチャンス！合計30,000ポイントが当たる</p>
+    </div>
+
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="#">TOP</a> > <a href="#">マイページ</a> > 買取の状況
+        </div>
+
+        <div class="main-content">
+            <aside class="sidebar">
+                <h3>お知らせ</h3>
+                <ul class="sidebar-nav">
+                    <li class="active"><a href="#">買取サービス</a></li>
+                </ul>
+                <h3 style="margin-top: 2rem;">買取の状況</h3>
+                <ul class="sidebar-nav">
+                    <li><a href="#">買取履歴</a></li>
+                    <li><a href="#">本人情報</a></li>
+                    <li><a href="#">身分証登録</a></li>
+                    <li><a href="#">口座情報登録</a></li>
+                </ul>
+                <h3 style="margin-top: 2rem;">購入サービス</h3>
+                <ul class="sidebar-nav">
+                    <li><a href="#">注文履歴</a></li>
+                    <li><a href="#">登録情報（お届け/お支払い方法）</a></li>
+                </ul>
+                <h3 style="margin-top: 2rem;">会員情報</h3>
+                <ul class="sidebar-nav">
+                    <li><a href="#">メールアドレスの変更</a></li>
+                    <li><a href="#">パスワードの変更</a></li>
+                    <li><a href="#">ニックネームの登録・変更</a></li>
+                    <li><a href="#">ポイント確認</a></li>
+                    <li><a href="#">ソーシャルID連携</a></li>
+                    <li><a href="#">メール配信設定</a></li>
+                    <li><a href="#">ログアウト</a></li>
+                </ul>
+            </aside>
+
+            <main class="content">
+                <h1>買取サービスの進行状況</h1>
+
+                <div class="progress-bar">
+                    <div class="progress-step completed">
+                        <div class="progress-icon">✓</div>
+                        <div class="progress-label">お申込み・梱包</div>
+                    </div>
+                    <div class="progress-step active">
+                        <div class="progress-icon">📦</div>
+                        <div class="progress-label">商品買査・査定</div>
+                    </div>
+                    <div class="progress-step">
+                        <div class="progress-icon">📋</div>
+                        <div class="progress-label">査定結果報告</div>
+                    </div>
+                    <div class="progress-step">
+                        <div class="progress-icon">🎉</div>
+                        <div class="progress-label">お振込</div>
+                    </div>
+                </div>
+
+                <div class="info-section">
+                    <h2>買取の状況</h2>
+                    <div class="info-grid">
+                        <div class="info-label">お申込み日</div>
+                        <div class="info-value">2025年09月21日(日)</div>
+                    </div>
+                    <div style="height: 1rem;"></div>
+                    <div class="info-grid">
+                        <div class="info-label">買取ナンバー</div>
+                        <div class="info-value">K25090122163</div>
+                    </div>
+                </div>
+
+                <!-- ポイント変更オファーバナー -->
+                <div class="point-offer-banner" id="pointOfferBanner">
+                    <div class="point-offer-header">
+                        <div class="point-offer-title">
+                            🎁 まだ間に合います！
+                            <span class="urgent-badge">期間限定</span>
+                        </div>
+                        <div class="deadline-timer">
+                            <div class="deadline-label">変更期限</div>
+                            <div class="deadline-time" id="deadlineTimer">1月10日 10:00</div>
+                        </div>
+                    </div>
+                    
+                    <div class="point-offer-content">
+                        <h3>💰 ポイント受け取りに変更して+10%ボーナスGET！</h3>
+                        <ul class="benefit-list">
+                            <li>買取金額が<strong>+10%増額</strong>されます</li>
+                            <li>振込手数料が<strong>不要</strong>になります</li>
+                            <li>すぐに使える！次回のお買い物に利用可能</li>
+                            <li>送料の支払いにも使えます</li>
+                        </ul>
+                        
+                        <div class="bonus-calculation">
+                            <div style="font-weight: bold; margin-bottom: 0.5rem; color: #d68000;">
+                                あなたの買取金額でシミュレーション：
+                            </div>
+                            <div class="bonus-calculation-row">
+                                <span>現金振込（現在の選択）</span>
+                                <span>16,273円</span>
+                            </div>
+                            <div class="bonus-calculation-row">
+                                <span>振込手数料</span>
+                                <span style="color: #d32f2f;">-200円</span>
+                            </div>
+                            <div class="bonus-calculation-row">
+                                <span>実際の受取額</span>
+                                <span><strong>16,073円</strong></span>
+                            </div>
+                            <div style="height: 1rem; border-bottom: 1px dashed #ccc;"></div>
+                            <div class="bonus-calculation-row" style="color: #4caf50; margin-top: 0.5rem;">
+                                <span>ソクフリ（+10%）+ ポイント受け取り（+20%）</span>
+                                <span><strong>21,154ポイント</strong></span>
+                            </div>
+                            <div class="bonus-calculation-row total">
+                                <span>差額</span>
+                                <span style="color: #d68000;">+1,828円分お得！</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="point-offer-actions">
+                        <button class="change-to-point-btn" onclick="changeToPoint()">
+                            🎉 今すぐポイント受け取りに変更する
+                        </button>
+                        <button class="dismiss-btn" onclick="dismissOffer()">
+                            現金振込のまま
+                        </button>
+                    </div>
+                </div>
+
+                <div class="message-box">
+                    <p><strong>お詫びとお手続きはもう完了しています。</strong></p>
+                    <p>この度は、ありがとうございました。またのご利用をお待ちしております。</p>
+                </div>
+
+                <!-- おすすめ本バナー -->
+                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; padding: 2rem; margin: 2rem 0; color: white; box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);">
+                    <div style="display: flex; align-items: center; justify-content: space-between; gap: 2rem;">
+                        <div style="flex: 1;">
+                            <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem; color: white;">📚 あなたのために本を選びました</h3>
+                            <p style="font-size: 1rem; margin-bottom: 1rem; opacity: 0.95;">
+                                買取いただいた本から、あなたの関心に合わせたおすすめの本をAIが厳選しました。<br>
+                                獲得した<strong style="font-size: 1.2rem; color: #ffd700;">21,154ポイント</strong>で今すぐ購入できます！
+                            </p>
+                            <button onclick="window.location.href='recommendations.html'" style="background-color: white; color: #667eea; padding: 1rem 2rem; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
+                                おすすめの本を見る →
+                            </button>
+                        </div>
+                        <div style="font-size: 5rem; opacity: 0.3;">📖</div>
+                    </div>
+                </div>
+
+                <div class="summary-box">
+                    <h2>💰 買取内容</h2>
+                    <div class="summary-grid">
+                        <div class="summary-item">
+                            <div class="summary-label">査定点数</div>
+                            <div class="summary-value">117冊</div>
+                        </div>
+                        <div class="summary-item">
+                            <div class="summary-label">買取点数</div>
+                            <div class="summary-value">103冊</div>
+                        </div>
+                        <div class="summary-item">
+                            <div class="summary-label">獲得ポイント</div>
+                            <div class="summary-value">21,154pt</div>
+                        </div>
+                    </div>
+                    <div class="point-info">
+                        <p>
+                            <strong>🎁 ソクフリ×ポイント受取をお選びいただきありがとうございます！</strong><br>
+                            通常の買取金額 16,273円 に <strong>+30%上乗せ</strong> されて、<br>
+                            <strong style="font-size: 1.2rem; color: #d68000;">21,154ポイント</strong> が付与されました！（+4,881ポイントお得！）
+                        </p>
+                        <p style="margin-top: 1rem; font-size: 0.9rem;">
+                            ポイントはバリューブックスでの本の購入や送料のお支払いにご利用いただけます。<br>
+                            マイページの「ポイント確認」から現在のポイント残高をご確認いただけます。
+                        </p>
+                    </div>
+                </div>
+
+                <div class="info-section">
+                    <h2>📖 本人情報</h2>
+                    <p style="color: #666; font-size: 0.9rem; margin-bottom: 1rem;">
+                        この情報は既に登録済みです。
+                    </p>
+                </div>
+
+                <div class="info-section">
+                    <h2>💳 身分証登録</h2>
+                    <p style="color: #666; font-size: 0.9rem; margin-bottom: 1rem;">
+                        この情報は既に登録済みです。
+                    </p>
+                </div>
+
+                <div class="info-section">
+                    <h2>🏦 口座情報登録</h2>
+                    <p style="color: #00a0e9; font-size: 0.9rem; font-weight: 500;">
+                        ※ポイント受取を選択されたため、口座情報の登録は不要です。
+                    </p>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <div style="background: white; border-radius: 8px; padding: 2rem; margin: 2rem auto; max-width: 1000px; text-align: center;">
+        <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">🎉 ポイントが確定しました！</h3>
+        <p style="color: #666; margin-bottom: 1.5rem;">
+            獲得した<strong style="color: #d68000;">21,154ポイント</strong>で、今すぐ本を購入できます
+        </p>
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+            <a href="recommendations.html" style="background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%); color: white; padding: 1.2rem 2.5rem; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 1.1rem;">
+                おすすめの本を見る
+            </a>
+            <a href="mypage.html" style="background: white; border: 2px solid #00a0e9; color: #00a0e9; padding: 1.2rem 2.5rem; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 1.1rem;">
+                マイページへ
+            </a>
+            <a href="offer.html" style="background: white; border: 2px solid #00a0e9; color: #00a0e9; padding: 1.2rem 2.5rem; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 1.1rem;">
+                もっと本を売る
+            </a>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; VALUE BOOKS ALL RIGHTS RESERVED.</p>
+    </footer>
+
+    <!-- フローティングサイドオファー -->
+    <div class="floating-side-offer" id="floatingSideOffer">
+        <button class="floating-close-btn" onclick="closeFloatingOffer()">×</button>
+        <div class="floating-title">⏰ 期間限定オファー</div>
+        <div class="floating-deadline">
+            残り時間: <span id="floatingTimer">2日 14時間</span>
+        </div>
+        <div class="floating-benefit">
+            <strong>ポイント受け取り</strong>なら<br>
+            <span style="font-size: 1.3rem; color: white;">+1,828円分</span><br>
+            お得になります！
+        </div>
+        <button class="floating-cta-btn" onclick="scrollToOffer()">
+            詳細を見る
+        </button>
+    </div>
+
+    <script>
+        // 期限のカウントダウン
+        function updateCountdown() {
+            const deadline = new Date('2026-01-10T10:00:00');
+            const now = new Date();
+            const diff = deadline - now;
+            
+            if (diff <= 0) {
+                document.getElementById('deadlineTimer').textContent = '期限切れ';
+                document.getElementById('floatingTimer').textContent = '期限切れ';
+                return;
+            }
+            
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            
+            document.getElementById('floatingTimer').textContent = 
+                `${days}日 ${hours}時間 ${minutes}分`;
+        }
+        
+        // 1分ごとに更新
+        setInterval(updateCountdown, 60000);
+        updateCountdown();
+        
+        // ポイント受け取りに変更
+        function changeToPoint() {
+            if (confirm('買取金額の受け取り方法を「ポイント受け取り」に変更しますか？\n\n変更後は、21,154ポイントが付与されます（ソクフリ+ポイント受け取りで+30%ボーナス込み）')) {
+                // ここで実際のAPIコールを行う
+                alert('✅ ポイント受け取りに変更しました！\n\n21,154ポイントが付与されます。\nポイントはマイページの「ポイント確認」からご確認いただけます。');
+                
+                // オファーバナーを非表示
+                document.getElementById('pointOfferBanner').style.display = 'none';
+                document.getElementById('floatingSideOffer').classList.add('hidden');
+                
+                // ページをリロード（実際にはサーバーからの更新データを取得）
+                location.reload();
+            }
+        }
+        
+        // オファーを却下
+        function dismissOffer() {
+            if (confirm('現金振込のままで手続きを進めますか？\n\nポイント受け取りなら+1,828円分お得になります。')) {
+                document.getElementById('pointOfferBanner').style.display = 'none';
+                document.getElementById('floatingSideOffer').classList.add('hidden');
+            }
+        }
+        
+        // フローティングオファーを閉じる
+        function closeFloatingOffer() {
+            document.getElementById('floatingSideOffer').classList.add('hidden');
+        }
+        
+        // オファー位置までスクロール
+        function scrollToOffer() {
+            document.getElementById('pointOfferBanner').scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'center' 
+            });
+            // スクロール後に少し強調表示
+            const banner = document.getElementById('pointOfferBanner');
+            banner.style.animation = 'none';
+            setTimeout(() => {
+                banner.style.animation = 'pulse 1s ease-in-out 2';
+            }, 10);
+        }
+        
+        // スクロールに応じてフローティングオファーを表示/非表示
+        let lastScrollTop = 0;
+        window.addEventListener('scroll', function() {
+            const floatingOffer = document.getElementById('floatingSideOffer');
+            const offerBanner = document.getElementById('pointOfferBanner');
+            
+            if (!offerBanner || offerBanner.style.display === 'none') {
+                return;
+            }
+            
+            const bannerRect = offerBanner.getBoundingClientRect();
+            const isVisible = bannerRect.top < window.innerHeight && bannerRect.bottom >= 0;
+            
+            if (!isVisible && !floatingOffer.classList.contains('hidden')) {
+                // バナーが見えない場合はフローティングを表示
+                floatingOffer.style.display = 'block';
+            } else if (isVisible) {
+                // バナーが見える場合はフローティングを非表示
+                floatingOffer.style.display = 'none';
+            }
+        }, { passive: true });
+    </script>
+</body>
+</html>
+

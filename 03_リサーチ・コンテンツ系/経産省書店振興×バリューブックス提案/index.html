@@ -1,0 +1,1593 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>書店活性化への提案 — バリューブックスの取り組みと海外事例</title>
+<script src="https://cdn.jsdelivr.net/npm/@twemoji/api@latest/dist/twemoji.min.js" crossorigin="anonymous"></script>
+<style>
+  img.emoji {
+    height: 1.2em;
+    width: 1.2em;
+    margin: 0 .05em 0 .1em;
+    vertical-align: -0.15em;
+  }
+  :root {
+    --primary: #1a3a5c;
+    --primary-light: #2c5f8a;
+    --accent: #c0392b;
+    --accent-light: #e74c3c;
+    --bg: #f8f9fa;
+    --bg-white: #ffffff;
+    --text: #2c3e50;
+    --text-light: #5a6c7d;
+    --border: #dee2e6;
+    --success: #27ae60;
+    --warning: #f39c12;
+    --info: #3498db;
+    --section-gap: 100px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", sans-serif;
+    color: var(--text);
+    background: var(--bg);
+    line-height: 1.8;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ===== Navigation ===== */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(26, 58, 92, 0.97);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  nav .nav-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+  }
+  nav .nav-logo {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+  nav .nav-links {
+    display: flex;
+    gap: 4px;
+    list-style: none;
+  }
+  nav .nav-links a {
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+    font-size: 13px;
+    padding: 8px 14px;
+    border-radius: 6px;
+    transition: all 0.2s;
+  }
+  nav .nav-links a:hover,
+  nav .nav-links a.active {
+    color: #fff;
+    background: rgba(255,255,255,0.12);
+  }
+
+  /* ===== Hero ===== */
+  .hero {
+    background: linear-gradient(135deg, var(--primary) 0%, #0d2137 100%);
+    color: #fff;
+    padding: 140px 24px 100px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .hero-content {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 6px 20px;
+    border-radius: 100px;
+    font-size: 13px;
+    letter-spacing: 1px;
+    margin-bottom: 28px;
+    color: rgba(255,255,255,0.9);
+  }
+  .hero h1 {
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 800;
+    line-height: 1.4;
+    margin-bottom: 24px;
+    letter-spacing: -0.5px;
+  }
+  .hero h1 em {
+    font-style: normal;
+    color: #f9ca24;
+  }
+  .hero p {
+    font-size: 17px;
+    line-height: 1.9;
+    color: rgba(255,255,255,0.8);
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  /* ===== Sections ===== */
+  section {
+    padding: var(--section-gap) 24px;
+  }
+  .container {
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+  .section-label {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--primary-light);
+    margin-bottom: 12px;
+    background: rgba(44, 95, 138, 0.08);
+    padding: 4px 14px;
+    border-radius: 4px;
+  }
+  .section-title {
+    font-size: clamp(24px, 3.2vw, 36px);
+    font-weight: 800;
+    line-height: 1.4;
+    margin-bottom: 16px;
+    color: var(--primary);
+  }
+  .section-lead {
+    font-size: 16px;
+    color: var(--text-light);
+    line-height: 1.9;
+    max-width: 720px;
+    margin-bottom: 48px;
+  }
+
+  /* ===== Crisis Section ===== */
+  .crisis-bg {
+    background: var(--bg-white);
+  }
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin-bottom: 48px;
+  }
+  .stat-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px 24px;
+    text-align: center;
+  }
+  .stat-card .stat-number {
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--accent);
+    line-height: 1.2;
+  }
+  .stat-card .stat-number.positive {
+    color: var(--success);
+  }
+  .stat-card .stat-unit {
+    font-size: 16px;
+    color: var(--text-light);
+    margin-top: 2px;
+  }
+  .stat-card .stat-label {
+    font-size: 14px;
+    color: var(--text-light);
+    margin-top: 8px;
+    line-height: 1.5;
+  }
+
+  .comparison-row {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 24px;
+    align-items: center;
+    margin: 40px 0;
+  }
+  .comparison-card {
+    background: var(--bg);
+    border-radius: 12px;
+    padding: 32px;
+    text-align: center;
+    border: 2px solid var(--border);
+  }
+  .comparison-card.negative { border-color: var(--accent); }
+  .comparison-card.positive { border-color: var(--success); }
+  .comparison-vs {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--text-light);
+  }
+  .comparison-flag {
+    font-size: 40px;
+    margin-bottom: 8px;
+  }
+  .comparison-number {
+    font-size: 32px;
+    font-weight: 800;
+  }
+  .comparison-card.negative .comparison-number { color: var(--accent); }
+  .comparison-card.positive .comparison-number { color: var(--success); }
+
+  /* ===== Cause Section ===== */
+  .cause-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+    margin-top: 40px;
+  }
+  .cause-card {
+    background: var(--bg-white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 32px;
+    border-left: 4px solid var(--accent);
+  }
+  .cause-card h4 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: var(--primary);
+  }
+  .cause-card p {
+    font-size: 15px;
+    color: var(--text-light);
+    line-height: 1.8;
+  }
+
+  /* ===== World Section ===== */
+  .world-bg { background: var(--bg-white); }
+  .country-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+  }
+  .country-tab {
+    padding: 10px 20px;
+    border: 2px solid var(--border);
+    border-radius: 100px;
+    background: var(--bg-white);
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.2s;
+    color: var(--text-light);
+  }
+  .country-tab:hover { border-color: var(--primary-light); color: var(--primary); }
+  .country-tab.active {
+    background: var(--primary);
+    color: #fff;
+    border-color: var(--primary);
+  }
+  .country-content { display: none; }
+  .country-content.active { display: block; }
+
+  .country-detail {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+  .country-detail-main {
+    background: var(--bg);
+    border-radius: 12px;
+    padding: 32px;
+  }
+  .country-detail-main h4 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: var(--primary);
+  }
+  .country-detail-side {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .country-insight {
+    background: var(--bg);
+    border-radius: 12px;
+    padding: 24px;
+    border-left: 4px solid var(--info);
+  }
+  .country-insight h5 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--info);
+    margin-bottom: 8px;
+  }
+  .country-insight p {
+    font-size: 14px;
+    color: var(--text-light);
+    line-height: 1.7;
+  }
+
+  .key-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 14px;
+  }
+  .key-table th {
+    text-align: left;
+    padding: 10px 12px;
+    background: rgba(26, 58, 92, 0.06);
+    font-weight: 600;
+    color: var(--primary);
+    border-bottom: 2px solid var(--border);
+  }
+  .key-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  /* ===== METI Section ===== */
+  .meti-bg { background: #f0f4f8; }
+  .meti-timeline {
+    position: relative;
+    padding-left: 40px;
+    margin: 40px 0;
+  }
+  .meti-timeline::before {
+    content: '';
+    position: absolute;
+    left: 15px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--primary-light);
+  }
+  .meti-event {
+    position: relative;
+    margin-bottom: 28px;
+    padding-left: 20px;
+  }
+  .meti-event::before {
+    content: '';
+    position: absolute;
+    left: -31px;
+    top: 8px;
+    width: 12px;
+    height: 12px;
+    background: var(--primary);
+    border-radius: 50%;
+    border: 3px solid var(--bg);
+    box-shadow: 0 0 0 2px var(--primary-light);
+  }
+  .meti-event-date {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--primary-light);
+    margin-bottom: 4px;
+  }
+  .meti-event-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--primary);
+  }
+  .meti-event-desc {
+    font-size: 14px;
+    color: var(--text-light);
+    margin-top: 4px;
+    line-height: 1.6;
+  }
+
+  .meti-needs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-top: 40px;
+  }
+  .meti-need {
+    background: var(--bg-white);
+    border-radius: 12px;
+    padding: 28px;
+    border: 1px solid var(--border);
+  }
+  .meti-need-icon {
+    font-size: 28px;
+    margin-bottom: 12px;
+  }
+  .meti-need h4 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 8px;
+  }
+  .meti-need p {
+    font-size: 14px;
+    color: var(--text-light);
+    line-height: 1.7;
+  }
+
+  /* ===== Solution Section ===== */
+  .solution-bg { background: var(--bg-white); }
+  .solution-pillars {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin: 48px 0;
+  }
+  .pillar {
+    background: var(--bg);
+    border-radius: 16px;
+    padding: 36px 28px;
+    border: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .pillar::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+  }
+  .pillar:nth-child(1)::before { background: var(--accent); }
+  .pillar:nth-child(2)::before { background: var(--info); }
+  .pillar:nth-child(3)::before { background: var(--success); }
+  .pillar-number {
+    font-size: 48px;
+    font-weight: 800;
+    color: rgba(26, 58, 92, 0.08);
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+  .pillar h4 {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 12px;
+  }
+  .pillar p {
+    font-size: 14px;
+    color: var(--text-light);
+    line-height: 1.8;
+    margin-bottom: 20px;
+  }
+  .pillar-ref {
+    font-size: 12px;
+    color: var(--info);
+    font-weight: 600;
+    padding: 6px 12px;
+    background: rgba(52, 152, 219, 0.08);
+    border-radius: 6px;
+    display: inline-block;
+  }
+
+  /* ===== Margin Improvement ===== */
+  .margin-chart {
+    display: flex;
+    align-items: end;
+    gap: 32px;
+    justify-content: center;
+    margin: 48px 0;
+    padding: 40px;
+    background: var(--bg);
+    border-radius: 16px;
+  }
+  .margin-bar-group {
+    text-align: center;
+    flex: 1;
+    max-width: 200px;
+  }
+  .margin-bar {
+    width: 100%;
+    border-radius: 8px 8px 0 0;
+    transition: height 0.6s ease;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 40px;
+  }
+  .margin-bar span {
+    color: #fff;
+    font-size: 20px;
+    font-weight: 800;
+  }
+  .margin-bar-label {
+    margin-top: 12px;
+    font-size: 13px;
+    color: var(--text-light);
+    line-height: 1.5;
+  }
+
+  /* ===== Mapping Section ===== */
+  .mapping-bg { background: #f0f4f8; }
+  .mapping-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 14px;
+    background: var(--bg-white);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  }
+  .mapping-table thead th {
+    background: var(--primary);
+    color: #fff;
+    padding: 16px 20px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+  }
+  .mapping-table tbody td {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+    line-height: 1.6;
+  }
+  .mapping-table tbody tr:last-child td { border-bottom: none; }
+  .mapping-table tbody tr:hover { background: rgba(52, 152, 219, 0.03); }
+  .mapping-tag {
+    display: inline-block;
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 100px;
+    font-weight: 600;
+    margin-top: 4px;
+  }
+  .mapping-tag.de { background: #fef3cd; color: #856404; }
+  .mapping-tag.us { background: #d4edda; color: #155724; }
+  .mapping-tag.kr { background: #d1ecf1; color: #0c5460; }
+  .mapping-tag.uk { background: #f8d7da; color: #721c24; }
+  .mapping-tag.fr { background: #e2d5f1; color: #4a235a; }
+
+  /* ===== Proposal Section ===== */
+  .proposal-bg { background: var(--bg-white); }
+  .proposal-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;
+    margin: 40px 0;
+  }
+  .proposal-card {
+    border: 2px solid var(--border);
+    border-radius: 16px;
+    padding: 36px;
+    position: relative;
+  }
+  .proposal-card-label {
+    position: absolute;
+    top: -14px;
+    left: 24px;
+    background: var(--primary);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 16px;
+    border-radius: 100px;
+    letter-spacing: 1px;
+  }
+  .proposal-card h4 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 12px;
+    margin-top: 4px;
+  }
+  .proposal-card p {
+    font-size: 14px;
+    color: var(--text-light);
+    line-height: 1.8;
+    margin-bottom: 20px;
+  }
+  .proposal-metric {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+  }
+  .proposal-metric-label { color: var(--text-light); }
+  .proposal-metric-value { font-weight: 700; color: var(--primary); }
+
+  /* ===== Strength Section ===== */
+  .strength-bg { background: linear-gradient(135deg, var(--primary) 0%, #0d2137 100%); color: #fff; }
+  .strength-bg .section-label { color: rgba(255,255,255,0.6); background: rgba(255,255,255,0.1); }
+  .strength-bg .section-title { color: #fff; }
+  .strength-bg .section-lead { color: rgba(255,255,255,0.7); }
+
+  .strength-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-top: 40px;
+  }
+  .strength-item {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    padding: 28px;
+  }
+  .strength-item-icon {
+    font-size: 32px;
+    margin-bottom: 12px;
+  }
+  .strength-item h4 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .strength-item p {
+    font-size: 14px;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.7;
+  }
+
+  /* ===== Quote ===== */
+  .quote-block {
+    background: var(--bg);
+    border-left: 4px solid var(--primary);
+    padding: 28px 32px;
+    margin: 32px 0;
+    border-radius: 0 12px 12px 0;
+  }
+  .quote-block p {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--primary);
+    line-height: 1.8;
+  }
+  .quote-block cite {
+    display: block;
+    margin-top: 8px;
+    font-size: 13px;
+    color: var(--text-light);
+    font-style: normal;
+  }
+
+  /* ===== CTA ===== */
+  .cta-section {
+    background: var(--bg-white);
+    text-align: center;
+    padding: 80px 24px;
+    border-top: 1px solid var(--border);
+  }
+  .cta-section h2 {
+    font-size: clamp(22px, 3vw, 32px);
+    font-weight: 800;
+    color: var(--primary);
+    margin-bottom: 16px;
+  }
+  .cta-section p {
+    font-size: 16px;
+    color: var(--text-light);
+    line-height: 1.8;
+    max-width: 640px;
+    margin: 0 auto 32px;
+  }
+
+  /* ===== Footer ===== */
+  footer {
+    background: var(--primary);
+    color: rgba(255,255,255,0.6);
+    padding: 40px 24px;
+    text-align: center;
+    font-size: 13px;
+    line-height: 1.8;
+  }
+  footer a { color: rgba(255,255,255,0.8); }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 768px) {
+    nav .nav-links { display: none; }
+    .comparison-row { grid-template-columns: 1fr; gap: 12px; }
+    .comparison-vs { display: none; }
+    .country-detail { grid-template-columns: 1fr; }
+    .solution-pillars { grid-template-columns: 1fr; }
+    .margin-chart { flex-direction: column; align-items: center; }
+    .margin-bar-group { max-width: 100%; }
+    .margin-bar { height: auto !important; padding: 16px; }
+  }
+
+  /* ===== Scroll Animation ===== */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ===== World Comparison Table ===== */
+  .world-table-wrap {
+    overflow-x: auto;
+    margin: 40px 0;
+    border-radius: 12px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  }
+  .world-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    background: var(--bg-white);
+    min-width: 700px;
+  }
+  .world-table thead th {
+    background: var(--primary);
+    color: #fff;
+    padding: 14px 16px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 13px;
+  }
+  .world-table thead th:first-child { text-align: left; }
+  .world-table tbody td {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+    text-align: center;
+    vertical-align: middle;
+  }
+  .world-table tbody td:first-child { text-align: left; font-weight: 600; }
+  .world-table tbody tr:last-child td { border-bottom: none; }
+  .world-table tbody tr:hover { background: rgba(52,152,219,0.03); }
+  .world-table .highlight-row { background: rgba(26,58,92,0.04); }
+  .world-table .highlight-row td { font-weight: 600; }
+  .trend-up { color: var(--success); font-weight: 700; }
+  .trend-down { color: var(--accent); font-weight: 700; }
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">書店活性化への提案</div>
+    <ul class="nav-links">
+      <li><a href="#crisis">現状認識</a></li>
+      <li><a href="#world">海外事例</a></li>
+      <li><a href="#uniqueness">独自性</a></li>
+      <li><a href="#meti">経産省の取組</a></li>
+      <li><a href="#turning-point">転換点</a></li>
+      <li><a href="#solution">解決策</a></li>
+      <li><a href="#strength">なぜVBか</a></li>
+      <li><a href="#proposal">提案</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Hero -->
+<header class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">経済産業省 書店振興プロジェクト × VALUE BOOKS</div>
+    <h1>世界で書店は<em>衰退していない</em>。<br>日本でも、その<em>仕組み</em>は実現できる。</h1>
+    <p>国内の事情を踏まえつつも、海外の事例にも学び、<br>バリューブックスは時代に即した「書店のインフラ」をつくろうとしています。<br>経済産業省が求める書店活性化の課題に、正面から取り組むご提案です。</p>
+  </div>
+</header>
+
+<!-- Section 1: Crisis -->
+<section id="crisis" class="crisis-bg">
+  <div class="container">
+    <div class="fade-in">
+      <span class="section-label">現状認識</span>
+      <h2 class="section-title">日本の書店の衰退は、構造的なものである</h2>
+      <p class="section-lead">書店の衰退は、インターネットやスマートフォン、AIの普及が原因だと言われがちですが、本当にそうでしょうか。雑誌がインターネットに置き換わったのは事実です。しかし書籍に限れば、世界16カ国中12カ国で売上が増加する中、日本だけが30年間右肩下がりというのは特異な現象です。書籍の需要そのものは減少していない——問題は、需要を収益に変える構造にあると私たちは考えます。</p>
+    </div>
+
+    <div class="stat-grid fade-in">
+      <div class="stat-card">
+        <div class="stat-number">10,918</div>
+        <div class="stat-unit">店</div>
+        <div class="stat-label">現在の全国書店数<br>（10年前から3割以上減少）</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">-614</div>
+        <div class="stat-unit">店 / 年</div>
+        <div class="stat-label">年間閉店数<br>（1日1軒以上が消滅）</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">27.9%</div>
+        <div class="stat-unit"></div>
+        <div class="stat-label">書店のない市区町村<br>（全国の約4分の1）</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">22%</div>
+        <div class="stat-unit">粗利率</div>
+        <div class="stat-label">書店の粗利率<br>（経営持続に必要な30%を大幅に下回る）</div>
+      </div>
+    </div>
+
+    <div class="comparison-row fade-in">
+      <div class="comparison-card positive">
+        <div class="comparison-flag">🇺🇸</div>
+        <div>アメリカ</div>
+        <div class="comparison-number">+323店/年</div>
+        <div style="font-size:14px; color:var(--text-light); margin-top:4px;">独立系書店が爆発的に増加</div>
+      </div>
+      <div class="comparison-vs">VS</div>
+      <div class="comparison-card negative">
+        <div class="comparison-flag">🇯🇵</div>
+        <div>日本</div>
+        <div class="comparison-number">-614店/年</div>
+        <div style="font-size:14px; color:var(--text-light); margin-top:4px;">毎日1軒以上が閉店</div>
+      </div>
+    </div>
+
+    <div class="cause-cards fade-in">
+      <div class="cause-card">
+        <h4>① 流通慣行と粗利率の問題</h4>
+        <p>委託販売制度の下、書店の粗利は22〜23%に固定。再販制度によりコスト転嫁もできず、人件費・賃料の高騰を吸収できない構造が続いている。</p>
+      </div>
+      <div class="cause-card">
+        <h4>② 取次依存と配本の課題</h4>
+        <p>書店規模を優先した自動配本、注文書籍の到着の遅れ、雑誌に依存した流通形態。書店の選書権限が弱く、現場の創意工夫が活かしにくい。</p>
+      </div>
+      <div class="cause-card">
+        <h4>③ DX化の遅れ</h4>
+        <p>在庫管理のアナログ化、EC対応の遅れ、データ活用の不足。Amazonに対抗する術を持たない独立系書店が多く、オンラインとオフラインの融合が進んでいない。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Section 2: World Examples -->
+<section id="world" class="world-bg">
+  <div class="container">
+    <div class="fade-in">
+      <span class="section-label">海外事例</span>
+      <h2 class="section-title">世界にはたくさんのヒントがある</h2>
+      <p class="section-lead">アメリカ、ドイツ、韓国、イギリス、フランス——各国の成功事例は、日本の書店にも復活の道があることを示しています。特に注目すべきは、日本と近しい制度を持つ国でも成長しているという事実です。</p>
+    </div>
+
+    <div class="world-table-wrap fade-in">
+      <table class="world-table">
+        <thead>
+          <tr>
+            <th>国</th>
+            <th>流通モデル</th>
+            <th>再販制度</th>
+            <th>書店動向</th>
+            <th>粗利率</th>
+            <th>成功の鍵</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>🇺🇸 アメリカ</td>
+            <td>直取引・買切</td>
+            <td>なし</td>
+            <td class="trend-up">+323店/年</td>
+            <td>40%〜</td>
+            <td>イングラム、分権型運営</td>
+          </tr>
+          <tr>
+            <td>🇩🇪 ドイツ</td>
+            <td>買切＋IT支援</td>
+            <td><strong>あり</strong></td>
+            <td class="trend-up">成長を維持</td>
+            <td>高い</td>
+            <td>リブリ（卸＝バックオフィス）</td>
+          </tr>
+          <tr>
+            <td>🇰🇷 韓国</td>
+            <td>図書定価制</td>
+            <td>割引制限あり</td>
+            <td class="trend-up">拡大中</td>
+            <td>—</td>
+            <td>OMO戦略＋公的支援</td>
+          </tr>
+          <tr>
+            <td>🇬🇧 イギリス</td>
+            <td>買切</td>
+            <td>なし</td>
+            <td class="trend-up">復活中</td>
+            <td>35-45%</td>
+            <td>分権型運営、チャリティ文化</td>
+          </tr>
+          <tr>
+            <td>🇫🇷 フランス</td>
+            <td>買切</td>
+            <td><strong>あり</strong></td>
+            <td class="trend-up">+1.5%成長</td>
+            <td>—</td>
+            <td>年間2,010億円の公的支援</td>
+          </tr>
+          <tr class="highlight-row">
+            <td>🇯🇵 日本</td>
+            <td>委託販売</td>
+            <td><strong>あり</strong></td>
+            <td class="trend-down">-614店/年</td>
+            <td>22-23%</td>
+            <td>—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Country Details -->
+    <div class="fade-in" style="margin-top: 48px;">
+      <h3 style="font-size: 22px; font-weight: 700; color: var(--primary); margin-bottom: 24px;">各国の成功モデル詳細</h3>
+      <div class="country-tabs">
+        <button class="country-tab active" onclick="showCountry('us')">🇺🇸 アメリカ</button>
+        <button class="country-tab" onclick="showCountry('de')">🇩🇪 ドイツ</button>
+        <button class="country-tab" onclick="showCountry('kr')">🇰🇷 韓国</button>
+        <button class="country-tab" onclick="showCountry('uk')">🇬🇧 イギリス</button>
+        <button class="country-tab" onclick="showCountry('fr')">🇫🇷 フランス</button>
+      </div>
+
+      <!-- US -->
+      <div id="country-us" class="country-content active">
+        <div class="country-detail">
+          <div class="country-detail-main">
+            <h4>イングラム — 出版インフラのOS</h4>
+            <p style="font-size:14px; color:var(--text-light); line-height:1.8; margin-bottom:16px;">イングラムは単なる卸ではなく、「世界最大のオンデマンド印刷工場」と「出版社の全業務アウトソーシング先」を兼ね備えた出版業界の基盤（OS）です。</p>
+            <table class="key-table">
+              <tr><th>機能</th><th>内容</th></tr>
+              <tr><td>仮想在庫</td><td>出版社は在庫ゼロ。データを預けるだけで注文時に製造・発送</td></tr>
+              <tr><td>POD印刷</td><td>1冊から製造可能、24〜48時間で出荷</td></tr>
+              <tr><td>IngramSpark</td><td>誰でも出版社になれるプラットフォーム</td></tr>
+              <tr><td>IPS</td><td>出版社の営業・物流を全面代行</td></tr>
+            </table>
+          </div>
+          <div class="country-detail-side">
+            <div class="country-insight">
+              <h5>ジェームズ・ドーントの革命</h5>
+              <p>B&N（米最大書店チェーン）を「600の独立系書店の集合体」に変革。各店舗に選書権限を委譲し、返品率を劇的に低下させて黒字化を実現。2025年は60店の新規開業を予定。</p>
+            </div>
+            <div class="country-insight">
+              <h5>新刊×古本ハイブリッド</h5>
+              <p>Powell's BooksやTroubled Sleepなど、新刊と古本を同じ棚に並べるモデルが成功。バリューブックスの構想と同じ方向性が、米国で実証されています。</p>
+            </div>
+            <div class="country-insight">
+              <h5>独立系書店の爆発的成長</h5>
+              <p>2024年に323店が新規開業（+31%）。ABA会員は5年間で1,000店以上増加。「体験」「キュレーション」「デジタル疲れ」が追い風に。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DE -->
+      <div id="country-de" class="country-content">
+        <div class="country-detail">
+          <div class="country-detail-main">
+            <h4>リブリ — 書店のバックオフィス</h4>
+            <p style="font-size:14px; color:var(--text-light); line-height:1.8; margin-bottom:16px;">ドイツは日本と同じ再販制度を持ちながら、卸会社が「書店のIT部門・物流部門」を丸ごと代行することで、独立系書店にAmazon同等の利便性を提供しています。</p>
+            <table class="key-table">
+              <tr><th>サービス</th><th>内容</th></tr>
+              <tr><td>翌朝配送</td><td>夕方注文→翌朝到着が全国標準</td></tr>
+              <tr><td>在庫管理</td><td>書店の在庫をリアルタイムで管理</td></tr>
+              <tr><td>ECサイト構築</td><td>独立系書店にもEC機能を提供</td></tr>
+              <tr><td>データ分析</td><td>売れ筋データ・仕入れ推奨を提供</td></tr>
+              <tr><td>決済代行</td><td>出版社との精算を卸が代行</td></tr>
+            </table>
+          </div>
+          <div class="country-detail-side">
+            <div class="country-insight">
+              <h5>再販制度は言い訳にならない</h5>
+              <p>ドイツも日本と同じ定価販売制度がありますが、書店数は維持され、書籍市場は成長を維持しています。違いは「卸の役割」と「書店への権限委譲」です。</p>
+            </div>
+            <div class="country-insight">
+              <h5>日本との決定的な違い</h5>
+              <p>ドイツ：卸がITインフラを丸ごと提供 → 小さな書店でもAmazon同等の利便性。日本：各社バラバラ → 独立系書店がDX化できない。</p>
+            </div>
+            <div class="country-insight" style="border-left-color: var(--success);">
+              <h5>時限再販制（18ヶ月）</h5>
+              <p>ドイツの再販制度には期限があります。出版から18ヶ月が経過すると、出版社は定価拘束を解除でき、書店は自由に価格を設定できます。再販制度で新刊の多様性を守りつつ、時間の経過とともに書店に価格決定権を与える仕組みです。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- KR -->
+      <div id="country-kr" class="country-content">
+        <div class="country-detail">
+          <div class="country-detail-main">
+            <h4>教保文庫 — OMO戦略で復活</h4>
+            <p style="font-size:14px; color:var(--text-light); line-height:1.8; margin-bottom:16px;">韓国は2014年に図書定価制（定価の15%以内の割引のみ許可）を導入。日本とは異なる制度ですが、手厚い公的支援とOMO（Online Merges with Offline）戦略で書店が復活しています。</p>
+            <table class="key-table">
+              <tr><th>施策</th><th>内容</th></tr>
+              <tr><td>バロバロサービス</td><td>オンライン注文→1時間で店舗受取</td></tr>
+              <tr><td>出版文化産業振興法</td><td>出版を「国家知識競争力」と法的に位置づけ</td></tr>
+              <tr><td>地域書店活性化条項</td><td>自治体の書店支援に法的根拠を付与（2021年）</td></tr>
+              <tr><td>図書館×書店連携</td><td>市立図書館が地元書店から書籍を購入</td></tr>
+            </table>
+          </div>
+          <div class="country-detail-side">
+            <div class="country-insight">
+              <h5>委託販売でも復活できる</h5>
+              <p>図書定価制と手厚い公的支援の下で韓国の書店が復活した事実は、日本にも希望があることを示しています。鍵は「公的支援×OMO」の組み合わせです。</p>
+            </div>
+            <div class="country-insight">
+              <h5>アラジン：中古×新刊モデル</h5>
+              <p>韓国のアラジンは新刊販売・中古買取・中古販売を統合した「韓国版バリューブックス」。ハイブリッドモデルが韓国でも成功しています。</p>
+            </div>
+            <div class="country-insight" style="border-left-color: var(--success);">
+              <h5>プログラム支援が中心</h5>
+              <p>韓国の書店支援の特徴は、単なる補助金ではなく「プログラムへの支援」が中心であることです。出版文化産業振興院が全国の書店に対し、作家との出会い・ワークショップ・読書会などの文化プログラムを支援。また図書館が地域書店から優先的に書籍を購入する法改正（2021年）も行われ、書店が地域の文化拠点として機能する仕組みが整備されています。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- UK -->
+      <div id="country-uk" class="country-content">
+        <div class="country-detail">
+          <div class="country-detail-main">
+            <h4>ドーントの原点 — ウォーターストーンズ再建</h4>
+            <p style="font-size:14px; color:var(--text-light); line-height:1.8; margin-bottom:16px;">イギリスは1995年に再販制度を廃止し、一度はAmazonに敗北。しかし「体験で勝負する」書店が復活し、チャリティショップ文化が古本×社会貢献の成熟モデルを形成しています。</p>
+            <table class="key-table">
+              <tr><th>要素</th><th>内容</th></tr>
+              <tr><td>分権型運営</td><td>各店舗に選書・陳列の全権限を委譲</td></tr>
+              <tr><td>チャリティショップ</td><td>Oxfam Books等、古本×社会貢献文化</td></tr>
+              <tr><td>World of Books</td><td>数百万冊のオンライン古本販売</td></tr>
+            </table>
+          </div>
+          <div class="country-detail-side">
+            <div class="country-insight">
+              <h5>charibon（チャリボン）の完成形</h5>
+              <p>バリューブックスのcharibonは、イギリスで大産業となっているチャリティ×古本モデルの日本版。B Corp認証と合わせて「社会的意義のある書店インフラ」となっています。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FR -->
+      <div id="country-fr" class="country-content">
+        <div class="country-detail">
+          <div class="country-detail-main">
+            <h4>フランス — 公的支援の最高峰</h4>
+            <p style="font-size:14px; color:var(--text-light); line-height:1.8; margin-bottom:16px;">フランスは書籍を「生活必需品」として位置づけ、年間2,010億円規模の支援を行っています。日本の再販制度と同じ定価販売制度を維持しながら、政策的に書店を守る姿勢が明確です。</p>
+            <table class="key-table">
+              <tr><th>施策</th><th>内容</th></tr>
+              <tr><td>VAT軽減税率</td><td>20%→5.5%に軽減（税収減約1,090億円）</td></tr>
+              <tr><td>反アマゾン法</td><td>書籍の無料配送を法律で禁止（2014年）</td></tr>
+              <tr><td>カルチャー・パス</td><td>18歳の若者に300ユーロ（約5万円）を支給</td></tr>
+              <tr><td>SOFIA制度</td><td>図書館の書籍購入費の6%を著者・出版社に分配</td></tr>
+              <tr><td>年間支援総額</td><td>約2,010億円（2024年）</td></tr>
+            </table>
+          </div>
+          <div class="country-detail-side">
+            <div class="country-insight">
+              <h5>日本への示唆</h5>
+              <p>フランスの年間2,010億円と比較すると、日本の支援はまだ始まったばかりです。だからこそ「民間で動いている解決策」と連携することで、少ない予算でも大きな効果を出すことが重要です。</p>
+            </div>
+            <div class="country-insight" style="border-left-color: var(--success);">
+              <h5>時限再販制（2年）</h5>
+              <p>フランスのラング法（1982年〜）では、書籍の定価販売義務は出版から2年間に限定されています。公的支援と組み合わせることで、新刊の多様性を保護しつつ、市場原理とのバランスを取る仕組みが機能しています。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Section: Uniqueness -->
+<section id="uniqueness" class="crisis-bg">
+  <div class="container">
+    <div class="fade-in">
+      <span class="section-label">守るべき独自性</span>
+      <h2 class="section-title">日本の豊かな出版文化を、守りながら変革する</h2>
+      <p class="section-lead">海外に学ぶことは重要ですが、日本の出版流通制度が育んできた文化的豊かさも見落としてはなりません。変えるべきものと守るべきものの見極めが、真の書店振興につながると考えます。</p>
+    </div>
+
+    <div class="quote-block fade-in">
+      <p>日本では年間7万点以上の新刊が発行され、人口あたりの刊行点数は世界トップクラス。この多様性は、価格競争に陥らない再販制度なくしては実現し得ませんでした。</p>
+    </div>
+
+    <div class="cause-cards fade-in" style="margin-top: 40px;">
+      <div class="cause-card" style="border-left-color: var(--info);">
+        <h4>委託販売制度が支えた「書店の多様性」</h4>
+        <p>返品可能な仕組みがあるからこそ、書店は未知の著者やニッチなジャンルも棚に並べられました。個性的な品揃えを可能にしてきた一方で、返品前提の構造が書店の仕入れ力を弱め、粗利22〜23%という薄利を固定化してしまった側面もあります。</p>
+      </div>
+      <div class="cause-card" style="border-left-color: var(--info);">
+        <h4>再販制度が守った「出版の多様性」</h4>
+        <p>定価販売により価格競争が起きないからこそ、小さな出版社でもニッチなテーマや新人作家の作品を世に出せます。大手でも個人書店でも同じ価格で売れるため、書店は選書やサービスで勝負でき、年間7万点超という世界有数の出版の多様性が維持されてきました。</p>
+      </div>
+      <div class="cause-card" style="border-left-color: var(--info);">
+        <h4>取次が担った「全国流通網」</h4>
+        <p>日販・トーハンを中心とする取次は、数千の出版社と書店をつなぐ巨大な流通インフラであり、小さな出版社の本を全国に届ける仕組みは出版文化の根幹です。一方で、知の流通という役割はインターネットとネット書店に一定程度カバーされるようになり、取次の役割は原点から再定義を求められています。</p>
+      </div>
+    </div>
+
+    <div class="fade-in" style="margin-top: 48px;">
+      <div style="background: var(--bg); border-radius: 12px; padding: 32px;">
+        <h4 style="font-size: 18px; font-weight: 700; color: var(--primary); margin-bottom: 16px;">制度を否定するのではなく、時代に合った形に進化させる</h4>
+        <p style="font-size: 15px; color: var(--text-light); line-height: 1.9;">これらの制度を全否定する必要はありません。取次の流通網を維持することは多様性を守るうえで重要です。しかし、既存流通をただ維持するだけでは書店の衰退は止まりません。</p>
+        <p style="font-size: 15px; color: var(--text-light); line-height: 1.9; margin-top: 12px;">バリューブックスが提案するのは、新刊については<strong style="color: var(--primary);">買切を中心とした流通</strong>への移行です。返品が取次流通の制度疲労の大きな原因であることは自明です。買切で仕入れるからこそ、書店は目利き力を取り戻せる。自ら選び、自ら値付けし、自ら売る——その過程で粗利は改善され、経営に持続可能性が生まれます。なお、在庫リスクを考えると、ドイツ（18ヶ月）やフランス（2年）で法制化されている<strong style="color: var(--primary);">時限再販制</strong>の考え方も参考になります。一定期間は定価販売で多様性を守り、期間後は書店が柔軟に価格を設定できる仕組みです。</p>
+        <p style="font-size: 15px; color: var(--text-light); line-height: 1.9; margin-top: 12px;">そしてもう一つ、バリューブックスならではの提案が、<strong style="color: var(--primary);">古本を書店経営の新たなエンジンにする</strong>ことです。古本は再販制度の対象外であり、書店が自由に価格を決められます。長年の古本事業で培った仕入れ・査定・流通のインフラを書店に開放し、新刊の買切と古本の組み合わせで粗利改善を実現します。</p>
+        <p style="font-size: 15px; color: var(--text-light); line-height: 1.9; margin-top: 12px;">既存の取次流通を基幹として維持しつつ、そこに<strong style="color: var(--primary);">新しい選択肢を重ねる</strong>こと。それが、日本の出版文化を守りながら時代に適応するための現実的なアプローチだと考えています。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Section 3: METI -->
+<section id="meti" class="meti-bg">
+  <div class="container">
+    <div class="fade-in">
+      <span class="section-label">経済産業省の取組</span>
+      <h2 class="section-title">経産省は「構造の問題」に踏み込んでいる</h2>
+      <p class="section-lead">2024年3月に発足した「書店振興プロジェクトチーム」は、単なる商業支援ではなく、書店を「文化創造基盤」「コンテンツ産業の源泉」として位置づけ、構造的な課題解決に取り組んでいます。</p>
+    </div>
+
+    <div class="meti-timeline fade-in">
+      <div class="meti-event">
+        <div class="meti-event-date">2024年3月</div>
+        <div class="meti-event-title">書店振興プロジェクトチーム発足</div>
+        <div class="meti-event-desc">経済産業大臣直轄で設置。文科省・文化庁・公取委等と連携</div>
+      </div>
+      <div class="meti-event">
+        <div class="meti-event-date">2024年4月〜9月</div>
+        <div class="meti-event-title">車座ヒアリング実施</div>
+        <div class="meti-event-desc">全国の書店関係者から現場の声を直接収集</div>
+      </div>
+      <div class="meti-event">
+        <div class="meti-event-date">2024年10月</div>
+        <div class="meti-event-title">「書店活性化のための課題（案）」公表</div>
+        <div class="meti-event-desc">34項目の課題を整理、パブリックコメントを実施</div>
+      </div>
+      <div class="meti-event">
+        <div class="meti-event-date">2025年6月</div>
+        <div class="meti-event-title">「書店活性化プラン」公表</div>
+        <div class="meti-event-desc">関係省庁の施策を統合したプランを策定</div>
+      </div>
+      <div class="meti-event">
+        <div class="meti-event-date">2025年度〜</div>
+        <div class="meti-event-title">実証事業の開始</div>
+        <div class="meti-event-desc">令和6年度補正予算を活用し、DX化・効率化・返品率改善の実証事業を実施</div>
+      </div>
+    </div>
+
+    <h3 style="font-size: 20px; font-weight: 700; color: var(--primary); margin-bottom: 8px;" class="fade-in">経産省の課題認識から見えてくるもの</h3>
+    <div class="meti-needs fade-in">
+      <div class="meti-need">
+        <div class="meti-need-icon">📈</div>
+        <h4>粗利改善モデル</h4>
+        <p>22-23%の粗利を30%以上に引き上げる具体的かつ再現可能な方法</p>
+      </div>
+      <div class="meti-need">
+        <div class="meti-need-icon">🔄</div>
+        <h4>流通構造の改革</h4>
+        <p>取次依存から脱却する現実的な道筋と、直取引・買切への移行支援</p>
+      </div>
+      <div class="meti-need">
+        <div class="meti-need-icon">💻</div>
+        <h4>DX化の成功事例</h4>
+        <p>書店の在庫管理・EC対応・データ活用を実現する具体的なツールと事例</p>
+      </div>
+      <div class="meti-need">
+        <div class="meti-need-icon">🏘️</div>
+        <h4>地域活性化モデル</h4>
+        <p>無書店自治体の解消と、書店を地域文化拠点として再構築する方法</p>
+      </div>
+      <div class="meti-need">
+        <div class="meti-need-icon">🌍</div>
+        <h4>海外事例の日本版</h4>
+        <p>ドイツ・韓国・フランス等の成功モデルを日本で実装する具体的なパートナー</p>
+      </div>
+      <div class="meti-need">
+        <div class="meti-need-icon">🤝</div>
+        <h4>実証パートナー</h4>
+        <p>補正予算の実証事業を共に進められる、すでに動いている民間企業</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Section: Turning Point -->
+<section id="turning-point" class="solution-bg">
+  <div class="container">
+    <div class="fade-in">
+      <span class="section-label">構造の転換点</span>
+      <h2 class="section-title">「雑誌」が支えた流通を、「古本」がつなぐ未来</h2>
+      <p class="section-lead">日本の出版流通は、長らく雑誌によって支えられてきました。書店への配送網、取次の収益構造、そして書店の来店動機——その多くが雑誌の存在をエンジンとして成り立っていました。その前提が崩れつつある中で、私たちの提案は、その流通を成り立たせるエンジンを古本に切り替えることです。</p>
+    </div>
+
+    <div class="cause-cards fade-in">
+      <div class="cause-card" style="border-left-color: var(--warning);">
+        <h4>雑誌が果たしてきた役割</h4>
+        <p>雑誌は、定期的に大量に発行・配送されることで、全国津々浦々への配送網を維持する「物流の背骨」でした。書店にとっては安定した来店動機であり、取次にとっては収益の柱。出版流通の仕組みそのものが、雑誌の存在を前提に設計されていたのです。</p>
+      </div>
+      <div class="cause-card" style="border-left-color: var(--accent);">
+        <h4>雑誌衰退のインパクト</h4>
+        <p>雑誌の販売額はピーク時（1997年）の約1兆3,000億円から大幅に縮小し、書店への配送頻度は減少、地方への配送網は維持が困難になっています。雑誌という「柱」が細くなったことで、書店の収益だけでなく、出版流通のインフラそのものが揺らいでいます。</p>
+      </div>
+    </div>
+
+    <div class="fade-in" style="margin-top: 48px;">
+      <div style="background: var(--bg); border-radius: 12px; padding: 32px; border: 2px solid var(--success);">
+        <h4 style="font-size: 18px; font-weight: 700; color: var(--success); margin-bottom: 16px;">古本という「第二の柱」</h4>
+        <p style="font-size: 15px; color: var(--text-light); line-height: 1.9;">雑誌に代わって流通を支え、書店の収益構造を変えられる存在——それが<strong style="color: var(--primary);">古本</strong>です。</p>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 20px;">
+          <div style="background: var(--bg-white); border-radius: 8px; padding: 20px;">
+            <div style="font-size: 24px; margin-bottom: 8px;">📊</div>
+            <p style="font-size: 14px; font-weight: 700; color: var(--primary); margin-bottom: 4px;">成長している市場である</p>
+            <p style="font-size: 13px; color: var(--text-light); line-height: 1.7;">雑誌市場が縮小を続ける一方、リユース市場は拡大を続けています。衰退するエンジンから成長するエンジンへの切り替えは、流通を持続可能にするための合理的な選択です。</p>
+          </div>
+          <div style="background: var(--bg-white); border-radius: 8px; padding: 20px;">
+            <div style="font-size: 24px; margin-bottom: 8px;">💰</div>
+            <p style="font-size: 14px; font-weight: 700; color: var(--primary); margin-bottom: 4px;">価格決定権が書店にある</p>
+            <p style="font-size: 13px; color: var(--text-light); line-height: 1.7;">古本には再販制度が適用されません。書店が自ら値付けし、自ら売る。小売業として当たり前の価格決定権を、古本なら持つことができます。</p>
+          </div>
+          <div style="background: var(--bg-white); border-radius: 8px; padding: 20px;">
+            <div style="font-size: 24px; margin-bottom: 8px;">📈</div>
+            <p style="font-size: 14px; font-weight: 700; color: var(--primary); margin-bottom: 4px;">利益率を確保しやすい</p>
+            <p style="font-size: 13px; color: var(--text-light); line-height: 1.7;">新刊の粗利が22〜23%に固定される一方、古本は仕入れと販売価格の差を書店が自らコントロールでき、はるかに高い利益率を実現できます。</p>
+          </div>
+          <div style="background: var(--bg-white); border-radius: 8px; padding: 20px;">
+            <div style="font-size: 24px; margin-bottom: 8px;">📦</div>
+            <p style="font-size: 14px; font-weight: 700; color: var(--primary); margin-bottom: 4px;">縮小する物流にフィットする</p>
+            <p style="font-size: 13px; color: var(--text-light); line-height: 1.7;">古本はもともと多品種・小口の流通です。配送規模が縮小している現在の物流環境にむしろ適しており、大量配送を前提とした雑誌とは異なるかたちで物流を支えられます。</p>
+          </div>
+          <div style="background: var(--bg-white); border-radius: 8px; padding: 20px;">
+            <div style="font-size: 24px; margin-bottom: 8px;">🏪</div>
+            <p style="font-size: 14px; font-weight: 700; color: var(--primary); margin-bottom: 4px;">一点ものが来店動機になる</p>
+            <p style="font-size: 13px; color: var(--text-light); line-height: 1.7;">古本は同じ状態のものが二つとない一点ものです。「今ここで手に取らなければ出会えない」という希少性が、かつて雑誌が果たしていた来店動機の役割を引き継ぎます。</p>
+          </div>
+          <div style="background: var(--bg-white); border-radius: 8px; padding: 20px;">
+            <div style="font-size: 24px; margin-bottom: 8px;">🤝</div>
+            <p style="font-size: 14px; font-weight: 700; color: var(--primary); margin-bottom: 4px;">既存の業界と競合しない</p>
+            <p style="font-size: 13px; color: var(--text-light); line-height: 1.7;">古本は新刊の販売機会を奪うものではありません。むしろ「品切れ・絶版本の供給」という、新刊では対応できない需要を満たします。</p>
+          </div>
+          <div style="background: var(--bg-white); border-radius: 8px; padding: 20px;">
+            <div style="font-size: 24px; margin-bottom: 8px;">🌱</div>
+            <p style="font-size: 14px; font-weight: 700; color: var(--primary); margin-bottom: 4px;">環境に配慮できる</p>
+            <p style="font-size: 13px; color: var(--text-light); line-height: 1.7;">すでに存在する本を循環させることで、新たな資源消費や返品廃棄を抑えられます。持続可能な出版文化への貢献です。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="quote-block fade-in" style="margin-top: 40px;">
+      <p>雑誌が担ってきた「流通を支える」「書店に人を呼ぶ」「粗利を確保する」という役割を、古本が引き継ぐ。それは既存の出版業界を脅かすものではなく、失われつつあるインフラを補完する、新しい共存の形です。</p>
+    </div>
+  </div>
+</section>
+
+<!-- Section 4: Solution -->
+<section id="solution" class="solution-bg">
+  <div class="container">
+    <div class="fade-in">
+      <span class="section-label">バリューブックスの解決策</span>
+      <h2 class="section-title">経産省の課題に対して、<br>私たちにできること</h2>
+      <p class="section-lead">バリューブックスは「提案段階」ではありません。SKYPOD倉庫の導入、プロアカウントの立ち上げ、新刊販売の実行——すべてが進行中です。海外5カ国の成功要素を統合した、日本独自の書店インフラをすでに構築し始めています。</p>
+    </div>
+
+    <div class="solution-pillars fade-in">
+      <div class="pillar">
+        <div class="pillar-number">01</div>
+        <h4>物流DX基盤<br><small style="font-weight:400; font-size:14px; color:var(--text-light);">— SKYPOD倉庫</small></h4>
+        <p>3D自動倉庫SKYPODの導入により、処理能力3倍・検品作業75%削減・翌日配送を実現。独立系書店の「共有バックオフィス」として機能し、ドイツのリブリが提供するサービスを日本で再現します。</p>
+        <span class="pillar-ref">🇩🇪 ドイツ「リブリ」＋ 🇺🇸 アメリカ「イングラム」モデル</span>
+      </div>
+      <div class="pillar">
+        <div class="pillar-number">02</div>
+        <h4>エコシステム<br><small style="font-weight:400; font-size:14px; color:var(--text-light);">— プロアカウント</small></h4>
+        <p>著者・書店・出版社が高収益で直販できるプラットフォーム。パートナーに売上の70%を還元（一般書店の7倍）。在庫管理・受注・発送・決済・集客をすべてバリューブックスが代行します。</p>
+        <span class="pillar-ref">🇺🇸 Bookshop.org ＋ 🇰🇷 教保文庫モデル</span>
+      </div>
+      <div class="pillar">
+        <div class="pillar-number">03</div>
+        <h4>粗利革命<br><small style="font-weight:400; font-size:14px; color:var(--text-light);">— ハイブリッド卸</small></h4>
+        <p>新刊と古本を組み合わせたハイブリッド卸で、書店の粗利を22%→40%超に改善。Powell's Booksなど米国で実証されたモデルを、日本で初めてインフラとして提供します。</p>
+        <span class="pillar-ref">🇺🇸 Powell's Books ＋ 🇰🇷 アラジンモデル</span>
+      </div>
+    </div>
+
+    <!-- Margin Chart -->
+    <div class="fade-in">
+      <h3 style="font-size: 20px; font-weight: 700; color: var(--primary); margin-bottom: 8px; text-align:center;">粗利率の改善シミュレーション</h3>
+      <p style="text-align:center; font-size:14px; color:var(--text-light); margin-bottom: 8px;">古本を組み合わせるだけで、書店の経営持続性が劇的に改善します</p>
+      <div class="margin-chart">
+        <div class="margin-bar-group">
+          <div class="margin-bar" style="height: 110px; background: var(--accent);">
+            <span>22%</span>
+          </div>
+          <div class="margin-bar-label"><strong>現状</strong><br>新刊100%</div>
+        </div>
+        <div class="margin-bar-group">
+          <div class="margin-bar" style="height: 150px; background: linear-gradient(180deg, var(--accent) 70%, var(--success) 30%);">
+            <span>30%</span>
+          </div>
+          <div class="margin-bar-label"><strong>必要水準</strong><br>経営持続ライン</div>
+        </div>
+        <div class="margin-bar-group">
+          <div class="margin-bar" style="height: 175px; background: linear-gradient(180deg, var(--accent) 70%, var(--success) 30%);">
+            <span>35%</span>
+          </div>
+          <div class="margin-bar-label"><strong>新刊70%+古本30%</strong><br>VBハイブリッド</div>
+        </div>
+        <div class="margin-bar-group">
+          <div class="margin-bar" style="height: 200px; background: var(--success);">
+            <span>40%超</span>
+          </div>
+          <div class="margin-bar-label"><strong>新刊50%+古本50%</strong><br>VBハイブリッド</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="quote-block fade-in" style="margin-top: 48px;">
+      <p>アメリカの独立系書店復活を支えたのは「イングラム」という出版インフラ。ドイツの書店を守っているのは「リブリ」という卸のIT支援。日本にはそれがありません。バリューブックスは、その「日本版イングラム」を目指しています。</p>
+    </div>
+
+    <!-- Detailed Mapping -->
+    <div class="fade-in" style="margin-top: 64px;">
+      <h3 style="font-size: 22px; font-weight: 700; color: var(--primary); margin-bottom: 8px;">経産省の課題に対する具体的な対応</h3>
+      <p style="font-size: 14px; color: var(--text-light); margin-bottom: 24px;">上記3つの柱が、経産省が公表した書店活性化の課題にどう対応するかを一覧化しました。</p>
+    </div>
+
+    <div style="overflow-x: auto;" class="fade-in">
+      <table class="mapping-table">
+        <thead>
+          <tr>
+            <th style="width:25%;">経産省の課題</th>
+            <th style="width:40%;">バリューブックスの解決策</th>
+            <th style="width:20%;">期待される効果</th>
+            <th style="width:15%;">海外モデル</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>粗利率の低さ</strong><br>（22-23%）</td>
+            <td>古本×新刊ハイブリッド卸で粗利を改善。古本を30%混ぜるだけで粗利35%、50%で40%超に</td>
+            <td><strong>粗利率 +13〜18p</strong></td>
+            <td><span class="mapping-tag us">🇺🇸 Powell's</span><br><span class="mapping-tag kr">🇰🇷 アラジン</span></td>
+          </tr>
+          <tr>
+            <td><strong>取次依存・自動配本</strong></td>
+            <td>プロアカウントで書店が自分で選んで仕入れ。VBからの直接仕入れで取次を迂回</td>
+            <td><strong>選書権限の回復</strong></td>
+            <td><span class="mapping-tag us">🇺🇸 ドーント</span><br><span class="mapping-tag de">🇩🇪 リブリ</span></td>
+          </tr>
+          <tr>
+            <td><strong>返品率の高さ</strong></td>
+            <td>買切モデル＋データ活用で返品率を劇的に低減</td>
+            <td><strong>物流コスト削減</strong></td>
+            <td><span class="mapping-tag de">🇩🇪 買切</span></td>
+          </tr>
+          <tr>
+            <td><strong>DX化・EC対応の遅れ</strong></td>
+            <td>プロアカウントで書店にEC機能を即座に提供。SKYPOD倉庫でAI在庫管理</td>
+            <td><strong>EC売上の創出</strong></td>
+            <td><span class="mapping-tag de">🇩🇪 リブリEC</span><br><span class="mapping-tag us">🇺🇸 Bookshop</span></td>
+          </tr>
+          <tr>
+            <td><strong>人手不足・人件費高騰</strong></td>
+            <td>SKYPOD自動倉庫で処理能力3倍、人件費半減。効率をパートナー書店に還元</td>
+            <td><strong>人件費 50%削減</strong></td>
+            <td><span class="mapping-tag us">🇺🇸 イングラム</span></td>
+          </tr>
+          <tr>
+            <td><strong>配送維持困難</strong><br>（2024年問題）</td>
+            <td>埼玉倉庫から効率的なまとめ配送。送料100円の物流コスト優位性</td>
+            <td><strong>配送コスト 20%削減</strong></td>
+            <td><span class="mapping-tag de">🇩🇪 翌朝配送</span></td>
+          </tr>
+          <tr>
+            <td><strong>無書店自治体の増加</strong></td>
+            <td>プロアカウント＋低在庫モデルで低リスクの書店開業を支援</td>
+            <td><strong>新規書店開設</strong></td>
+            <td><span class="mapping-tag kr">🇰🇷 地域活性化</span></td>
+          </tr>
+          <tr>
+            <td><strong>出版社の在庫問題</strong></td>
+            <td>埼玉倉庫が「出版社の共有倉庫」に。物流・発送を一括代行</td>
+            <td><strong>在庫リスクゼロ化</strong></td>
+            <td><span class="mapping-tag us">🇺🇸 IPS</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- Section: Strength -->
+<section id="strength" class="strength-bg">
+  <div class="container">
+    <div class="fade-in">
+      <span class="section-label">なぜバリューブックスか</span>
+      <h2 class="section-title">実証パートナーに最適な7つの理由</h2>
+      <p class="section-lead">バリューブックスは「これから作る」のではなく「すでに動いている」解決策を持つ、数少ない企業の一つです。</p>
+    </div>
+
+    <div class="strength-grid fade-in">
+      <div class="strength-item">
+        <div class="strength-item-icon">⚡</div>
+        <h4>すでに動いている</h4>
+        <p>SKYPOD倉庫の導入準備、プロアカウントの立ち上げ、新刊販売戦略の実行——すべてが構想ではなく進行中の事業です。</p>
+      </div>
+      <div class="strength-item">
+        <div class="strength-item-icon">📚</div>
+        <h4>古本流通の圧倒的な事業基盤</h4>
+        <p>年間数百万冊規模の古本買取・販売を手がける、国内最大級の古本流通プレイヤー。仕入れ・査定・在庫管理・物流のインフラがすでに稼働しており、書店への古本卸をすぐに実行できる体制があります。</p>
+      </div>
+      <div class="strength-item">
+        <div class="strength-item-icon">🌍</div>
+        <h4>海外モデルの研究と統合</h4>
+        <p>米独韓英仏5カ国の成功事例を徹底研究し、日本独自の書店インフラモデルを構想。理論と実行の両方を持っています。</p>
+      </div>
+      <div class="strength-item">
+        <div class="strength-item-icon">🏪</div>
+        <h4>独立系書店の味方</h4>
+        <p>大手チェーン向けのブックセラーズ＆カンパニーとは異なり、経産省が最も支援したい独立系書店・中小出版社にリーチできます。</p>
+      </div>
+      <div class="strength-item">
+        <div class="strength-item-icon">🏅</div>
+        <h4>B Corp認証の信頼</h4>
+        <p>世界が認めた「社会に良い企業」の証明。charibonの実績と合わせ、書店支援を「社会的事業」として位置づけられます。</p>
+      </div>
+      <div class="strength-item">
+        <div class="strength-item-icon">📊</div>
+        <h4>日本最大級のデータ</h4>
+        <p>古本市場のデータを日本最大級で保有。「どの本が中古市場で高騰しているか＝需要があるのに絶版」というインサイトを提供できます。</p>
+      </div>
+      <div class="strength-item">
+        <div class="strength-item-icon">📺</div>
+        <h4>メディアの発信力</h4>
+        <p>積読チャンネル・本の惑星など強力なメディアを保有。実証事業の成果発信や、書店文化への関心喚起を担えます。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Section 6: Proposal -->
+<section id="proposal" class="proposal-bg">
+  <div class="container">
+    <div class="fade-in">
+      <span class="section-label">具体的な提案</span>
+      <h2 class="section-title">3つの連携シナリオ</h2>
+      <p class="section-lead">バリューブックスが経産省の書店活性化に貢献できる、具体的な連携の形をご提案します。</p>
+    </div>
+
+    <div class="proposal-cards fade-in">
+      <div class="proposal-card">
+        <span class="proposal-card-label">提案 A</span>
+        <h4>書店粗利改善モデル事業</h4>
+        <p>独立系書店3〜5店にバリューブックスから古本を卸売し、粗利改善効果を実証。プロアカウントによるEC機能の提供効果も併せて検証します。</p>
+        <div class="proposal-metric">
+          <span class="proposal-metric-label">実証期間</span>
+          <span class="proposal-metric-value">9ヶ月（3フェーズ）</span>
+        </div>
+        <div class="proposal-metric">
+          <span class="proposal-metric-label">粗利率目標</span>
+          <span class="proposal-metric-value">22% → 35%以上</span>
+        </div>
+        <div class="proposal-metric">
+          <span class="proposal-metric-label">参照モデル</span>
+          <span class="proposal-metric-value">🇺🇸 Powell's / 🇰🇷 アラジン</span>
+        </div>
+      </div>
+
+      <div class="proposal-card">
+        <span class="proposal-card-label">提案 B</span>
+        <h4>無書店自治体への書店開設支援</h4>
+        <p>VBのプロアカウント＋低在庫モデルで、初期投資を大幅に抑えた書店開業の仕組みを提供。自治体との連携で無書店地域の解消を目指します。</p>
+        <div class="proposal-metric">
+          <span class="proposal-metric-label">初期投資</span>
+          <span class="proposal-metric-value">従来の1/10以下</span>
+        </div>
+        <div class="proposal-metric">
+          <span class="proposal-metric-label">在庫リスク</span>
+          <span class="proposal-metric-value">ほぼゼロ</span>
+        </div>
+        <div class="proposal-metric">
+          <span class="proposal-metric-label">参照モデル</span>
+          <span class="proposal-metric-value">🇰🇷 地域書店活性化条項</span>
+        </div>
+      </div>
+
+      <div class="proposal-card">
+        <span class="proposal-card-label">提案 C</span>
+        <h4>出版流通改革の実証プラットフォーム</h4>
+        <p>取次システムとは別の「第三の流通ルート」として、VBが中小出版社と独立系書店をつなぐプラットフォームを構築・実証します。</p>
+        <div class="proposal-metric">
+          <span class="proposal-metric-label">ポジション</span>
+          <span class="proposal-metric-value">独立系書店の味方</span>
+        </div>
+        <div class="proposal-metric">
+          <span class="proposal-metric-label">差別化</span>
+          <span class="proposal-metric-value">古本×新刊ハイブリッド</span>
+        </div>
+        <div class="proposal-metric">
+          <span class="proposal-metric-label">参照モデル</span>
+          <span class="proposal-metric-value">🇩🇪 リブリ / 🇺🇸 イングラム</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container">
+    <div class="fade-in">
+      <h2>実証パートナーとして、連携をさせてください。</h2>
+      <p>日本の書店は構造のせいで衰退しています。その構造を変えるための仕組みを、バリューブックスはすでに作り、動かしています。経産省の書店活性化プランと連携することで、日本の書店に復活の道を開くことができます。</p>
+      <p style="margin-top: 32px; font-size: 14px; color: var(--text-light);">
+        <strong>VALUE BOOKS（バリューブックス）</strong><br>
+        長野県上田市 ｜ B Corp認証企業<br>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <p>本資料はバリューブックス戦略資料・海外書店事例調査（米独韓英仏5カ国）・経済産業省公表資料をもとに作成しています。</p>
+    <p style="margin-top: 8px;">参考: METI Journal ONLINE / 経済産業省プレスリリース / 文化通信社 / American Booksellers Association</p>
+    <p style="margin-top: 16px; color: rgba(255,255,255,0.4);">© 2026 VALUE BOOKS</p>
+  </div>
+</footer>
+
+<script>
+// Country Tab Switching
+function showCountry(id) {
+  document.querySelectorAll('.country-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.country-tab').forEach(el => el.classList.remove('active'));
+  document.getElementById('country-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// Scroll Animation
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// Nav Active State
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('nav .nav-links a');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(section => {
+    const top = section.offsetTop - 100;
+    if (scrollY >= top) current = section.getAttribute('id');
+  });
+  navLinks.forEach(link => {
+    link.classList.remove('active');
+    if (link.getAttribute('href') === '#' + current) link.classList.add('active');
+  });
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  twemoji.parse(document.body, { folder: 'svg', ext: '.svg' });
+});
+</script>
+
+</body>
+</html>

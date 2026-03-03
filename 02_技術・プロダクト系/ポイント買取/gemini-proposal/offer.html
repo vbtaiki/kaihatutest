@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>買取お申込み | VALUE BOOKS [GEMINI案]</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+            background-color: #f0f4f8;
+            color: #2d3748;
+            line-height: 1.6;
+        }
+
+        .header {
+            background-color: #fff;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #2d3748;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .version-badge {
+            background: linear-gradient(135deg, #38b2ac 0%, #319795 100%);
+            color: white;
+            padding: 0.35rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+
+        .nav {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .nav a {
+            color: #4a5568;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav a:hover {
+            color: #38b2ac;
+        }
+
+        .point-badge {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            color: #d68000;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 2rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #2c7a7b;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #38b2ac;
+        }
+
+        .option-grid {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .option-card {
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1.25rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .option-card:hover {
+            border-color: #cbd5e0;
+            background: #f7fafc;
+        }
+
+        .option-card.selected {
+            border-color: #38b2ac;
+            background: #f0fff4;
+        }
+
+        .option-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .option-title {
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .bonus-tag {
+            background: #38b2ac;
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        .option-desc {
+            font-size: 0.8rem;
+            color: #718096;
+        }
+
+        .side-panel {
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+        }
+
+        .summary-card {
+            background: #2d3748;
+            color: white;
+            border-radius: 20px;
+            padding: 1.5rem;
+        }
+
+        .summary-title {
+            font-size: 1rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 0.5rem;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+            font-size: 0.9rem;
+        }
+
+        .summary-total {
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 2px dashed rgba(255,255,255,0.2);
+            text-align: center;
+        }
+
+        .total-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #81e6d9;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: #38b2ac;
+            color: white;
+            border: none;
+            padding: 1.25rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 1.5rem;
+            transition: all 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: #319795;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(56, 178, 172, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .form-grid { grid-template-columns: 1fr; }
+            .side-panel { position: static; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <a href="../index.html" class="logo">
+                VALUE BOOKS
+                <span class="version-badge">GEMINI案</span>
+            </a>
+            <nav class="nav">
+                <a href="mypage.html">マイページ</a>
+                <a href="recommendations.html">本を探す</a>
+                <a href="rank-system.html">🏆 ランク</a>
+                <div class="point-badge">💰 21,154pt</div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <h1 style="margin-bottom: 2rem; font-size: 1.8rem;">📦 買取のお申込み</h1>
+
+        <div class="form-grid">
+            <div class="main-form">
+                <div class="card">
+                    <div class="card-title">🚛 集荷の設定</div>
+                    <div class="form-group">
+                        <label class="label">箱数</label>
+                        <input type="number" class="input-field" value="1" min="1">
+                    </div>
+                    <div class="form-group">
+                        <label class="label">集荷希望日</label>
+                        <input type="date" class="input-field" value="2026-01-10">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">✨ ボーナス選択</div>
+                    
+                    <p style="font-size: 0.85rem; color: #718096; margin-bottom: 1.5rem;">
+                        スマートな選択で買取金額を最大化しましょう
+                    </p>
+
+                    <div class="option-grid">
+                        <div class="option-card selected" id="opt-sokufuri" onclick="toggleOption('sokufuri')">
+                            <div class="option-header">
+                                <div class="option-title">
+                                    <span>ソクフリ（自動承認）</span>
+                                    <span class="bonus-tag">+10% UP</span>
+                                </div>
+                                <input type="checkbox" checked style="accent-color: #38b2ac;">
+                            </div>
+                            <p class="option-desc">査定完了後、即座に支払いを確定します。お待たせしません。</p>
+                        </div>
+
+                        <div class="option-card selected" id="opt-point" onclick="toggleOption('point')">
+                            <div class="option-header">
+                                <div class="option-title">
+                                    <span>ポイント受け取り</span>
+                                    <span class="bonus-tag">+20% UP</span>
+                                </div>
+                                <input type="checkbox" checked style="accent-color: #38b2ac;">
+                            </div>
+                            <p class="option-desc">買取金額をポイントで受取。次回の読書体験がお得になります。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">👤 お客様情報</div>
+                    <p style="font-size: 0.9rem; color: #4a5568;">
+                        <strong>中村 大樹</strong> 様<br>
+                        長野県安曇野市穂高1049-9<br>
+                        <a href="#" style="color: #38b2ac; text-decoration: none; font-size: 0.8rem;">登録情報を変更する</a>
+                    </p>
+                </div>
+            </div>
+
+            <div class="side-panel">
+                <div class="summary-card">
+                    <div class="summary-title">🤖 AIボーナス予測</div>
+                    <div class="summary-row">
+                        <span>基本推定額</span>
+                        <span>¥13,000</span>
+                    </div>
+                    <div id="row-sokufuri" class="summary-row" style="color: #81e6d9;">
+                        <span>ソクフリ (+10%)</span>
+                        <span>+¥1,300</span>
+                    </div>
+                    <div id="row-point" class="summary-row" style="color: #81e6d9;">
+                        <span>ポイント受取 (+20%)</span>
+                        <span>+¥2,600</span>
+                    </div>
+                    <div class="summary-row" style="color: #81e6d9;">
+                        <span>初回ボーナス</span>
+                        <span>+1,000pt</span>
+                    </div>
+                    
+                    <div class="summary-total">
+                        <div style="font-size: 0.8rem; opacity: 0.8; margin-bottom: 0.5rem;">獲得予定ポイント</div>
+                        <div class="total-value" id="total-val">21,154pt</div>
+                        <div style="font-size: 0.75rem; opacity: 0.7; margin-top: 0.5rem;">
+                            現金受取より ¥4,881 お得
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="submit-btn" onclick="location.href='apply-complete.html'">
+                    内容を確認して申込む
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let sokufuri = true;
+        let point = true;
+
+        function toggleOption(type) {
+            if (type === 'sokufuri') {
+                sokufuri = !sokufuri;
+                document.getElementById('opt-sokufuri').classList.toggle('selected');
+                document.getElementById('opt-sokufuri').querySelector('input').checked = sokufuri;
+                document.getElementById('row-sokufuri').style.display = sokufuri ? 'flex' : 'none';
+            } else {
+                point = !point;
+                document.getElementById('opt-point').classList.toggle('selected');
+                document.getElementById('opt-point').querySelector('input').checked = point;
+                document.getElementById('row-point').style.display = point ? 'flex' : 'none';
+            }
+            updateTotal();
+        }
+
+        function updateTotal() {
+            let base = 13000;
+            let total = base;
+            if (sokufuri) total += base * 0.1;
+            if (point) total += base * 0.2;
+            total += 1000; // First bonus
+            document.getElementById('total-val').innerText = total.toLocaleString() + 'pt';
+        }
+    </script>
+</body>
+</html>
+

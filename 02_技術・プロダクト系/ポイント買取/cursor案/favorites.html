@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>お気に入り | VALUE BOOKS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .header {
+            background-color: #fff;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .version-badge {
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            color: white;
+            padding: 0.35rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+
+        .header-nav {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .header-nav a {
+            color: #666;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .header-nav a:hover {
+            color: #00a0e9;
+        }
+
+        .point-badge {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            color: #d68000;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+        }
+
+        .page-title {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .point-info {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            border: 2px solid #ff6b35;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .point-amount {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #d68000;
+            margin-bottom: 0.5rem;
+        }
+
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .book-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .book-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        }
+
+        .favorite-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .favorite-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .book-cover {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1rem;
+            font-weight: bold;
+            text-align: center;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .book-cover.orange { background: linear-gradient(135deg, #f7931e 0%, #ff6b35 100%); }
+        .book-cover.green { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); }
+        .book-cover.blue { background: linear-gradient(135deg, #00a0e9 0%, #0088cc 100%); }
+        .book-cover.pink { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+
+        .book-title {
+            font-weight: bold;
+            font-size: 1.05rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .book-desc {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .book-price {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #d32f2f;
+            margin-bottom: 1rem;
+        }
+
+        .book-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #00a0e9 0%, #0088cc 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 160, 233, 0.3);
+        }
+
+        .btn-secondary {
+            background: white;
+            border: 2px solid #00a0e9;
+            color: #00a0e9;
+        }
+
+        .btn-secondary:hover {
+            background-color: #f0f9ff;
+        }
+
+        .cart-summary {
+            background: linear-gradient(135deg, #e6f7ff 0%, #cceeff 100%);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            position: sticky;
+            bottom: 2rem;
+            box-shadow: 0 -4px 12px rgba(0,0,0,0.1);
+        }
+
+        .cart-summary h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+
+        .cart-total {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #0088cc;
+            margin-bottom: 1rem;
+        }
+
+        .recommendation-link {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .books-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header-nav {
+                gap: 0.5rem;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <a href="../index.html" class="logo">
+                VALUE BOOKS
+                <span class="version-badge">CURSOR案</span>
+            </a>
+            <nav class="nav">
+                <a href="mypage.html">マイページ</a>
+                <a href="recommendations.html">本を探す</a>
+                <a href="rank-system.html">🏆 ランク</a>
+                <div class="point-badge">💰 21,154pt</div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="page-title">❤️ お気に入り</div>
+        <div class="page-subtitle">気になる本をリストに保存しました（5冊）</div>
+
+        <div class="point-info">
+            <div style="font-size: 1rem; color: #666; margin-bottom: 0.5rem;">
+                あなたの保有ポイント
+            </div>
+            <div class="point-amount">17,901pt</div>
+            <div style="font-size: 0.9rem; color: #666;">
+                お気に入りの本すべて購入可能です！
+            </div>
+        </div>
+
+        <div class="recommendation-link">
+            <p style="color: #666; margin-bottom: 1rem;">
+                もっと本を探しますか？AIがあなたにぴったりの本を見つけます
+            </p>
+            <a href="recommendations.html" style="color: #00a0e9; font-weight: bold; text-decoration: none;">
+                📚 おすすめの本を見る →
+            </a>
+        </div>
+
+        <div class="books-grid">
+            <div class="book-card">
+                <button class="favorite-btn" onclick="removeFavorite(this)">❤️</button>
+                <div class="book-cover">
+                    人生を変える<br>読書術
+                </div>
+                <div class="book-title">人生を変える読書術</div>
+                <div class="book-desc">
+                    本の選び方から読み方まで、読書の質を高める方法
+                </div>
+                <div class="book-price">¥ 1,800</div>
+                <div class="book-actions">
+                    <a href="quick-purchase.html" class="btn btn-primary">購入</a>
+                </div>
+            </div>
+
+            <div class="book-card">
+                <button class="favorite-btn" onclick="removeFavorite(this)">❤️</button>
+                <div class="book-cover orange">
+                    思考の整理学
+                </div>
+                <div class="book-title">思考の整理学</div>
+                <div class="book-desc">
+                    頭の中を整理して、創造的な思考を育てる
+                </div>
+                <div class="book-price">¥ 1,200</div>
+                <div class="book-actions">
+                    <a href="quick-purchase.html" class="btn btn-primary">購入</a>
+                </div>
+            </div>
+
+            <div class="book-card">
+                <button class="favorite-btn" onclick="removeFavorite(this)">❤️</button>
+                <div class="book-cover green">
+                    禅とオートバイ<br>修理技術
+                </div>
+                <div class="book-title">禅とオートバイ修理技術</div>
+                <div class="book-desc">
+                    哲学的な視点から人生の本質を探る名著
+                </div>
+                <div class="book-price">¥ 2,100</div>
+                <div class="book-actions">
+                    <a href="quick-purchase.html" class="btn btn-primary">購入</a>
+                </div>
+            </div>
+
+            <div class="book-card">
+                <button class="favorite-btn" onclick="removeFavorite(this)">❤️</button>
+                <div class="book-cover blue">
+                    幸せになる<br>勇気
+                </div>
+                <div class="book-title">幸せになる勇気</div>
+                <div class="book-desc">
+                    アドラー心理学で人間関係の悩みを解決
+                </div>
+                <div class="book-price">¥ 1,600</div>
+                <div class="book-actions">
+                    <a href="quick-purchase.html" class="btn btn-primary">購入</a>
+                </div>
+            </div>
+
+            <div class="book-card">
+                <button class="favorite-btn" onclick="removeFavorite(this)">❤️</button>
+                <div class="book-cover pink">
+                    夜と霧
+                </div>
+                <div class="book-title">夜と霧</div>
+                <div class="book-desc">
+                    極限状態での人間の尊厳を描いた不朽の名作
+                </div>
+                <div class="book-price">¥ 1,500</div>
+                <div class="book-actions">
+                    <a href="quick-purchase.html" class="btn btn-primary">購入</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="cart-summary">
+            <h3>💰 まとめて購入</h3>
+            <div style="color: #666; margin-bottom: 0.5rem;">
+                お気に入り全5冊の合計金額
+            </div>
+            <div class="cart-total">¥ 8,200</div>
+            <div style="color: #666; margin-bottom: 1.5rem;">
+                ポイント利用で <strong style="color: #4caf50;">¥ 0</strong><br>
+                <span style="font-size: 0.85rem;">残りポイント: 9,701pt</span>
+            </div>
+            <a href="reserve-cart.html" class="btn btn-primary" style="width: 100%; max-width: 300px; display: inline-block;">
+                全て購入する
+            </a>
+        </div>
+
+        <div style="background: white; border-radius: 12px; padding: 2rem; text-align: center; margin-top: 2rem;">
+            <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">💡 ヒント</h3>
+            <p style="color: #666; line-height: 1.8;">
+                お気に入りの本は在庫が限られています。<br>
+                ポイントで今すぐ購入して確保しましょう！<br>
+                読み終わったら、また買取に出してポイントを貯められます。
+            </p>
+            <div style="margin-top: 1.5rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <a href="recommendations.html" class="btn btn-secondary">
+                    📚 もっと探す
+                </a>
+                <a href="offer.html" class="btn btn-secondary">
+                    📦 本を売る
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <footer style="text-align: center; padding: 2rem; color: #666; background: white; margin-top: 3rem;">
+        <p>&copy; 2026 VALUE BOOKS ALL RIGHTS RESERVED.</p>
+    </footer>
+
+    <script>
+        function removeFavorite(button) {
+            if (confirm('お気に入りから削除しますか？')) {
+                const card = button.closest('.book-card');
+                card.style.opacity = '0';
+                card.style.transform = 'scale(0.8)';
+                setTimeout(() => {
+                    card.remove();
+                    updateCount();
+                }, 300);
+            }
+        }
+
+        function updateCount() {
+            const count = document.querySelectorAll('.book-card').length;
+            document.querySelector('.page-subtitle').textContent = `気になる本をリストに保存しました（${count}冊）`;
+            
+            if (count === 0) {
+                alert('お気に入りが空です。おすすめページから本を探しましょう！');
+                window.location.href = 'recommendations.html';
+            }
+        }
+    </script>
+</body>
+</html>
+

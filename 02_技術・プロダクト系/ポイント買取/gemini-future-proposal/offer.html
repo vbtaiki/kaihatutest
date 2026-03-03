@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>買取お申込み | VALUE BOOKS [GEMINI未来案]</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+            background-color: #f0f4f8;
+            color: #2d3748;
+            line-height: 1.6;
+        }
+
+        .header {
+            background-color: #fff;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #2d3748;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .version-badge {
+            background: linear-gradient(135deg, #38b2ac 0%, #319795 100%);
+            color: white;
+            padding: 0.35rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+
+        .nav {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .nav a {
+            color: #4a5568;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav a:hover {
+            color: #38b2ac;
+        }
+
+        .point-badge {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            color: #d68000;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .container {
+            max-width: 1120px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 360px;
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 1.6rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
+        }
+
+        .page-hero {
+            background: linear-gradient(135deg, #0ea5e9 0%, #38bdf8 100%);
+            color: white;
+            border-radius: 22px;
+            padding: 1.75rem;
+            box-shadow: 0 10px 30px rgba(14,165,233,0.18);
+            margin-bottom: 1.25rem;
+        }
+        .page-hero h1 {
+            font-size: 1.55rem;
+            margin-bottom: 0.35rem;
+        }
+        .page-hero p {
+            opacity: 0.92;
+            font-size: 0.95rem;
+        }
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+        .step {
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.18);
+            border-radius: 14px;
+            padding: 0.75rem 0.9rem;
+        }
+        .step .k {
+            font-size: 0.75rem;
+            opacity: 0.9;
+            font-weight: 800;
+            letter-spacing: 0.2px;
+        }
+        .step .v {
+            margin-top: 0.2rem;
+            font-size: 0.9rem;
+            font-weight: 800;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #2c7a7b;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #38b2ac;
+        }
+
+        .option-grid {
+            display: grid;
+            gap: 1rem;
+        }
+
+        details.accordion {
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            background: #fff;
+            overflow: hidden;
+        }
+        details.accordion + details.accordion { margin-top: 1rem; }
+        details.accordion summary {
+            list-style: none;
+            cursor: pointer;
+            padding: 1rem 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
+        }
+        details.accordion summary::-webkit-details-marker { display: none; }
+        .acc-left { display: flex; flex-direction: column; gap: 0.15rem; }
+        .acc-title { font-weight: 900; color: #0f172a; }
+        .acc-sub { font-size: 0.85rem; color: #64748b; }
+        .acc-right { display: flex; gap: 0.5rem; align-items: center; }
+        .chev {
+            width: 34px; height: 34px;
+            border-radius: 10px;
+            border: 1px solid rgba(15,23,42,0.12);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: #0f172a;
+            background: #fff;
+        }
+        details[open] .chev { transform: rotate(180deg); }
+        .acc-body { padding: 0 1.1rem 1.1rem; }
+
+        .option-card {
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .option-card:hover {
+            border-color: #cbd5e0;
+            background: #f7fafc;
+        }
+
+        .option-card.selected {
+            border-color: #38b2ac;
+            background: #f0fff4;
+        }
+
+        .option-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .option-title {
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .bonus-tag {
+            background: #38b2ac;
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        .option-desc {
+            font-size: 0.8rem;
+            color: #718096;
+        }
+
+        .option-extra {
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .option-card.selected .option-extra {
+            display: block;
+        }
+
+        .subtle {
+            font-size: 0.78rem;
+            color: #718096;
+        }
+
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.25rem 0.6rem;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            border: 1px solid rgba(56, 178, 172, 0.25);
+            background: rgba(56, 178, 172, 0.08);
+            color: #2c7a7b;
+        }
+
+        .mini-row {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            align-items: center;
+            margin-top: 0.75rem;
+        }
+
+        .mini-select, .mini-input {
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 0.6rem 0.75rem;
+            font-size: 0.9rem;
+            width: 100%;
+        }
+
+        .mini-select:focus, .mini-input:focus {
+            outline: none;
+            border-color: #38b2ac;
+        }
+
+        .cap-note {
+            margin-top: 0.75rem;
+            font-size: 0.78rem;
+            color: rgba(255,255,255,0.75);
+        }
+
+        .side-panel {
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+        }
+
+        .summary-card {
+            background: #2d3748;
+            color: white;
+            border-radius: 20px;
+            padding: 1.5rem;
+        }
+
+        .summary-progress {
+            margin-top: 0.75rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid rgba(255,255,255,0.12);
+        }
+        .progress-bar-dark {
+            height: 10px;
+            background: rgba(255,255,255,0.12);
+            border-radius: 999px;
+            overflow: hidden;
+            margin-top: 0.5rem;
+        }
+        .progress-fill-dark {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(135deg, #0ea5e9 0%, #38bdf8 100%);
+            border-radius: 999px;
+            transition: width 0.25s ease;
+        }
+
+        .summary-title {
+            font-size: 1rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 0.5rem;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+            font-size: 0.9rem;
+        }
+
+        .summary-total {
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 2px dashed rgba(255,255,255,0.2);
+            text-align: center;
+        }
+
+        .total-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #81e6d9;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: #38b2ac;
+            color: white;
+            border: none;
+            padding: 1.25rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 1.5rem;
+            transition: all 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: #319795;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(56, 178, 172, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .form-grid { grid-template-columns: 1fr; }
+            .side-panel { position: static; }
+            .steps { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <a href="../index.html" class="logo">
+                VALUE BOOKS
+                <span class="version-badge">GEMINI未来案</span>
+            </a>
+            <nav class="nav">
+                <a href="mypage.html">マイページ</a>
+                <a href="recommendations.html">本を探す</a>
+                <a href="rank-system.html">🏆 ランク</a>
+                <div class="point-badge">💰 21,154pt</div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="page-hero">
+            <h1>📦 買取のお申込み（未来案）</h1>
+            <p>内容が増えた分、整理して迷わない画面にしました。協力ボーナスは「折りたたみ」で必要なときだけ開けます。</p>
+            <div class="steps">
+                <div class="step">
+                    <div class="k">STEP 1</div>
+                    <div class="v">集荷を決める</div>
+                </div>
+                <div class="step">
+                    <div class="k">STEP 2</div>
+                    <div class="v">ボーナスを選ぶ</div>
+                </div>
+                <div class="step">
+                    <div class="k">STEP 3</div>
+                    <div class="v">見積を確認</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-grid">
+            <div class="main-form">
+                <div class="card">
+                    <div class="card-title">🚛 集荷の設定</div>
+                    <div class="form-group">
+                        <label class="label">箱数</label>
+                        <input type="number" class="input-field" value="1" min="1">
+                    </div>
+                    <div class="form-group">
+                        <label class="label">集荷希望日</label>
+                        <input type="date" class="input-field" value="2026-01-10">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">✨ ボーナス選択</div>
+                    
+                    <p style="font-size: 0.85rem; color: #718096; margin-bottom: 1.5rem;">
+                        上から順に「基本 → 協力 → 本棚スキャン」。必要な部分だけ開いて設定できます。
+                    </p>
+                    <details class="accordion" open>
+                        <summary>
+                            <div class="acc-left">
+                                <div class="acc-title">基本ボーナス（まずはここだけでOK）</div>
+                                <div class="acc-sub">ソクフリ +10% / ポイント受取 +20%</div>
+                            </div>
+                            <div class="acc-right">
+                                <span class="pill">基本</span>
+                                <span class="chev">⌄</span>
+                            </div>
+                        </summary>
+                        <div class="acc-body">
+                            <div class="option-grid">
+                                <div class="option-card selected" id="opt-sokufuri" onclick="toggleOption('sokufuri')">
+                                    <div class="option-header">
+                                        <div class="option-title">
+                                            <span>ソクフリ（自動承認）</span>
+                                            <span class="bonus-tag">+10%</span>
+                                        </div>
+                                        <input type="checkbox" checked style="accent-color: #38b2ac;">
+                                    </div>
+                                    <p class="option-desc">査定完了後、即座に支払いを確定します。</p>
+                                </div>
+
+                                <div class="option-card selected" id="opt-point" onclick="toggleOption('point')">
+                                    <div class="option-header">
+                                        <div class="option-title">
+                                            <span>ポイント受け取り</span>
+                                            <span class="bonus-tag">+20%</span>
+                                        </div>
+                                        <input type="checkbox" checked style="accent-color: #38b2ac;">
+                                    </div>
+                                    <p class="option-desc">次回購入に繋がりやすく、期待値が高い選択です。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+
+                    <details class="accordion">
+                        <summary>
+                            <div class="acc-left">
+                                <div class="acc-title">協力ボーナス（+20%）</div>
+                                <div class="acc-sub">日時協力 +10% / 状態申請（簡易板） +10%</div>
+                            </div>
+                            <div class="acc-right">
+                                <span class="pill">協力</span>
+                                <span class="chev">⌄</span>
+                            </div>
+                        </summary>
+                        <div class="acc-body">
+                            <div class="option-grid">
+                                <div class="option-card" id="opt-warehouse">
+                                    <div class="option-header">
+                                        <div class="option-title">
+                                            <span>日時協力（倉庫状況に合わせて集荷）</span>
+                                            <span class="bonus-tag">+10%</span>
+                                        </div>
+                                        <input id="chk-warehouse" type="checkbox" style="accent-color: #38b2ac;">
+                                    </div>
+                                    <p class="option-desc">倉庫が空いている「高いよ」日を選ぶと適用されます。</p>
+                                    <div class="option-extra">
+                                        <div class="mini-row">
+                                            <span class="pill">AIおすすめ</span>
+                                            <span class="subtle">「高いよ」の日を選ぶと +10%</span>
+                                        </div>
+                                        <div class="mini-row" style="align-items: flex-start;">
+                                            <div style="flex: 1; min-width: 220px;">
+                                                <label class="label" style="margin-bottom: 0.4rem;">集荷日（倉庫状況）</label>
+                                                <select id="warehouse-date" class="mini-select">
+                                                    <option value="normal">2026-01-10（通常）</option>
+                                                    <option value="best">2026-01-11（高いよ：倉庫が空いている）</option>
+                                                    <option value="normal2">2026-01-12（通常）</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="option-card" id="opt-condition-rough">
+                                    <div class="option-header">
+                                        <div class="option-title">
+                                            <span>状態申請（簡易板）</span>
+                                            <span class="bonus-tag">+10%</span>
+                                        </div>
+                                        <input id="chk-condition" type="checkbox" style="accent-color: #38b2ac;">
+                                    </div>
+                                    <p class="option-desc">全体の状態を1つ選ぶだけでOK（申請で+10%）。</p>
+                                    <div class="option-extra">
+                                        <label class="label" style="margin-bottom: 0.4rem;">全体の状態（必須）</label>
+                                        <div class="mini-row" style="gap: 1rem;">
+                                            <label style="display:flex; gap:0.5rem; align-items:center; cursor:pointer;">
+                                                <input type="radio" name="condition-level" value="no-writing" style="accent-color:#38b2ac;">
+                                                <span>書き込みなし</span>
+                                            </label>
+                                            <label style="display:flex; gap:0.5rem; align-items:center; cursor:pointer;">
+                                                <input type="radio" name="condition-level" value="some-writing" style="accent-color:#38b2ac;">
+                                                <span>少し書き込みあり</span>
+                                            </label>
+                                            <label style="display:flex; gap:0.5rem; align-items:center; cursor:pointer;">
+                                                <input type="radio" name="condition-level" value="many-writing" style="accent-color:#38b2ac;">
+                                                <span>書き込み多め</span>
+                                            </label>
+                                        </div>
+                                        <div class="mini-row">
+                                            <span class="subtle">任意チェック（査定の手戻り削減）</span>
+                                        </div>
+                                        <div class="mini-row" style="gap: 1rem;">
+                                            <label style="display:flex; gap:0.5rem; align-items:center; cursor:pointer;">
+                                                <input type="checkbox" id="attr-no-tear" style="accent-color:#38b2ac;">
+                                                <span>破れなし</span>
+                                            </label>
+                                            <label style="display:flex; gap:0.5rem; align-items:center; cursor:pointer;">
+                                                <input type="checkbox" id="attr-low-yellow" style="accent-color:#38b2ac;">
+                                                <span>ヤケ少なめ</span>
+                                            </label>
+                                            <label style="display:flex; gap:0.5rem; align-items:center; cursor:pointer;">
+                                                <input type="checkbox" id="attr-with-cover" style="accent-color:#38b2ac;">
+                                                <span>カバー/帯あり多め</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+
+                    <details class="accordion">
+                        <summary>
+                            <div class="acc-left">
+                                <div class="acc-title">本棚スキャン（別ページで完結 / +40%）</div>
+                                <div class="acc-sub">全冊状態申請 +20% / 買取可のみ送付 +20%</div>
+                            </div>
+                            <div class="acc-right">
+                                <span class="pill">スキャン</span>
+                                <span class="chev">⌄</span>
+                            </div>
+                        </summary>
+                        <div class="acc-body">
+                            <div class="option-card" id="opt-itemized" style="cursor: default;">
+                                <div class="option-header">
+                                    <div class="option-title">
+                                        <span>本棚スキャン申請</span>
+                                        <span class="bonus-tag">+40%</span>
+                                    </div>
+                                    <a href="bookshelf-scan.html" class="bonus-tag" style="text-decoration:none;">開く</a>
+                                </div>
+                                <p class="option-desc">
+                                    買取申込ページでは“進捗”だけ見せます。作業は別ページでまとめて完了してください。
+                                </p>
+                                <div class="mini-row">
+                                    <span class="pill" id="scan-progress">状態申請: -</span>
+                                    <span class="pill" id="send-only-buyable">送付は買取可のみ: -</span>
+                                </div>
+                                <div class="mini-row">
+                                    <a href="bookshelf-scan.html" class="submit-btn" style="margin-top: 0; padding: 0.85rem 1rem; border-radius: 12px; width: auto; text-align: center; display: inline-block;">
+                                        📷 本棚スキャン申請ページへ
+                                    </a>
+                                    <span class="subtle">完了したらこのページに戻って、見積が更新されます</span>
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">👤 お客様情報</div>
+                    <p style="font-size: 0.9rem; color: #4a5568;">
+                        <strong>中村 大樹</strong> 様<br>
+                        長野県安曇野市穂高1049-9<br>
+                        <a href="#" style="color: #38b2ac; text-decoration: none; font-size: 0.8rem;">登録情報を変更する</a>
+                    </p>
+                </div>
+            </div>
+
+            <div class="side-panel">
+                <div class="summary-card">
+                    <div class="summary-title">🤖 AIボーナス予測</div>
+                    <div class="summary-row">
+                        <span>基本推定額</span>
+                        <span>¥13,000</span>
+                    </div>
+                    <div id="row-sokufuri" class="summary-row" style="color: #81e6d9;">
+                        <span>ソクフリ (+10%)</span>
+                        <span>+¥1,300</span>
+                    </div>
+                    <div id="row-point" class="summary-row" style="color: #81e6d9;">
+                        <span>ポイント受取 (+20%)</span>
+                        <span>+¥2,600</span>
+                    </div>
+                    <div id="row-warehouse" class="summary-row" style="color: #81e6d9; display: none;">
+                        <span>日時協力 (+10%)</span>
+                        <span>+¥1,300</span>
+                    </div>
+                    <div id="row-condition-rough" class="summary-row" style="color: #81e6d9; display: none;">
+                        <span>状態申請（簡易板） (+10%)</span>
+                        <span>+¥1,300</span>
+                    </div>
+                    <div id="row-itemized" class="summary-row" style="color: #81e6d9; display: none;">
+                        <span>全冊状態申請 (+20%)</span>
+                        <span>+¥2,600</span>
+                    </div>
+                    <div id="row-buyout" class="summary-row" style="color: #81e6d9; display: none;">
+                        <span>買取率協力（買取可のみ送付） (+20%)</span>
+                        <span>+¥2,600</span>
+                    </div>
+                    <div id="row-comp" class="summary-row" style="color: #81e6d9; display: none;">
+                        <span>コンプボーナス (+10%)</span>
+                        <span>+¥1,300</span>
+                    </div>
+                    <div id="row-cap" class="summary-row" style="color: rgba(255,255,255,0.7); display: none;">
+                        <span>上限適用（買取金額2倍）</span>
+                        <span>—</span>
+                    </div>
+                    <div class="summary-row" style="color: #81e6d9;">
+                        <span>初回ボーナス</span>
+                        <span>+1,000pt</span>
+                    </div>
+                    
+                    <div class="summary-total">
+                        <div style="font-size: 0.8rem; opacity: 0.8; margin-bottom: 0.5rem;">獲得予定ポイント</div>
+                        <div class="total-value" id="total-val">21,154pt</div>
+                        <div class="summary-progress">
+                            <div id="coop-remaining" style="font-size: 0.85rem; font-weight: bold; color: rgba(255,255,255,0.92);">
+                                目標（+100%UP）まであと --%
+                            </div>
+                            <div class="progress-bar-dark">
+                                <div id="coop-bar-fill" class="progress-fill-dark"></div>
+                            </div>
+                            <div id="coop-next" style="margin-top: 0.5rem; font-size: 0.78rem; color: rgba(255,255,255,0.78);">
+                                次にやること: —
+                            </div>
+                        </div>
+                        <div id="better-than-cash" style="font-size: 0.75rem; opacity: 0.7; margin-top: 0.5rem;">
+                            現金受取より ¥4,881 お得
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="submit-btn" onclick="location.href='apply-complete.html'">
+                    内容を確認して申込む
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let sokufuri = true;
+        let point = true;
+
+        const SCAN_STATE_KEY = 'vb_gf_scan_state_v1';
+
+        function yen(n) {
+            return '¥' + Math.round(n).toLocaleString();
+        }
+
+        function pct(n) {
+            return Math.round(n * 100) + '%';
+        }
+
+        function setSelected(cardId, isOn) {
+            const card = document.getElementById(cardId);
+            if (!card) return;
+            card.classList.toggle('selected', !!isOn);
+        }
+
+        function setRow(rowId, show, labelText, amountYen) {
+            const row = document.getElementById(rowId);
+            if (!row) return;
+            row.style.display = show ? 'flex' : 'none';
+            if (labelText) row.querySelector('span:first-child').innerText = labelText;
+            if (amountYen !== undefined && row.querySelector('span:last-child')) {
+                row.querySelector('span:last-child').innerText = amountYen;
+            }
+        }
+
+        function getConditionLevel() {
+            const el = document.querySelector('input[name="condition-level"]:checked');
+            return el ? el.value : '';
+        }
+
+        function getWarehouseRate() {
+            const enabled = document.getElementById('chk-warehouse')?.checked;
+            if (!enabled) return 0;
+            const v = document.getElementById('warehouse-date')?.value;
+            return v === 'best' ? 0.10 : 0;
+        }
+
+        function getConditionRate() {
+            const enabled = document.getElementById('chk-condition')?.checked;
+            if (!enabled) return 0;
+            const level = getConditionLevel();
+            return level ? 0.10 : 0;
+        }
+
+        function loadScanState() {
+            try {
+                const raw = localStorage.getItem(SCAN_STATE_KEY);
+                const s = raw ? JSON.parse(raw) : null;
+                return {
+                    total: Number(s?.total || 0),
+                    filled: Number(s?.filled || 0),
+                    sendOnlyBuyable: !!s?.sendOnlyBuyable,
+                    allStated: !!s?.allStated,
+                };
+            } catch {
+                return { total: 0, filled: 0, sendOnlyBuyable: false, allStated: false };
+            }
+        }
+
+        function isItemizedCompleted(scanState) {
+            return !!scanState?.allStated;
+        }
+
+        function isBuyoutCoopAchieved(scanState) {
+            // 「買取金額がつかない本」を送らない
+            return !!scanState?.sendOnlyBuyable;
+        }
+
+        function isWarehouseCoopAchieved() {
+            return getWarehouseRate() > 0;
+        }
+
+        function isConditionCoopAchieved() {
+            return getConditionRate() > 0;
+        }
+
+        function isCompAchieved(scanState) {
+            // ここまで全部協力（日時協力 + 状態申請 + 全冊状態申請 + 買取可のみ送付）で +10%
+            return isWarehouseCoopAchieved() && isConditionCoopAchieved() && isItemizedCompleted(scanState) && isBuyoutCoopAchieved(scanState);
+        }
+
+        function toggleOption(type) {
+            if (type === 'sokufuri') {
+                sokufuri = !sokufuri;
+                document.getElementById('opt-sokufuri').classList.toggle('selected');
+                document.getElementById('opt-sokufuri').querySelector('input').checked = sokufuri;
+                document.getElementById('row-sokufuri').style.display = sokufuri ? 'flex' : 'none';
+            } else if (type === 'point') {
+                point = !point;
+                document.getElementById('opt-point').classList.toggle('selected');
+                document.getElementById('opt-point').querySelector('input').checked = point;
+                document.getElementById('row-point').style.display = point ? 'flex' : 'none';
+            }
+            updateTotal();
+        }
+
+        function updateTotal() {
+            const base = 13000;
+            const firstBonus = 1000;
+
+            // --- read enabled states
+            const warehouseEnabled = !!document.getElementById('chk-warehouse')?.checked;
+            const conditionEnabled = !!document.getElementById('chk-condition')?.checked;
+            const scanState = loadScanState();
+
+            setSelected('opt-warehouse', warehouseEnabled);
+            setSelected('opt-condition-rough', conditionEnabled);
+            setSelected('opt-itemized', scanState.total > 0);
+
+            // --- compute rates
+            const sokufuriRate = sokufuri ? 0.10 : 0;
+            const pointRate = point ? 0.20 : 0;
+
+            const warehouseRate = getWarehouseRate(); // best day => +10%
+            const conditionRate = getConditionRate(); // level chosen => +10%
+
+            const itemizedRate = isItemizedCompleted(scanState) ? 0.20 : 0;
+            const buyoutRate = isBuyoutCoopAchieved(scanState) ? 0.20 : 0;
+            const compRate = isCompAchieved(scanState) ? 0.10 : 0;
+
+            const rawBonusRate = sokufuriRate + pointRate + warehouseRate + conditionRate + itemizedRate + buyoutRate + compRate;
+            const cappedMultiplier = Math.min(2.0, 1.0 + rawBonusRate);
+            const capped = (1.0 + rawBonusRate) > 2.0;
+
+            const total = Math.round(base * cappedMultiplier + firstBonus);
+
+            // --- summary rows
+            setRow('row-sokufuri', sokufuriRate > 0, `ソクフリ (${pct(0.10)})`, `+${yen(base * 0.10)}`);
+            setRow('row-point', pointRate > 0, `ポイント受取 (${pct(0.20)})`, `+${yen(base * 0.20)}`);
+
+            setRow('row-warehouse', warehouseRate > 0, `日時協力 (${pct(0.10)})`, `+${yen(base * 0.10)}`);
+            setRow('row-condition-rough', conditionRate > 0, `状態申請（簡易板） (${pct(0.10)})`, `+${yen(base * 0.10)}`);
+
+            setRow('row-itemized', itemizedRate > 0, `全冊状態申請 (${pct(0.20)})`, `+${yen(base * 0.20)}`);
+            setRow('row-buyout', buyoutRate > 0, `買取率協力（買取可のみ送付） (${pct(0.20)})`, `+${yen(base * 0.20)}`);
+            setRow('row-comp', compRate > 0, `コンプボーナス (${pct(0.10)})`, `+${yen(base * 0.10)}`);
+
+            setRow('row-cap', capped, '上限適用（買取金額2倍）', '—');
+            const capNote = document.getElementById('cap-note');
+            if (capNote) capNote.style.display = capped ? 'block' : 'none';
+
+            // --- update scan badges (from scan page state)
+            const scanProgress = document.getElementById('scan-progress');
+            const sendOnlyBuyable = document.getElementById('send-only-buyable');
+            if (scanProgress) {
+                scanProgress.innerText = scanState.total > 0 ? `状態申請: ${scanState.filled}/${scanState.total}` : '状態申請: -';
+            }
+            if (sendOnlyBuyable) {
+                if (scanState.total === 0) {
+                    sendOnlyBuyable.innerText = '送付は買取可のみ: -';
+                } else {
+                    sendOnlyBuyable.innerText = scanState.sendOnlyBuyable ? '送付は買取可のみ: 100%' : '送付は買取可のみ: 未達';
+                }
+            }
+
+            // --- coop progress (goal +100%UP)
+            const currentPct =
+                (sokufuri ? 10 : 0) +
+                (point ? 20 : 0) +
+                (warehouseRate > 0 ? 10 : 0) +
+                (conditionRate > 0 ? 10 : 0) +
+                (itemizedRate > 0 ? 20 : 0) +
+                (buyoutRate > 0 ? 20 : 0) +
+                (compRate > 0 ? 10 : 0);
+            const remain = Math.max(0, 100 - currentPct);
+            const coopEl = document.getElementById('coop-remaining');
+            if (coopEl) coopEl.innerText = `目標（+100%UP）まであと ${remain}%`;
+            const coopFill = document.getElementById('coop-bar-fill');
+            if (coopFill) coopFill.style.width = Math.max(0, Math.min(100, currentPct)) + '%';
+            const coopNext = document.getElementById('coop-next');
+            if (coopNext) {
+                let next = '—';
+                if (!sokufuri) next = 'ソクフリをON（+10%）';
+                else if (!point) next = 'ポイント受取をON（+20%）';
+                else if (!(warehouseRate > 0)) next = '日時協力：倉庫の「高いよ」日を選ぶ（+10%）';
+                else if (!(conditionRate > 0)) next = '状態申請：全体の状態を選ぶ（+10%）';
+                else if (!itemizedRate) next = '本棚スキャン：全冊状態申請を達成（+20%）';
+                else if (!buyoutRate) next = '本棚スキャン：買取可のみ送付を達成（+20%）';
+                else if (!compRate) next = 'コンプ達成で+10%（最後のひと押し）';
+                else next = '🎉 100%UP達成（買取金額2倍）';
+                coopNext.innerText = `次にやること: ${next}`;
+            }
+
+            // --- output total
+            document.getElementById('total-val').innerText = total.toLocaleString() + 'pt';
+            const diff = Math.max(0, Math.round(total - base));
+            document.getElementById('better-than-cash').innerText = '現金受取より ' + yen(diff) + ' お得';
+        }
+
+        // wire events
+        document.getElementById('chk-warehouse')?.addEventListener('change', updateTotal);
+        document.getElementById('warehouse-date')?.addEventListener('change', updateTotal);
+
+        document.getElementById('chk-condition')?.addEventListener('change', updateTotal);
+        document.querySelectorAll('input[name="condition-level"]').forEach((el) => el.addEventListener('change', updateTotal));
+        document.getElementById('attr-no-tear')?.addEventListener('change', updateTotal);
+        document.getElementById('attr-low-yellow')?.addEventListener('change', updateTotal);
+        document.getElementById('attr-with-cover')?.addEventListener('change', updateTotal);
+
+        // 初期計算
+        updateTotal();
+    </script>
+</body>
+</html>
+

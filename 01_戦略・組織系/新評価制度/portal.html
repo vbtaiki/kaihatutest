@@ -1,0 +1,2733 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>評価制度ポータル | VALUE BOOKS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-primary: #00A99D;
+            --color-primary-light: #4ECDC4;
+            --color-primary-pale: #E8F8F5;
+            --color-primary-dark: #008B80;
+            --color-accent: #FF6B6B;
+            --color-accent-light: #FFE5E5;
+            --color-warm: #FFE66D;
+            --color-warm-light: #FFF9E6;
+            --color-purple: #9B59B6;
+            --color-purple-light: #F3E5F5;
+            --color-gold: #F39C12;
+            --color-gold-light: #FEF5E7;
+            --color-text: #2D3436;
+            --color-text-light: #636E72;
+            --color-text-muted: #B2BEC3;
+            --color-bg: #F5F7FA;
+            --color-bg-white: #FFFFFF;
+            --color-bg-alt: #F8FFFE;
+            --color-border: #E8E8E8;
+            --font-main: 'Zen Kaku Gothic New', sans-serif;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+            --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
+            --radius: 12px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-main);
+            line-height: 1.7;
+            color: var(--color-text);
+            background: var(--color-bg);
+        }
+
+        /* アニメーション */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 5px var(--color-primary); }
+            50% { box-shadow: 0 0 20px var(--color-primary), 0 0 30px var(--color-primary-light); }
+        }
+
+        @keyframes confetti {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+        }
+
+        .animate-in {
+            animation: fadeInUp 0.5s ease forwards;
+        }
+
+        /* ========================================
+           ログイン画面
+        ======================================== */
+        .login-screen {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #1A1A2E 0%, #16213E 50%, var(--color-primary-dark) 100%);
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-screen::before {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, var(--color-primary) 0%, transparent 70%);
+            top: -100px;
+            right: -100px;
+            opacity: 0.3;
+        }
+
+        .login-screen::after {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, var(--color-warm) 0%, transparent 70%);
+            bottom: -50px;
+            left: -50px;
+            opacity: 0.2;
+        }
+
+        .login-card {
+            background: rgba(255, 255, 255, 0.98);
+            padding: 3rem;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: var(--shadow-lg);
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .login-logo {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+            color: white;
+            font-weight: 900;
+            font-size: 1.25rem;
+            border-radius: 16px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 8px 24px rgba(0, 169, 157, 0.3);
+        }
+
+        .login-title {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--color-text);
+            margin-bottom: 0.5rem;
+        }
+
+        .login-subtitle {
+            font-size: 0.9375rem;
+            color: var(--color-text-light);
+            margin-bottom: 2rem;
+        }
+
+        .login-input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid var(--color-border);
+            border-radius: 10px;
+            font-size: 1rem;
+            font-family: var(--font-main);
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .login-input:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 4px rgba(0, 169, 157, 0.1);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 700;
+            font-family: var(--font-main);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 16px rgba(0, 169, 157, 0.3);
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 169, 157, 0.4);
+        }
+
+        /* ========================================
+           ダッシュボード画面
+        ======================================== */
+        .dashboard-screen {
+            display: none;
+            min-height: 100vh;
+        }
+
+        .dashboard-screen.active {
+            display: block;
+        }
+
+        /* ヘッダー */
+        .header {
+            background: linear-gradient(135deg, var(--color-primary-dark) 0%, #1A1A2E 100%);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .header-logo .logo-mark {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background: white;
+            color: var(--color-primary);
+            font-weight: 900;
+            font-size: 0.75rem;
+            border-radius: 8px;
+        }
+
+        .header-logo span {
+            font-weight: 700;
+            font-size: 0.875rem;
+        }
+
+        .header-user {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .header-user-name {
+            font-size: 0.875rem;
+        }
+
+        .header-avatar {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--color-primary-light) 0%, var(--color-primary) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.875rem;
+        }
+
+        /* タブナビゲーション */
+        .tab-nav {
+            background: white;
+            border-bottom: 1px solid var(--color-border);
+            position: sticky;
+            top: 52px;
+            z-index: 99;
+        }
+
+        .tab-nav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            overflow-x: auto;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            background: none;
+            border: none;
+            font-size: 0.9375rem;
+            font-weight: 700;
+            font-family: var(--font-main);
+            color: var(--color-text-light);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            white-space: nowrap;
+        }
+
+        .tab-btn:hover {
+            color: var(--color-primary);
+            background: var(--color-primary-pale);
+        }
+
+        .tab-btn.active {
+            color: var(--color-primary);
+            border-bottom-color: var(--color-primary);
+        }
+
+        .tab-btn .badge {
+            background: var(--color-accent);
+            color: white;
+            font-size: 0.6875rem;
+            padding: 0.125rem 0.5rem;
+            border-radius: 10px;
+            animation: pulse 2s infinite;
+        }
+
+        /* メインコンテンツ */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* カード */
+        .card {
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid var(--color-border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .card-title {
+            font-weight: 700;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card-body {
+            padding: 1.25rem;
+        }
+
+        .section {
+            margin-bottom: 1.5rem;
+        }
+
+        /* ========================================
+           マイページ
+        ======================================== */
+        .hero-stats {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+            border-radius: var(--radius);
+            padding: 2rem;
+            color: white;
+            margin-bottom: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-stats::before {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            right: -50px;
+            top: -50px;
+        }
+
+        .hero-greeting {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero-countdown {
+            font-size: 0.875rem;
+            opacity: 0.9;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-level {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .level-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: rgba(255,255,255,0.15);
+            padding: 0.75rem 1.25rem;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        .level-badge .icon {
+            font-size: 2rem;
+        }
+
+        .level-badge .info h3 {
+            font-size: 1.125rem;
+            font-weight: 700;
+        }
+
+        .level-badge .info p {
+            font-size: 0.75rem;
+            opacity: 0.9;
+        }
+
+        .xp-bar {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .xp-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            margin-bottom: 0.375rem;
+        }
+
+        .xp-track {
+            height: 10px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .xp-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--color-warm), #FFD93D);
+            border-radius: 5px;
+            transition: width 1s ease;
+            box-shadow: 0 0 10px rgba(255, 230, 109, 0.5);
+        }
+
+        .job-type-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+            background: rgba(255,255,255,0.2);
+            padding: 0.375rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.8125rem;
+        }
+
+        /* ステータスカード */
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 0.75rem;
+        }
+
+        .status-item {
+            background: var(--color-bg);
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .status-item:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .status-item .value {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--color-primary);
+        }
+
+        .status-item .label {
+            font-size: 0.75rem;
+            color: var(--color-text-light);
+            margin-top: 0.25rem;
+        }
+
+        .status-item.accent .value {
+            color: var(--color-accent);
+        }
+
+        .status-item.gold .value {
+            color: var(--color-gold);
+        }
+
+        /* クエスト */
+        .quest-card {
+            background: linear-gradient(135deg, var(--color-gold-light) 0%, var(--color-warm-light) 100%);
+            border: 2px solid var(--color-gold);
+            border-radius: var(--radius);
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .quest-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .quest-header .icon {
+            font-size: 2rem;
+            animation: bounce 2s infinite;
+        }
+
+        .quest-header h3 {
+            font-size: 1.125rem;
+            color: var(--color-gold);
+        }
+
+        .quest-header p {
+            font-size: 0.8125rem;
+            color: var(--color-text-light);
+        }
+
+        .quest-progress {
+            background: white;
+            border-radius: 8px;
+            padding: 1rem;
+        }
+
+        .quest-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.5rem 0;
+        }
+
+        .quest-item:not(:last-child) {
+            border-bottom: 1px dashed var(--color-border);
+        }
+
+        .quest-check {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+        }
+
+        .quest-check.done {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .quest-check.pending {
+            background: var(--color-border);
+            color: var(--color-text-muted);
+        }
+
+        .quest-item .text {
+            flex: 1;
+            font-size: 0.9375rem;
+        }
+
+        .quest-item .text.done {
+            text-decoration: line-through;
+            color: var(--color-text-muted);
+        }
+
+        /* ガイドリンク */
+        .guide-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--color-bg);
+            border-radius: 10px;
+            text-decoration: none;
+            color: var(--color-text);
+            transition: all 0.3s ease;
+            margin-bottom: 0.75rem;
+        }
+
+        .guide-link:hover {
+            background: var(--color-primary-pale);
+            transform: translateX(5px);
+        }
+
+        .guide-link .icon {
+            font-size: 1.5rem;
+        }
+
+        .guide-link h4 {
+            font-size: 0.9375rem;
+            margin-bottom: 0.125rem;
+        }
+
+        .guide-link p {
+            font-size: 0.8125rem;
+            color: var(--color-text-light);
+        }
+
+        /* ========================================
+           評価入力タブ
+        ======================================== */
+        .feedback-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--color-bg);
+            border-radius: 10px;
+            margin-bottom: 0.75rem;
+        }
+
+        .feedback-avatar {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--color-primary-light) 0%, var(--color-primary) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        .feedback-info {
+            flex: 1;
+        }
+
+        .feedback-name {
+            font-weight: 700;
+            font-size: 0.9375rem;
+        }
+
+        .feedback-team {
+            font-size: 0.8125rem;
+            color: var(--color-text-light);
+        }
+
+        .feedback-btn {
+            padding: 0.625rem 1.25rem;
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 700;
+            font-family: var(--font-main);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .feedback-btn:hover {
+            background: var(--color-primary-dark);
+        }
+
+        .feedback-btn.done {
+            background: var(--color-text-muted);
+            cursor: default;
+        }
+
+        /* ========================================
+           制度ガイドタブ
+        ======================================== */
+        .guide-section {
+            margin-bottom: 1rem;
+        }
+
+        .guide-section-title {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--color-text-muted);
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--color-border);
+            background: var(--color-bg);
+        }
+
+        /* アコーディオン */
+        .accordion {
+            background: white;
+            margin-bottom: 0;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .accordion:last-child {
+            border-bottom: none;
+        }
+
+        .accordion-header {
+            padding: 1rem 1.25rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transition: background 0.3s ease;
+        }
+
+        .accordion-header:hover {
+            background: var(--color-primary-pale);
+        }
+
+        .accordion-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            background: var(--color-primary);
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 700;
+            border-radius: 6px;
+        }
+
+        .accordion-title {
+            flex: 1;
+            font-weight: 700;
+            font-size: 0.9375rem;
+        }
+
+        .accordion-icon {
+            color: var(--color-text-muted);
+            font-size: 0.75rem;
+            transition: transform 0.3s ease;
+        }
+
+        .accordion.open .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            display: none;
+            padding: 1.5rem;
+            background: var(--color-bg-alt);
+            border-top: 1px solid var(--color-border);
+        }
+
+        .accordion.open .accordion-content {
+            display: block;
+        }
+
+        /* 制度ガイド内のスタイル */
+        .accordion-content h3 {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--color-primary-dark);
+            margin: 1.5rem 0 0.75rem 0;
+        }
+
+        .accordion-content h3:first-child {
+            margin-top: 0;
+        }
+
+        .accordion-content h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--color-text);
+            margin: 1rem 0 0.5rem 0;
+        }
+
+        .accordion-content p {
+            margin-bottom: 0.75rem;
+        }
+
+        .accordion-content ul, .accordion-content ol {
+            margin: 0.75rem 0 0.75rem 1.25rem;
+        }
+
+        .accordion-content li {
+            margin-bottom: 0.375rem;
+        }
+
+        .accordion-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            font-size: 0.875rem;
+        }
+
+        .accordion-content th, .accordion-content td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .accordion-content th {
+            background: var(--color-primary);
+            color: white;
+            font-weight: 700;
+        }
+
+        .accordion-content tr:nth-child(even) {
+            background: white;
+        }
+
+        .highlight-box {
+            background: var(--color-primary-pale);
+            border-left: 4px solid var(--color-primary);
+            padding: 1rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1rem 0;
+        }
+
+        .highlight-box h4 {
+            margin-top: 0;
+            color: var(--color-primary-dark);
+        }
+
+        .highlight-box.warning {
+            background: var(--color-accent-light);
+            border-left-color: var(--color-accent);
+        }
+
+        .highlight-box.warning h4 {
+            color: #C0392B;
+        }
+
+        .highlight-box.decision {
+            background: var(--color-warm-light);
+            border-left-color: var(--color-gold);
+        }
+
+        .highlight-box.decision h4 {
+            color: #B7950B;
+        }
+
+        /* カードグリッド */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0.75rem;
+            margin: 1rem 0;
+        }
+
+        .info-card {
+            background: white;
+            border: 1px solid var(--color-border);
+            border-radius: 10px;
+            padding: 1rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .info-card h4 {
+            margin: 0 0 0.5rem 0;
+            color: var(--color-primary-dark);
+            font-size: 0.9375rem;
+        }
+
+        .info-card p {
+            margin: 0;
+            font-size: 0.8125rem;
+            color: var(--color-text-light);
+        }
+
+        /* フロー */
+        .flow {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .flow-step {
+            background: white;
+            border: 2px solid var(--color-primary);
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            text-align: center;
+            min-width: 100px;
+        }
+
+        .flow-step strong {
+            display: block;
+            color: var(--color-primary-dark);
+            font-size: 0.8125rem;
+        }
+
+        .flow-step span {
+            font-size: 0.75rem;
+            color: var(--color-text-light);
+        }
+
+        .flow-arrow {
+            font-size: 1.25rem;
+            color: var(--color-primary);
+        }
+
+        /* レポートサンプル */
+        .report-sample {
+            background: white;
+            border: 2px solid var(--color-primary);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin: 1rem 0;
+        }
+
+        .report-sample.maintain {
+            border-color: #B2BEC3;
+        }
+
+        .report-sample.warning {
+            border-color: var(--color-accent);
+        }
+
+        .report-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .report-badge {
+            background: var(--color-primary);
+            color: white;
+            padding: 0.375rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.8125rem;
+            font-weight: 700;
+        }
+
+        .report-badge.maintain {
+            background: #636E72;
+        }
+
+        .report-badge.warning {
+            background: var(--color-accent);
+        }
+
+        /* タイムライン */
+        .timeline {
+            position: relative;
+            margin: 1.5rem 0;
+            padding-left: 1.5rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--color-primary-pale);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 1rem;
+            padding-left: 1.25rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -1.5rem;
+            top: 0.4rem;
+            width: 10px;
+            height: 10px;
+            background: var(--color-primary);
+            border-radius: 50%;
+            border: 2px solid white;
+            box-shadow: 0 0 0 2px var(--color-primary);
+        }
+
+        .timeline-date {
+            font-weight: 700;
+            color: var(--color-primary-dark);
+            font-size: 0.9375rem;
+        }
+
+        /* よくある質問 */
+        .faq-item {
+            margin-bottom: 0.75rem;
+            background: white;
+            padding: 1rem;
+            border-radius: 10px;
+        }
+
+        .faq-item summary {
+            font-weight: 700;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .faq-item summary::before {
+            content: 'Q.';
+            color: var(--color-primary);
+            font-weight: 900;
+        }
+
+        .faq-item p {
+            margin: 0.75rem 0 0 0;
+            padding-left: 1.5rem;
+            font-size: 0.9375rem;
+            color: var(--color-text-light);
+        }
+
+        /* ========================================
+           モーダル
+        ======================================== */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 1rem;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: white;
+            border-radius: var(--radius);
+            width: 100%;
+            max-width: 400px;
+            box-shadow: var(--shadow-lg);
+            animation: fadeInUp 0.3s ease;
+        }
+
+        .modal-header {
+            padding: 1.25rem;
+            border-bottom: 1px solid var(--color-border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .modal-header h3 {
+            font-size: 1.125rem;
+            font-weight: 700;
+        }
+
+        .modal-close {
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: var(--color-bg);
+            border-radius: 50%;
+            font-size: 1.25rem;
+            cursor: pointer;
+            color: var(--color-text-muted);
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            background: var(--color-accent-light);
+            color: var(--color-accent);
+        }
+
+        .modal-body {
+            padding: 1.25rem;
+        }
+
+        .modal-footer {
+            padding: 1rem 1.25rem;
+            border-top: 1px solid var(--color-border);
+            display: flex;
+            gap: 0.75rem;
+            justify-content: flex-end;
+        }
+
+        .rating-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.75rem;
+            margin: 1rem 0;
+        }
+
+        .rating-option {
+            text-align: center;
+            padding: 1rem;
+            border: 2px solid var(--color-border);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .rating-option:hover {
+            border-color: var(--color-primary);
+            background: var(--color-primary-pale);
+        }
+
+        .rating-option.selected {
+            border-color: var(--color-primary);
+            background: var(--color-primary-pale);
+        }
+
+        .rating-option .emoji {
+            font-size: 2rem;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .rating-option .label {
+            font-size: 0.8125rem;
+            font-weight: 700;
+        }
+
+        .comment-area {
+            width: 100%;
+            min-height: 80px;
+            padding: 0.75rem;
+            border: 2px solid var(--color-border);
+            border-radius: 8px;
+            font-family: var(--font-main);
+            font-size: 0.9375rem;
+            resize: vertical;
+        }
+
+        .comment-area:focus {
+            outline: none;
+            border-color: var(--color-primary);
+        }
+
+        /* ボタン */
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.9375rem;
+            font-weight: 700;
+            font-family: var(--font-main);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--color-primary-dark);
+        }
+
+        .btn-secondary {
+            background: var(--color-bg);
+            color: var(--color-text);
+        }
+
+        .btn-secondary:hover {
+            background: var(--color-border);
+        }
+
+        /* フローティングナビ */
+        .floating-nav {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            z-index: 100;
+        }
+
+        .floating-btn {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: var(--shadow-lg);
+            transition: all 0.3s ease;
+        }
+
+        .floating-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .floating-btn.primary {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .floating-btn.secondary {
+            background: white;
+            color: var(--color-text);
+        }
+
+        /* ユーザー切り替えメニュー */
+        .user-switcher {
+            position: relative;
+        }
+
+        .user-switcher-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 8px;
+            transition: background 0.3s ease;
+        }
+
+        .user-switcher-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .user-switcher-btn::after {
+            content: '▼';
+            font-size: 0.625rem;
+            opacity: 0.7;
+        }
+
+        .user-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--shadow-lg);
+            min-width: 280px;
+            overflow: hidden;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 200;
+        }
+
+        .user-menu.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(8px);
+        }
+
+        .user-menu-header {
+            padding: 1rem;
+            background: var(--color-bg);
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .user-menu-header p {
+            margin: 0;
+            font-size: 0.75rem;
+            color: var(--color-text-light);
+        }
+
+        .user-menu-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.875rem 1rem;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            border-bottom: 1px solid var(--color-border);
+            color: var(--color-text);
+        }
+
+        .user-menu-item:last-child {
+            border-bottom: none;
+        }
+
+        .user-menu-item:hover {
+            background: var(--color-primary-pale);
+        }
+
+        .user-menu-item.active {
+            background: var(--color-primary-pale);
+        }
+
+        .user-menu-item .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 0.875rem;
+        }
+
+        .user-menu-item .info {
+            flex: 1;
+        }
+
+        .user-menu-item .info .name {
+            font-weight: 700;
+            font-size: 0.9375rem;
+        }
+
+        .user-menu-item .info .role {
+            font-size: 0.75rem;
+            color: var(--color-text-light);
+        }
+
+        .user-menu-item .level-tag {
+            font-size: 0.6875rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 700;
+        }
+
+        /* レスポンシブ */
+        @media (max-width: 768px) {
+            .hero-level {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .tab-btn {
+                padding: 0.75rem 1rem;
+                font-size: 0.8125rem;
+            }
+
+            .tab-btn span:not(.badge) {
+                display: none;
+            }
+
+            .status-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ログイン画面 -->
+<div class="login-screen" id="loginScreen">
+    <div class="login-card">
+        <div class="login-logo">VB</div>
+        <h1 class="login-title">評価制度ポータル</h1>
+        <p class="login-subtitle">VALUE BOOKS</p>
+        <input type="text" class="login-input" placeholder="スタッフID" value="tanaka001">
+        <input type="password" class="login-input" placeholder="パスワード" value="••••••••">
+        <button class="login-btn" onclick="login()">ログイン</button>
+    </div>
+</div>
+
+<!-- ダッシュボード画面 -->
+<div class="dashboard-screen" id="dashboardScreen">
+    <header class="header">
+        <div class="header-inner">
+            <div class="header-logo">
+                <span class="logo-mark">VB</span>
+                <span>評価制度ポータル</span>
+            </div>
+            <div class="user-switcher">
+                <div class="user-switcher-btn" onclick="toggleUserMenu()">
+                    <span class="header-user-name" id="currentUserName">田中 太郎</span>
+                    <div class="header-avatar" id="currentUserAvatar">田</div>
+                </div>
+                <div class="user-menu" id="userMenu">
+                    <div class="user-menu-header">
+                        <p>🔄 デモ用アカウント切り替え</p>
+                    </div>
+                    <div class="user-menu-item active" onclick="switchUser('tanaka')">
+                        <div class="avatar" style="background: linear-gradient(135deg, var(--color-primary-light) 0%, var(--color-primary) 100%);">田</div>
+                        <div class="info">
+                            <div class="name">田中 太郎</div>
+                            <div class="role">倉庫作業 / 価値生産タイプ</div>
+                        </div>
+                        <span class="level-tag" style="background: var(--color-primary-pale); color: var(--color-primary-dark);">リーダー</span>
+                    </div>
+                    <div class="user-menu-item" onclick="switchUser('sato')">
+                        <div class="avatar" style="background: linear-gradient(135deg, var(--color-purple-light) 0%, var(--color-purple) 100%);">佐</div>
+                        <div class="info">
+                            <div class="name">佐藤 美咲</div>
+                            <div class="role">企画・開発 / 価値創造タイプ</div>
+                        </div>
+                        <span class="level-tag" style="background: var(--color-purple-light); color: #7D3C98;">マネージャー</span>
+                    </div>
+                    <div class="user-menu-item" onclick="switchUser('suzuki')">
+                        <div class="avatar" style="background: linear-gradient(135deg, #B2BEC3 0%, #636E72 100%);">鈴</div>
+                        <div class="info">
+                            <div class="name">鈴木 一郎</div>
+                            <div class="role">倉庫作業 / 価値生産タイプ</div>
+                        </div>
+                        <span class="level-tag" style="background: var(--color-bg); color: var(--color-text-light);">スタンダード</span>
+                    </div>
+                    <div class="user-menu-item" onclick="switchUser('takahashi')">
+                        <div class="avatar" style="background: linear-gradient(135deg, var(--color-warm) 0%, var(--color-gold) 100%);">高</div>
+                        <div class="info">
+                            <div class="name">高橋 優子</div>
+                            <div class="role">カスタマー対応 / 関係構築タイプ</div>
+                        </div>
+                        <span class="level-tag" style="background: var(--color-warm-light); color: #B7950B;">リーダー</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- タブナビゲーション -->
+    <nav class="tab-nav">
+        <div class="tab-nav-inner">
+            <button class="tab-btn active" onclick="showTab(event, 'dashboard')">
+                🏠 <span>マイページ</span>
+            </button>
+            <button class="tab-btn" onclick="showTab(event, 'feedback')">
+                🙏 <span>感謝を送る</span>
+            </button>
+            <button class="tab-btn" onclick="showTab(event, 'guide')">
+                📖 <span>制度ガイド</span>
+            </button>
+        </div>
+    </nav>
+
+    <main>
+        <!-- マイページタブ -->
+        <div class="tab-content active" id="dashboardTab">
+            <!-- ヒーロー -->
+            <div class="hero-stats animate-in" id="heroStats">
+                <p class="hero-greeting">こんにちは、<strong id="heroName">田中 太郎</strong>さん 👋</p>
+                <p class="hero-countdown">📅 次回評価まで <strong>142日</strong>（2026年6月30日）</p>
+                
+                <div class="hero-level">
+                    <div class="level-badge">
+                        <span class="icon" id="heroIcon">⭐</span>
+                        <div class="info">
+                            <h3 id="heroLevel">リーダー</h3>
+                            <p id="heroSalary">時給 2,000円</p>
+                        </div>
+                    </div>
+                    <div class="job-type-badge" id="heroJobType">
+                        📦 価値生産タイプ
+                    </div>
+                    <div class="xp-bar">
+                        <div class="xp-label">
+                            <span id="heroNextLevel">次の階層：マネージャー</span>
+                            <span id="heroXP">条件達成 2/4</span>
+                        </div>
+                        <div class="xp-track">
+                            <div class="xp-fill" id="heroXPBar" style="width: 50%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem;">
+                <div>
+                    <!-- 現在のステータス -->
+                    <div class="card section animate-in" style="animation-delay: 0.1s;">
+                        <div class="card-header">
+                            <div class="card-title">📊 現在のステータス</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="status-grid" id="statusGrid">
+                                <div class="status-item">
+                                    <div class="value" id="statPersonal">+18%</div>
+                                    <div class="label">個人数値</div>
+                                </div>
+                                <div class="status-item">
+                                    <div class="value" id="statTeam">92%</div>
+                                    <div class="label">チーム達成</div>
+                                </div>
+                                <div class="status-item gold">
+                                    <div class="value" id="statReputation">85%</div>
+                                    <div class="label">周囲評判</div>
+                                </div>
+                                <div class="status-item">
+                                    <div class="value" id="statAttendance">97%</div>
+                                    <div class="label">出勤率</div>
+                                </div>
+                            </div>
+                            <div style="margin-top: 1rem; padding: 1rem; background: var(--color-primary-pale); border-radius: 10px;" id="aiCommentBox">
+                                <p style="margin: 0; font-size: 0.875rem;" id="aiComment">
+                                    🤖 <strong>AIコメント：</strong>個人数値がチーム平均を大きく上回っています。この調子を維持すれば、次回評価での昇格が見えてきます。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 次の階層への条件 -->
+                    <div class="quest-card animate-in" style="animation-delay: 0.2s;" id="questCard">
+                        <div class="quest-header">
+                            <span class="icon">📋</span>
+                            <div>
+                                <h3 id="questTitle">マネージャーへの条件</h3>
+                                <p id="questSubtitle">あと2つ達成で昇格</p>
+                            </div>
+                        </div>
+                        <div class="quest-progress" id="questProgress">
+                            <div class="quest-item">
+                                <div class="quest-check done">✓</div>
+                                <span class="text done">処理効率チームトップ10%を維持</span>
+                            </div>
+                            <div class="quest-item">
+                                <div class="quest-check done">✓</div>
+                                <span class="text done">周囲から感謝を受けている</span>
+                            </div>
+                            <div class="quest-item">
+                                <div class="quest-check pending">○</div>
+                                <span class="text">業務改善の提案・実行（あと1件）</span>
+                            </div>
+                            <div class="quest-item">
+                                <div class="quest-check pending">○</div>
+                                <span class="text">複数エリアでの業務経験</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <!-- 感謝を送る -->
+                    <div class="card section animate-in" style="animation-delay: 0.15s;">
+                        <div class="card-header">
+                            <div class="card-title">🙏 感謝を送る</div>
+                        </div>
+                        <div class="card-body">
+                            <div style="margin-bottom: 1rem; padding: 0.75rem; background: var(--color-primary-pale); border-radius: 8px;">
+                                <p style="margin: 0; font-size: 0.8125rem; color: var(--color-text);">
+                                    良い影響を受けた人に感謝を送りましょう。<br>
+                                    <strong>義務ではありません。送りたい時に、送りたい人に。</strong>
+                                </p>
+                            </div>
+                            <div class="feedback-item">
+                                <div class="feedback-avatar">鈴</div>
+                                <div class="feedback-info">
+                                    <div class="feedback-name">鈴木 一郎</div>
+                                    <div class="feedback-team">倉庫作業</div>
+                                </div>
+                                <button class="feedback-btn" onclick="openThanksModal('鈴木 一郎')">感謝を送る</button>
+                            </div>
+                            <div class="feedback-item">
+                                <div class="feedback-avatar">高</div>
+                                <div class="feedback-info">
+                                    <div class="feedback-name">高橋 誠</div>
+                                    <div class="feedback-team">物流管理</div>
+                                </div>
+                                <button class="feedback-btn" onclick="openThanksModal('高橋 誠')">感謝を送る</button>
+                            </div>
+                            <div style="margin-top: 0.75rem; text-align: center;">
+                                <a href="#" onclick="showTab(event, 'feedback')" style="color: var(--color-primary); font-size: 0.875rem;">全員を見る →</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 制度ガイドへのショートカット -->
+                    <div class="card section animate-in" style="animation-delay: 0.2s;">
+                        <div class="card-header">
+                            <div class="card-title">📖 制度を理解する</div>
+                        </div>
+                        <div class="card-body" style="padding: 1rem;">
+                            <a href="#" onclick="showTab(event, 'guide'); setTimeout(() => openAccordion('why-now'), 100);" class="guide-link" style="margin-bottom: 0.5rem; background: linear-gradient(135deg, var(--color-primary-pale) 0%, var(--color-warm-light) 100%);">
+                                <span class="icon">🚀</span>
+                                <div>
+                                    <h4>なぜ今、変わるのか</h4>
+                                    <p>時代の変化と私たちの選択</p>
+                                </div>
+                            </a>
+                            <a href="#" onclick="showTab(event, 'guide'); setTimeout(() => openAccordion('ueda-future'), 100);" class="guide-link" style="margin-bottom: 0.5rem;">
+                                <span class="icon">🌱</span>
+                                <div>
+                                    <h4>上田拠点の新しい仕事</h4>
+                                    <p>私たちが生み出す価値</p>
+                                </div>
+                            </a>
+                            <a href="#" onclick="showTab(event, 'guide'); setTimeout(() => openAccordion('salary'), 100);" class="guide-link" style="margin-bottom: 0.5rem;">
+                                <span class="icon">💰</span>
+                                <div>
+                                    <h4>給与体系</h4>
+                                    <p>6段階の時給テーブル</p>
+                                </div>
+                            </a>
+                            <a href="#" onclick="showTab(event, 'guide'); setTimeout(() => openAccordion('evaluation'), 100);" class="guide-link" style="margin-bottom: 0;">
+                                <span class="icon">📊</span>
+                                <div>
+                                    <h4>評価の仕組み</h4>
+                                    <p>職種別の評価方法</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 感謝を送るタブ -->
+        <div class="tab-content" id="feedbackTab">
+            <div style="max-width: 700px; margin: 0 auto;">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">🙏 感謝を送る</div>
+                    </div>
+                    <div class="card-body">
+                        <div style="background: var(--color-primary-pale); padding: 1rem; border-radius: 10px; margin-bottom: 1.5rem;">
+                            <p style="margin: 0; font-size: 0.9375rem;">
+                                良い影響を受けた人に感謝を送りましょう。<br>
+                                <strong>義務ではありません。</strong>送りたい時に、送りたい人に。
+                            </p>
+                        </div>
+
+                        <div class="feedback-item">
+                            <div class="feedback-avatar">鈴</div>
+                            <div class="feedback-info">
+                                <div class="feedback-name">鈴木 一郎</div>
+                                <div class="feedback-team">倉庫作業 / スタンダード</div>
+                            </div>
+                            <button class="feedback-btn" onclick="openThanksModal('鈴木 一郎')">感謝を送る</button>
+                        </div>
+                        <div class="feedback-item">
+                            <div class="feedback-avatar" style="background: linear-gradient(135deg, var(--color-text-muted) 0%, #95A5A6 100%);">佐</div>
+                            <div class="feedback-info">
+                                <div class="feedback-name">佐藤 花子</div>
+                                <div class="feedback-team">倉庫作業 / リーダー</div>
+                            </div>
+                            <button class="feedback-btn done">送信済 ✓</button>
+                        </div>
+                        <div class="feedback-item">
+                            <div class="feedback-avatar">高</div>
+                            <div class="feedback-info">
+                                <div class="feedback-name">高橋 誠</div>
+                                <div class="feedback-team">物流管理 / マネージャー</div>
+                            </div>
+                            <button class="feedback-btn" onclick="openThanksModal('高橋 誠')">感謝を送る</button>
+                        </div>
+
+                        <div style="margin-top: 1.5rem; padding: 1rem; background: var(--color-bg); border-radius: 10px; text-align: center;">
+                            <p style="margin: 0; font-size: 0.875rem; color: var(--color-text-light);">
+                                今月送った感謝：<strong style="color: var(--color-primary);">1件</strong>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 1.5rem;">
+                    <a href="#" onclick="showTab(event, 'dashboard')" style="color: var(--color-primary); text-decoration: none; font-size: 0.9375rem;">← マイページに戻る</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 制度ガイドタブ -->
+        <div class="tab-content" id="guideTab">
+            <div style="max-width: 900px; margin: 0 auto;">
+                
+                <!-- ビジョン・ヒーローセクション -->
+                <div class="card section" style="background: linear-gradient(135deg, #1A1A2E 0%, #16213E 50%, var(--color-primary-dark) 100%); color: white; border: none; overflow: hidden; position: relative;">
+                    <div style="position: absolute; top: -50px; right: -50px; width: 200px; height: 200px; background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);"></div>
+                    <div style="position: absolute; bottom: -30px; left: -30px; width: 150px; height: 150px; background: radial-gradient(circle, rgba(0,169,157,0.3) 0%, transparent 70%);"></div>
+                    <div style="padding: 2.5rem 2rem; position: relative; z-index: 1; text-align: center;">
+                        <p style="font-size: 2.5rem; margin-bottom: 0.5rem;">📚📖📕🤖✨</p>
+                        <h1 style="font-size: 1.75rem; font-weight: 900; margin-bottom: 0.5rem; line-height: 1.4;">
+                            AI時代の幕開けを<br>一緒に楽しみ、<br>本が読まれる社会を残そう。
+                        </h1>
+                        <p style="font-size: 1rem; opacity: 0.9; margin-bottom: 1.5rem;">新しい評価制度のご案内</p>
+                        <div style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); padding: 1rem 1.5rem; border-radius: 12px; display: inline-block;">
+                            <p style="margin: 0; font-size: 0.9375rem; line-height: 1.6;">
+                                日本および世界中の人々が<br>
+                                <strong>本を自由に読み学び楽しむことのできる環境を整える。</strong>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- なぜ今、変わるのか -->
+                <div class="card guide-section">
+                    <div class="guide-section-title">🔄 なぜ今、変わるのか</div>
+                    
+                    <div class="accordion open" id="why-now">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span class="accordion-number">!</span>
+                            <span class="accordion-title">時代の変化と私たちの選択</span>
+                            <span class="accordion-icon">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="card-grid" style="margin-bottom: 1.5rem;">
+                                <div class="info-card" style="border-top: 4px solid var(--color-primary);">
+                                    <h4>🏭 埼玉倉庫の自動化</h4>
+                                    <p><strong>2026年10月〜12月</strong>、埼玉倉庫の自動化が本格稼働します。大量の入出荷や定型業務は、機械が担います。</p>
+                                </div>
+                                <div class="info-card" style="border-top: 4px solid var(--color-purple);">
+                                    <h4>🔄 仕事が毎月変わる時代</h4>
+                                    <p>AIの進化により、<strong>「先月の正解」が「今月の不正解」</strong>になる。そんなスピードで世の中は動いています。</p>
+                                </div>
+                                <div class="info-card" style="border-top: 4px solid var(--color-accent);">
+                                    <h4>📊 古い評価基準の限界</h4>
+                                    <p>スキャン数やミスの少なさを10円単位で測る。そんな評価は、<strong>新しい仕事の価値を測れません。</strong></p>
+                                </div>
+                            </div>
+
+                            <div style="background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%); color: white; padding: 1.5rem; border-radius: 12px; text-align: center; margin-bottom: 1.5rem;">
+                                <p style="margin: 0; font-size: 1.125rem; font-weight: 700; line-height: 1.6;">
+                                    だからこそ、<br>
+                                    <span style="font-size: 1.375rem;">評価制度を根本から変え、<br>給与を大幅に引き上げます。</span>
+                                </p>
+                                <p style="margin: 0.75rem 0 0 0; font-size: 0.9375rem; opacity: 0.9;">
+                                    これは皆さんへの<strong>「期待」</strong>と<strong>「投資」</strong>です。
+                                </p>
+                            </div>
+
+                            <h3>🎯 3つの基本方針</h3>
+                            <div class="card-grid">
+                                <div class="info-card" style="text-align: center;">
+                                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">🔺</div>
+                                    <h4>全員が今より上がってスタート</h4>
+                                    <p>現在の時給から繰り上げて、新しい階層でスタートします。</p>
+                                </div>
+                                <div class="info-card" style="text-align: center;">
+                                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">🎯</div>
+                                    <h4>評価は年2回、シンプルに</h4>
+                                    <p>数値的な貢献、周りからの評判、今後へのコミット。この3つで評価します。</p>
+                                </div>
+                                <div class="info-card" style="text-align: center;">
+                                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">🛡️</div>
+                                    <h4>下がる時は1年の猶予</h4>
+                                    <p>改善点を共有し、取り組む時間を設けます。いきなり下がることはありません。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion" id="ueda-future">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span class="accordion-number">★</span>
+                            <span class="accordion-title">上田拠点の新しい仕事</span>
+                            <span class="accordion-icon">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div style="background: var(--color-primary-pale); padding: 1rem; border-radius: 10px; margin-bottom: 1.5rem; text-align: center;">
+                                <p style="margin: 0; font-size: 1rem;">
+                                    埼玉が<strong>「生産性」</strong>を担うなら、<br>
+                                    上田は<strong>「新しい価値」</strong>を生み出す拠点になります。
+                                </p>
+                            </div>
+
+                            <div class="card-grid">
+                                <div class="info-card">
+                                    <h4>🤖 AIツールの活用・実験</h4>
+                                    <p>ChatGPTや画像認識AIを使った業務改善、新しい働き方の実験</p>
+                                </div>
+                                <div class="info-card">
+                                    <h4>📚 特殊な本の査定・鑑定</h4>
+                                    <p>機械では判断できない、人間の目利きが必要な本の価値判断</p>
+                                </div>
+                                <div class="info-card">
+                                    <h4>🤝 顧客対応・法人営業</h4>
+                                    <p>BtoB、図書館、企業向けの特別な対応とリレーション構築</p>
+                                </div>
+                                <div class="info-card">
+                                    <h4>💡 新規事業の企画</h4>
+                                    <p>本の新しい届け方、読書体験の提案、サービス開発</p>
+                                </div>
+                                <div class="info-card">
+                                    <h4>✍️ コンテンツ制作</h4>
+                                    <p>SNS、ブログ、動画など、本の魅力を伝える発信</p>
+                                </div>
+                                <div class="info-card">
+                                    <h4>🌱 まだ見ぬ仕事</h4>
+                                    <p>AIの進化とともに、毎月新しい仕事が生まれます</p>
+                                </div>
+                            </div>
+
+                            <div class="highlight-box decision">
+                                <h4>💭 私たちが目指す姿</h4>
+                                <ul style="margin-bottom: 0;">
+                                    <li><strong>変化を楽しむ組織</strong>：「前と同じやり方がいい」ではなく、「やってみよう」が口癖の組織</li>
+                                    <li><strong>多様な働き方</strong>：バリバリ稼ぐ人も、時間を減らして生活を豊かにする人も。どちらも正解</li>
+                                    <li><strong>挑戦が報われる</strong>：新しいことに挑戦した人が、正当に評価される</li>
+                                </ul>
+                            </div>
+
+                            <div style="background: linear-gradient(135deg, #1A1A2E 0%, #16213E 100%); color: white; padding: 1.5rem; border-radius: 12px; text-align: center; margin-top: 1.5rem;">
+                                <p style="margin: 0; font-size: 1rem; line-height: 1.8;">
+                                    「生産性」のプレッシャーは埼玉と機械が背負う。<br>
+                                    <strong style="font-size: 1.125rem;">私たちは人間らしく、健やかに、<br>そしてクリエイティブに働こう。</strong>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 基本設計 -->
+                <div class="card guide-section">
+                    <div class="guide-section-title">📋 制度の詳細</div>
+                    
+                    <!-- 1. 設計思想 -->
+                    <div class="accordion" id="philosophy">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span class="accordion-number">1</span>
+                            <span class="accordion-title">設計思想</span>
+                            <span class="accordion-icon">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <h3>🎯 この制度が目指すこと</h3>
+                            <ul>
+                                <li><strong>納得感</strong>：なぜこの時給なのかが分かる</li>
+                                <li><strong>公平性</strong>：職種に関係なく、貢献が正当に評価される</li>
+                                <li><strong>透明性</strong>：評価の基準が明確で、誰でも理解できる</li>
+                                <li><strong>成長支援</strong>：次に何をすれば良いかが分かる</li>
+                            </ul>
+
+                            <h3>⚖️ 評価の基本原則</h3>
+                            <div class="card-grid">
+                                <div class="info-card">
+                                    <h4>📊 データに基づく</h4>
+                                    <p>感覚や印象ではなく、実際の数値とフィードバックで評価</p>
+                                </div>
+                                <div class="info-card">
+                                    <h4>🤖 AIが補助</h4>
+                                    <p>人間のバイアスを減らし、一貫性のある判定を支援</p>
+                                </div>
+                                <div class="info-card">
+                                    <h4>👥 周囲の声</h4>
+                                    <p>一緒に働く仲間からの評価も重要な要素</p>
+                                </div>
+                                <div class="info-card">
+                                    <h4>📈 成長志向</h4>
+                                    <p>現状の評価だけでなく、次へのヒントを提供</p>
+                                </div>
+                            </div>
+
+                            <div class="highlight-box">
+                                <h4>💡 なぜ「システム＋AI」なのか？</h4>
+                                <ul style="margin-bottom: 0;">
+                                    <li>人が評価すると、どうしても「好き嫌い」が入りやすい</li>
+                                    <li>データに基づく判定なら、誰が見ても納得できる</li>
+                                    <li>AIは「判定」ではなく「提案」。最終確認は人間が行う</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2. 給与体系 -->
+                    <div class="accordion" id="salary">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span class="accordion-number">2</span>
+                            <span class="accordion-title">給与体系</span>
+                            <span class="accordion-icon">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <h3>💰 6段階の時給 / 月給テーブル</h3>
+
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>階層</th>
+                                        <th>時給</th>
+                                        <th>月給（120h）</th>
+                                        <th>月給（140h）</th>
+                                        <th>月給（160h）</th>
+                                        <th>想定比率</th>
+                                        <th>判定方法</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>交渉枠</strong></td>
+                                        <td>3,000円〜</td>
+                                        <td>360,000円〜</td>
+                                        <td>420,000円〜</td>
+                                        <td>480,000円〜</td>
+                                        <td>〜5%</td>
+                                        <td>プレゼン交渉</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>スペシャリスト</strong></td>
+                                        <td>3,000円</td>
+                                        <td>360,000円</td>
+                                        <td>420,000円</td>
+                                        <td>480,000円</td>
+                                        <td>約5%</td>
+                                        <td>システム＋AI</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>マネージャー</strong></td>
+                                        <td>2,500円</td>
+                                        <td>300,000円</td>
+                                        <td>350,000円</td>
+                                        <td>400,000円</td>
+                                        <td>約10%</td>
+                                        <td>システム＋AI</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>リーダー / メンター</strong></td>
+                                        <td>2,000円</td>
+                                        <td>240,000円</td>
+                                        <td>280,000円</td>
+                                        <td>320,000円</td>
+                                        <td>約20%</td>
+                                        <td>システム＋AI</td>
+                                    </tr>
+                                    <tr style="background: var(--color-primary-pale);">
+                                        <td><strong>スタンダード</strong></td>
+                                        <td>1,500円</td>
+                                        <td>180,000円</td>
+                                        <td>210,000円</td>
+                                        <td>240,000円</td>
+                                        <td>約30%</td>
+                                        <td>システム＋AI</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>研修・スタート</strong></td>
+                                        <td>1,300円</td>
+                                        <td>156,000円</td>
+                                        <td>182,000円</td>
+                                        <td>208,000円</td>
+                                        <td>約10%</td>
+                                        <td>入社時固定</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <p style="margin-top: 0.75rem; font-size: 0.8125rem; color: var(--color-text-light);">
+                                ※ 月給（フレックス成果）は <strong>月コミット120h / 140h / 160h</strong> の目安です。
+                            </p>
+
+                            <div class="highlight-box">
+                                <h4>📌 ポイント</h4>
+                                <ul style="margin-bottom: 0;">
+                                    <li><strong>比率は「目安」</strong>であり、厳格に守る必要はない</li>
+                                    <li>全員がこの制度の対象（パート・正社員・全拠点）</li>
+                                    <li>3,000円までは「システム＋AI」、それ以上は「プレゼン交渉」</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3. 評価の仕組み -->
+                    <div class="accordion" id="evaluation">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span class="accordion-number">3</span>
+                            <span class="accordion-title">評価の仕組み</span>
+                            <span class="accordion-icon">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <h3>📊 評価の4つの階層</h3>
+                            <p>評価は「会社全体」から「個人」まで、4つの階層で構成されます。</p>
+                            
+                            <div style="background: linear-gradient(180deg, var(--color-primary-pale) 0%, white 100%); border-radius: 12px; padding: 1.5rem; margin: 1rem 0;">
+                                <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                                    <div style="background: var(--color-primary); color: white; padding: 1rem; border-radius: 8px; text-align: center;">
+                                        <p style="margin: 0; font-size: 0.75rem; opacity: 0.9;">LEVEL 1</p>
+                                        <p style="margin: 0; font-size: 1.125rem; font-weight: 700;">🏢 会社全体の利益</p>
+                                        <p style="margin: 0.25rem 0 0 0; font-size: 0.8125rem; opacity: 0.9;">売上・利益・成長率など、会社全体の業績</p>
+                                    </div>
+                                    <div style="text-align: center; color: var(--color-primary);">↓</div>
+                                    <div style="background: var(--color-primary-light); color: white; padding: 1rem; border-radius: 8px; text-align: center; margin: 0 1rem;">
+                                        <p style="margin: 0; font-size: 0.75rem; opacity: 0.9;">LEVEL 2</p>
+                                        <p style="margin: 0; font-size: 1.125rem; font-weight: 700;">👥 チームの目標達成</p>
+                                        <p style="margin: 0.25rem 0 0 0; font-size: 0.8125rem; opacity: 0.9;">部門・プロジェクトごとの成果</p>
+                                    </div>
+                                    <div style="text-align: center; color: var(--color-primary);">↓</div>
+                                    <div style="background: white; border: 2px solid var(--color-primary); padding: 1rem; border-radius: 8px; text-align: center; margin: 0 2rem;">
+                                        <p style="margin: 0; font-size: 0.75rem; color: var(--color-primary);">LEVEL 3</p>
+                                        <p style="margin: 0; font-size: 1.125rem; font-weight: 700; color: var(--color-primary-dark);">📈 個人の数値達成</p>
+                                        <p style="margin: 0.25rem 0 0 0; font-size: 0.8125rem; color: var(--color-text-light);">作業量・処理効率・出勤率など</p>
+                                    </div>
+                                    <div style="text-align: center; color: var(--color-primary);">↓</div>
+                                    <div style="background: #FFF9E6; border: 2px solid var(--color-warm); padding: 1rem; border-radius: 8px; text-align: center; margin: 0 3rem;">
+                                        <p style="margin: 0; font-size: 0.75rem; color: #B7950B;">LEVEL 4</p>
+                                        <p style="margin: 0; font-size: 1.125rem; font-weight: 700; color: #7D6608;">💬 周りからの評判</p>
+                                        <p style="margin: 0.25rem 0 0 0; font-size: 0.8125rem; color: var(--color-text-light);">一緒に働く仲間からの信頼</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h3>🎯 職種による評価ウェイトの違い</h3>
+                            <p>職種によって、4つの階層のどこに評価の重みが置かれるかが異なります。</p>
+
+                            <div style="overflow-x: auto;">
+                                <table style="min-width: 500px;">
+                                    <thead>
+                                        <tr>
+                                            <th>職種</th>
+                                            <th style="text-align: center;">会社</th>
+                                            <th style="text-align: center;">チーム</th>
+                                            <th style="text-align: center;">個人</th>
+                                            <th style="text-align: center;">評判</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>🏭 倉庫作業</strong></td>
+                                            <td style="text-align: center;">△</td>
+                                            <td style="text-align: center;">○</td>
+                                            <td style="text-align: center; background: var(--color-primary-pale);"><strong>◎</strong></td>
+                                            <td style="text-align: center;">○</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>📦 物流・在庫管理</strong></td>
+                                            <td style="text-align: center;">○</td>
+                                            <td style="text-align: center; background: var(--color-primary-pale);"><strong>◎</strong></td>
+                                            <td style="text-align: center;">○</td>
+                                            <td style="text-align: center;">○</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>💻 企画・開発</strong></td>
+                                            <td style="text-align: center;">○</td>
+                                            <td style="text-align: center; background: var(--color-primary-pale);"><strong>◎</strong></td>
+                                            <td style="text-align: center;">△</td>
+                                            <td style="text-align: center;">○</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>🤝 営業・法人対応</strong></td>
+                                            <td style="text-align: center; background: var(--color-primary-pale);"><strong>◎</strong></td>
+                                            <td style="text-align: center;">○</td>
+                                            <td style="text-align: center;">○</td>
+                                            <td style="text-align: center;">○</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>📞 カスタマー対応</strong></td>
+                                            <td style="text-align: center;">△</td>
+                                            <td style="text-align: center;">○</td>
+                                            <td style="text-align: center;">○</td>
+                                            <td style="text-align: center; background: #FFF9E6;"><strong>◎</strong></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <p style="font-size: 0.8125rem; color: var(--color-text-light);">◎ = 評価の重み大 / ○ = 標準 / △ = 参考程度</p>
+
+                            <h3>🗺️ 組織全体の中での職種の位置づけ</h3>
+                            <div class="card-grid">
+                                <div class="info-card" style="border-top: 4px solid var(--color-accent);">
+                                    <h4 style="color: #C0392B;">💰 収益創出</h4>
+                                    <p><strong>営業・法人対応</strong><br>売上・利益を直接生み出す</p>
+                                </div>
+                                <div class="info-card" style="border-top: 4px solid var(--color-primary);">
+                                    <h4 style="color: var(--color-primary-dark);">📦 価値生産</h4>
+                                    <p><strong>倉庫作業・物流管理</strong><br>商品を届ける実行力</p>
+                                </div>
+                                <div class="info-card" style="border-top: 4px solid var(--color-purple);">
+                                    <h4 style="color: #7D3C98;">💡 価値創造</h4>
+                                    <p><strong>企画・開発・コンテンツ</strong><br>新しい体験を生み出す</p>
+                                </div>
+                                <div class="info-card" style="border-top: 4px solid var(--color-warm);">
+                                    <h4 style="color: #B7950B;">🤝 関係構築</h4>
+                                    <p><strong>カスタマー対応</strong><br>顧客との信頼を築く</p>
+                                </div>
+                            </div>
+
+                            <div class="highlight-box">
+                                <h4>💡 この設計のポイント</h4>
+                                <ul style="margin-bottom: 0;">
+                                    <li><strong>倉庫作業系</strong>：個人の数値が明確に出るため、会社全体の業績が悪くても「自分の頑張り」が正当に評価される</li>
+                                    <li><strong>企画・営業系</strong>：会社・チームの成果と連動するため、全体の業績が良ければ恩恵を受けやすい</li>
+                                    <li>どちらが有利・不利ではなく、<strong>職種の特性に合った評価</strong>を行う</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4. AI判定の詳細 -->
+                    <div class="accordion" id="ai-system">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span class="accordion-number">4</span>
+                            <span class="accordion-title">AI判定の詳細</span>
+                            <span class="accordion-icon">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <h3>判定フロー</h3>
+                            <div class="flow">
+                                <div class="flow-step">
+                                    <strong>データ収集</strong>
+                                    <span>勤怠・作業・評判</span>
+                                </div>
+                                <span class="flow-arrow">→</span>
+                                <div class="flow-step">
+                                    <strong>ルールベース判定</strong>
+                                    <span>基準を満たすか</span>
+                                </div>
+                                <span class="flow-arrow">→</span>
+                                <div class="flow-step">
+                                    <strong>AI総合分析</strong>
+                                    <span>傾向読み解き</span>
+                                </div>
+                                <span class="flow-arrow">→</span>
+                                <div class="flow-step">
+                                    <strong>階層提案</strong>
+                                    <span>人間が確認</span>
+                                </div>
+                            </div>
+
+                            <h3>ルールベース判定の基準（例）</h3>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>階層</th>
+                                        <th>定量基準</th>
+                                        <th>評判基準</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>スペシャリスト</strong></td>
+                                        <td>部門全体の成果責任</td>
+                                        <td>感謝を多く受けている（上位10%）</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>マネージャー</strong></td>
+                                        <td>業務改善を実行・数値化</td>
+                                        <td>感謝を多く受けている（上位20%）</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>リーダー</strong></td>
+                                        <td>他メンバーへの教育実績</td>
+                                        <td>感謝を受けている</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>スタンダード</strong></td>
+                                        <td>基本業務を安定</td>
+                                        <td>−</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <h3>AIの役割</h3>
+                            <ul>
+                                <li><strong>評判コメントの傾向分析</strong>：キーワード抽出</li>
+                                <li><strong>異常検知</strong>：急に「困った」が増えた場合のアラート</li>
+                                <li><strong>相対位置の可視化</strong>：全体の中での位置</li>
+                                <li><strong>最終判定ではなく「提案」</strong>：人間が確認</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- レポートサンプル -->
+                <div class="card guide-section">
+                    <div class="guide-section-title">レポートサンプル</div>
+                    
+                    <!-- 6. AI評価レポート サンプル -->
+                    <div class="accordion open" id="report-sample">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span class="accordion-number">5</span>
+                            <span class="accordion-title">AI評価レポート サンプル</span>
+                            <span class="accordion-icon">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <p>評価を受けた人に届く<strong>「AI生成評価レポート」</strong>のサンプルです。</p>
+
+                            <!-- サンプル1: 昇格 -->
+                            <h3 style="color: var(--color-primary);">📈 昇格のケース</h3>
+                            <div class="report-sample">
+                                <div class="report-header">
+                                    <div>
+                                        <p style="margin: 0; font-size: 0.8125rem; color: var(--color-text-light);">2026年12月 評価レポート</p>
+                                        <p style="margin: 0; font-size: 1.25rem; font-weight: 900;">田中 太郎 さん</p>
+                                    </div>
+                                    <span class="report-badge">⬆ 昇格</span>
+                                </div>
+
+                                <div style="background: var(--color-primary-pale); padding: 0.75rem; border-radius: 8px; margin-bottom: 1rem;">
+                                    <p style="margin: 0; font-size: 0.8125rem;">
+                                        <strong>🏭 あなたの職種タイプ：倉庫作業（価値生産）</strong><br>
+                                        <span style="color: var(--color-text-light);">評価の重み：<strong>個人数値 ◎</strong> ＞ チーム ○ ＞ 評判 ○ ＞ 会社全体 △</span>
+                                    </p>
+                                </div>
+
+                                <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem;">
+                                    <div style="background: var(--color-bg); padding: 0.75rem 1rem; border-radius: 8px; text-align: center;">
+                                        <p style="margin: 0; font-size: 0.75rem; color: var(--color-text-light);">前回</p>
+                                        <p style="margin: 0; font-weight: 700;">スタンダード 1,500円</p>
+                                    </div>
+                                    <span style="font-size: 1.5rem; color: var(--color-primary);">→</span>
+                                    <div style="background: var(--color-primary-pale); padding: 0.75rem 1rem; border-radius: 8px; text-align: center; border: 2px solid var(--color-primary);">
+                                        <p style="margin: 0; font-size: 0.75rem; color: var(--color-primary-dark);">新階層</p>
+                                        <p style="margin: 0; font-weight: 700; color: var(--color-primary-dark);">リーダー 2,000円</p>
+                                    </div>
+                                </div>
+
+                                <h4>📊 評価サマリー</h4>
+                                <table style="margin: 0.5rem 0;">
+                                    <tr>
+                                        <td style="background: var(--color-primary-pale);"><strong>📈 個人数値</strong></td>
+                                        <td style="background: var(--color-primary-pale);">処理効率 +18%（チーム平均を大幅に上回る）✅</td>
+                                    </tr>
+                                    <tr><td><strong>👥 チーム</strong></td><td>チーム全体の処理効率向上に貢献</td></tr>
+                                    <tr><td><strong>💬 感謝</strong></td><td>今期 12件の感謝を受領</td></tr>
+                                    <tr><td><strong>🏢 会社全体</strong></td><td>（参考）会社業績は前年比+5%</td></tr>
+                                </table>
+
+                                <h4>🎯 昇格の理由</h4>
+                                <div style="background: var(--color-primary-pale); padding: 0.75rem; border-radius: 6px;">
+                                    <strong>個人の処理効率がチームトップクラス</strong>です。新人2名の研修も担当し完了。周囲から「教え方が丁寧」「頼りになる」という声が多く、リーダーとしての役割を担えると判断しました。
+                                    <p style="margin: 0.5rem 0 0 0; font-size: 0.8125rem; color: var(--color-text-light);">
+                                        ※ 倉庫作業系は「個人数値」が評価の主軸です。会社全体の業績に左右されにくく、あなた自身の頑張りが正当に評価されています。
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- サンプル2: 現状維持 -->
+                            <h3 style="color: #636E72;">➡️ 現状維持のケース</h3>
+                            <div class="report-sample maintain">
+                                <div class="report-header">
+                                    <div>
+                                        <p style="margin: 0; font-size: 0.8125rem; color: var(--color-text-light);">2026年12月 評価レポート</p>
+                                        <p style="margin: 0; font-size: 1.25rem; font-weight: 900;">佐藤 花子 さん</p>
+                                    </div>
+                                    <span class="report-badge maintain">→ 維持</span>
+                                </div>
+
+                                <h4>📝 現状維持の理由と次へのヒント</h4>
+                                <div style="background: #F5F5F5; padding: 0.75rem; border-radius: 6px;">
+                                    <p style="margin: 0 0 0.75rem 0;">リーダーとして安定した働きを続けています。周囲からの評判も良好です。</p>
+                                    <p style="margin: 0; padding-top: 0.75rem; border-top: 1px dashed #CCC;">
+                                        <strong>次の階層（マネージャー）に向けて：</strong><br>
+                                        業務改善の提案・実行や、複数エリアを横断した動きがあると昇格が見えてきます。
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- サンプル3: 要改善 -->
+                            <h3 style="color: var(--color-accent);">⚠️ 改善が必要なケース</h3>
+                            <div class="report-sample warning">
+                                <div class="report-header">
+                                    <div>
+                                        <p style="margin: 0; font-size: 0.8125rem; color: var(--color-text-light);">2026年12月 評価レポート</p>
+                                        <p style="margin: 0; font-size: 1.25rem; font-weight: 900;">山田 健一 さん</p>
+                                    </div>
+                                    <span class="report-badge warning">⚠ 要改善</span>
+                                </div>
+
+                                <div style="background: var(--color-accent-light); padding: 0.75rem; border-radius: 6px; margin-bottom: 1rem;">
+                                    <p style="margin: 0; font-weight: 700; color: #C0392B;">
+                                        ⚠️ イエローカード：1年間の改善期間に入ります
+                                    </p>
+                                    <p style="margin: 0.25rem 0 0 0; font-size: 0.875rem; color: #C0392B;">
+                                        今回は現階層を維持しますが、改善が見られない場合、1年後に階層が下がる可能性があります。
+                                    </p>
+                                </div>
+
+                                <h4 style="color: #C0392B;">🔧 改善が必要なポイント</h4>
+                                <div style="background: var(--color-accent-light); padding: 0.75rem; border-radius: 6px;">
+                                    <ol style="margin: 0; padding-left: 1.25rem;">
+                                        <li><strong>出勤安定性</strong>：目標90%を下回っています（現在88%）</li>
+                                        <li><strong>コミュニケーション</strong>：「相談しづらい」という声があります</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 制度詳細 -->
+                <div class="card guide-section">
+                    <div class="guide-section-title">制度詳細</div>
+                    
+                    <!-- 7. プレゼン交渉制度 -->
+                    <div class="accordion" id="presentation">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span class="accordion-number">6</span>
+                            <span class="accordion-title">プレゼン交渉制度</span>
+                            <span class="accordion-icon">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="highlight-box">
+                                <h4>🎤 制度概要</h4>
+                                <p style="margin-bottom: 0;">
+                                    時給3,000円を超える報酬を希望する人は、<br>
+                                    <strong>自分でプロジェクトを立案し、オーナーチームにプレゼンして交渉する。</strong>
+                                </p>
+                            </div>
+
+                            <h3>ルール</h3>
+                            <table>
+                                <tr><th style="width: 30%;">項目</th><th>内容</th></tr>
+                                <tr><td><strong>挑戦回数</strong></td><td>年2回まで（評価タイミングに合わせる）</td></tr>
+                                <tr><td><strong>審査者</strong></td><td>オーナーチーム</td></tr>
+                                <tr><td><strong>失敗時</strong></td><td>ペナルティなし。半年後に再挑戦可能</td></tr>
+                                <tr><td><strong>成功時</strong></td><td>交渉で決まった時給が適用（上限なし）</td></tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- 8. 昇格・降格ルール -->
+                    <div class="accordion" id="promotion">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span class="accordion-number">7</span>
+                            <span class="accordion-title">昇格・降格ルール</span>
+                            <span class="accordion-icon">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <h3>昇格</h3>
+                            <table>
+                                <tr><th style="width: 30%;">項目</th><th>内容</th></tr>
+                                <tr><td><strong>タイミング</strong></td><td>年2回の評価時</td></tr>
+                                <tr><td><strong>幅</strong></td><td>1回の評価で<strong>1段階まで</strong></td></tr>
+                                <tr><td><strong>据え置き</strong></td><td>上がらないことも普通にある（ハードル高め）</td></tr>
+                            </table>
+
+                            <h3>降格</h3>
+                            <table>
+                                <tr><th style="width: 30%;">項目</th><th>内容</th></tr>
+                                <tr><td><strong>判定</strong></td><td>「この階層に見合っていない」とシステムが判定</td></tr>
+                                <tr><td><strong>猶予期間</strong></td><td><strong>1年間</strong>（2回の評価サイクル）</td></tr>
+                                <tr><td><strong>フォロー</strong></td><td>改善点をフィードバック・業務調整も可</td></tr>
+                            </table>
+
+                            <div class="highlight-box warning">
+                                <h4>⚠️ いきなり降格しない</h4>
+                                <p style="margin-bottom: 0;">
+                                    「次の評価で下がるかもしれません」という<strong>イエローカード</strong>を出し、<br>
+                                    1年間の猶予を与える。その間に改善すれば降格なし。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 9. 評価スケジュール -->
+                    <div class="accordion" id="schedule">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span class="accordion-number">8</span>
+                            <span class="accordion-title">評価スケジュール</span>
+                            <span class="accordion-icon">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <h3>年間スケジュール</h3>
+                            <table>
+                                <thead><tr><th>時期</th><th>内容</th></tr></thead>
+                                <tbody>
+                                    <tr><td><strong>毎月</strong></td><td>簡易評判アンケート実施（5分）</td></tr>
+                                    <tr><td><strong>6月</strong></td><td>上期評価・システム判定・結果通知</td></tr>
+                                    <tr><td><strong>7月</strong></td><td>新時給適用開始（上期分）</td></tr>
+                                    <tr><td><strong>12月</strong></td><td>下期評価・システム判定・結果通知</td></tr>
+                                    <tr><td><strong>1月</strong></td><td>新時給適用開始（下期分）</td></tr>
+                                </tbody>
+                            </table>
+
+                            <h3>評価の流れ（本人視点）</h3>
+                            <div class="flow">
+                                <div class="flow-step">
+                                    <strong>毎月5分</strong>
+                                    <span>アンケート回答</span>
+                                </div>
+                                <span class="flow-arrow">→</span>
+                                <div class="flow-step">
+                                    <strong>半年に1回</strong>
+                                    <span>結果通知を見る</span>
+                                </div>
+                                <span class="flow-arrow">→</span>
+                                <div class="flow-step">
+                                    <strong>希望者のみ</strong>
+                                    <span>プレゼン交渉</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- よくある質問 -->
+                <div class="card guide-section">
+                    <div class="guide-section-title">よくある質問</div>
+                    
+                    <div class="accordion" id="faq">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span class="accordion-number">9</span>
+                            <span class="accordion-title">FAQ</span>
+                            <span class="accordion-icon">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <details class="faq-item">
+                                <summary>評価はいつ行われますか？</summary>
+                                <p>年2回（6月と12月）に評価が行われ、翌月から新しい時給が適用されます。</p>
+                            </details>
+                            <details class="faq-item">
+                                <summary>AIに評価されるのは不安です</summary>
+                                <p>AIは「判定を補助する」役割であり、最終的な確認は人間が行います。判定理由は本人に開示されます。</p>
+                            </details>
+                            <details class="faq-item">
+                                <summary>他の人の給料は分かりますか？</summary>
+                                <p>分かりません。個人の時給は非公開です。階層ごとの時給テーブルのみ公開されています。</p>
+                            </details>
+                            <details class="faq-item">
+                                <summary>プレゼン交渉で失敗したらどうなりますか？</summary>
+                                <p>ペナルティはありません。半年後に再挑戦できます。</p>
+                            </details>
+                            <details class="faq-item">
+                                <summary>働く時間は自分で決められますか？</summary>
+                                <p>はい、完全に自由です。週休3日でも、1日6時間でも、週6日でも。会社は「何時間働くべき」とは言いません。</p>
+                            </details>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 質問・相談 -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">💬 質問・相談</div>
+                    </div>
+                    <div class="card-body">
+                        <p style="margin-bottom: 1rem; color: var(--color-text-light);">
+                            評価について質問や相談がある場合は、以下からお問い合わせください。
+                        </p>
+                        <button class="btn btn-primary" style="width: 100%;">質問・相談フォームを開く</button>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 1.5rem;">
+                    <a href="#" onclick="showTab(event, 'dashboard')" style="color: var(--color-primary); text-decoration: none; font-size: 0.9375rem;">← マイページに戻る</a>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- フローティングナビ -->
+    <div class="floating-nav">
+        <button class="floating-btn secondary" onclick="showTab(event, 'guide')" title="制度ガイド">📖</button>
+        <button class="floating-btn primary" onclick="showTab(event, 'dashboard')" title="マイページ">🏠</button>
+    </div>
+</div>
+
+<!-- 感謝を送るモーダル -->
+<div class="modal-overlay" id="feedbackModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h3>🙏 <span id="modalTargetName">鈴木 一郎</span> さんに感謝を送る</h3>
+            <button class="modal-close" onclick="closeFeedbackModal()">×</button>
+        </div>
+        <div class="modal-body">
+            <div style="text-align: center; padding: 1.5rem; background: var(--color-primary-pale); border-radius: 12px; margin-bottom: 1.5rem;">
+                <span style="font-size: 3rem;">🙏</span>
+                <p style="margin: 0.5rem 0 0 0; font-weight: 700; color: var(--color-primary-dark);">
+                    良い影響を受けました
+                </p>
+            </div>
+
+            <p style="margin-bottom: 0.5rem; font-size: 0.9375rem; color: var(--color-text-light);">
+                メッセージ（任意・100文字以内）
+            </p>
+            <textarea class="comment-area" placeholder="例：いつも丁寧に教えてくれてありがとう、助かりました、など"></textarea>
+            
+            <p style="margin-top: 1rem; font-size: 0.75rem; color: var(--color-text-muted);">
+                ※ 誰が送ったかは本人に通知されます（メッセージ内容は非公開も選べます）
+            </p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" onclick="closeFeedbackModal()">キャンセル</button>
+            <button class="btn btn-primary" onclick="submitThanks()">感謝を送る</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ユーザーデータ
+    const users = {
+        tanaka: {
+            id: 'tanaka',
+            name: '田中 太郎',
+            avatar: '田',
+            avatarColor: 'linear-gradient(135deg, var(--color-primary-light) 0%, var(--color-primary) 100%)',
+            level: 'リーダー',
+            salary: '2,000円',
+            icon: '⭐',
+            jobType: '📦 価値生産タイプ',
+            jobTypeColor: 'var(--color-primary)',
+            nextLevel: '次の階層：マネージャー',
+            xp: '条件達成 2/4',
+            xpPercent: '50%',
+            stats: { personal: '+18%', team: '92%', reputation: '85%', attendance: '97%' },
+            aiComment: '🤖 <strong>AIコメント：</strong>個人数値がチーム平均を大きく上回っています。この調子を維持すれば、次回評価での昇格が見えてきます。',
+            questTitle: 'マネージャーへの条件',
+            questSubtitle: 'あと2つ達成で昇格',
+            quests: [
+                { done: true, text: '処理効率チームトップ10%を維持' },
+                { done: true, text: '周囲から感謝を受けている' },
+                { done: false, text: '業務改善の提案・実行（あと1件）' },
+                { done: false, text: '複数エリアでの業務経験' }
+            ]
+        },
+        sato: {
+            id: 'sato',
+            name: '佐藤 美咲',
+            avatar: '佐',
+            avatarColor: 'linear-gradient(135deg, var(--color-purple-light) 0%, var(--color-purple) 100%)',
+            level: 'マネージャー',
+            salary: '2,500円',
+            icon: '💫',
+            jobType: '💡 価値創造タイプ',
+            jobTypeColor: 'var(--color-purple)',
+            nextLevel: '次の階層：スペシャリスト',
+            xp: '条件達成 3/4',
+            xpPercent: '75%',
+            stats: { personal: '+8%', team: '105%', reputation: '92%', attendance: '95%' },
+            aiComment: '🤖 <strong>AIコメント：</strong>チームプロジェクトの完遂率が素晴らしいです。新規事業の企画提案にも期待しています。スペシャリストへの道が見えてきました。',
+            questTitle: 'スペシャリストへの条件',
+            questSubtitle: 'あと1つ達成で昇格',
+            quests: [
+                { done: true, text: 'プロジェクトリード経験（2件以上）' },
+                { done: true, text: '周囲から多くの感謝を受けている' },
+                { done: true, text: '他部門との連携実績' },
+                { done: false, text: '新規事業・サービスの企画提案' }
+            ]
+        },
+        suzuki: {
+            id: 'suzuki',
+            name: '鈴木 一郎',
+            avatar: '鈴',
+            avatarColor: 'linear-gradient(135deg, #B2BEC3 0%, #636E72 100%)',
+            level: 'スタンダード',
+            salary: '1,500円',
+            icon: '🌱',
+            jobType: '📦 価値生産タイプ',
+            jobTypeColor: 'var(--color-primary)',
+            nextLevel: '次の階層：リーダー',
+            xp: '条件達成 2/4',
+            xpPercent: '50%',
+            stats: { personal: '+5%', team: '88%', reputation: '72%', attendance: '94%' },
+            aiComment: '🤖 <strong>AIコメント：</strong>安定した作業をありがとうございます。周囲からの評判も上向きです。新人へのサポート経験を積むと、リーダーへの道が開けます。',
+            questTitle: 'リーダーへの条件',
+            questSubtitle: 'あと2つ達成で昇格',
+            quests: [
+                { done: true, text: '基本業務を正確にこなす' },
+                { done: true, text: '生産性向上への貢献' },
+                { done: false, text: '新人への作業サポート経験' },
+                { done: false, text: '周囲から感謝を受けている' }
+            ]
+        },
+        takahashi: {
+            id: 'takahashi',
+            name: '高橋 優子',
+            avatar: '高',
+            avatarColor: 'linear-gradient(135deg, var(--color-warm) 0%, var(--color-gold) 100%)',
+            level: 'リーダー',
+            salary: '2,000円',
+            icon: '🌟',
+            jobType: '🤝 関係構築タイプ',
+            jobTypeColor: '#B7950B',
+            nextLevel: '次の階層：マネージャー',
+            xp: '条件達成 3/4',
+            xpPercent: '75%',
+            stats: { personal: '+12%', team: '95%', reputation: '94%', attendance: '98%' },
+            aiComment: '🤖 <strong>AIコメント：</strong>顧客満足度が非常に高く、周囲からの信頼も厚いです。マネージャー昇格まであと一歩！対応マニュアルの改善提案など、チームへの貢献を期待しています。',
+            questTitle: 'マネージャーへの条件',
+            questSubtitle: 'あと1つ達成で昇格',
+            quests: [
+                { done: true, text: '周囲から多くの感謝を受けている' },
+                { done: true, text: '顧客満足度4.5以上' },
+                { done: true, text: '対応件数チーム平均以上' },
+                { done: false, text: 'チーム改善提案の実行' }
+            ]
+        }
+    };
+
+    let currentUser = 'tanaka';
+
+    // 初期化
+    document.addEventListener('DOMContentLoaded', () => {
+        // 月給（120/140/160h）は index.html 側の共通ロジックで生成しているため、ここでは何もしない
+    });
+
+    // ログイン
+    function login() {
+        document.getElementById('loginScreen').style.display = 'none';
+        document.getElementById('dashboardScreen').classList.add('active');
+    }
+
+    // ユーザーメニュー
+    function toggleUserMenu() {
+        document.getElementById('userMenu').classList.toggle('active');
+    }
+
+    // メニュー外クリックで閉じる
+    document.addEventListener('click', function(e) {
+        const menu = document.getElementById('userMenu');
+        const switcher = document.querySelector('.user-switcher');
+        if (menu && switcher && !switcher.contains(e.target)) {
+            menu.classList.remove('active');
+        }
+    });
+
+    // ユーザー切り替え
+    function switchUser(userId) {
+        currentUser = userId;
+        const user = users[userId];
+        
+        // メニュー項目のアクティブ状態を更新
+        document.querySelectorAll('.user-menu-item').forEach(item => {
+            item.classList.remove('active');
+        });
+        event.target.closest('.user-menu-item').classList.add('active');
+
+        // ヘッダー更新
+        document.getElementById('currentUserName').textContent = user.name;
+        document.getElementById('currentUserAvatar').textContent = user.avatar;
+        document.getElementById('currentUserAvatar').style.background = user.avatarColor;
+
+        // ヒーロー更新
+        document.getElementById('heroName').textContent = user.name;
+        document.getElementById('heroIcon').textContent = user.icon;
+        document.getElementById('heroLevel').textContent = user.level;
+        document.getElementById('heroSalary').textContent = '時給 ' + user.salary;
+        document.getElementById('heroJobType').textContent = user.jobType;
+        document.getElementById('heroNextLevel').textContent = user.nextLevel;
+        document.getElementById('heroXP').textContent = user.xp;
+        document.getElementById('heroXPBar').style.width = user.xpPercent;
+
+        // ステータス更新
+        document.getElementById('statPersonal').textContent = user.stats.personal;
+        document.getElementById('statTeam').textContent = user.stats.team;
+        document.getElementById('statReputation').textContent = user.stats.reputation;
+        document.getElementById('statAttendance').textContent = user.stats.attendance;
+        document.getElementById('aiComment').innerHTML = user.aiComment;
+
+        // クエスト更新
+        document.getElementById('questTitle').textContent = user.questTitle;
+        document.getElementById('questSubtitle').textContent = user.questSubtitle;
+        
+        let questHTML = '';
+        user.quests.forEach(q => {
+            if (q.done) {
+                questHTML += `<div class="quest-item"><div class="quest-check done">✓</div><span class="text done">${q.text}</span></div>`;
+            } else {
+                questHTML += `<div class="quest-item"><div class="quest-check pending">○</div><span class="text">${q.text}</span></div>`;
+            }
+        });
+        document.getElementById('questProgress').innerHTML = questHTML;
+
+        // メニューを閉じる
+        document.getElementById('userMenu').classList.remove('active');
+
+        // マイページに戻る
+        showTab(null, 'dashboard');
+    }
+
+    // タブ切り替え
+    function showTab(event, tabName) {
+        if (event) event.preventDefault();
+        
+        // タブボタン
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        if (event && event.target.closest) {
+            const btn = event.target.closest('.tab-btn');
+            if (btn) btn.classList.add('active');
+        } else {
+            // ボタン以外からの呼び出し時
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            tabBtns.forEach(btn => {
+                if (tabName === 'dashboard' && btn.textContent.includes('マイページ')) btn.classList.add('active');
+                if (tabName === 'feedback' && btn.textContent.includes('感謝を送る')) btn.classList.add('active');
+                if (tabName === 'guide' && btn.textContent.includes('制度ガイド')) btn.classList.add('active');
+            });
+        }
+
+        // タブコンテンツ
+        document.querySelectorAll('.tab-content').forEach(content => {
+            content.classList.remove('active');
+        });
+        document.getElementById(tabName + 'Tab').classList.add('active');
+
+        // トップにスクロール
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // アコーディオン
+    function toggleAccordion(header) {
+        const accordion = header.parentElement;
+        accordion.classList.toggle('open');
+    }
+
+    function openAccordion(id) {
+        const accordion = document.getElementById(id);
+        if (accordion) {
+            // 全て閉じる
+            document.querySelectorAll('.accordion').forEach(a => a.classList.remove('open'));
+            // 対象を開く
+            accordion.classList.add('open');
+            // スクロール
+            accordion.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }
+
+    // 評価モーダル
+    function openThanksModal(name) {
+        document.getElementById('modalTargetName').textContent = name;
+        document.getElementById('feedbackModal').classList.add('active');
+    }
+
+    function closeFeedbackModal() {
+        document.getElementById('feedbackModal').classList.remove('active');
+        document.querySelector('.comment-area').value = '';
+    }
+
+    function submitThanks() {
+        alert('感謝を送りました。ありがとうございます。');
+        closeFeedbackModal();
+    }
+</script>
+
+</body>
+</html>

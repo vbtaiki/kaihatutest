@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>本棚スキャン申請 | VALUE BOOKS [GEMINI未来案]</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+            background-color: #f0f4f8;
+            color: #2d3748;
+            line-height: 1.6;
+        }
+
+        .header {
+            background-color: #fff;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #2d3748;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .version-badge {
+            background: linear-gradient(135deg, #0ea5e9 0%, #38bdf8 100%);
+            color: white;
+            padding: 0.35rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+        .nav {
+            display: flex;
+            gap: 1.25rem;
+            align-items: center;
+        }
+        .nav a {
+            color: #4a5568;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        .nav a:hover { color: #0ea5e9; }
+
+        .container {
+            max-width: 980px;
+            margin: 2rem auto;
+            padding: 0 2rem 3rem;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #0ea5e9 0%, #38bdf8 100%);
+            color: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 10px 30px rgba(14,165,233,0.18);
+        }
+        .hero h1 { font-size: 1.6rem; margin-bottom: 0.5rem; }
+        .hero p { opacity: 0.95; }
+
+        .cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.25rem;
+            margin-bottom: 1.25rem;
+        }
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 1.25rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        .card-title {
+            font-weight: 800;
+            margin-bottom: 0.75rem;
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.25rem 0.6rem;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            border: 1px solid rgba(14,165,233,0.25);
+            background: rgba(14,165,233,0.08);
+            color: #0369a1;
+        }
+        .muted { color: #64748b; font-size: 0.9rem; }
+
+        .row { display:flex; gap: 0.75rem; flex-wrap: wrap; align-items:center; margin-top: 0.75rem; }
+        .input, .select {
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 0.7rem 0.85rem;
+            font-size: 0.95rem;
+            width: 100%;
+        }
+        .input:focus, .select:focus { outline:none; border-color: #0ea5e9; }
+
+        .btn {
+            border: none;
+            border-radius: 12px;
+            padding: 0.8rem 1rem;
+            font-weight: 900;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        .btn.primary { background: #0ea5e9; color: white; }
+        .btn.primary:hover { background: #0284c7; }
+        .btn.ghost {
+            background: #fff;
+            border: 2px solid rgba(14,165,233,0.35);
+            color: #0284c7;
+        }
+        .btn.ghost:hover { border-color: #0ea5e9; }
+
+        .list {
+            margin-top: 1rem;
+            display: grid;
+            gap: 0.75rem;
+        }
+        .item {
+            border: 1px solid rgba(15,23,42,0.12);
+            background: #fff;
+            border-radius: 14px;
+            padding: 0.9rem;
+        }
+        .item-top {
+            display: grid;
+            grid-template-columns: 1fr 180px;
+            gap: 0.75rem;
+            align-items: center;
+        }
+        .item-meta {
+            margin-top: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+        .toggle {
+            display:inline-flex;
+            align-items:center;
+            gap:0.5rem;
+            font-size:0.9rem;
+            color:#334155;
+            cursor:pointer;
+            user-select:none;
+        }
+
+        .bar {
+            height: 10px;
+            background: #e2e8f0;
+            border-radius: 999px;
+            overflow: hidden;
+            margin-top: 0.5rem;
+        }
+        .bar > div {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(135deg, #0ea5e9 0%, #38bdf8 100%);
+            border-radius: 999px;
+            transition: width 0.25s ease;
+        }
+
+        @media (max-width: 860px) {
+            .cards { grid-template-columns: 1fr; }
+            .item-top { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <a href="../index.html" class="logo">
+                VALUE BOOKS
+                <span class="version-badge">GEMINI未来案</span>
+            </a>
+            <nav class="nav">
+                <a href="offer.html">← 買取申込へ戻る</a>
+                <a href="mypage.html">マイページ</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="hero">
+            <h1>📷 本棚スキャン申請</h1>
+            <p>ここで「状態申請」と「買取金額がつかない本を送らない」を完成させると、合計で <strong>+40%</strong> まで上乗せできます。</p>
+        </div>
+
+        <div class="cards">
+            <div class="card">
+                <div class="card-title">🎯 進捗</div>
+                <div class="row">
+                    <span class="pill" id="pill-allstated">全冊状態申請: 未達</span>
+                    <span class="pill" id="pill-sendonly">買取可のみ送付: 未達</span>
+                </div>
+                <div class="row muted" id="pill-detail">状態申請: - / 送付対象: -</div>
+                <div class="bar"><div id="barFill"></div></div>
+                <div class="row muted" id="remainText">+40% まであと --%</div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">⚙️ スキャン設定</div>
+                <div class="row">
+                    <div style="flex:1; min-width: 220px;">
+                        <label class="muted" style="display:block; margin-bottom:0.35rem;">冊数（デモ）</label>
+                        <input id="count" class="input" type="number" min="3" max="50" value="10">
+                    </div>
+                </div>
+                <div class="row">
+                    <button id="btnGen" class="btn primary" type="button">リストを作る</button>
+                    <button id="btnFill" class="btn ghost" type="button">未選択を「ふつう」で埋める</button>
+                    <button id="btnFilter" class="btn ghost" type="button">買取不可を送らない</button>
+                </div>
+                <div class="row">
+                    <button id="btnReset" class="btn ghost" type="button">リセット</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">📚 スキャン結果</div>
+            <div class="muted">各冊に状態を入れてください。状態が <b>買取不可っぽい</b> の本は「送付する」をOFFにすると <b>買取可のみ送付</b> が達成しやすいです。</div>
+            <div id="list" class="list"></div>
+            <div class="row" style="margin-top: 1.25rem;">
+                <a class="btn primary" href="offer.html">完了して買取申込へ戻る</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const KEY = 'vb_gf_scan_state_v1';
+
+        function load() {
+            try { return JSON.parse(localStorage.getItem(KEY) || 'null'); } catch { return null; }
+        }
+        function save(state) {
+            localStorage.setItem(KEY, JSON.stringify(state));
+        }
+        function clamp(n, a, b){ return Math.max(a, Math.min(b, n)); }
+
+        function computeState() {
+            const list = document.getElementById('list');
+            const items = [...list.querySelectorAll('.item')];
+            const total = items.length;
+            let filled = 0;
+            let send = 0;
+            let buyableSend = 0;
+            items.forEach((it) => {
+                const sel = it.querySelector('select');
+                const sendChk = it.querySelector('input[type="checkbox"][data-send]');
+                const v = sel ? sel.value : '';
+                if (v) filled++;
+                const isSend = !!(sendChk && sendChk.checked);
+                if (isSend) {
+                    send++;
+                    if (v && v !== 'no') buyableSend++;
+                }
+            });
+            const allStated = total > 0 && filled === total;
+            const sendOnlyBuyable = send > 0 && buyableSend === send; // 送付は買取可のみ（100%）
+            return { total, filled, send, buyableSend, allStated, sendOnlyBuyable };
+        }
+
+        function renderProgress() {
+            const s = computeState();
+            const pillAll = document.getElementById('pill-allstated');
+            const pillSend = document.getElementById('pill-sendonly');
+            const detail = document.getElementById('pill-detail');
+            const bar = document.getElementById('barFill');
+            const remain = document.getElementById('remainText');
+
+            if (pillAll) pillAll.textContent = `全冊状態申請: ${s.allStated ? '達成' : '未達'}（+20%）`;
+            if (pillSend) pillSend.textContent = `買取可のみ送付: ${s.sendOnlyBuyable ? '達成' : '未達'}（+20%）`;
+            if (detail) detail.textContent = `状態申請: ${s.filled}/${s.total || 0} / 送付対象: ${s.send || 0}`;
+
+            const earned = (s.allStated ? 20 : 0) + (s.sendOnlyBuyable ? 20 : 0);
+            const remainPct = 40 - earned;
+            if (remain) remain.textContent = `+40% まであと ${Math.max(0, remainPct)}%`;
+            if (bar) bar.style.width = clamp((earned / 40) * 100, 0, 100) + '%';
+
+            save({ ...s });
+        }
+
+        function genList() {
+            const n = clamp(parseInt(document.getElementById('count')?.value || '10', 10), 3, 50);
+            const list = document.getElementById('list');
+            list.innerHTML = '';
+            for (let i = 1; i <= n; i++) {
+                const div = document.createElement('div');
+                div.className = 'item';
+                div.innerHTML = `
+                    <div class="item-top">
+                        <input class="input" type="text" value="本棚スキャン本 #${i}" aria-label="書名">
+                        <select class="select" aria-label="状態">
+                            <option value="">状態を選択…</option>
+                            <option value="good">良い（書込なし/美品）</option>
+                            <option value="ok">ふつう（軽い使用感）</option>
+                            <option value="bad">難あり（ヤケ/折れ/書込あり）</option>
+                            <option value="no">買取不可っぽい（破損/水濡れ等）</option>
+                        </select>
+                    </div>
+                    <div class="item-meta">
+                        <label class="toggle">
+                            <input type="checkbox" data-send checked style="accent-color:#0ea5e9;">
+                            送付する
+                        </label>
+                        <span class="muted">※ 買取不可っぽいは送付OFF推奨</span>
+                    </div>
+                `;
+                list.appendChild(div);
+            }
+            renderProgress();
+        }
+
+        function fillOk() {
+            const list = document.getElementById('list');
+            [...list.querySelectorAll('select')].forEach((s) => { if (!s.value) s.value = 'ok'; });
+            renderProgress();
+        }
+
+        function filterUnbuyable() {
+            const list = document.getElementById('list');
+            [...list.querySelectorAll('.item')].forEach((it) => {
+                const sel = it.querySelector('select');
+                const sendChk = it.querySelector('input[type="checkbox"][data-send]');
+                if (sel && sendChk && sel.value === 'no') sendChk.checked = false;
+            });
+            renderProgress();
+        }
+
+        function resetAll() {
+            localStorage.removeItem(KEY);
+            document.getElementById('list').innerHTML = '';
+            renderProgress();
+        }
+
+        document.getElementById('btnGen')?.addEventListener('click', genList);
+        document.getElementById('btnFill')?.addEventListener('click', fillOk);
+        document.getElementById('btnFilter')?.addEventListener('click', filterUnbuyable);
+        document.getElementById('btnReset')?.addEventListener('click', resetAll);
+        document.getElementById('list')?.addEventListener('change', renderProgress);
+        document.getElementById('list')?.addEventListener('input', renderProgress);
+
+        // Restore progress if any (we don't reconstruct list items; keep state only)
+        renderProgress();
+    </script>
+</body>
+</html>
+
+

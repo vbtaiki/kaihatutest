@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ランクシステム | VALUE BOOKS [GEMINI未来案]</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+            background-color: #f0f4f8;
+            color: #2d3748;
+            line-height: 1.6;
+        }
+
+        .header {
+            background-color: #fff;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #2d3748;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .version-badge {
+            background: linear-gradient(135deg, #38b2ac 0%, #319795 100%);
+            color: white;
+            padding: 0.35rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+
+        .nav {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .nav a {
+            color: #4a5568;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav a:hover {
+            color: #38b2ac;
+        }
+
+        .point-badge {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            color: #d68000;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+
+        .rank-hero {
+            background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+            color: white;
+            border-radius: 24px;
+            padding: 3rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .rank-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .rank-name {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-container {
+            max-width: 500px;
+            margin: 2rem auto 0;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #38b2ac;
+            width: 68%;
+        }
+
+        .progress-text {
+            font-size: 0.85rem;
+            opacity: 0.8;
+        }
+
+        .benefit-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .benefit-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .benefit-card h3 {
+            color: #2c7a7b;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .benefit-list {
+            list-style: none;
+            font-size: 0.9rem;
+            color: #4a5568;
+        }
+
+        .benefit-list li {
+            margin-bottom: 0.75rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .benefit-list li::before {
+            content: '✦';
+            position: absolute;
+            left: 0;
+            color: #38b2ac;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <a href="../index.html" class="logo">
+                VALUE BOOKS
+                <span class="version-badge">GEMINI未来案</span>
+            </a>
+            <nav class="nav">
+                <a href="mypage.html">マイページ</a>
+                <a href="recommendations.html">本を探す</a>
+                <a href="rank-system.html">🏆 ランク</a>
+                <div class="point-badge">💰 21,154pt</div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="rank-hero">
+            <div class="rank-icon">🥈</div>
+            <div class="rank-name">シルバーランク</div>
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
+                <div class="progress-text">あと 47冊 でゴールドランクへ昇格</div>
+            </div>
+        </div>
+
+        <div style="background: white; border-radius: 20px; padding: 1.5rem; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 2rem;">
+            <div style="font-weight: 800; margin-bottom: 0.5rem; color: #2d3748;">🚀 未来案：協力で“買取2倍”を目指す</div>
+            <p style="color:#4a5568; font-size: 0.95rem; margin-bottom: 1rem;">
+                ランクアップも大事ですが、未来案はまず「協力ボーナス（目指せ+100%UP）」を揃えると体験が一気に変わります。
+            </p>
+            <div style="display:flex; gap:0.75rem; flex-wrap:wrap;">
+                <a href="offer.html" style="display:inline-block; background:#38b2ac; color:#fff; padding:0.85rem 1.2rem; border-radius:12px; text-decoration:none; font-weight:bold;">
+                    ✨ 協力ボーナスを設定
+                </a>
+                <a href="bookshelf-scan.html" style="display:inline-block; background:#fff; border:2px solid #38b2ac; color:#38b2ac; padding:0.85rem 1.2rem; border-radius:12px; text-decoration:none; font-weight:bold;">
+                    📷 本棚スキャン申請
+                </a>
+            </div>
+        </div>
+
+        <h2 style="margin-bottom: 2rem; color: #2d3748;">現在の特典</h2>
+
+        <div class="benefit-grid">
+            <div class="benefit-card">
+                <h3>💰 買取ボーナス</h3>
+                <ul class="benefit-list">
+                    <li>基本査定額 +5%</li>
+                    <li>ポイント受取ボーナス +20%</li>
+                    <li>ソクフリボーナス +10%</li>
+                </ul>
+            </div>
+
+            <div class="benefit-card">
+                <h3>🚚 配送・サービス</h3>
+                <ul class="benefit-list">
+                    <li>送料無料クーポン（毎月1枚）</li>
+                    <li>AI優先査定（通常より24時間短縮）</li>
+                    <li>限定先行販売へのアクセス</li>
+                </ul>
+            </div>
+
+            <div class="benefit-card">
+                <h3>🌱 エコ・特典</h3>
+                <ul class="benefit-list">
+                    <li>エコ貢献証明書の発行</li>
+                    <li>提携カフェでのコーヒー割引</li>
+                    <li>植樹プロジェクトへの自動参加</li>
+                </ul>
+            </div>
+        </div>
+
+        <div style="margin-top: 3rem; text-align: center;">
+            <a href="offer.html" style="display: inline-block; background: #38b2ac; color: white; padding: 1rem 3rem; border-radius: 12px; text-decoration: none; font-weight: bold;">
+                本を売ってランクを上げる
+            </a>
+        </div>
+    </div>
+</body>
+</html>
+

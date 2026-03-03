@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>予約カート | VALUE BOOKS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .header {
+            background-color: #fff;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .version-badge {
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            color: white;
+            padding: 0.35rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 2rem;
+        }
+
+        .page-header {
+            margin-bottom: 2rem;
+        }
+
+        .page-title {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            font-size: 1rem;
+            color: #666;
+        }
+
+        .point-status {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            border: 2px solid #ff6b35;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .point-status-left {
+            flex: 1;
+        }
+
+        .point-status-label {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 0.3rem;
+        }
+
+        .point-status-amount {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #d68000;
+        }
+
+        .point-status-note {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 0.3rem;
+        }
+
+        .info-banner {
+            background: #e6f7ff;
+            border-left: 4px solid #00a0e9;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 2rem;
+        }
+
+        .info-banner-title {
+            font-weight: bold;
+            color: #0088cc;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .info-banner-text {
+            font-size: 0.95rem;
+            color: #333;
+        }
+
+        .cart-items {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .cart-item {
+            display: flex;
+            gap: 1.5rem;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .cart-item-image {
+            width: 100px;
+            height: 140px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.85rem;
+            text-align: center;
+            padding: 0.5rem;
+            flex-shrink: 0;
+        }
+
+        .cart-item-image.orange { background: linear-gradient(135deg, #f7931e 0%, #ff6b35 100%); }
+        .cart-item-image.green { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); }
+
+        .cart-item-content {
+            flex: 1;
+        }
+
+        .cart-item-title {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .cart-item-desc {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .cart-item-price {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #d32f2f;
+        }
+
+        .cart-item-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-shrink: 0;
+        }
+
+        .remove-btn {
+            background: none;
+            border: 1px solid #ddd;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .remove-btn:hover {
+            background-color: #f5f5f5;
+            border-color: #999;
+        }
+
+        .summary-section {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .summary-row.total {
+            border-bottom: none;
+            border-top: 2px solid #333;
+            padding-top: 1.5rem;
+            margin-top: 1rem;
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+
+        .summary-label {
+            color: #666;
+        }
+
+        .summary-value {
+            font-weight: 500;
+        }
+
+        .summary-value.highlight {
+            color: #4caf50;
+            font-weight: bold;
+        }
+
+        .checkout-button {
+            width: 100%;
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            color: white;
+            padding: 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+        }
+
+        .checkout-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
+        }
+
+        .checkout-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .add-more-books {
+            text-align: center;
+            padding: 2rem;
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+
+        .add-more-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: white;
+            border: 2px solid #00a0e9;
+            color: #00a0e9;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .add-more-btn:hover {
+            background-color: #00a0e9;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .cart-item {
+                flex-direction: column;
+            }
+
+            .cart-item-actions {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .point-status {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <a href="../index.html" class="logo">
+                VALUE BOOKS
+                <span class="version-badge">CURSOR案</span>
+            </a>
+            <nav class="nav">
+                <a href="mypage.html">マイページ</a>
+                <a href="recommendations.html">本を探す</a>
+                <a href="rank-system.html">🏆 ランク</a>
+                <div class="point-badge">💰 21,154pt</div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="page-header">
+            <div class="page-title">🛒 予約カート</div>
+            <div class="page-subtitle">査定完了後に自動でポイントが適用されます</div>
+        </div>
+
+        <div class="info-banner">
+            <div class="info-banner-title">
+                💡 予約カートとは？
+            </div>
+            <div class="info-banner-text">
+                査定が完了する前に、欲しい本を予約できる機能です。<br>
+                査定完了と同時にポイントが確定し、予約した本を即座に購入できます。<br>
+                <strong>人気の本は売り切れる前に確保しましょう！</strong>
+            </div>
+        </div>
+
+        <div class="point-status">
+            <div class="point-status-left">
+                <div class="point-status-label">獲得予定ポイント</div>
+                <div class="point-status-amount">約 17,901pt</div>
+                <div class="point-status-note">
+                    ※査定完了後に確定・自動適用されます
+                </div>
+            </div>
+            <div style="font-size: 4rem; opacity: 0.3;">💰</div>
+        </div>
+
+        <div class="cart-items">
+            <h3 style="margin-bottom: 1.5rem; font-size: 1.3rem;">予約中の本（3冊）</h3>
+
+            <div class="cart-item">
+                <div class="cart-item-image">
+                    35歳からの<br>リアル
+                </div>
+                <div class="cart-item-content">
+                    <div class="cart-item-title">35歳からのリアル</div>
+                    <div class="cart-item-desc">
+                        30代のキャリアと人生について考える一冊
+                    </div>
+                    <div class="cart-item-price">¥ 1,500</div>
+                </div>
+                <div class="cart-item-actions">
+                    <button class="remove-btn" onclick="removeItem(this)">削除</button>
+                </div>
+            </div>
+
+            <div class="cart-item">
+                <div class="cart-item-image orange">
+                    心が軽くなる<br>ヒント
+                </div>
+                <div class="cart-item-content">
+                    <div class="cart-item-title">心が軽くなるヒント</div>
+                    <div class="cart-item-desc">
+                        日々のストレスから解放される方法
+                    </div>
+                    <div class="cart-item-price">¥ 1,600</div>
+                </div>
+                <div class="cart-item-actions">
+                    <button class="remove-btn" onclick="removeItem(this)">削除</button>
+                </div>
+            </div>
+
+            <div class="cart-item">
+                <div class="cart-item-image green">
+                    毎日が楽しい人の<br>小さな習慣
+                </div>
+                <div class="cart-item-content">
+                    <div class="cart-item-title">毎日が楽しい人の小さな習慣</div>
+                    <div class="cart-item-desc">
+                        幸せな日常を作るシンプルな方法
+                    </div>
+                    <div class="cart-item-price">¥ 2,860</div>
+                </div>
+                <div class="cart-item-actions">
+                    <button class="remove-btn" onclick="removeItem(this)">削除</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="summary-section">
+            <h3 style="margin-bottom: 1rem; font-size: 1.3rem;">💰 お支払い内容</h3>
+
+            <div class="summary-row">
+                <div class="summary-label">商品合計（3冊）</div>
+                <div class="summary-value">¥ 5,960</div>
+            </div>
+
+            <div class="summary-row">
+                <div class="summary-label">送料</div>
+                <div class="summary-value">¥ 300</div>
+            </div>
+
+            <div class="summary-row">
+                <div class="summary-label">小計</div>
+                <div class="summary-value">¥ 6,260</div>
+            </div>
+
+            <div class="summary-row">
+                <div class="summary-label">使用予定ポイント</div>
+                <div class="summary-value highlight">- 6,260pt</div>
+            </div>
+
+            <div class="summary-row total">
+                <div>お支払い額</div>
+                <div style="color: #4caf50;">¥ 0（ポイント全額払い）</div>
+            </div>
+
+            <div style="background: #e8f5e9; padding: 1rem; border-radius: 4px; margin-top: 1.5rem;">
+                <div style="font-size: 0.9rem; color: #2e7d32;">
+                    <strong>残りポイント：</strong> 約 11,641pt<br>
+                    <span style="font-size: 0.85rem;">（初回購入ボーナス +1,000pt 含む）</span>
+                </div>
+            </div>
+        </div>
+
+        <button class="checkout-button" onclick="reserveCheckout()">
+            査定完了後に自動で購入する
+        </button>
+
+        <div style="text-align: center; margin-top: 1rem;">
+            <p style="font-size: 0.85rem; color: #666;">
+                ※査定完了と同時に自動で注文が確定します<br>
+                ※ポイント不足の場合は差額をクレジットカードでお支払いいただけます
+            </p>
+        </div>
+
+        <div class="add-more-books">
+            <p style="margin-bottom: 1rem; color: #666;">
+                他にも気になる本はありませんか？
+            </p>
+            <a href="recommendations.html" class="add-more-btn">
+                <span>📚</span>
+                <span>もっと本を探す</span>
+            </a>
+        </div>
+
+        <div style="background: white; border-radius: 8px; padding: 2rem; text-align: center;">
+            <h4 style="margin-bottom: 1rem;">🎁 初回購入ボーナスについて</h4>
+            <p style="font-size: 0.95rem; color: #666; line-height: 1.8;">
+                買取ポイントで初めて本を購入すると、<strong style="color: #d68000;">+1,000ポイント</strong>が追加でもらえます！<br>
+                このボーナスは査定完了時に自動で付与されます。
+            </p>
+        </div>
+    </div>
+
+    <footer style="text-align: center; padding: 2rem; color: #666;">
+        <p>&copy; 2026 VALUE BOOKS ALL RIGHTS RESERVED.</p>
+    </footer>
+
+    <script>
+        function removeItem(button) {
+            if (confirm('この本を予約カートから削除しますか？')) {
+                const item = button.closest('.cart-item');
+                item.style.opacity = '0';
+                item.style.transform = 'translateX(-100%)';
+                setTimeout(() => {
+                    item.remove();
+                    updateSummary();
+                }, 300);
+            }
+        }
+
+        function updateSummary() {
+            const items = document.querySelectorAll('.cart-item');
+            if (items.length === 0) {
+                alert('カートが空です');
+                // 実際にはおすすめページへリダイレクト
+            }
+        }
+
+        function reserveCheckout() {
+            if (confirm('予約を確定しますか？\n\n査定完了後、自動で購入手続きが完了します。')) {
+                alert('✅ 予約が完了しました！\n\n査定完了と同時に自動で購入されます。\nメールで通知をお送りしますので、お待ちください。');
+                // 実際には完了ページへ遷移
+                window.location.href = 'apply-complete.html';
+            }
+        }
+    </script>
+</body>
+</html>
+

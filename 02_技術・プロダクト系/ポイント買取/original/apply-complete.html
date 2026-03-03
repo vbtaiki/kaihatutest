@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>申込完了 | VALUE BOOKS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .header {
+            background-color: #fff;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .version-badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.35rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+
+        .nav {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .nav a {
+            color: #666;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .nav a:hover {
+            color: #00a0e9;
+        }
+
+        .point-badge {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            color: #d68000;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 3rem auto;
+            padding: 0 1rem;
+        }
+
+        .complete-card {
+            background: white;
+            border-radius: 16px;
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .success-icon {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+            animation: bounce 0.6s ease-in-out;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .complete-card h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #00a0e9;
+        }
+
+        .complete-card p {
+            color: #666;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        .info-section {
+            background: #f9f9f9;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: left;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            color: #666;
+            font-weight: 500;
+        }
+
+        .info-value {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .highlight-value {
+            color: #00a0e9;
+            font-size: 1.2rem;
+        }
+
+        .bonus-details {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .bonus-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px dashed rgba(214, 128, 0, 0.3);
+        }
+
+        .bonus-item:last-child {
+            border-bottom: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .next-steps {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .next-steps h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .step {
+            display: flex;
+            align-items: start;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: #f9f9f9;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+        }
+
+        .step-number {
+            background: linear-gradient(135deg, #00a0e9 0%, #0088cc 100%);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .step-content h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .step-content p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .btn-group {
+            display: grid;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            display: block;
+            padding: 1.2rem 2rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: bold;
+            text-align: center;
+            transition: all 0.3s;
+            font-size: 1.05rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #00a0e9 0%, #0088cc 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(0, 160, 233, 0.3);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #333;
+            border: 2px solid #e0e0e0;
+        }
+
+        .btn-secondary:hover {
+            border-color: #00a0e9;
+            color: #00a0e9;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <a href="../index.html" class="logo">
+                VALUE BOOKS
+                <span class="version-badge">オリジナル案</span>
+            </a>
+            <nav class="nav">
+                <a href="mypage.html">マイページ</a>
+                <a href="recommendations.html">本を探す</a>
+                <a href="rank-system.html">🏆 ランク</a>
+                <div class="point-badge">💰 21,154pt</div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="complete-card">
+            <div class="success-icon">✅</div>
+            <h1>買取申込が完了しました！</h1>
+            <p>お申込みありがとうございます。<br>買取キットを2-3営業日以内に発送いたします。</p>
+
+            <div class="info-section">
+                <div class="info-row">
+                    <span class="info-label">申込番号</span>
+                    <span class="info-value">VB20260107-0001</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">申込日時</span>
+                    <span class="info-value">2026年1月7日 22:30</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">査定予定点数</span>
+                    <span class="info-value">約50冊</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">お支払方法</span>
+                    <span class="info-value highlight-value">ポイント受け取り（速フリ有効）</span>
+                </div>
+            </div>
+
+            <div class="bonus-details">
+                <div class="bonus-item">
+                    <span>基本買取金額</span>
+                    <span>13,000円</span>
+                </div>
+                <div class="bonus-item">
+                    <span>速フリボーナス (+10%)</span>
+                    <span style="color: #d68000;">+1,300円</span>
+                </div>
+                <div class="bonus-item">
+                    <span>ポイント受け取りボーナス (+20%)</span>
+                    <span style="color: #d68000;">+2,600円</span>
+                </div>
+                <div class="bonus-item">
+                    <span>初回特典ボーナス</span>
+                    <span style="color: #d68000;">+1,000pt</span>
+                </div>
+                <div class="bonus-item">
+                    <span>獲得予定ポイント</span>
+                    <span style="color: #d68000; font-size: 1.3rem;">21,154pt</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="next-steps">
+            <h2>📋 今後の流れ</h2>
+            
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h3>買取キットの到着</h3>
+                    <p>2-3営業日以内に買取キット（段ボール・伝票）をお送りします</p>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h3>本の梱包・発送</h3>
+                    <p>買取キットに本を詰めて、同封の伝票で発送してください</p>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h3>査定完了</h3>
+                    <p>速フリ選択済みのため、到着後即座にポイントが付与されます！</p>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <h3>ポイントで本を購入</h3>
+                    <p>獲得したポイントで、すぐに欲しい本を購入できます</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="btn-group">
+            <a href="recommendations.html" class="btn btn-primary">
+                🎁 おすすめの本を見る
+            </a>
+            <a href="mypage.html" class="btn btn-secondary">
+                マイページへ戻る
+            </a>
+        </div>
+    </div>
+
+    <footer style="text-align: center; padding: 3rem 1rem; color: #666;">
+        <p>&copy; 2026 VALUE BOOKS ALL RIGHTS RESERVED.</p>
+    </footer>
+</body>
+</html>
+

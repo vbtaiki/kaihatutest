@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>バリューブックス 買取ポイントシステム</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .header {
+            background-color: #fff;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4rem 2rem;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.95;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin: 3rem 0 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #00a0e9;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .version-badge {
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        .version-badge.original {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .version-badge.cursor {
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+        }
+
+        .version-badge.gemini {
+            background: linear-gradient(135deg, #38b2ac 0%, #319795 100%);
+        }
+
+        .version-badge.gemini-future {
+            background: linear-gradient(135deg, #0ea5e9 0%, #38bdf8 100%);
+        }
+
+        .version-badge.gpt {
+            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+        }
+
+        .page-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .page-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            cursor: pointer;
+            text-decoration: none;
+            color: #333;
+            display: block;
+        }
+
+        .page-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        }
+
+        .page-card-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .page-card-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .page-card-desc {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .badge {
+            display: inline-block;
+            background-color: #ff6b35;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .badge.new {
+            background: linear-gradient(135deg, #00a0e9 0%, #0088cc 100%);
+        }
+
+        .flow-diagram {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .flow-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .flow-steps {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .flow-step {
+            flex: 1;
+            min-width: 150px;
+            text-align: center;
+            position: relative;
+        }
+
+        .flow-step:not(:last-child)::after {
+            content: '→';
+            position: absolute;
+            right: -1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+            color: #00a0e9;
+        }
+
+        .flow-number {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #00a0e9 0%, #0088cc 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin: 0 auto 0.5rem;
+        }
+
+        .flow-label {
+            font-size: 0.9rem;
+            color: #333;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .page-links {
+                grid-template-columns: 1fr;
+            }
+
+            .flow-steps {
+                flex-direction: column;
+            }
+
+            .flow-step:not(:last-child)::after {
+                content: '↓';
+                right: auto;
+                top: auto;
+                bottom: -1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                VALUE BOOKS
+                <span class="version-badge" style="background: linear-gradient(135deg, #00a0e9 0%, #0088cc 100%);">デモトップ</span>
+            </div>
+            <nav class="nav">
+                <a href="original/mypage.html">オリジナル案</a>
+                <a href="cursor案/mypage.html">CURSOR案</a>
+                <a href="gemini-proposal/mypage.html">GEMINI案</a>
+                <a href="gemini-future-proposal/mypage.html">GEMINI未来案</a>
+                <a href="gpt-proposal/mypage.html">GPT案</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="hero">
+            <h1>📚 買取ポイントシステム デモ</h1>
+            <p>本を売って、ポイントで次の本を買う。新しい読書体験を始めましょう。</p>
+        </div>
+
+        <div class="flow-diagram">
+            <div class="flow-title">💡 ユーザーフロー</div>
+            <div class="flow-steps">
+                <div class="flow-step">
+                    <div class="flow-number">1</div>
+                    <div class="flow-label">買取申込</div>
+                </div>
+                <div class="flow-step">
+                    <div class="flow-number">2</div>
+                    <div class="flow-label">予約カート</div>
+                </div>
+                <div class="flow-step">
+                    <div class="flow-number">3</div>
+                    <div class="flow-label">査定完了</div>
+                </div>
+                <div class="flow-step">
+                    <div class="flow-number">4</div>
+                    <div class="flow-label">本を購入</div>
+                </div>
+                <div class="flow-step">
+                    <div class="flow-number">5</div>
+                    <div class="flow-label">リピート</div>
+                </div>
+            </div>
+        </div>
+
+        <h2 style="font-size: 1.8rem; margin-bottom: 1.5rem; text-align: center;">🎯 画面一覧</h2>
+        <p style="text-align: center; color: #666; margin-bottom: 3rem;">
+            オリジナル案とCURSOR案は独立しており、それぞれ内部だけで循環するように設計されています。
+        </p>
+
+        <h2 class="section-title">
+            📂 オリジナル案（Original）
+            <span class="version-badge original">オリジナル案</span>
+        </h2>
+        <div class="page-links" style="margin-bottom: 3rem;">
+            <a href="original/offer.html" class="page-card">
+                <div class="page-card-icon">📝</div>
+                <div class="page-card-title">買取申込</div>
+                <div class="page-card-desc">
+                    ポイント受け取り（+10%上乗せ）を選択して申込<br>
+                    ※デフォルトでポイント選択済み
+                </div>
+            </a>
+
+            <a href="original/confirm.html" class="page-card">
+                <div class="page-card-icon">✅</div>
+                <div class="page-card-title">申込確認</div>
+                <div class="page-card-desc">
+                    入力内容を確認してポイント受け取りのメリットを再確認
+                </div>
+            </a>
+
+            <a href="original/result.html" class="page-card">
+                <div class="page-card-icon">💰</div>
+                <div class="page-card-title">買取結果（ポイント）</div>
+                <div class="page-card-desc">
+                    ポイント受け取り済みユーザー向けの結果画面
+                </div>
+            </a>
+
+            <a href="original/result-cash.html" class="page-card">
+                <div class="page-card-icon">💵</div>
+                <div class="page-card-title">買取結果（現金）</div>
+                <div class="page-card-desc">
+                    期間限定でポイント変更可能（1/10 10:00まで）
+                </div>
+            </a>
+
+            <a href="original/recommendations.html" class="page-card">
+                <div class="page-card-icon">📚</div>
+                <div class="page-card-title">おすすめの本</div>
+                <div class="page-card-desc">
+                    AIが選んだパーソナライズドレコメンド、ポイント残高表示
+                </div>
+            </a>
+
+            <a href="original/mypage.html" class="page-card">
+                <div class="page-card-icon">👤</div>
+                <div class="page-card-title">マイページ</div>
+                <div class="page-card-desc">
+                    ユーザー情報、ポイント残高、買取実績を一覧表示
+                </div>
+            </a>
+
+            <a href="original/apply-complete.html" class="page-card">
+                <div class="page-card-icon">✅</div>
+                <div class="page-card-title">申込完了</div>
+                <div class="page-card-desc">
+                    買取申込完了後の確認画面、獲得予定ポイントを表示
+                </div>
+            </a>
+
+            <a href="original/rank-system.html" class="page-card">
+                <div class="page-card-icon">🏆</div>
+                <div class="page-card-title">ランクシステム</div>
+                <div class="page-card-desc">
+                    ユーザーランクと特典、次のランクまでの進捗状況
+                </div>
+            </a>
+        </div>
+
+        <h2 class="section-title">
+            ✨ CURSOR案（New Features）
+            <span class="version-badge cursor">CURSOR案</span>
+        </h2>
+        <div class="page-links">
+            <a href="cursor案/mypage.html" class="page-card">
+                <span class="badge new">NEW</span>
+                <div class="page-card-icon">👤</div>
+                <div class="page-card-title">マイページ</div>
+                <div class="page-card-desc">
+                    ポイント残高、購入・買取履歴、ランク情報を一覧
+                </div>
+            </a>
+
+            <a href="cursor案/apply-complete.html" class="page-card">
+                <span class="badge new">NEW</span>
+                <div class="page-card-icon">🎉</div>
+                <div class="page-card-title">申込完了</div>
+                <div class="page-card-desc">
+                    仮ポイント表示、初回購入ボーナス、予約カートへの導線
+                </div>
+            </a>
+
+            <a href="cursor案/reserve-cart.html" class="page-card">
+                <span class="badge new">NEW</span>
+                <div class="page-card-icon">🛒</div>
+                <div class="page-card-title">予約カート</div>
+                <div class="page-card-desc">
+                    査定前でも仮ポイントで本を予約できる
+                </div>
+            </a>
+
+            <a href="cursor案/email-notification.html" class="page-card">
+                <span class="badge new">NEW</span>
+                <div class="page-card-icon">📧</div>
+                <div class="page-card-title">査定完了通知</div>
+                <div class="page-card-desc">
+                    メール風UI、ポイント確定、今すぐ使える導線
+                </div>
+            </a>
+
+            <a href="cursor案/purchase-history.html" class="page-card">
+                <span class="badge new">NEW</span>
+                <div class="page-card-icon">📦</div>
+                <div class="page-card-title">購入履歴</div>
+                <div class="page-card-desc">
+                    過去の注文、配送状況、リピート購入
+                </div>
+            </a>
+
+            <a href="cursor案/favorites.html" class="page-card">
+                <span class="badge new">NEW</span>
+                <div class="page-card-icon">❤️</div>
+                <div class="page-card-title">お気に入り</div>
+                <div class="page-card-desc">
+                    気になる本をリストで管理、まとめて購入
+                </div>
+            </a>
+
+            <a href="cursor案/recommendations.html" class="page-card">
+                <span class="badge new">NEW</span>
+                <div class="page-card-icon">📚</div>
+                <div class="page-card-title">おすすめの本</div>
+                <div class="page-card-desc">
+                    AIがあなたに合った本を厳選、ワンクリック購入
+                </div>
+            </a>
+
+            <a href="cursor案/offer.html" class="page-card">
+                <span class="badge new">NEW</span>
+                <div class="page-card-icon">📦</div>
+                <div class="page-card-title">買取申込</div>
+                <div class="page-card-desc">
+                    本を売ってポイントを獲得、最大+30%ボーナス
+                </div>
+            </a>
+
+            <a href="cursor案/quick-purchase.html" class="page-card">
+                <span class="badge new">NEW</span>
+                <div class="page-card-icon">⚡</div>
+                <div class="page-card-title">ワンクリック購入</div>
+                <div class="page-card-desc">
+                    ポイントで即購入、住所確認のみで完了
+                </div>
+            </a>
+
+            <a href="cursor案/rank-system.html" class="page-card">
+                <span class="badge new">NEW</span>
+                <div class="page-card-icon">🏆</div>
+                <div class="page-card-title">ランクシステム</div>
+                <div class="page-card-desc">
+                    ポイント獲得でランクアップ、特典が増える
+                </div>
+            </a>
+        </div>
+
+        <h2 class="section-title">
+            🤖 GEMINI案（AI Intelligence & Eco）
+            <span class="version-badge gemini">GEMINI案</span>
+        </h2>
+        <div class="page-links">
+            <a href="gemini-proposal/mypage.html" class="page-card">
+                <span class="badge new">NEW</span>
+                <div class="page-card-icon">👤</div>
+                <div class="page-card-title">AIマイページ</div>
+                <div class="page-card-desc">
+                    AI分析による読書ステータスとエコ貢献度の可視化
+                </div>
+            </a>
+
+            <a href="gemini-proposal/offer.html" class="page-card">
+                <span class="badge new">NEW</span>
+                <div class="page-card-icon">📦</div>
+                <div class="page-card-title">スマート買取申込</div>
+                <div class="page-card-desc">
+                    AIボーナス予測機能を搭載した直感的な申込フォーム
+                </div>
+            </a>
+
+            <a href="gemini-proposal/recommendations.html" class="page-card">
+                <span class="badge new">NEW</span>
+                <div class="page-card-icon">🤖</div>
+                <div class="page-card-title">AI分析レコメンド</div>
+                <div class="page-card-desc">
+                    「なぜおすすめなのか」をAIが論理的に解説
+                </div>
+            </a>
+
+            <a href="gemini-proposal/rank-system.html" class="page-card">
+                <span class="badge new">NEW</span>
+                <div class="page-card-icon">🏆</div>
+                <div class="page-card-title">エコ・ランク</div>
+                <div class="page-card-desc">
+                    環境貢献度に応じた特別な優待システム
+                </div>
+            </a>
+        </div>
+
+        <h2 class="section-title">
+            🚀 GEMINI未来案（Logistics & Bonus）
+            <span class="version-badge gemini-future">GEMINI未来案</span>
+        </h2>
+        <div class="page-links">
+            <a href="gemini-future-proposal/mypage.html" class="page-card">
+                <span class="badge new">NEW</span>
+                <div class="page-card-icon">👤</div>
+                <div class="page-card-title">未来マイページ</div>
+                <div class="page-card-desc">
+                    目指せ+100%UP（買取金額2倍）。協力したくなる未来版ダッシュボード
+                </div>
+            </a>
+
+            <a href="gemini-future-proposal/offer.html" class="page-card">
+                <span class="badge new">NEW</span>
+                <div class="page-card-icon">📦</div>
+                <div class="page-card-title">未来ボーナス選択</div>
+                <div class="page-card-desc">
+                    倉庫協力・状態申告・1冊ずつ申告で+10%×3を追加
+                </div>
+            </a>
+
+            <a href="gemini-future-proposal/apply-complete.html" class="page-card">
+                <span class="badge new">NEW</span>
+                <div class="page-card-icon">✅</div>
+                <div class="page-card-title">申込完了</div>
+                <div class="page-card-desc">
+                    協力ボーナス導線つきの未来版完了画面
+                </div>
+            </a>
+
+            <a href="gemini-future-proposal/recommendations.html" class="page-card">
+                <span class="badge new">NEW</span>
+                <div class="page-card-icon">🤖</div>
+                <div class="page-card-title">AI分析レコメンド</div>
+                <div class="page-card-desc">
+                    既存GEMINI案をベースに未来版導線で回遊
+                </div>
+            </a>
+
+            <a href="gemini-future-proposal/rank-system.html" class="page-card">
+                <span class="badge new">NEW</span>
+                <div class="page-card-icon">🏆</div>
+                <div class="page-card-title">エコ・ランク</div>
+                <div class="page-card-desc">
+                    未来版（協力ボーナス前提）で継続利用を促進
+                </div>
+            </a>
+        </div>
+
+        <h2 class="section-title">
+            🧠 GPT案（Conversational & Strategy）
+            <span class="version-badge gpt">GPT案</span>
+        </h2>
+        <div class="page-links">
+            <a href="gpt-proposal/mypage.html" class="page-card">
+                <span class="badge new">NEW</span>
+                <div class="page-card-icon">👤</div>
+                <div class="page-card-title">GPTマイページ</div>
+                <div class="page-card-desc">
+                    GPTが読書プランと次の一冊選びをサポート
+                </div>
+            </a>
+
+            <a href="gpt-proposal/offer.html" class="page-card">
+                <span class="badge new">NEW</span>
+                <div class="page-card-icon">📦</div>
+                <div class="page-card-title">GPT買取申込</div>
+                <div class="page-card-desc">
+                    GPT見積もりプレビューで“納得して”申込できる
+                </div>
+            </a>
+
+            <a href="gpt-proposal/apply-complete.html" class="page-card">
+                <span class="badge new">NEW</span>
+                <div class="page-card-icon">✅</div>
+                <div class="page-card-title">申込完了</div>
+                <div class="page-card-desc">
+                    次のアクションをGPTが提案（購入・予約・おすすめ）
+                </div>
+            </a>
+
+            <a href="gpt-proposal/recommendations.html" class="page-card">
+                <span class="badge new">NEW</span>
+                <div class="page-card-icon">📚</div>
+                <div class="page-card-title">理由つきレコメンド</div>
+                <div class="page-card-desc">
+                    「なぜ合うのか」を短く分かりやすく説明
+                </div>
+            </a>
+
+            <a href="gpt-proposal/rank-system.html" class="page-card">
+                <span class="badge new">NEW</span>
+                <div class="page-card-icon">🏆</div>
+                <div class="page-card-title">ランク＆次の目標</div>
+                <div class="page-card-desc">
+                    次にやることが1クリックで決まる目標設計
+                </div>
+            </a>
+        </div>
+
+        <div style="background: white; border-radius: 12px; padding: 2rem; margin-top: 3rem;">
+            <h3 style="font-size: 1.3rem; margin-bottom: 1rem;">🎯 新機能のハイライト</h3>
+            <ul style="list-style: none; padding-left: 0;">
+                <li style="padding: 0.5rem 0; border-bottom: 1px solid #f0f0f0;">
+                    ✅ <strong>ポイントをデフォルト選択</strong> - 選択のハードルを下げる
+                </li>
+                <li style="padding: 0.5rem 0; border-bottom: 1px solid #f0f0f0;">
+                    👤 <strong>マイページ・購入履歴</strong> - 一元管理で便利に
+                </li>
+                <li style="padding: 0.5rem 0; border-bottom: 1px solid #f0f0f0;">
+                    ❤️ <strong>お気に入り機能</strong> - 気になる本をキープ
+                </li>
+                <li style="padding: 0.5rem 0; border-bottom: 1px solid #f0f0f0;">
+                    🎁 <strong>初回購入ボーナス +1,000pt</strong> - 購入への後押し
+                </li>
+                <li style="padding: 0.5rem 0; border-bottom: 1px solid #f0f0f0;">
+                    🛒 <strong>予約カート機能</strong> - 査定前でも本を確保できる
+                </li>
+                <li style="padding: 0.5rem 0; border-bottom: 1px solid #f0f0f0;">
+                    📧 <strong>査定完了メール風通知</strong> - 即座に購入へ誘導
+                </li>
+                <li style="padding: 0.5rem 0; border-bottom: 1px solid #f0f0f0;">
+                    ⚡ <strong>ワンクリック購入</strong> - 最小限の手間で購入完了
+                </li>
+                <li style="padding: 0.5rem 0;">
+                    🏆 <strong>ランク・バッジシステム</strong> - 継続利用を促進
+                </li>
+            </ul>
+        </div>
+
+        <div style="background: white; border-radius: 12px; padding: 2rem; margin-top: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-left: 6px solid #38b2ac;">
+            <h3 style="font-size: 1.3rem; margin-bottom: 1rem; color: #2c7a7b;">🤖 GEMINI案の特徴（Smart & Eco）</h3>
+            <ul style="list-style: none; padding: 0;">
+                <li style="padding: 0.5rem 0; border-bottom: 1px solid #f0f0f0;">
+                    🌱 <strong>エコ貢献度の可視化</strong> - 読書を通じた環境貢献を実感
+                </li>
+                <li style="padding: 0.5rem 0; border-bottom: 1px solid #f0f0f0;">
+                    🤖 <strong>AI論理レコメンド</strong> - おすすめの理由を論理的に解説
+                </li>
+                <li style="padding: 0.5rem 0; border-bottom: 1px solid #f0f0f0;">
+                    📈 <strong>AIボーナス予測</strong> - 申込時にリアルタイムで獲得ポイントをシミュレーション
+                </li>
+                <li style="padding: 0.5rem 0;">
+                    🎨 <strong>モダン・ティールUI</strong> - 知的で清潔感のあるデザイン
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <footer style="text-align: center; padding: 2rem; color: #666; background: white; margin-top: 3rem;">
+        <p>&copy; 2026 VALUE BOOKS ALL RIGHTS RESERVED.</p>
+    </footer>
+</body>
+</html>
+

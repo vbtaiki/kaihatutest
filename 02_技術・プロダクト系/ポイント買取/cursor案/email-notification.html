@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>査定完了通知 | VALUE BOOKS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            line-height: 1.6;
+            padding: 2rem 1rem;
+        }
+
+        .email-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: white;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .email-header {
+            background: linear-gradient(135deg, #00a0e9 0%, #0088cc 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .email-logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+        }
+
+        .version-badge {
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            color: white;
+            padding: 0.35rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+
+        .email-tagline {
+            font-size: 0.9rem;
+            opacity: 0.95;
+        }
+
+        .email-body {
+            padding: 2rem;
+        }
+
+        .greeting {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .success-box {
+            background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .success-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .success-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .success-message {
+            font-size: 1rem;
+            opacity: 0.95;
+        }
+
+        .point-display {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            border: 3px solid #ff6b35;
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .point-label {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        .point-amount {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #d68000;
+            margin-bottom: 0.5rem;
+        }
+
+        .point-breakdown {
+            font-size: 0.9rem;
+            color: #666;
+            background: white;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-top: 1rem;
+        }
+
+        .point-breakdown-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+        }
+
+        .cta-button {
+            display: block;
+            width: 100%;
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            color: white;
+            padding: 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-decoration: none;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+            margin-bottom: 1rem;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
+        }
+
+        .cta-button.secondary {
+            background: white;
+            color: #00a0e9;
+            border: 2px solid #00a0e9;
+            box-shadow: none;
+        }
+
+        .cta-button.secondary:hover {
+            background-color: #f0f9ff;
+        }
+
+        .info-section {
+            background: #f9f9f9;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+
+        .info-title {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .bonus-alert {
+            background: #e6f7ff;
+            border-left: 4px solid #00a0e9;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 2rem;
+        }
+
+        .bonus-alert-title {
+            font-weight: bold;
+            color: #0088cc;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .bonus-alert-text {
+            font-size: 0.95rem;
+            color: #333;
+        }
+
+        .email-footer {
+            background: #1a1a1a;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .email-footer-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .email-footer-links {
+            font-size: 0.85rem;
+            color: #aaa;
+        }
+
+        .email-footer-links a {
+            color: #00a0e9;
+            text-decoration: none;
+            margin: 0 0.5rem;
+        }
+
+        .reserved-items {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 2rem;
+        }
+
+        .reserved-title {
+            font-weight: bold;
+            color: #856404;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .reserved-item {
+            background: white;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .reserved-item:last-child {
+            margin-bottom: 0;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 0;
+            }
+
+            .email-body {
+                padding: 1.5rem;
+            }
+
+            .point-amount {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <a href="../index.html" class="logo">
+                VALUE BOOKS
+                <span class="version-badge">CURSOR案</span>
+            </a>
+            <nav class="nav">
+                <a href="mypage.html">マイページ</a>
+                <a href="recommendations.html">本を探す</a>
+                <a href="rank-system.html">🏆 ランク</a>
+                <div class="point-badge">💰 21,154pt</div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="email-container">
+        <div class="email-header">
+            <div class="email-logo">
+                VALUE BOOKS
+                <span class="version-badge">CURSOR案</span>
+            </div>
+            <div class="email-tagline">買取査定が完了しました</div>
+        </div>
+
+        <div class="email-body">
+            <div class="greeting">
+                中村 大樹 様
+            </div>
+
+            <p style="margin-bottom: 2rem; line-height: 1.8;">
+                この度は、バリューブックスの買取サービスをご利用いただき、誠にありがとうございます。<br>
+                お送りいただいた本の査定が完了しましたので、お知らせいたします。
+            </p>
+
+            <div class="success-box">
+                <div class="success-icon">🎉</div>
+                <div class="success-title">査定完了！</div>
+                <div class="success-message">
+                    ポイントが確定しました
+                </div>
+            </div>
+
+            <div class="point-display">
+                <div class="point-label">獲得ポイント</div>
+                <div class="point-amount">21,154pt</div>
+                <div style="font-size: 0.9rem; color: #666; margin-bottom: 1rem;">
+                    今すぐご利用いただけます
+                </div>
+                <div class="point-breakdown">
+                    <div class="point-breakdown-row">
+                        <span>基本買取額</span>
+                        <span>16,273円</span>
+                    </div>
+                    <div class="point-breakdown-row">
+                        <span style="color: #4caf50;">ソクフリボーナス（+10%）</span>
+                        <span style="color: #4caf50; font-weight: bold;">+1,627pt</span>
+                    </div>
+                    <div class="point-breakdown-row">
+                        <span style="color: #00a0e9;">ポイント受け取りボーナス（+20%）</span>
+                        <span style="color: #00a0e9; font-weight: bold;">+3,254pt</span>
+                    </div>
+                    <div class="point-breakdown-row" style="border-top: 2px solid #e0e0e0; padding-top: 0.5rem; margin-top: 0.5rem; font-weight: bold; color: #d68000;">
+                        <span>合計</span>
+                        <span>21,154pt</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bonus-alert">
+                <div class="bonus-alert-title">
+                    🎁 初回購入ボーナス対象です！
+                </div>
+                <div class="bonus-alert-text">
+                    このポイントで初めて本を購入すると、<strong style="color: #d68000;">さらに+1,000ポイント</strong>が追加でもらえます！<br>
+                    <span style="font-size: 0.85rem;">※購入完了時に自動で付与されます</span>
+                </div>
+            </div>
+
+            <div class="reserved-items">
+                <div class="reserved-title">
+                    🛒 予約中の商品があります
+                </div>
+                <div style="font-size: 0.9rem; margin-bottom: 1rem; color: #856404;">
+                    以下の本が予約カートに入っています。今すぐ購入できます！
+                </div>
+                <div class="reserved-item">
+                    <span>35歳からのリアル 他2冊</span>
+                    <span style="font-weight: bold;">合計 ¥6,260</span>
+                </div>
+                <div style="text-align: center; margin-top: 1rem;">
+                    <a href="reserve-cart.html" style="color: #856404; font-weight: bold; text-decoration: none;">
+                        予約カートを確認する →
+                    </a>
+                </div>
+            </div>
+
+            <a href="recommendations.html" class="cta-button">
+                💰 ポイントで本を買う
+            </a>
+
+            <a href="mypage.html" class="cta-button secondary">
+                📋 買取詳細を見る
+            </a>
+
+            <div class="info-section">
+                <div class="info-title">📊 買取内容</div>
+                <div class="info-row">
+                    <span>査定点数</span>
+                    <span>117冊</span>
+                </div>
+                <div class="info-row">
+                    <span>買取点数</span>
+                    <span>103冊</span>
+                </div>
+                <div class="info-row">
+                    <span>買取不可</span>
+                    <span>14冊（返送不要で処分）</span>
+                </div>
+                <div class="info-row">
+                    <span>買取ナンバー</span>
+                    <span>K25090122163</span>
+                </div>
+            </div>
+
+            <div style="background: #e8f5e9; border-left: 4px solid #4caf50; padding: 1.5rem; border-radius: 4px; margin-bottom: 2rem;">
+                <div style="font-weight: bold; color: #2e7d32; margin-bottom: 0.5rem;">
+                    ✅ ポイントは有効期限まで1年間
+                </div>
+                <div style="font-size: 0.9rem; color: #1b5e20;">
+                    有効期限：2027年1月7日まで<br>
+                    期限が近づいたらメールでお知らせします
+                </div>
+            </div>
+
+            <div style="border-top: 1px solid #e0e0e0; padding-top: 2rem; text-align: center;">
+                <p style="font-size: 0.9rem; color: #666; line-height: 1.8;">
+                    ご不明な点がございましたら、<br>
+                    お気軽にカスタマーサポートまでお問い合わせください。
+                </p>
+            </div>
+        </div>
+
+        <div class="email-footer">
+            <div class="email-footer-logo">VB</div>
+            <div class="email-footer-links">
+                <a href="#">マイページ</a> |
+                <a href="#">お問い合わせ</a> |
+                <a href="#">よくある質問</a>
+            </div>
+            <div style="margin-top: 1rem; font-size: 0.8rem; color: #666;">
+                &copy; 2026 VALUE BOOKS ALL RIGHTS RESERVED.
+            </div>
+        </div>
+    </div>
+
+    <div style="max-width: 600px; margin: 2rem auto; text-align: center;">
+        <a href="../index.html" style="color: #00a0e9; text-decoration: none; font-size: 0.9rem;">
+            ← トップページに戻る
+        </a>
+    </div>
+</body>
+</html>
+

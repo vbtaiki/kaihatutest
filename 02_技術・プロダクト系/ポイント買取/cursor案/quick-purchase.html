@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ワンクリック購入 | VALUE BOOKS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .header {
+            background-color: #fff;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .version-badge {
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            color: white;
+            padding: 0.35rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+        }
+
+        .success-animation {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .checkmark {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+            margin: 0 auto 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: white;
+            animation: scaleIn 0.5s ease-out;
+        }
+
+        @keyframes scaleIn {
+            from {
+                transform: scale(0);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .success-title {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #4caf50;
+        }
+
+        .success-message {
+            font-size: 1.1rem;
+            color: #666;
+        }
+
+        .order-summary {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .summary-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .order-item {
+            display: flex;
+            gap: 1.5rem;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .order-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-image {
+            width: 80px;
+            height: 110px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.75rem;
+            text-align: center;
+            padding: 0.5rem;
+            flex-shrink: 0;
+        }
+
+        .item-image.orange { background: linear-gradient(135deg, #f7931e 0%, #ff6b35 100%); }
+        .item-image.green { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); }
+
+        .item-info {
+            flex: 1;
+        }
+
+        .item-title {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .item-price {
+            color: #d32f2f;
+            font-weight: bold;
+        }
+
+        .payment-info {
+            background: linear-gradient(135deg, #e6f7ff 0%, #cceeff 100%);
+            border: 2px solid #00a0e9;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .payment-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(0, 160, 233, 0.2);
+        }
+
+        .payment-row:last-child {
+            border-bottom: none;
+        }
+
+        .payment-row.total {
+            border-top: 2px solid #00a0e9;
+            padding-top: 1.5rem;
+            margin-top: 1rem;
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+
+        .payment-label {
+            color: #666;
+        }
+
+        .payment-value {
+            font-weight: 500;
+        }
+
+        .payment-value.highlight {
+            color: #4caf50;
+            font-weight: bold;
+        }
+
+        .bonus-earned {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            border: 3px solid #ff6b35;
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .bonus-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .bonus-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #d68000;
+            margin-bottom: 0.5rem;
+        }
+
+        .bonus-amount {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #d68000;
+            margin-bottom: 0.5rem;
+        }
+
+        .bonus-desc {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .delivery-info {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .info-title {
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .cta-buttons {
+            display: grid;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .cta-button {
+            padding: 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .cta-button.primary {
+            background: linear-gradient(135deg, #00a0e9 0%, #0088cc 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(0, 160, 233, 0.3);
+        }
+
+        .cta-button.primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 160, 233, 0.4);
+        }
+
+        .cta-button.secondary {
+            background: white;
+            color: #00a0e9;
+            border: 2px solid #00a0e9;
+        }
+
+        .cta-button.secondary:hover {
+            background-color: #f0f9ff;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .order-item {
+                flex-direction: column;
+            }
+
+            .success-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <a href="../index.html" class="logo">
+                VALUE BOOKS
+                <span class="version-badge">CURSOR案</span>
+            </a>
+            <nav class="nav">
+                <a href="mypage.html">マイページ</a>
+                <a href="recommendations.html">本を探す</a>
+                <a href="rank-system.html">🏆 ランク</a>
+                <div class="point-badge">💰 21,154pt</div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="success-animation">
+            <div class="checkmark">✓</div>
+            <div class="success-title">購入完了！</div>
+            <div class="success-message">
+                ご注文ありがとうございました<br>
+                商品は通常2〜5日でお届けします
+            </div>
+        </div>
+
+        <div class="bonus-earned">
+            <div class="bonus-icon">🎁</div>
+            <div class="bonus-title">初回購入ボーナス獲得！</div>
+            <div class="bonus-amount">+1,000pt</div>
+            <div class="bonus-desc">
+                アカウントに自動で追加されました<br>
+                次回のお買い物にご利用いただけます
+            </div>
+        </div>
+
+        <div class="order-summary">
+            <div class="summary-title">📦 ご注文内容</div>
+
+            <div class="order-item">
+                <div class="item-image">
+                    35歳からの<br>リアル
+                </div>
+                <div class="item-info">
+                    <div class="item-title">35歳からのリアル</div>
+                    <div style="font-size: 0.9rem; color: #666; margin-bottom: 0.5rem;">
+                        30代のキャリアと人生について考える一冊
+                    </div>
+                    <div class="item-price">¥ 1,500</div>
+                </div>
+            </div>
+
+            <div class="order-item">
+                <div class="item-image orange">
+                    心が軽くなる<br>ヒント
+                </div>
+                <div class="item-info">
+                    <div class="item-title">心が軽くなるヒント</div>
+                    <div style="font-size: 0.9rem; color: #666; margin-bottom: 0.5rem;">
+                        日々のストレスから解放される方法
+                    </div>
+                    <div class="item-price">¥ 1,600</div>
+                </div>
+            </div>
+
+            <div class="order-item">
+                <div class="item-image green">
+                    毎日が楽しい人の<br>小さな習慣
+                </div>
+                <div class="item-info">
+                    <div class="item-title">毎日が楽しい人の小さな習慣</div>
+                    <div style="font-size: 0.9rem; color: #666; margin-bottom: 0.5rem;">
+                        幸せな日常を作るシンプルな方法
+                    </div>
+                    <div class="item-price">¥ 2,860</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="payment-info">
+            <div style="font-weight: bold; font-size: 1.2rem; margin-bottom: 1rem;">
+                💰 お支払い内容
+            </div>
+
+            <div class="payment-row">
+                <div class="payment-label">商品合計（3冊）</div>
+                <div class="payment-value">¥ 5,960</div>
+            </div>
+
+            <div class="payment-row">
+                <div class="payment-label">送料</div>
+                <div class="payment-value">¥ 300</div>
+            </div>
+
+            <div class="payment-row">
+                <div class="payment-label">小計</div>
+                <div class="payment-value">¥ 6,260</div>
+            </div>
+
+            <div class="payment-row">
+                <div class="payment-label">使用ポイント</div>
+                <div class="payment-value highlight">- 6,260pt</div>
+            </div>
+
+            <div class="payment-row total">
+                <div>合計お支払い額</div>
+                <div style="color: #4caf50;">¥ 0</div>
+            </div>
+
+            <div style="background: white; padding: 1rem; border-radius: 4px; margin-top: 1rem;">
+                <div style="font-size: 0.9rem; color: #666;">
+                    残りポイント：<strong style="color: #d68000;">12,641pt</strong><br>
+                    <span style="font-size: 0.85rem;">（初回購入ボーナス +1,000pt 含む）</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="delivery-info">
+            <div class="info-title">📍 配送先情報</div>
+            <div class="info-row">
+                <span>お届け先</span>
+                <span>中村 大樹 様</span>
+            </div>
+            <div class="info-row">
+                <span>住所</span>
+                <span>〒399-8303<br>長野県安曇野市穂高1049-9</span>
+            </div>
+            <div class="info-row">
+                <span>お届け予定</span>
+                <span style="font-weight: bold; color: #4caf50;">1月10日〜1月14日</span>
+            </div>
+            <div class="info-row">
+                <span>注文番号</span>
+                <span>VB2026010700123</span>
+            </div>
+        </div>
+
+        <div style="background: #fff3cd; border-left: 4px solid #ffc107; padding: 1.5rem; border-radius: 4px; margin-bottom: 2rem;">
+            <div style="font-weight: bold; color: #856404; margin-bottom: 0.5rem;">
+                📧 確認メールを送信しました
+            </div>
+            <div style="font-size: 0.9rem; color: #856404;">
+                ご注文の詳細をメールでお送りしました。<br>
+                nakamura@value-books.jp宛に配信しております。
+            </div>
+        </div>
+
+        <div class="cta-buttons">
+            <a href="recommendations.html" class="cta-button primary">
+                📚 他の本も見てみる
+            </a>
+            <a href="rank-system.html" class="cta-button secondary">
+                🏆 マイランクを確認する
+            </a>
+        </div>
+
+        <div style="background: white; border-radius: 8px; padding: 2rem; text-align: center;">
+            <h3 style="margin-bottom: 1rem;">🎯 次回もお得に</h3>
+            <p style="font-size: 0.95rem; color: #666; line-height: 1.8;">
+                また読み終わった本があれば、ぜひバリューブックスで売ってください。<br>
+                ポイント受け取りを選ぶと、<strong style="color: #d68000;">いつでも+10%</strong>お得です！
+            </p>
+            <div style="margin-top: 1.5rem;">
+                <a href="offer.html" style="color: #00a0e9; font-weight: bold; text-decoration: none;">
+                    買取を申し込む →
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <footer style="text-align: center; padding: 2rem; color: #666;">
+        <p>&copy; 2026 VALUE BOOKS ALL RIGHTS RESERVED.</p>
+    </footer>
+</body>
+</html>
+

@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>あなたへのおすすめ | VALUE BOOKS [GPT案]</title>
+    <link rel="stylesheet" href="assets/gpt.css">
+    <script src="assets/gpt.js" defer></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+            background-color: #f0f4f8;
+            color: #2d3748;
+            line-height: 1.6;
+        }
+
+        .header {
+            background-color: #fff;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #2d3748;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .version-badge {
+            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+            color: white;
+            padding: 0.35rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+
+        .nav {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .nav a {
+            color: #4a5568;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav a:hover {
+            color: #6366f1;
+        }
+
+        .point-badge {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            color: #d68000;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .ai-header {
+            background: #fff;
+            border-radius: 24px;
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .ai-avatar {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: white;
+        }
+
+        .ai-message {
+            flex: 1;
+        }
+
+        .ai-message h1 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #3730a3;
+        }
+
+        .ai-message p {
+            color: #718096;
+            font-size: 1rem;
+        }
+
+        .recommend-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .book-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            display: flex;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+
+        .book-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .book-img {
+            width: 140px;
+            background: #f7fafc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+
+        .book-info {
+            padding: 1.5rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .book-title {
+            font-weight: 800;
+            font-size: 1.1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .book-author {
+            font-size: 0.85rem;
+            color: #718096;
+            margin-bottom: 1rem;
+        }
+
+        .ai-analysis {
+            background: #f0fff4;
+            border-radius: 10px;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid #6366f1;
+        }
+
+        .analysis-label {
+            font-size: 0.7rem;
+            font-weight: bold;
+            color: #3730a3;
+            text-transform: uppercase;
+            margin-bottom: 0.25rem;
+            display: block;
+        }
+
+        .analysis-text {
+            font-size: 0.8rem;
+            color: #2d3748;
+        }
+
+        .price-row {
+            margin-top: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .price {
+            font-weight: 800;
+            color: #3730a3;
+            font-size: 1.2rem;
+        }
+
+        .btn-buy {
+            background: #6366f1;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .btn-buy:hover {
+            background: #4f46e5;
+        }
+
+        @media (max-width: 640px) {
+            .book-card { flex-direction: column; }
+            .book-img { width: 100%; height: 200px; }
+        }
+    </style>
+</head>
+<body data-gpt-page="recommendations">
+    <header class="header">
+        <div class="header-content">
+            <a href="../index.html" class="logo">
+                VALUE BOOKS
+                <span class="version-badge">GPT案</span>
+            </a>
+            <nav class="nav">
+                <a href="mypage.html">マイページ</a>
+                <a href="recommendations.html">本を探す</a>
+                <a href="rank-system.html">🏆 ランク</a>
+                <div class="point-badge">💰 21,154pt</div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="ai-header">
+            <div class="ai-avatar">🧠</div>
+            <div class="ai-message">
+                <h1>GPTが「次の一冊」を会話で絞り込みます</h1>
+                <p>理由→比較→購入まで、右下のGPTからその場で決められます（このページは“理由が短い”が前提）。</p>
+                <div style="margin-top: 1rem; display:flex; gap:0.75rem; flex-wrap:wrap;">
+                    <button class="gpt-mini-btn primary" type="button" data-gpt-ask="理由を3行で">理由を3行で</button>
+                    <button class="gpt-mini-btn" type="button" data-gpt-ask="今の気分に合わせて絞り込み">今の気分で絞る</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="recommend-grid">
+            <div class="book-card">
+                <div class="book-img">📘</div>
+                <div class="book-info">
+                    <div class="book-title">ディープラーニング 2026</div>
+                    <div class="book-author">AI研究会 著</div>
+                    <div class="ai-analysis">
+                        <span class="analysis-label">GPTの視点</span>
+                        <p class="analysis-text">以前売却された「Python入門」の次のステップとして最適です。関連度95%。</p>
+                    </div>
+                    <div class="price-row">
+                        <span class="price">2,400pt</span>
+                        <div style="display:flex; gap:0.5rem; align-items:center;">
+                            <button class="gpt-mini-btn" type="button" data-gpt-ask="『ディープラーニング 2026』を選ぶ理由を3行で">理由</button>
+                            <a href="mypage.html" class="btn-buy">ポイントで購入</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="book-card">
+                <div class="book-img">📗</div>
+                <div class="book-info">
+                    <div class="book-title">サステナブルな都市設計</div>
+                    <div class="book-author">佐藤 恵 著</div>
+                    <div class="ai-analysis">
+                        <span class="analysis-label">GPTの視点</span>
+                        <p class="analysis-text">「環境貢献」に関心の高いあなたに、現代の潮流を捉えた一冊です。</p>
+                    </div>
+                    <div class="price-row">
+                        <span class="price">1,850pt</span>
+                        <div style="display:flex; gap:0.5rem; align-items:center;">
+                            <button class="gpt-mini-btn" type="button" data-gpt-ask="『サステナブルな都市設計』を選ぶ理由を3行で">理由</button>
+                            <a href="mypage.html" class="btn-buy">ポイントで購入</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="book-card">
+                <div class="book-img">📙</div>
+                <div class="book-info">
+                    <div class="book-title">データで見る未来の日本</div>
+                    <div class="book-author">経済分析チーム</div>
+                    <div class="ai-analysis">
+                        <span class="analysis-label">GPTの視点</span>
+                        <p class="analysis-text">ビジネス書を多く売却されている傾向から、この統計分析も好みに合うはずです。</p>
+                    </div>
+                    <div class="price-row">
+                        <span class="price">2,100pt</span>
+                        <div style="display:flex; gap:0.5rem; align-items:center;">
+                            <button class="gpt-mini-btn" type="button" data-gpt-ask="『データで見る未来の日本』を選ぶ理由を3行で">理由</button>
+                            <a href="mypage.html" class="btn-buy">ポイントで購入</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="book-card">
+                <div class="book-img">📓</div>
+                <div class="book-info">
+                    <div class="book-title">UXデザインの真髄</div>
+                    <div class="book-author">田中 健一 著</div>
+                    <div class="ai-analysis">
+                        <span class="analysis-label">GPTの視点</span>
+                        <p class="analysis-text">「デザインパターン」との併読が最も多い、評価の高い専門書です。</p>
+                    </div>
+                    <div class="price-row">
+                        <span class="price">3,200pt</span>
+                        <div style="display:flex; gap:0.5rem; align-items:center;">
+                            <button class="gpt-mini-btn" type="button" data-gpt-ask="『UXデザインの真髄』を選ぶ理由を3行で">理由</button>
+                            <a href="mypage.html" class="btn-buy">ポイントで購入</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-top: 4rem; text-align: center;">
+            <p style="color: #718096; margin-bottom: 1.5rem;">読みたい本が見つかりませんでしたか？</p>
+            <a href="offer.html" style="background: #fff; border: 2px solid #6366f1; color: #6366f1; padding: 1rem 2rem; border-radius: 12px; text-decoration: none; font-weight: bold;">
+                本を売ってポイントを貯める
+            </a>
+        </div>
+    </div>
+
+    <footer style="text-align: center; padding: 3rem; color: #718096; font-size: 0.9rem;">
+        <p>&copy; 2026 VALUE BOOKS ALL RIGHTS RESERVED.</p>
+    </footer>
+</body>
+</html>
+

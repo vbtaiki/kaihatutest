@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>あなたへのおすすめ | VALUE BOOKS [GEMINI未来案]</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+            background-color: #f0f4f8;
+            color: #2d3748;
+            line-height: 1.6;
+        }
+
+        .header {
+            background-color: #fff;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #2d3748;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .version-badge {
+            background: linear-gradient(135deg, #38b2ac 0%, #319795 100%);
+            color: white;
+            padding: 0.35rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+
+        .nav {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .nav a {
+            color: #4a5568;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav a:hover {
+            color: #38b2ac;
+        }
+
+        .point-badge {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            color: #d68000;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .ai-header {
+            background: #fff;
+            border-radius: 24px;
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .ai-avatar {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #38b2ac 0%, #319795 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: white;
+        }
+
+        .ai-message {
+            flex: 1;
+        }
+
+        .ai-message h1 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #2c7a7b;
+        }
+
+        .ai-message p {
+            color: #718096;
+            font-size: 1rem;
+        }
+
+        .recommend-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .book-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            display: flex;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+
+        .book-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .book-img {
+            width: 140px;
+            background: #f7fafc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+
+        .book-info {
+            padding: 1.5rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .book-title {
+            font-weight: 800;
+            font-size: 1.1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .book-author {
+            font-size: 0.85rem;
+            color: #718096;
+            margin-bottom: 1rem;
+        }
+
+        .ai-analysis {
+            background: #f0fff4;
+            border-radius: 10px;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid #38b2ac;
+        }
+
+        .analysis-label {
+            font-size: 0.7rem;
+            font-weight: bold;
+            color: #2c7a7b;
+            text-transform: uppercase;
+            margin-bottom: 0.25rem;
+            display: block;
+        }
+
+        .analysis-text {
+            font-size: 0.8rem;
+            color: #2d3748;
+        }
+
+        .price-row {
+            margin-top: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .price {
+            font-weight: 800;
+            color: #2c7a7b;
+            font-size: 1.2rem;
+        }
+
+        .btn-buy {
+            background: #38b2ac;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .btn-buy:hover {
+            background: #319795;
+        }
+
+        @media (max-width: 640px) {
+            .book-card { flex-direction: column; }
+            .book-img { width: 100%; height: 200px; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <a href="../index.html" class="logo">
+                VALUE BOOKS
+                <span class="version-badge">GEMINI未来案</span>
+            </a>
+            <nav class="nav">
+                <a href="mypage.html">マイページ</a>
+                <a href="recommendations.html">本を探す</a>
+                <a href="rank-system.html">🏆 ランク</a>
+                <div class="point-badge">💰 21,154pt</div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="ai-header">
+            <div class="ai-avatar">🚀</div>
+            <div class="ai-message">
+                <h1>未来版：ポイントで買える本を厳選</h1>
+                <p>買う→売る→また買う、の循環を作るためのおすすめです。協力ボーナス（目指せ+100%UP）は買取申込で設定できます。</p>
+                <div style="margin-top: 1rem; display:flex; gap:0.75rem; flex-wrap:wrap;">
+                    <a href="offer.html" class="btn-buy" style="padding:0.7rem 1rem; border-radius: 10px;">✨ 協力ボーナスを設定</a>
+                    <a href="bookshelf-scan.html" class="btn-buy" style="padding:0.7rem 1rem; border-radius: 10px; background:#fff; color:#38b2ac; border:2px solid #38b2ac;">📷 本棚スキャン申請</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="recommend-grid">
+            <div class="book-card">
+                <div class="book-img">📘</div>
+                <div class="book-info">
+                    <div class="book-title">ディープラーニング 2026</div>
+                    <div class="book-author">AI研究会 著</div>
+                    <div class="ai-analysis">
+                        <span class="analysis-label">未来の視点</span>
+                        <p class="analysis-text">以前売却された「Python入門」の次のステップとして最適です。関連度95%。</p>
+                    </div>
+                    <div class="price-row">
+                        <span class="price">2,400pt</span>
+                        <a href="mypage.html" class="btn-buy">ポイントで購入</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="book-card">
+                <div class="book-img">📗</div>
+                <div class="book-info">
+                    <div class="book-title">サステナブルな都市設計</div>
+                    <div class="book-author">佐藤 恵 著</div>
+                    <div class="ai-analysis">
+                        <span class="analysis-label">未来の視点</span>
+                        <p class="analysis-text">「環境貢献」に関心の高いあなたに、現代の潮流を捉えた一冊です。</p>
+                    </div>
+                    <div class="price-row">
+                        <span class="price">1,850pt</span>
+                        <a href="mypage.html" class="btn-buy">ポイントで購入</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="book-card">
+                <div class="book-img">📙</div>
+                <div class="book-info">
+                    <div class="book-title">データで見る未来の日本</div>
+                    <div class="book-author">経済分析チーム</div>
+                    <div class="ai-analysis">
+                        <span class="analysis-label">未来の視点</span>
+                        <p class="analysis-text">ビジネス書を多く売却されている傾向から、この統計分析も好みに合うはずです。</p>
+                    </div>
+                    <div class="price-row">
+                        <span class="price">2,100pt</span>
+                        <a href="mypage.html" class="btn-buy">ポイントで購入</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="book-card">
+                <div class="book-img">📓</div>
+                <div class="book-info">
+                    <div class="book-title">UXデザインの真髄</div>
+                    <div class="book-author">田中 健一 著</div>
+                    <div class="ai-analysis">
+                        <span class="analysis-label">未来の視点</span>
+                        <p class="analysis-text">「デザインパターン」との併読が最も多い、評価の高い専門書です。</p>
+                    </div>
+                    <div class="price-row">
+                        <span class="price">3,200pt</span>
+                        <a href="mypage.html" class="btn-buy">ポイントで購入</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-top: 4rem; text-align: center;">
+            <p style="color: #718096; margin-bottom: 1.5rem;">もっとお得にしたいですか？</p>
+            <div style="display:flex; gap:0.75rem; flex-wrap:wrap; justify-content:center;">
+                <a href="offer.html" style="background: #fff; border: 2px solid #38b2ac; color: #38b2ac; padding: 1rem 2rem; border-radius: 12px; text-decoration: none; font-weight: bold;">
+                    協力ボーナスを設定して売る
+                </a>
+                <a href="bookshelf-scan.html" style="background: #38b2ac; color: #fff; padding: 1rem 2rem; border-radius: 12px; text-decoration: none; font-weight: bold;">
+                    本棚スキャンを先に終える
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <footer style="text-align: center; padding: 3rem; color: #718096; font-size: 0.9rem;">
+        <p>&copy; 2026 VALUE BOOKS ALL RIGHTS RESERVED.</p>
+    </footer>
+</body>
+</html>
+

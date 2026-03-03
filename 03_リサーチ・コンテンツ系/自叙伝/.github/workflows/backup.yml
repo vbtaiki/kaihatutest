@@ -1,0 +1,35 @@
+# GitHub Actionsで自動バックアップ（オプション）
+# このファイルは将来的に使えるように用意
+
+name: Weekly Backup
+
+on:
+  schedule:
+    # 毎週日曜日の深夜0時（JST 9:00）に実行
+    - cron: '0 0 * * 0'
+  workflow_dispatch: # 手動実行も可能
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      - name: Create backup branch
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          BACKUP_BRANCH="backup-$(date +%Y%m%d)"
+          git checkout -b $BACKUP_BRANCH
+          git push origin $BACKUP_BRANCH
+      
+      - name: Calculate stats
+        run: |
+          echo "## 📊 Writing Stats" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          find . -name "第*章*.md" -o -name "序章*.md" | while read file; do
+            chars=$(wc -m < "$file" | tr -d ' ')
+            echo "- $(basename "$file"): ${chars} chars" >> $GITHUB_STEP_SUMMARY
+          done
+

@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>マイページ | VALUE BOOKS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .header {
+            background-color: #fff;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .version-badge {
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            color: white;
+            padding: 0.35rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+
+        .header-nav {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .header-nav a {
+            color: #666;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .header-nav a:hover {
+            color: #00a0e9;
+        }
+
+        .point-badge {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            color: #d68000;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+        }
+
+        .user-info-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 16px;
+            padding: 3rem 2rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+        }
+
+        .user-greeting {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .user-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.3rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .action-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            text-decoration: none;
+            color: #333;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .action-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        }
+
+        .action-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .action-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .action-desc {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .history-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .history-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .history-item:last-child {
+            border-bottom: none;
+        }
+
+        .history-info {
+            flex: 1;
+        }
+
+        .history-title {
+            font-weight: bold;
+            margin-bottom: 0.3rem;
+        }
+
+        .history-date {
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .history-status {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+
+        .status-completed {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .status-processing {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .recommendations-section {
+            background: linear-gradient(135deg, #e6f7ff 0%, #cceeff 100%);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .book-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .book-item {
+            text-align: center;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .book-cover {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.85rem;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            transition: transform 0.3s;
+        }
+
+        .book-item:hover .book-cover {
+            transform: scale(1.05);
+        }
+
+        .book-cover.orange { background: linear-gradient(135deg, #f7931e 0%, #ff6b35 100%); }
+        .book-cover.green { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); }
+
+        .book-title {
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .header-nav {
+                gap: 0.5rem;
+                font-size: 0.8rem;
+            }
+
+            .quick-actions {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <a href="../index.html" class="logo">
+                VALUE BOOKS
+                <span class="version-badge">CURSOR案</span>
+            </a>
+            <nav class="nav">
+                <a href="mypage.html">マイページ</a>
+                <a href="recommendations.html">本を探す</a>
+                <a href="rank-system.html">🏆 ランク</a>
+                <div class="point-badge">💰 21,154pt</div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="user-info-card">
+            <div class="user-greeting">こんにちは、中村 大樹 さん</div>
+            <div style="font-size: 1rem; opacity: 0.95;">
+                シルバーランクの特典をご利用いただけます
+            </div>
+            <div class="user-stats">
+                <div class="stat-item">
+                    <div class="stat-value">17,901pt</div>
+                    <div class="stat-label">保有ポイント</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">🥈</div>
+                    <div class="stat-label">シルバーランク</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">3冊</div>
+                    <div class="stat-label">購入済み</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">103冊</div>
+                    <div class="stat-label">買取実績</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-title">⚡ クイックアクション</div>
+        <div class="quick-actions">
+            <a href="offer.html" class="action-card">
+                <div class="action-icon">📦</div>
+                <div class="action-title">本を売る</div>
+                <div class="action-desc">
+                    読み終わった本を買取に出してポイントを貯める
+                </div>
+            </a>
+
+            <a href="recommendations.html" class="action-card">
+                <div class="action-icon">📚</div>
+                <div class="action-title">本を探す</div>
+                <div class="action-desc">
+                    AIがあなたにぴったりの本をおすすめ
+                </div>
+            </a>
+
+            <a href="favorites.html" class="action-card">
+                <div class="action-icon">❤️</div>
+                <div class="action-title">お気に入り</div>
+                <div class="action-desc">
+                    気になる本をチェック（5冊）
+                </div>
+            </a>
+
+            <a href="rank-system.html" class="action-card">
+                <div class="action-icon">🏆</div>
+                <div class="action-title">ランクアップ</div>
+                <div class="action-desc">
+                    あと12,099ptでゴールドランク
+                </div>
+            </a>
+        </div>
+
+        <div class="section-title">📋 最近の買取</div>
+        <div class="history-card">
+            <div class="history-item">
+                <div class="history-info">
+                    <div class="history-title">買取申込 #K25090122163</div>
+                    <div class="history-date">2026年1月7日 | 103冊 → 17,901pt獲得</div>
+                </div>
+                <div class="history-status status-completed">完了</div>
+            </div>
+            <div class="history-item">
+                <div class="history-info">
+                    <div class="history-title">買取申込 #K25080515024</div>
+                    <div class="history-date">2025年8月5日 | 52冊 → 8,450pt獲得</div>
+                </div>
+                <div class="history-status status-completed">完了</div>
+            </div>
+        </div>
+
+        <div class="section-title">🛒 最近の購入</div>
+        <div class="history-card">
+            <div class="history-item">
+                <div class="history-info">
+                    <div class="history-title">注文 #VB2026010700123</div>
+                    <div class="history-date">2026年1月7日 | 3冊 | 6,260pt使用</div>
+                </div>
+                <div class="history-status status-processing">配送中</div>
+            </div>
+        </div>
+
+        <div class="recommendations-section">
+            <div class="section-title">💡 あなたへのおすすめ</div>
+            <p style="color: #666; margin-bottom: 1rem;">
+                最近見た本や買取した本から、あなたが興味を持ちそうな本を選びました
+            </p>
+            <div class="book-grid">
+                <a href="recommendations.html" class="book-item">
+                    <div class="book-cover">
+                        人生を変える<br>読書術
+                    </div>
+                    <div class="book-title">人生を変える読書術</div>
+                </a>
+                <a href="recommendations.html" class="book-item">
+                    <div class="book-cover orange">
+                        思考の整理学
+                    </div>
+                    <div class="book-title">思考の整理学</div>
+                </a>
+                <a href="recommendations.html" class="book-item">
+                    <div class="book-cover green">
+                        禅とオートバイ<br>修理技術
+                    </div>
+                    <div class="book-title">禅とオートバイ修理技術</div>
+                </a>
+            </div>
+            <div style="text-align: center; margin-top: 1.5rem;">
+                <a href="recommendations.html" style="color: #00a0e9; font-weight: bold; text-decoration: none;">
+                    もっと見る →
+                </a>
+            </div>
+        </div>
+
+        <div style="background: white; border-radius: 12px; padding: 2rem; text-align: center;">
+            <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">🎁 お友達紹介キャンペーン</h3>
+            <p style="color: #666; margin-bottom: 1.5rem;">
+                お友達を紹介すると、あなたとお友達それぞれに<strong style="color: #d68000;">1,000ポイント</strong>プレゼント！
+            </p>
+            <button style="background: linear-gradient(135deg, #00a0e9 0%, #0088cc 100%); color: white; padding: 1rem 2rem; border: none; border-radius: 8px; font-size: 1rem; font-weight: bold; cursor: pointer;">
+                紹介リンクを取得
+            </button>
+        </div>
+    </div>
+
+    <footer style="text-align: center; padding: 2rem; color: #666; background: white; margin-top: 3rem;">
+        <p>&copy; 2026 VALUE BOOKS ALL RIGHTS RESERVED.</p>
+    </footer>
+</body>
+</html>
+

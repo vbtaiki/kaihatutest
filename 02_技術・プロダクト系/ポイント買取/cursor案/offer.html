@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>買取お申込み | VALUE BOOKS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .header {
+            background-color: #fff;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .version-badge {
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            color: white;
+            padding: 0.35rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+
+        .nav {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .nav a {
+            color: #666;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .nav a:hover {
+            color: #00a0e9;
+        }
+
+        .point-badge {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            color: #d68000;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .section {
+            background-color: #fafafa;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-radius: 4px;
+        }
+
+        .section-title {
+            background-color: #f5f5f5;
+            padding: 0.8rem;
+            margin-bottom: 1.5rem;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        .form-group {
+            display: grid;
+            grid-template-columns: 150px 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            align-items: start;
+        }
+
+        .label {
+            padding-top: 0.5rem;
+            font-weight: 500;
+        }
+
+        .required {
+            background-color: #e74c3c;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 0.75rem;
+            margin-left: 0.5rem;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.95rem;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #00a0e9;
+        }
+
+        select.input-field {
+            cursor: pointer;
+        }
+
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            padding: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .radio-option:hover {
+            border-color: #00a0e9;
+            background-color: #f8fcff;
+        }
+
+        .radio-option.selected {
+            border-color: #00a0e9;
+            background-color: #e6f7ff;
+        }
+
+        .radio-option input[type="radio"] {
+            margin-top: 0.3rem;
+            cursor: pointer;
+        }
+
+        .radio-content {
+            flex: 1;
+        }
+
+        .radio-label {
+            font-weight: 500;
+            margin-bottom: 0.3rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .bonus-badge {
+            background: linear-gradient(135deg, #00a0e9 0%, #0088cc 100%);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .radio-description {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 0.3rem;
+        }
+
+        .bonus-highlight {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1rem;
+            margin-top: 0.5rem;
+            border-radius: 4px;
+        }
+
+        .bonus-highlight strong {
+            color: #d68000;
+            font-size: 1.1rem;
+        }
+
+        .note {
+            font-size: 0.85rem;
+            color: #666;
+            padding: 1rem;
+            background-color: #fff9e6;
+            border-left: 3px solid #ffc107;
+            margin-top: 0.5rem;
+        }
+
+        .campaign-info {
+            background-color: #e8f5e9;
+            border: 2px solid #4caf50;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border-radius: 6px;
+        }
+
+        .campaign-title {
+            color: #2e7d32;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .checkbox-group label {
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #00a0e9 0%, #0088cc 100%);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: linear-gradient(135deg, #0088cc 0%, #006699 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 160, 233, 0.3);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            color: #666;
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 1rem;
+                padding: 1rem;
+            }
+
+            .form-group {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+
+            .section {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <a href="../index.html" class="logo">
+                VALUE BOOKS
+                <span class="version-badge">CURSOR案</span>
+            </a>
+            <nav class="nav">
+                <a href="mypage.html">マイページ</a>
+                <a href="recommendations.html">本を探す</a>
+                <a href="rank-system.html">🏆 ランク</a>
+                <div class="point-badge">💰 21,154pt</div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <h1>買取お申込み</h1>
+
+        <div class="campaign-info">
+            <div class="campaign-title">
+                🎉 本を売って新春大宴王キャンペーン！
+            </div>
+            <div style="font-size: 0.9rem; color: #2e7d32;">
+                2026年1月1日〜1月31日まで、お買い物ごとにチャンス！<br>
+                合計30,000ポイントが当たる！
+            </div>
+        </div>
+
+        <form id="buybackForm">
+            <div class="section">
+                <div class="section-title">お申込み内容</div>
+
+                <div class="form-group">
+                    <label class="label">
+                        個数<span class="required">必須</span>
+                    </label>
+                    <div>
+                        <input type="number" class="input-field" min="1" value="1" required>
+                        <div class="note">
+                            ※個数が多い場合は、500円の送料が発生する場合があります。<br>
+                            送料無料条件は、初めて申込む方は配送または、配送で10冊以上となっています。
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="label">
+                        集荷希望日時<span class="required">必須</span>
+                    </label>
+                    <div style="display: flex; gap: 1rem;">
+                        <select class="input-field" style="flex: 1;" required>
+                            <option value="">日付</option>
+                            <option value="2026-01-10">2026年01月10日(金)</option>
+                            <option value="2026-01-11">2026年01月11日(土)</option>
+                            <option value="2026-01-12">2026年01月12日(日)</option>
+                            <option value="2026-01-13">2026年01月13日(月)</option>
+                        </select>
+                        <select class="input-field" style="flex: 1;" required>
+                            <option value="">時間</option>
+                            <option value="18-21">18時〜21時</option>
+                            <option value="19-21">19時〜21時</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group" style="grid-template-columns: 150px 1fr;">
+                    <label class="label">
+                        ソクフリ<span class="required">必須</span>
+                    </label>
+                    <div>
+                        <div class="radio-group">
+                            <div class="radio-option selected" onclick="selectSokufuri('yes')">
+                                <input type="radio" name="sokufuri" value="yes" checked>
+                                <div class="radio-content">
+                                    <div class="radio-label">
+                                        <span>する</span>
+                                        <span class="bonus-badge">査定額+10%</span>
+                                    </div>
+                                    <div class="radio-description">
+                                        査定結果の連絡を待たずに買取了承します
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="radio-option" onclick="selectSokufuri('no')">
+                                <input type="radio" name="sokufuri" value="no">
+                                <div class="radio-content">
+                                    <div class="radio-label">しない</div>
+                                    <div class="radio-description">
+                                        査定結果を確認してから買取を了承します
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="note" style="margin-top: 1rem;">
+                            ソクフリを選ぶと査定額が<strong>+10%</strong>アップ！
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group" style="grid-template-columns: 150px 1fr;">
+                    <label class="label">
+                        買取金額受け取り方法<span class="required">必須</span>
+                    </label>
+                    <div>
+                        <div class="radio-group">
+                            <div class="radio-option selected" onclick="selectPaymentMethod('point')">
+                                <input type="radio" name="payment" value="point" checked>
+                                <div class="radio-content">
+                                    <div class="radio-label">
+                                        <span>ポイント受け取り</span>
+                                        <span class="bonus-badge">査定額+20%</span>
+                                    </div>
+                                    <div class="radio-description">
+                                        買取金額をポイントで受け取ります
+                                    </div>
+                                    <div class="bonus-highlight">
+                                        <strong>🎁 査定額に+20%上乗せ！</strong><br>
+                                        <span style="font-size: 0.9rem;">
+                                            例：査定額1,000円 → <strong style="color: #d68000;">1,200ポイント</strong>で受け取れます！<br>
+                                            ※ポイントはバリューブックスで本を買う時に1ポイント=1円で使えます。
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="radio-option" onclick="selectPaymentMethod('cash')">
+                                <input type="radio" name="payment" value="cash">
+                                <div class="radio-content">
+                                    <div class="radio-label">現金振込</div>
+                                    <div class="radio-description">
+                                        査定金額を銀行振込でお受け取りいただけます
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="note" style="margin-top: 1rem;">
+                            <strong>💰 両方選択で最大+30%！</strong><br>
+                            ソクフリ(+10%) + ポイント受け取り(+20%) = <strong style="color: #d68000;">合計+30%</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="label">
+                        まきまき宅配便などのキャンペーン
+                    </label>
+                    <div>
+                        <div style="background-color: #fff; padding: 1rem; border-radius: 4px; border: 1px solid #e0e0e0;">
+                            <div class="checkbox-group" style="background-color: #fff; padding: 0;">
+                                <input type="checkbox" id="campaign1">
+                                <label for="campaign1">「《松本大樹》のデザイナーズツインバッグ(宿命)」（1名様）</label>
+                            </div>
+                        </div>
+                        <div class="note" style="margin-top: 0.5rem;">
+                            本を売ってもらえるキャンペーンに申し込む
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="label">クーポンコード</label>
+                    <input type="text" class="input-field" placeholder="クーポンコードをお持ちの方は入力してください">
+                </div>
+
+                <div class="form-group">
+                    <label class="label">下取りコード</label>
+                    <input type="text" class="input-field" placeholder="">
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">集荷先情報</div>
+
+                <div class="form-group">
+                    <label class="label">氏名</label>
+                    <input type="text" class="input-field" value="中村大樹" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label class="label">カナ</label>
+                    <input type="text" class="input-field" value="ナカムラタイキ" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label class="label">生年月日</label>
+                    <input type="text" class="input-field" value="1983/03/28" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label class="label">郵便番号</label>
+                    <input type="text" class="input-field" value="3998303" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label class="label">集荷先住所</label>
+                    <div>
+                        <input type="text" class="input-field" value="長野県" readonly style="margin-bottom: 0.5rem;">
+                        <input type="text" class="input-field" value="安曇野市穂高１０４９－９" readonly>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="label">ご職業</label>
+                    <input type="text" class="input-field" value="会社員" readonly>
+                </div>
+
+                <div style="text-align: right; margin-top: 1rem;">
+                    <button type="button" style="background-color: #fff; border: 1px solid #00a0e9; color: #00a0e9; padding: 0.5rem 1.5rem; border-radius: 4px; cursor: pointer; font-size: 0.9rem;">
+                        登録情報を変更する
+                    </button>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">連絡先</div>
+
+                <div class="form-group">
+                    <label class="label">メールアドレス</label>
+                    <input type="email" class="input-field" value="nakamura@value-books.jp" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label class="label">電話番号</label>
+                    <input type="tel" class="input-field" value="090-9008-7610" readonly>
+                </div>
+
+                <div style="text-align: right; margin-top: 1rem;">
+                    <button type="button" style="background-color: #fff; border: 1px solid #00a0e9; color: #00a0e9; padding: 0.5rem 1.5rem; border-radius: 4px; cursor: pointer; font-size: 0.9rem;">
+                        登録情報を変更する
+                    </button>
+                </div>
+            </div>
+
+            <div class="checkbox-group" style="margin-bottom: 2rem;">
+                <input type="checkbox" id="terms" required>
+                <label for="terms">インボイス制度に関する確認<br>
+                    <span style="font-size: 0.85rem; color: #666;">
+                        当社は、個人の方効用を受依するために利用します。
+                    </span>
+                </label>
+            </div>
+
+            <button type="submit" class="submit-btn">内容を確認する</button>
+        </form>
+    </div>
+
+    <div style="background: white; border-radius: 8px; padding: 2rem; margin: 2rem auto; max-width: 800px; text-align: center;">
+        <h3 style="font-size: 1.3rem; margin-bottom: 1rem;">📚 申込の前に、ポイントで買える本をチェック！</h3>
+        <p style="color: #666; margin-bottom: 1.5rem;">
+            買取が完了したら、獲得したポイントでこんな本が買えます
+        </p>
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+            <a href="recommendations.html" style="background: linear-gradient(135deg, #00a0e9 0%, #0088cc 100%); color: white; padding: 1rem 2rem; border-radius: 8px; text-decoration: none; font-weight: bold;">
+                おすすめの本を見る
+            </a>
+            <a href="mypage.html" style="background: white; border: 2px solid #00a0e9; color: #00a0e9; padding: 1rem 2rem; border-radius: 8px; text-decoration: none; font-weight: bold;">
+                マイページへ
+            </a>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; VALUE BOOKS ALL RIGHTS RESERVED.</p>
+        <p style="margin-top: 1rem;"><a href="../index.html" style="color: #00a0e9; text-decoration: none;">← トップページに戻る</a></p>
+    </footer>
+
+    <script>
+        function selectSokufuri(method) {
+            const options = event.currentTarget.parentElement.querySelectorAll('.radio-option');
+            options.forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            const selectedOption = event.currentTarget;
+            selectedOption.classList.add('selected');
+            
+            const radio = selectedOption.querySelector('input[type="radio"]');
+            radio.checked = true;
+        }
+
+        function selectPaymentMethod(method) {
+            const options = event.currentTarget.parentElement.querySelectorAll('.radio-option');
+            options.forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            const selectedOption = event.currentTarget;
+            selectedOption.classList.add('selected');
+            
+            const radio = selectedOption.querySelector('input[type="radio"]');
+            radio.checked = true;
+        }
+
+        document.getElementById('buybackForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // 申込完了ページへ遷移
+            window.location.href = 'apply-complete.html';
+        });
+
+        // ページ読み込み時にソーシャルプルーフを表示
+        window.addEventListener('load', function() {
+            // ソーシャルプルーフバナーを追加
+            const socialProof = document.createElement('div');
+            socialProof.style.cssText = 'background: #fff3cd; border-left: 4px solid #ffc107; padding: 1rem; border-radius: 4px; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 1rem;';
+            socialProof.innerHTML = `
+                <div style="font-size: 2rem;">👥</div>
+                <div style="flex: 1; font-size: 0.95rem; color: #856404;">
+                    <strong>90%のユーザーがソクフリ×ポイント受け取りを選択しています</strong><br>
+                    先月2,450人が最大+30%ボーナスを獲得しました
+                </div>
+            `;
+            
+            const section = document.querySelector('.section');
+            section.insertBefore(socialProof, section.firstChild);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>買取お申込み確認 | VALUE BOOKS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .header {
+            background-color: #fff;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .version-badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.35rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+
+        .nav {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .nav a {
+            color: #666;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .nav a:hover {
+            color: #00a0e9;
+        }
+
+        .point-badge {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            color: #d68000;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .section {
+            background-color: #fafafa;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-radius: 4px;
+        }
+
+        .section-title {
+            background-color: #f5f5f5;
+            padding: 0.8rem;
+            margin-bottom: 1.5rem;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        .info-row {
+            display: grid;
+            grid-template-columns: 150px 1fr;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            font-weight: 500;
+            color: #666;
+        }
+
+        .info-value {
+            color: #333;
+        }
+
+        .point-highlight {
+            background: linear-gradient(135deg, #e6f7ff 0%, #cceeff 100%);
+            border: 2px solid #00a0e9;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 0.5rem;
+        }
+
+        .point-highlight .title {
+            color: #0088cc;
+            font-weight: bold;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .point-highlight .description {
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 1rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-back {
+            background-color: #fff;
+            border: 2px solid #00a0e9;
+            color: #00a0e9;
+        }
+
+        .btn-back:hover {
+            background-color: #f0f9ff;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, #00a0e9 0%, #0088cc 100%);
+            color: white;
+        }
+
+        .btn-submit:hover {
+            background: linear-gradient(135deg, #0088cc 0%, #006699 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 160, 233, 0.3);
+        }
+
+        .btn-submit:active {
+            transform: translateY(0);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            color: #666;
+            font-size: 0.85rem;
+        }
+
+        .badge {
+            background: linear-gradient(135deg, #00a0e9 0%, #0088cc 100%);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            display: inline-block;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 1rem;
+                padding: 1rem;
+            }
+
+            .info-row {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+
+            .section {
+                padding: 1rem;
+            }
+
+            .button-group {
+                flex-direction: column-reverse;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <a href="../index.html" class="logo">
+                VALUE BOOKS
+                <span class="version-badge">オリジナル案</span>
+            </a>
+            <nav class="nav">
+                <a href="mypage.html">マイページ</a>
+                <a href="recommendations.html">本を探す</a>
+                <a href="rank-system.html">🏆 ランク</a>
+                <div class="point-badge">💰 21,154pt</div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <h1>買取お申込み確認</h1>
+
+        <div class="section">
+            <div class="section-title">お申込み内容</div>
+
+            <div class="info-row">
+                <div class="info-label">個数</div>
+                <div class="info-value">1個（送料500円）</div>
+            </div>
+
+            <div class="info-row">
+                <div class="info-label">集荷希望日時</div>
+                <div class="info-value">2026年01月08日 18時〜21時</div>
+            </div>
+
+            <div class="info-row">
+                <div class="info-label">ソクフリ</div>
+                <div class="info-value">
+                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                        <span>する</span>
+                        <span class="badge">査定額+10%</span>
+                    </div>
+                    <div class="point-highlight">
+                        <div class="title">
+                            🎉 査定金額が100円増額されます
+                        </div>
+                        <div class="description">
+                            買取金額をポイントで受け取ると、査定額に<strong style="color: #0088cc;">+10%</strong>が上乗せされます！<br>
+                            例：査定額 1,000円 → <strong style="color: #d68000;">1,100ポイント</strong>で受け取れます<br>
+                            <br>
+                            ポイントはバリューブックスでの本の購入や送料のお支払いにご利用いただけます（1ポイント=1円）
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-row">
+                <div class="info-label">まきまき宅配便など<br>キャンペーン</div>
+                <div class="info-value">「《松本大樹》のデザイナーズツインバッグ(宿命)」（1名様）</div>
+            </div>
+
+            <div class="info-row">
+                <div class="info-label">クーポンコード</div>
+                <div class="info-value">-</div>
+            </div>
+
+            <div class="info-row">
+                <div class="info-label">下取りコード</div>
+                <div class="info-value">-</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">集荷先情報</div>
+
+            <div class="info-row">
+                <div class="info-label">氏名</div>
+                <div class="info-value">中村 大樹</div>
+            </div>
+
+            <div class="info-row">
+                <div class="info-label">カナ</div>
+                <div class="info-value">ナカムラ タイキ</div>
+            </div>
+
+            <div class="info-row">
+                <div class="info-label">生年月日</div>
+                <div class="info-value">1983/03/28</div>
+            </div>
+
+            <div class="info-row">
+                <div class="info-label">郵便番号</div>
+                <div class="info-value">3998303</div>
+            </div>
+
+            <div class="info-row">
+                <div class="info-label">集荷先住所</div>
+                <div class="info-value">
+                    長野県<br>
+                    安曇野市穂高１０４９－９
+                </div>
+            </div>
+
+            <div class="info-row">
+                <div class="info-label">ご職業</div>
+                <div class="info-value">会社員</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">連絡先</div>
+
+            <div class="info-row">
+                <div class="info-label">メールアドレス</div>
+                <div class="info-value">nakamura@value-books.jp</div>
+            </div>
+
+            <div class="info-row">
+                <div class="info-label">電話番号</div>
+                <div class="info-value">090-9008-7610</div>
+            </div>
+        </div>
+
+        <div class="button-group">
+            <button class="btn btn-back" onclick="history.back()">修正する</button>
+            <button class="btn btn-submit" onclick="submitForm()">確定する</button>
+        </div>
+    </div>
+
+    <div style="background: linear-gradient(135deg, #e6f7ff 0%, #cceeff 100%); border-radius: 8px; padding: 2rem; margin: 2rem auto; max-width: 800px; text-align: center;">
+        <h3 style="font-size: 1.3rem; margin-bottom: 1rem;">💡 申込完了後は...</h3>
+        <p style="color: #666; margin-bottom: 1.5rem;">
+            査定が完了したら、獲得したポイントですぐに本を購入できます！<br>
+            査定前でも予約カートで欲しい本を確保できます。
+        </p>
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+            <a href="recommendations.html" style="background: linear-gradient(135deg, #00a0e9 0%, #0088cc 100%); color: white; padding: 1rem 2rem; border-radius: 8px; text-decoration: none; font-weight: bold;">
+                おすすめの本を見る
+            </a>
+            <a href="mypage.html" style="background: white; border: 2px solid #00a0e9; color: #00a0e9; padding: 1rem 2rem; border-radius: 8px; text-decoration: none; font-weight: bold;">
+                マイページへ
+            </a>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; VALUE BOOKS ALL RIGHTS RESERVED.</p>
+    </footer>
+
+    <script>
+        function submitForm() {
+            // 申込み完了後、結果ページへ遷移
+            window.location.href = 'result.html';
+        }
+    </script>
+</body>
+</html>
+
