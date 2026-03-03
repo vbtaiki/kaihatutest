@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>プロジェクト③：本のある暮らしグッズ | VALUE BOOKS 2026</title>
+    <link rel="stylesheet" href="project-style.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Sans", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif; line-height: 1.7; color: #333; background: #f5f5f5; }
+        .header { background: linear-gradient(135deg, #2c5f2d 0%, #1a4d2e 100%); color: white; padding: 40px 20px; }
+        .header-content { max-width: 1000px; margin: 0 auto; }
+        .project-number { display: inline-block; width: 50px; height: 50px; background: #00a99d; color: white; border-radius: 50%; text-align: center; line-height: 50px; font-weight: bold; font-size: 1.5rem; margin-bottom: 15px; }
+        .header h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        .header .subtitle { font-size: 1.1rem; opacity: 0.9; }
+        .nav { background: white; padding: 15px 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100; }
+        .nav a { color: #2c5f2d; text-decoration: none; margin-right: 20px; font-weight: 500; }
+        .nav a:hover { text-decoration: underline; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 40px 20px; }
+        .card { background: white; border-radius: 8px; padding: 30px; margin-bottom: 25px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        h2 { font-size: 1.8rem; color: #2c5f2d; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 3px solid #2c5f2d; }
+        h3 { font-size: 1.3rem; color: #333; margin: 20px 0 12px; }
+        .overview-box { background: linear-gradient(135deg, #FFE066 0%, #FFD700 100%); padding: 25px; border-radius: 8px; margin-bottom: 20px; }
+        .overview-box h3 { font-size: 1.5rem; margin-top: 0; margin-bottom: 15px; }
+        .overview-box p { font-size: 1.1rem; line-height: 1.8; }
+        .problem-solution { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-top: 15px; }
+        .problem-solution > div { padding: 15px; border-radius: 6px; }
+        .problem { background: #ffe6e6; border-left: 4px solid #e74c3c; }
+        .solution { background: #e6f7e6; border-left: 4px solid #2c5f2d; }
+        .effect { background: #e6f3ff; border-left: 4px solid #00a99d; }
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+        table th { background: #2c5f2d; color: white; padding: 12px; text-align: left; font-weight: 500; }
+        table td { padding: 12px; border-bottom: 1px solid #e0e0e0; }
+        table tr:hover { background: #f5f9f6; }
+        .flow-diagram { background: #f5f9f6; padding: 25px; border-radius: 8px; font-family: 'Courier New', monospace; white-space: pre-line; line-height: 2; border-left: 4px solid #00a99d; margin: 15px 0; }
+        .system-diagram { background: #f5f9f6; padding: 25px; border-radius: 8px; font-family: 'Courier New', monospace; white-space: pre; line-height: 1.6; border-left: 4px solid #2c5f2d; margin: 15px 0; overflow-x: auto; }
+        .tag { display: inline-block; background: #00a99d; color: white; padding: 4px 12px; border-radius: 3px; font-size: 0.85rem; margin-right: 8px; margin-bottom: 8px; }
+        .status-badge { display: inline-block; padding: 6px 15px; border-radius: 20px; font-size: 0.9rem; font-weight: bold; margin-right: 10px; }
+        .status-pending { background: #fff3cd; color: #856404; }
+        .status-progress { background: #d1ecf1; color: #0c5460; }
+        .risk-card { background: #fff3cd; padding: 20px; border-radius: 8px; border-left: 4px solid #ffc107; margin-bottom: 15px; }
+        .risk-card h4 { color: #856404; margin-bottom: 10px; }
+        .success-criteria { background: #e8f5e9; padding: 20px; border-radius: 8px; border-left: 4px solid #2c5f2d; }
+        .success-criteria ul { list-style: none; padding-left: 0; }
+        .success-criteria li { padding: 8px 0; padding-left: 30px; position: relative; }
+        .success-criteria li:before { content: "✓"; position: absolute; left: 0; color: #2c5f2d; font-weight: bold; font-size: 1.2rem; }
+        .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px; }
+        .team-member { background: #f5f9f6; padding: 15px; border-radius: 6px; text-align: center; }
+        .team-member .role { font-weight: bold; color: #2c5f2d; margin-bottom: 5px; }
+        .cta-section { background: linear-gradient(135deg, #2c5f2d 0%, #1a4d2e 100%); color: white; padding: 35px; border-radius: 8px; text-align: center; margin-top: 30px; }
+        .cta-section h2 { color: white; border-bottom: none; margin-bottom: 15px; }
+        @media (max-width: 768px) { .header h1 { font-size: 1.8rem; } table { font-size: 0.85rem; } }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="project-number">③</div>
+            <h1>本のある暮らしグッズ（物販）</h1>
+            <p class="subtitle">丸山珈琲やMinimalと組んで、本好きが喜ぶグッズを販売</p>
+        </div>
+    </div>
+    
+    <div class="nav">
+        <a href="index.html">← トップに戻る</a>
+        <a href="00_全体戦略_みんなの作戦会議ノート.html">全体戦略</a>
+    </div>
+    
+    <div class="container">
+        <div class="card">
+            <h2>📋 プロジェクト概要</h2>
+            <div class="overview-box">
+                <h3>何を作る？（一言で）</h3>
+                <p><strong>丸山珈琲やMinimalと組んで、本好きが喜ぶグッズを販売するECサイト</strong></p>
+            </div>
+            
+            <h3>なぜ作る？</h3>
+            <div class="problem-solution">
+                <div class="problem">
+                    <strong>📉 課題</strong>
+                    <p>書籍だけでは売上に限界、お客さんの単価が上がらない</p>
+                </div>
+                <div class="solution">
+                    <strong>💡 解決策</strong>
+                    <p>本＋グッズで「本のある暮らし」全体を提案</p>
+                </div>
+                <div class="effect">
+                    <strong>✨ 効果</strong>
+                    <p>客単価 <strong>+¥1,500</strong>、売上の多角化</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2>🎯 目標数値（KPI）</h2>
+            <table>
+                <thead>
+                    <tr><th>項目</th><th>現状</th><th>目標（6ヶ月後）</th><th>目標（12ヶ月後）</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>月間売上</td><td>¥0</td><td>¥1,000,000</td><td><strong>¥3,000,000</strong></td></tr>
+                    <tr><td>客単価UP</td><td>¥0</td><td>+¥800</td><td><strong>+¥1,500</strong></td></tr>
+                    <tr><td>クロスセル率</td><td>0%</td><td>10%</td><td><strong>20%</strong></td></tr>
+                    <tr><td>商品数（SKU）</td><td>0</td><td>30</td><td><strong>80</strong></td></tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="card">
+            <h2>👥 誰が使う？（ターゲット）</h2>
+            <ul style="line-height: 2;">
+                <li><strong>メインユーザー:</strong> 本好き、既存のお客さん</li>
+                <li><strong>利用シーン:</strong> 読書タイム、自分へのご褒美、プレゼント</li>
+                <li><strong>想定人数:</strong> 年間購入者 10,000名</li>
+            </ul>
+        </div>
+        
+        <div class="card">
+            <h2>🔄 ユーザーの流れ</h2>
+            <div class="flow-diagram">【積読チャンネルで紹介動画を見る】
+  ↓ 「これ欲しい！」
+【ECサイトで購入】
+  ↓ ポイントも使える
+【本と一緒に楽しむ】
+  ↓ SNSで投稿
+【また買いたくなる】</div>
+        </div>
+        
+        <div class="card">
+            <h2>💻 システム構成</h2>
+            <div class="system-diagram">┌─────────────────────────────┐
+│  バリューブックス本体サイト │
+│  (会員ID管理)               │
+└──────────┬──────────────────┘
+           │ SSO連携
+┌──────────▼──────────────────┐
+│  Shopify (グッズ専用)       │
+│  ・商品登録                 │
+│  ・カート・決済             │
+│  ・在庫管理                 │
+└──────────┬──────────────────┘
+           │
+┌──────────▼──────────────────┐
+│  倉庫（SKYPOD or 別拠点）   │
+│  ・在庫保管・発送           │
+└─────────────────────────────┘</div>
+            
+            <h3>使う技術</h3>
+            <table>
+                <thead><tr><th>部分</th><th>技術</th><th>理由</th></tr></thead>
+                <tbody>
+                    <tr><td>ECサイト</td><td><span class="tag">Shopify</span></td><td>カート開発不要、即販売可能</td></tr>
+                    <tr><td>SSO連携</td><td><span class="tag">Shopify Multipass</span></td><td>ログイン統合</td></tr>
+                    <tr><td>在庫管理</td><td><span class="tag">Shopify標準機能</span></td><td>自動化</td></tr>
+                    <tr><td>決済</td><td><span class="tag">Shopify Payments</span></td><td>多様な決済方法</td></tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="card">
+            <h2>📅 スケジュール</h2>
+            <h3><span class="status-badge status-progress">Phase 1</span> 立ち上げ（3ヶ月）</h3>
+            <ul>
+                <li>Shopify契約・構築（Month 1）</li>
+                <li>コラボ先交渉（丸山珈琲等）（Month 1-2）</li>
+                <li>商品選定・仕入れ（Month 2）</li>
+                <li>ソフトローンチ（Month 3）</li>
+            </ul>
+            
+            <h3><span class="status-badge status-pending">Phase 2</span> 本格展開（3ヶ月）</h3>
+            <ul>
+                <li>正式オープン</li>
+                <li>積読チャンネルで大々的紹介</li>
+                <li>第2弾商品追加</li>
+            </ul>
+            
+            <h3><span class="status-badge status-pending">Phase 3</span> 拡大（6ヶ月〜）</h3>
+            <ul>
+                <li>オリジナル商品開発</li>
+                <li>家具・大型商品</li>
+                <li>サブスク検討</li>
+            </ul>
+        </div>
+        
+        <div class="card">
+            <h2>💰 コスト見積もり</h2>
+            <table>
+                <thead><tr><th>項目</th><th>金額</th></tr></thead>
+                <tbody>
+                    <tr><td>Shopify初期設定</td><td>¥300,000</td></tr>
+                    <tr><td>SSO連携開発</td><td>¥500,000</td></tr>
+                    <tr><td>初回仕入れ（30SKU）</td><td>¥2,000,000</td></tr>
+                    <tr><td>撮影・デザイン</td><td>¥500,000</td></tr>
+                    <tr style="background: #f5f9f6;"><td><strong>合計（初期）</strong></td><td><strong>¥3,300,000</strong></td></tr>
+                    <tr style="background: #f5f9f6;"><td><strong>合計（月額運用）</strong></td><td><strong>¥1,200,000</strong></td></tr>
+                </tbody>
+            </table>
+            <p style="margin-top: 10px; color: #666; font-size: 0.9rem;">※月額にはShopify利用料、バイヤー費、追加仕入れを含む</p>
+        </div>
+        
+        <div class="card">
+            <h2>👨‍💻 チーム体制</h2>
+            <div class="team-grid">
+                <div class="team-member"><div class="role">PM</div><div>1名</div><small>全体管理</small></div>
+                <div class="team-member"><div class="role">バイヤー（業務委託）</div><div>1名</div><small>商品選定・仕入れ</small></div>
+                <div class="team-member"><div class="role">エンジニア</div><div>1名</div><small>Shopify連携</small></div>
+                <div class="team-member"><div class="role">デザイナー</div><div>1名</div><small>商品撮影・ページ作成</small></div>
+                <div class="team-member"><div class="role">在庫管理</div><div>1名</div><small>発送・在庫チェック</small></div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2>⚠️ リスクと対策</h2>
+            <div class="risk-card">
+                <h4>リスク1: 在庫が売れ残る</h4>
+                <strong>対策:</strong>
+                <ul><li>小ロット仕入れ徹底（各商品10〜30個）</li><li>売れ筋データを毎週チェック</li><li>滞留在庫は早めにセール</li></ul>
+            </div>
+            <div class="risk-card">
+                <h4>リスク2: バイヤーが辞める</h4>
+                <strong>対策:</strong>
+                <ul><li>複数バイヤー体制（2名目を早めに採用）</li><li>仕入れ先情報をドキュメント化</li><li>社内にMD知見を蓄積</li></ul>
+            </div>
+            <div class="risk-card">
+                <h4>リスク3: Shopifyと既存システムの連携不具合</h4>
+                <strong>対策:</strong>
+                <ul><li>初期は完全分離運用</li><li>ポイント連携は段階的に</li><li>エラーログの詳細監視</li></ul>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2>✅ 成功の条件</h2>
+            <div class="success-criteria">
+                <ul>
+                    <li>月商¥1,000,000達成（6ヶ月）</li>
+                    <li>クロスセル率 10%以上</li>
+                    <li>商品回転率 月2回転以上</li>
+                    <li>在庫消化率 90%以上</li>
+                    <li>コラボ先5社確保</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="cta-section">
+            <h2>🚀 次のアクション</h2>
+            <h3 style="color: white; border: none; margin-bottom: 15px;">今週</h3>
+            <ul style="list-style: none; padding: 0; text-align: left; max-width: 600px; margin: 0 auto 30px;">
+                <li>☐ Shopify契約手続き開始</li>
+                <li>☐ 丸山珈琲にアプローチ</li>
+                <li>☐ バイヤー募集要項作成</li>
+            </ul>
+            <h3 style="color: white; border: none; margin-bottom: 15px;">今月</h3>
+            <ul style="list-style: none; padding: 0; text-align: left; max-width: 600px; margin: 0 auto 30px;">
+                <li>☐ Shopify構築開始</li>
+                <li>☐ コラボ先1社決定</li>
+                <li>☐ 初回商品リスト30SKU作成</li>
+            </ul>
+            <p style="font-size: 1.3rem; font-weight: bold; margin-top: 30px;">B Corpを活かしたコラボで、本のある暮らしを豊かに！☕📚</p>
+        </div>
+    </div>
+</body>
+</html>
+

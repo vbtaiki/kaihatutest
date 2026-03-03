@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>チーム詳細 | Value Books OS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00BFA5;
+            --primary-light: #E0F7F4;
+            --primary-dark: #00A896;
+            --bg: #FAFBFC;
+            --white: #FFFFFF;
+            --text: #1A1A1A;
+            --text-secondary: #666666;
+            --text-muted: #999999;
+            --border: #E8E8E8;
+            --shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            --shadow-hover: 0 4px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Noto Sans JP', sans-serif;
+            min-height: 100vh;
+            line-height: 1.7;
+        }
+
+        a { color: inherit; text-decoration: none; }
+
+        /* Header */
+        .header {
+            background: var(--white);
+            border-bottom: 1px solid var(--border);
+            padding: 0 2rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 64px;
+        }
+
+        .logo { display: flex; align-items: center; gap: 0.5rem; }
+
+        .logo-text {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .logo-text span { color: var(--primary); }
+
+        .nav { display: flex; gap: 0.5rem; }
+
+        .nav a {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            transition: all 0.2s ease;
+        }
+
+        .nav a:hover {
+            background: var(--primary-light);
+            color: var(--primary);
+        }
+
+        .nav a.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Main */
+        .main {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 88px 2rem 2rem;
+        }
+
+        /* Back Link */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            transition: opacity 0.2s;
+        }
+
+        .back-link:hover { opacity: 0.7; }
+
+        /* Team Header */
+        .team-header {
+            background: linear-gradient(135deg, var(--primary) 0%, #26D0B8 100%);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+
+        .team-header-top {
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+
+        .team-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            background: rgba(255,255,255,0.2);
+            flex-shrink: 0;
+        }
+
+        .team-info { flex: 1; }
+
+        .team-id {
+            font-size: 0.8rem;
+            opacity: 0.8;
+            margin-bottom: 0.25rem;
+        }
+
+        .team-name {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .team-mission {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        /* Expectation Box */
+        .expectation-box {
+            background: rgba(255,255,255,0.15);
+            border-radius: 12px;
+            padding: 1.25rem;
+        }
+
+        .expectation-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            opacity: 0.9;
+        }
+
+        .expectation-text {
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+
+        /* Section */
+        .section {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+        }
+
+        .section-header {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-icon { font-size: 1.25rem; }
+
+        .section-title { font-size: 1rem; font-weight: 600; }
+
+        .section-count {
+            margin-left: auto;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            background: #F5F5F5;
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+        }
+
+        .section-body { padding: 1.5rem; }
+
+        /* Member Card */
+        .member-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+
+        .member-card {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem;
+            background: #F9F9F9;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            transition: all 0.2s;
+        }
+
+        .member-card:hover {
+            border-color: var(--primary);
+            background: var(--primary-light);
+        }
+
+        .member-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            font-weight: 600;
+            background: var(--primary-light);
+            color: var(--primary);
+            flex-shrink: 0;
+        }
+
+        .member-avatar.leader {
+            background: var(--primary);
+            color: white;
+        }
+
+        .member-info { flex: 1; min-width: 0; }
+
+        .member-name {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 0.15rem;
+        }
+
+        .member-role {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 0.35rem;
+        }
+
+        .member-focus {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* Project Card */
+        .project-list { display: flex; flex-direction: column; gap: 0.75rem; }
+
+        .project-card {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem 1.25rem;
+            background: #F9F9F9;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            transition: all 0.2s;
+            align-items: center;
+        }
+
+        .project-card:hover {
+            border-color: var(--primary);
+            background: var(--primary-light);
+        }
+
+        .project-status {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .project-status.planning { background: #FF9800; }
+        .project-status.progress { background: #2196F3; }
+
+        .project-info { flex: 1; min-width: 0; }
+
+        .project-name {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .project-desc {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .project-badge {
+            font-size: 0.7rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            flex-shrink: 0;
+        }
+
+        .project-badge.planning {
+            background: #FFF3E0;
+            color: #FF9800;
+        }
+
+        .project-badge.progress {
+            background: #E3F2FD;
+            color: #2196F3;
+        }
+
+        .project-arrow {
+            color: var(--primary);
+            font-size: 1.25rem;
+        }
+
+        /* Related Teams */
+        .related-teams {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        /* Media Card */
+        .media-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .media-card {
+            padding: 1.25rem;
+            background: linear-gradient(135deg, #f8fffe 0%, #f0faf8 100%);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--primary);
+        }
+
+        .media-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .media-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .media-leader {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            background: white;
+            padding: 0.2rem 0.75rem;
+            border-radius: 20px;
+        }
+
+        .media-target {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .media-desc {
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            line-height: 1.6;
+            margin-bottom: 0.75rem;
+        }
+
+        .media-strategy {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            background: white;
+            padding: 0.75rem;
+            border-radius: 8px;
+        }
+
+        .related-team-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.4rem 0.75rem;
+            background: #F5F5F5;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            transition: all 0.2s;
+        }
+
+        .related-team-badge:hover {
+            border-color: var(--primary);
+            background: var(--primary-light);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            border-top: 1px solid var(--border);
+            margin-top: 2rem;
+            background: var(--white);
+        }
+
+        .footer a { color: var(--primary); }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 4rem;
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 600px) {
+            .header-content { flex-direction: column; gap: 0.75rem; height: auto; padding: 0.75rem 0; }
+            .main { padding-top: 120px; }
+            .team-header-top { flex-direction: column; text-align: center; }
+            .team-icon { margin: 0 auto; }
+            .member-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <a href="index.html" class="logo">
+                <span class="logo-text">VALUE <span>BOOKS</span> OS</span>
+            </a>
+            <nav class="nav">
+                <a href="index.html">ダッシュボード</a>
+                <a href="teams.html" class="active">チーム</a>
+                <a href="members.html">メンバー</a>
+                <a href="projects.html">プロジェクト</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main" id="content">
+        <div class="loading">読み込み中...</div>
+    </main>
+
+    <footer class="footer">
+        <p>VALUE BOOKS OS | <a href="teams.html">チーム一覧に戻る</a></p>
+    </footer>
+
+    <script>
+        // チームデータ
+        const teams = {
+            'governance': {
+                id: '0-governance',
+                name: 'ガバナンス & 文化',
+                icon: '🏛️',
+                mission: '経営インフラの透明化と多様性・公平性を「強さ」に変える',
+                expectation: '「経営陣」という特権階級ではない。財務、法務、M&A憲法の運用、そして「誰が何を決めるか」というルールのメンテナンスを行う機能として動いてほしい。現場の邪魔をせず、現場が走りやすい「舗装道路」を作ることがミッション。また、ジェンダーギャップの解消や多様な働き方の実現は、バリューブックスの「強さ（採用力・組織の柔軟性）」に直結する経営戦略。構造的な課題（長時間労働前提の評価など）にメスを入れてほしい。',
+                members: [
+                    { id: 'torii', name: '鳥居', avatar: '鳥', role: 'リード', title: '代表取締役 / B Corp JAPAN代表', focus: 'B Corp理念の社内浸透とジェンダーギャップ解消', leader: true },
+                    { id: 'mizuno', name: '水野恵魅', avatar: '水', role: 'メンバー', title: '取締役', focus: '倉庫メンバーのメンタリング、ジェンダーギャップ解消' },
+                    { id: 'aizawa', name: '相澤', avatar: '相', role: 'メンバー', title: '取締役', focus: 'ジェンダーギャップ解消施策' }
+                ],
+                projects: [
+                    { id: 'gender-gap', name: 'ジェンダーギャップ解消', desc: '意思決定層の比率モニタリングと構造的課題への対応', status: 'progress' },
+                    { id: 'bcorp', name: 'B Corp社内浸透', desc: 'B Corp理念の社内への浸透施策', status: 'progress' },
+                    { id: 'ma-constitution', name: 'M&A憲法運用', desc: '意思決定プロセスの明文化と定着', status: 'planning' }
+                ],
+                relatedTeams: []
+            },
+            'warehouse': {
+                id: '1-warehouse',
+                name: '倉庫部門',
+                icon: '🏭',
+                mission: 'SKYPOD導入による「検品工数 1/4」への革命',
+                expectation: '自動化（SKYPOD）は手段であって目的ではない。目指すのは「人間が人間らしい仕事（付加価値・判断）に集中できる環境」。ロボットに使われるのではなく、ロボットを使いこなす楽しさを現場に浸透させてほしい。',
+                members: [
+                    { id: 'shimizu', name: '清水', avatar: '清', role: 'リーダー', title: '取締役 / 倉庫・物流統括', focus: 'SKYPOD導入、ダイレクト入庫フロー確立', leader: true },
+                    { id: 'hayashi', name: '林', avatar: '林', role: '上田原拠点', title: '上田原拠点責任者', focus: 'SKYPOD導入準備、現場オペレーション' },
+                    { id: 'seto', name: 'セト', avatar: 'セ', role: 'ミヨシ拠点', title: 'ミヨシ拠点責任者', focus: 'ミヨシ拠点の運営' }
+                ],
+                projects: [
+                    { id: 'skypod', name: 'SKYPOD導入', desc: '3D自動倉庫システムで検品工数1/4を実現', status: 'planning' },
+                    { id: 'direct-inbound', name: 'ダイレクト入庫', desc: '本棚スキャン経由で検品レスで保管するフロー確立', status: 'planning' }
+                ],
+                relatedTeams: [
+                    { id: 'logistics', name: 'ロジ・オペレーション', icon: '🚚' },
+                    { id: 'web-dev', name: 'Web開発', icon: '💻' }
+                ]
+            },
+            'purchase': {
+                id: '2-purchase',
+                name: '買取部門',
+                icon: '📦',
+                mission: 'スマート買取とポイント受取の最大化',
+                expectation: '「高く買う」だけが価値ではない。「面倒くさくない」「楽しい」体験を売る。特にポイント導入は、キャッシュアウトを防ぐ守りではなく、「バリューブックスで本を買う理由」を作る攻めの一手として捉えてほしい。',
+                members: [
+                    { id: 'shotoku', name: '聖徳', avatar: '聖', role: '新規担当', title: '新規顧客担当', focus: 'スマート買取キャンペーン、ポイント受取率向上' },
+                    { id: 'kodaira', name: '小平', avatar: '小', role: 'リピート担当', title: 'リピート顧客担当', focus: 'CRM施策、リピーター維持・拡大' }
+                ],
+                projects: [
+                    { id: 'smart-purchase', name: 'スマート買取（倍額還元）', desc: '本棚スキャン経由の買取でポイント倍額還元', status: 'planning' },
+                    { id: 'point-economy', name: 'ポイント受取率 20%', desc: '買取時のポイント選択率を20%に', status: 'progress' },
+                    { id: 'crm', name: 'CRM強化', desc: 'メルマガ・LINE登録を高価買取ミッションに', status: 'planning' }
+                ],
+                relatedTeams: [
+                    { id: 'web-dev', name: 'Web開発', icon: '💻' }
+                ]
+            },
+            'logistics': {
+                id: '3-logistics',
+                name: 'ロジ・オペレーション',
+                icon: '🚚',
+                mission: '自動化ラインの運用設計と最適化',
+                expectation: '倉庫チーム（拠点）とシステム開発（Web）の通訳になってほしい。現場の「物理的な動き」を、最も美しく「データ」に変換するプロセスを設計すること。',
+                members: [
+                    { id: 'sasaki', name: 'ササキ', avatar: 'サ', role: 'メンバー', title: 'オペレーション担当', focus: '動線のデータ化、オペレーション最適化' },
+                    { id: 'kutsukake', name: 'クツカケ', avatar: 'ク', role: 'メンバー', title: 'オペレーション担当', focus: '動線のデータ化、オペレーション最適化' }
+                ],
+                projects: [
+                    { id: 'ops-optimization', name: '動線のデータ化', desc: '現場作業動線のデータ化・効率化', status: 'planning' }
+                ],
+                relatedTeams: [
+                    { id: 'warehouse', name: '倉庫部門', icon: '🏭' },
+                    { id: 'web-dev', name: 'Web開発', icon: '💻' }
+                ]
+            },
+            'web-dev': {
+                id: '4-web-dev',
+                name: '自社サイト開発',
+                icon: '💻',
+                mission: 'ポイント経済圏とスマート買取のシステム実装',
+                expectation: '機能を作るのではなく「体験」を作ってほしい。「本棚スキャン」は、ただのOCRではなく「自分の本棚がデジタル化される喜び」であるべき。ポイント機能は、事務的な処理ではなく「お得感の演出」であるべき。',
+                members: [
+                    { id: 'yoshida', name: 'ヨシダ', avatar: 'ヨ', role: 'メンバー', title: '開発担当', focus: 'ポイント経済圏、本棚スキャン画像認識' },
+                    { id: 'katayama', name: '片山', avatar: '片', role: 'メンバー', title: '開発担当', focus: 'ポイント経済圏、本棚スキャン画像認識' }
+                ],
+                projects: [
+                    { id: 'point-economy', name: 'ポイント経済圏', desc: '買取金のポイント受取、ECでの利用、送料充当', status: 'progress' },
+                    { id: 'bookshelf-scan', name: '本棚スキャン v2', desc: '画像認識精度向上と状態申告UIの開発', status: 'progress' },
+                    { id: 'pro-dashboard', name: 'プロアカウント基盤', desc: 'パートナー向け売上・在庫確認ダッシュボード', status: 'planning' }
+                ],
+                relatedTeams: [
+                    { id: 'purchase', name: '買取部門', icon: '📦' },
+                    { id: 'warehouse', name: '倉庫部門', icon: '🏭' },
+                    { id: 'pro-account', name: 'Pro/MD', icon: '🤝' }
+                ]
+            },
+            'pro-account': {
+                id: '5-pro-account',
+                name: 'プロアカウント & MD',
+                icon: '🤝',
+                mission: 'オリジナルMDと「深さ」のあるパートナー成功事例',
+                expectation: '「広げる」ことより「深める」こと。100社と薄く付き合うより、3社（例：ゆる言語、BnBなど）と「めちゃくちゃ儲かる/面白い」事例を作ってほしい。その事例さえあれば、あとは勝手に広がっていく。',
+                members: [
+                    { id: 'nakamura-kazuyoshi', name: '中村和義', avatar: '中', role: 'リーダー', title: '取締役 / プロアカウント統括', focus: 'パートナーシップ深化、オリジナルMD開発', leader: true },
+                    { id: 'uchinuma', name: '内沼', avatar: '内', role: 'メンバー', title: '取締役 / メディア・製品開発', focus: '本の惑星、著者密着ドキュメンタリー、Video Podcast', leader: false },
+                    { id: 'iida', name: '飯田', avatar: '飯', role: '積読チャンネル', title: '積読チャンネル / YouTubeコラボ', focus: 'グッズ紹介によるマネタイズ強化', leader: false }
+                ],
+                projects: [
+                    { id: 'partnership', name: 'パートナーシップ深化', desc: 'ゆる言語学ラジオ、B&B等との圧倒的成功事例創出', status: 'progress' },
+                    { id: 'original-md', name: 'オリジナルMD開発', desc: '丸山珈琲、チョコ、ビール、ブックスタンド等', status: 'planning' },
+                    { id: 'tsundoku', name: '積読チャンネル収益化', desc: 'グッズ紹介・ポイント経済圏との連携', status: 'progress' }
+                ],
+                media: [
+                    { name: '本の惑星', leader: '内沼晋太郎', target: '業界関係者（著者・編集者・書店員）', desc: '内沼氏の知見をベースに、本を取り巻く環境やこれからの書店のあり方を深く掘り下げる。業界のプロたちからの視聴と信頼を獲得。', strategy: '出版業界のパートナーへの認識変革、プロアカウント普及の土壌形成' },
+                    { name: '本チャンネル', leader: '全国の書店主', target: '本好き・書店ファン', desc: '個性豊かな書店の店主たちを巻き込み、彼らの「選書眼」や「店舗の魅力」をコンテンツ化。日本中の書店の棚が仮想的に集まる状態を目指す。', strategy: 'アルゴリズムでは拾えないローカルな文脈や店主の偏愛をECに取り込む' },
+                    { name: '積読チャンネル', leader: '社内メンバー', target: '一般読者', desc: '本を楽しむ熱量を伝え、マスの購買行動を喚起する。登録者17万人の熱心な読書家コミュニティ。', strategy: 'グッズ紹介によるマネタイズ、ポイント経済圏との連携' }
+                ],
+                relatedTeams: [
+                    { id: 'web-dev', name: 'Web開発', icon: '💻' }
+                ]
+            }
+        };
+
+        // URLパラメータからチームIDを取得
+        const params = new URLSearchParams(window.location.search);
+        const teamId = params.get('id');
+
+        function render() {
+            const content = document.getElementById('content');
+
+            if (!teamId || !teams[teamId]) {
+                content.innerHTML = `
+                    <a href="teams.html" class="back-link">← チーム一覧に戻る</a>
+                    <div class="section">
+                        <div class="section-body">
+                            <p style="text-align: center; color: var(--text-muted);">チームが見つかりません</p>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            const team = teams[teamId];
+            document.title = `${team.name} | Value Books OS`;
+
+            content.innerHTML = `
+                <a href="teams.html" class="back-link">← チーム一覧に戻る</a>
+
+                <div class="team-header">
+                    <div class="team-header-top">
+                        <div class="team-icon">${team.icon}</div>
+                        <div class="team-info">
+                            <div class="team-id">${team.id}</div>
+                            <h1 class="team-name">${team.name}</h1>
+                            <p class="team-mission">${team.mission}</p>
+                        </div>
+                    </div>
+                    <div class="expectation-box">
+                        <div class="expectation-label">💭 Founder's Expectation</div>
+                        <p class="expectation-text">${team.expectation}</p>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-header">
+                        <span class="section-icon">👥</span>
+                        <h2 class="section-title">メンバー</h2>
+                        <span class="section-count">${team.members.length}名</span>
+                    </div>
+                    <div class="section-body">
+                        <div class="member-grid">
+                            ${team.members.map(m => `
+                                <a href="member-detail.html?id=${m.id}" class="member-card">
+                                    <div class="member-avatar ${m.leader ? 'leader' : ''}">${m.avatar}</div>
+                                    <div class="member-info">
+                                        <div class="member-name">${m.name}</div>
+                                        <div class="member-role">${m.role} / ${m.title}</div>
+                                        <div class="member-focus">${m.focus}</div>
+                                    </div>
+                                </a>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-header">
+                        <span class="section-icon">📂</span>
+                        <h2 class="section-title">プロジェクト</h2>
+                        <span class="section-count">${team.projects.length}件</span>
+                    </div>
+                    <div class="section-body">
+                        <div class="project-list">
+                            ${team.projects.map(p => `
+                                <a href="project-detail.html?id=${p.id}" class="project-card">
+                                    <span class="project-status ${p.status}"></span>
+                                    <div class="project-info">
+                                        <div class="project-name">${p.name}</div>
+                                        <div class="project-desc">${p.desc}</div>
+                                    </div>
+                                    <span class="project-badge ${p.status}">${p.status === 'progress' ? '進行中' : '計画中'}</span>
+                                    <span class="project-arrow">→</span>
+                                </a>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+
+                ${team.media && team.media.length > 0 ? `
+                <div class="section">
+                    <div class="section-header">
+                        <span class="section-icon">📺</span>
+                        <h2 class="section-title">メディア戦略</h2>
+                        <span class="section-count">${team.media.length}メディア</span>
+                    </div>
+                    <div class="section-body">
+                        <div class="media-list">
+                            ${team.media.map(m => `
+                                <div class="media-card">
+                                    <div class="media-header">
+                                        <div class="media-name">${m.name}</div>
+                                        <div class="media-leader">${m.leader}</div>
+                                    </div>
+                                    <div class="media-target"><strong>ターゲット:</strong> ${m.target}</div>
+                                    <div class="media-desc">${m.desc}</div>
+                                    <div class="media-strategy"><strong>戦略的意図:</strong> ${m.strategy}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+                ` : ''}
+
+                ${team.relatedTeams.length > 0 ? `
+                <div class="section">
+                    <div class="section-header">
+                        <span class="section-icon">🔗</span>
+                        <h2 class="section-title">連携チーム</h2>
+                    </div>
+                    <div class="section-body">
+                        <div class="related-teams">
+                            ${team.relatedTeams.map(t => `
+                                <a href="team-detail.html?id=${t.id}" class="related-team-badge">
+                                    ${t.icon} ${t.name}
+                                </a>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+                ` : ''}
+            `;
+        }
+
+        render();
+    </script>
+</body>
+</html>
+

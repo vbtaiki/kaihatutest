@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Value Books: 0-Position Flight Plan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: 'Helvetica Neue', Arial, sans-serif; background-color: #f3f4f6; }
+        .card { background: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); padding: 20px; }
+        input[type="number"], input[type="date"] { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 6px; margin-top: 5px; }
+        .stat-value { font-size: 2rem; font-weight: bold; }
+        .stat-label { font-size: 0.875rem; color: #6b7280; font-weight: 600; text-transform: uppercase; }
+    </style>
+</head>
+<body class="p-6">
+
+    <div class="max-w-5xl mx-auto">
+        <header class="mb-8 flex justify-between items-center">
+            <div>
+                <h1 class="text-3xl font-bold text-gray-800">0-Position Control</h1>
+                <p class="text-gray-500">在庫解消フライトプラン・シミュレーター</p>
+            </div>
+            <div class="text-right">
+                <span id="currentDateDisplay" class="font-bold text-lg"></span>
+            </div>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            
+            <div class="card md:col-span-1 border-l-4 border-blue-500">
+                <h2 class="text-xl font-bold mb-4 text-gray-700">⚙️ 現在設定 (Inputs)</h2>
+                
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">現在の日付</label>
+                        <input type="date" id="today" onchange="calculate()">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">現在の未出品在庫 (冊)</label>
+                        <input type="number" id="currentInventory" value="117573" oninput="calculate()">
+                    </div>
+                    <hr class="my-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 text-red-600">決行日 (0ポジション)</label>
+                        <input type="date" id="targetDate" value="2026-02-18" onchange="calculate()">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">目標在庫レベル (冊)</label>
+                        <input type="number" id="targetInventory" value="20000" oninput="calculate()">
+                    </div>
+                    <hr class="my-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 text-blue-600">現場の出品能力 (冊/日)</label>
+                        <input type="number" id="dailyOutput" value="21500" oninput="calculate()">
+                        <p class="text-xs text-gray-400 mt-1">※これを維持するのが前提</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="md:col-span-2 space-y-6">
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="card text-center">
+                        <div class="stat-label">残り日数</div>
+                        <div class="stat-value text-gray-800" id="daysRemaining">-</div>
+                        <div class="text-sm text-gray-500">Days to Launch</div>
+                    </div>
+                    
+                    <div class="card text-center">
+                        <div class="stat-label">解消すべき在庫</div>
+                        <div class="stat-value text-red-500" id="inventoryGap">-</div>
+                        <div class="text-sm text-gray-500">Total Burn Needed</div>
+                    </div>
+
+                    <div class="card text-center bg-blue-50 border border-blue-100">
+                        <div class="stat-label text-blue-800">1日の必要削減数</div>
+                        <div class="stat-value text-blue-600" id="dailyBurn">-</div>
+                        <div class="text-sm text-blue-400">Burn Rate</div>
+                    </div>
+                </div>
+
+                <div class="card bg-gray-900 text-white flex flex-col items-center justify-center p-8 relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-red-500 to-yellow-500"></div>
+                    <h3 class="text-xl font-medium text-gray-300 mb-2">★ 仕入れチームへの指示（査定上限）</h3>
+                    <div class="text-6xl font-bold tracking-tighter text-yellow-400" id="maxInputLimit">
+                        0
+                    </div>
+                    <p class="mt-2 text-gray-400">これ以上査定してはいけません</p>
+                    <div class="mt-4 bg-gray-800 px-4 py-2 rounded text-sm text-gray-300">
+                        計算式: 出品能力 <span id="calcOutput"></span> - 必要削減 <span id="calcBurn"></span>
+                    </div>
+                </div>
+
+                <div class="card h-64">
+                    <canvas id="burnDownChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Init Date
+        document.getElementById('today').valueAsDate = new Date();
+        document.getElementById('currentDateDisplay').innerText = new Date().toLocaleDateString('ja-JP', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+
+        let chartInstance = null;
+
+        function calculate() {
+            // Get values
+            const today = new Date(document.getElementById('today').value);
+            const targetDate = new Date(document.getElementById('targetDate').value);
+            const currentInv = parseInt(document.getElementById('currentInventory').value);
+            const targetInv = parseInt(document.getElementById('targetInventory').value);
+            const dailyOutput = parseInt(document.getElementById('dailyOutput').value);
+
+            // Calc Time
+            const diffTime = targetDate - today;
+            const daysRemaining = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+
+            // Calc Inventory
+            const gap = currentInv - targetInv;
+            
+            // Logic Check
+            if (daysRemaining <= 0) {
+                document.getElementById('daysRemaining').innerText = "0";
+                document.getElementById('maxInputLimit').innerText = "到達";
+                return;
+            }
+
+            const dailyBurn = Math.ceil(gap / daysRemaining);
+            const maxInput = dailyOutput - dailyBurn;
+
+            // Update DOM
+            document.getElementById('daysRemaining').innerText = daysRemaining + "日";
+            document.getElementById('inventoryGap').innerText = gap.toLocaleString() + "冊";
+            document.getElementById('dailyBurn').innerText = "▼" + dailyBurn.toLocaleString();
+            
+            const limitEl = document.getElementById('maxInputLimit');
+            limitEl.innerText = maxInput.toLocaleString();
+            
+            // Color Logic
+            if (maxInput < 15000) {
+                limitEl.className = "text-6xl font-bold tracking-tighter text-red-500"; // Too tight
+            } else {
+                limitEl.className = "text-6xl font-bold tracking-tighter text-yellow-400"; // OK
+            }
+
+            document.getElementById('calcOutput').innerText = dailyOutput.toLocaleString();
+            document.getElementById('calcBurn').innerText = dailyBurn.toLocaleString();
+
+            updateChart(today, daysRemaining, currentInv, targetInv);
+        }
+
+        function updateChart(startDate, days, startVal, endVal) {
+            const ctx = document.getElementById('burnDownChart').getContext('2d');
+            
+            // Generate Labels and Data
+            const labels = [];
+            const dataIdeal = [];
+            const step = (startVal - endVal) / days;
+
+            for (let i = 0; i <= days; i++) {
+                const d = new Date(startDate);
+                d.setDate(d.getDate() + i);
+                labels.push(`${d.getMonth()+1}/${d.getDate()}`);
+                
+                let val = startVal - (step * i);
+                dataIdeal.push(val);
+            }
+
+            if (chartInstance) {
+                chartInstance.destroy();
+            }
+
+            chartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: '理想的な在庫推移 (Burndown)',
+                        data: dataIdeal,
+                        borderColor: '#3b82f6',
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        borderWidth: 2,
+                        fill: true,
+                        pointRadius: 0,
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { mode: 'index', intersect: false }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            min: 0,
+                            max: Math.max(startVal * 1.1)
+                        }
+                    }
+                }
+            });
+        }
+
+        // Initial Run
+        calculate();
+    </script>
+</body>
+</html>
+

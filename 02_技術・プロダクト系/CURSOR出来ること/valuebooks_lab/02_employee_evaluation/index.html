@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>バリューブックス 人事評価ダッシュボード</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap');
+        
+        :root {
+            --primary: #2d3748;
+            --accent: #667eea;
+            --accent-light: #a3bffa;
+            --success: #48bb78;
+            --warning: #ed8936;
+            --bg: #f7fafc;
+            --card-bg: #ffffff;
+            --text: #2d3748;
+            --text-muted: #718096;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, #4a5568 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        header h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        header p {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+        
+        .search-section {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .search-section label {
+            font-weight: 500;
+            margin-right: 1rem;
+        }
+        
+        .search-section select {
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 0.5rem;
+            min-width: 250px;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+        
+        .search-section select:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+        
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .card {
+            background: var(--card-bg);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .card h3 {
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        
+        .profile-card {
+            grid-column: 1 / -1;
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+        
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--accent) 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: white;
+            font-weight: 700;
+        }
+        
+        .profile-info h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.25rem;
+        }
+        
+        .profile-info .department {
+            color: var(--accent);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+        
+        .profile-info .meta {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        
+        .metrics {
+            display: flex;
+            gap: 1rem;
+            margin-left: auto;
+        }
+        
+        .metric {
+            text-align: center;
+            padding: 1rem 1.5rem;
+            background: var(--bg);
+            border-radius: 0.75rem;
+        }
+        
+        .metric-value {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+        
+        .metric-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 300px;
+        }
+        
+        .comment-box {
+            background: #fffbeb;
+            border-left: 4px solid #f59e0b;
+            padding: 1rem;
+            border-radius: 0 0.5rem 0.5rem 0;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        
+        .goal-section {
+            margin-top: 1rem;
+        }
+        
+        .goal-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .goal-item:last-child {
+            border-bottom: none;
+        }
+        
+        .progress-bar {
+            width: 150px;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent) 0%, var(--success) 100%);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+        
+        .achievement-rate {
+            font-weight: 700;
+            min-width: 50px;
+            text-align: right;
+        }
+        
+        .achievement-rate.high { color: var(--success); }
+        .achievement-rate.medium { color: var(--warning); }
+        .achievement-rate.low { color: #e53e3e; }
+        
+        #no-selection {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 4rem;
+            color: var(--text-muted);
+        }
+        
+        #no-selection .icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📊 バリューブックス 人事評価ダッシュボード</h1>
+            <p>社員のスキル評価と目標達成状況を可視化</p>
+        </header>
+        
+        <div class="search-section">
+            <label for="employee-select">👤 社員を選択:</label>
+            <select id="employee-select">
+                <option value="">-- 社員IDまたは名前で選択 --</option>
+            </select>
+        </div>
+        
+        <div class="dashboard" id="dashboard">
+            <div id="no-selection">
+                <div class="icon">👆</div>
+                <p>上のドロップダウンから社員を選択してください</p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let employeesData = null;
+        let radarChart = null;
+        
+        // JSONデータを読み込む
+        async function loadData() {
+            try {
+                const response = await fetch('employees.json');
+                employeesData = await response.json();
+                populateSelect();
+            } catch (error) {
+                console.error('データの読み込みに失敗しました:', error);
+                // フォールバック: インラインデータを使用
+                employeesData = {
+                    "employees": [
+                        {
+                            "社員ID": "E001",
+                            "氏名": "山田太郎",
+                            "部署": "買取査定チーム",
+                            "入社日": "2018-04-01",
+                            "貢献係数": 1.35,
+                            "スキル評価": {
+                                "専門知識": 90, "コミュニケーション": 85, "問題解決": 88,
+                                "リーダーシップ": 75, "創造性": 82, "業務効率": 92
+                            },
+                            "定性評価コメント": "古書の鑑定眼に優れ、希少本の発見率がチーム内トップ。",
+                            "今期目標": "月間買取処理300件達成",
+                            "達成率": 115
+                        }
+                    ]
+                };
+                populateSelect();
+            }
+        }
+        
+        function populateSelect() {
+            const select = document.getElementById('employee-select');
+            employeesData.employees.forEach(emp => {
+                const option = document.createElement('option');
+                option.value = emp.社員ID;
+                option.textContent = `${emp.社員ID} - ${emp.氏名} (${emp.部署})`;
+                select.appendChild(option);
+            });
+        }
+        
+        function getAchievementClass(rate) {
+            if (rate >= 100) return 'high';
+            if (rate >= 80) return 'medium';
+            return 'low';
+        }
+        
+        function displayEmployee(employeeId) {
+            const dashboard = document.getElementById('dashboard');
+            
+            if (!employeeId) {
+                dashboard.innerHTML = `
+                    <div id="no-selection">
+                        <div class="icon">👆</div>
+                        <p>上のドロップダウンから社員を選択してください</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            const emp = employeesData.employees.find(e => e.社員ID === employeeId);
+            if (!emp) return;
+            
+            const initial = emp.氏名.charAt(0);
+            const achievementClass = getAchievementClass(emp.達成率);
+            
+            dashboard.innerHTML = `
+                <div class="card profile-card">
+                    <div class="profile-avatar">${initial}</div>
+                    <div class="profile-info">
+                        <h2>${emp.氏名}</h2>
+                        <div class="department">${emp.部署}</div>
+                        <div class="meta">社員ID: ${emp.社員ID} | 入社日: ${emp.入社日}</div>
+                    </div>
+                    <div class="metrics">
+                        <div class="metric">
+                            <div class="metric-value">${emp.貢献係数.toFixed(2)}</div>
+                            <div class="metric-label">貢献係数</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value ${achievementClass}">${emp.達成率}%</div>
+                            <div class="metric-label">目標達成率</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3>📈 スキル評価レーダーチャート</h3>
+                    <div class="chart-container">
+                        <canvas id="radarChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3>💬 定性評価コメント</h3>
+                    <div class="comment-box">
+                        ${emp.定性評価コメント}
+                    </div>
+                    <div class="goal-section">
+                        <h3 style="margin-top: 1rem;">🎯 今期目標</h3>
+                        <div class="goal-item">
+                            <span>${emp.今期目標}</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: ${Math.min(emp.達成率, 100)}%"></div>
+                            </div>
+                            <span class="achievement-rate ${achievementClass}">${emp.達成率}%</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // レーダーチャートを描画
+            createRadarChart(emp.スキル評価);
+        }
+        
+        function createRadarChart(skills) {
+            const ctx = document.getElementById('radarChart').getContext('2d');
+            
+            if (radarChart) {
+                radarChart.destroy();
+            }
+            
+            radarChart = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: Object.keys(skills),
+                    datasets: [{
+                        label: 'スキル評価',
+                        data: Object.values(skills),
+                        backgroundColor: 'rgba(102, 126, 234, 0.2)',
+                        borderColor: 'rgba(102, 126, 234, 1)',
+                        borderWidth: 2,
+                        pointBackgroundColor: 'rgba(102, 126, 234, 1)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgba(102, 126, 234, 1)'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: {
+                                stepSize: 20
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+        }
+        
+        // イベントリスナー
+        document.getElementById('employee-select').addEventListener('change', (e) => {
+            displayEmployee(e.target.value);
+        });
+        
+        // 初期化
+        loadData();
+    </script>
+</body>
+</html>
+
+
+

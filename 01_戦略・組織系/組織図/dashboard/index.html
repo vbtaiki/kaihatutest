@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Value Books OS Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00BFA5;
+            --primary-light: #E0F7F4;
+            --primary-dark: #00A896;
+            --bg: #FAFBFC;
+            --white: #FFFFFF;
+            --text: #1A1A1A;
+            --text-secondary: #666666;
+            --text-muted: #999999;
+            --border: #E8E8E8;
+            --shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            --shadow-hover: 0 4px 16px rgba(0, 0, 0, 0.1);
+            --accent-orange: #FF9800;
+            --accent-blue: #2196F3;
+            --accent-purple: #9C27B0;
+            --accent-red: #F44336;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Noto Sans JP', sans-serif;
+            min-height: 100vh;
+            line-height: 1.7;
+        }
+
+        /* Header */
+        .header {
+            background: var(--white);
+            border-bottom: 1px solid var(--border);
+            padding: 0 2rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 64px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            color: var(--text);
+        }
+
+        .logo-text {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .logo-text span {
+            color: var(--primary);
+        }
+
+        .nav {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .nav a {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .nav a:hover {
+            background: var(--primary-light);
+            color: var(--primary);
+        }
+
+        .nav a.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Main */
+        .main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 88px 2rem 2rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, #26D0B8 100%);
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 400px;
+            height: 400px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            right: 20%;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 50%;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-eyebrow {
+            font-size: 0.8rem;
+            font-weight: 500;
+            opacity: 0.9;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            line-height: 1.4;
+            margin-bottom: 0.75rem;
+        }
+
+        .hero-subtitle {
+            font-size: 0.95rem;
+            opacity: 0.9;
+            max-width: 500px;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 2.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .hero-stat {
+            text-align: left;
+        }
+
+        .hero-stat-value {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .hero-stat-label {
+            font-size: 0.8rem;
+            opacity: 0.85;
+        }
+
+        .view-selector-container {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            z-index: 2;
+        }
+
+        .view-selector {
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.85rem;
+            cursor: pointer;
+            backdrop-filter: blur(4px);
+        }
+
+        .view-selector:focus {
+            outline: none;
+            border-color: white;
+        }
+
+        .view-selector option {
+            color: var(--text);
+            background: white;
+        }
+
+        /* Section */
+        .section {
+            margin-bottom: 2rem;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        /* Quick Links */
+        .quick-links {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .quick-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 1.25rem;
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .quick-link:hover {
+            border-color: var(--primary);
+            box-shadow: var(--shadow);
+        }
+
+        .quick-link-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-light);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+
+        .quick-link-text {
+            flex: 1;
+        }
+
+        .quick-link-label {
+            font-size: 0.9rem;
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        .quick-link-count {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .quick-link-arrow {
+            color: var(--primary);
+            font-size: 1.25rem;
+        }
+
+        /* Teams Grid */
+        .teams-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+
+        /* Team Card */
+        .team-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .team-card:hover {
+            box-shadow: var(--shadow-hover);
+            border-color: var(--primary);
+            cursor: pointer;
+        }
+
+        .team-card-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .team-card-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .team-icon {
+            width: 44px;
+            height: 44px;
+            background: var(--primary-light);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+
+        .team-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .team-id {
+            font-size: 0.65rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .team-name {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.25rem;
+        }
+
+        .team-mission {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* Expectation Block */
+        .team-expectation {
+            background: var(--primary-light);
+            border-left: 3px solid var(--primary);
+            padding: 0.75rem 1rem;
+            border-radius: 0 8px 8px 0;
+            margin: 0.75rem 0;
+            display: none;
+        }
+
+        .team-expectation-label {
+            font-size: 0.7rem;
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 0.35rem;
+        }
+
+        .team-expectation p {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Projects in Card */
+        .team-projects {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.35rem;
+            margin-top: 0.75rem;
+        }
+
+        .team-project-tag {
+            padding: 0.2rem 0.6rem;
+            background: #F5F5F5;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+        }
+
+        /* Strategy Section */
+        .strategy-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .strategy-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .strategy-card {
+            background: linear-gradient(135deg, #f0faf8 0%, #ffffff 100%);
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--primary);
+            border-radius: 12px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .strategy-card:hover {
+            border-color: var(--primary);
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-2px);
+        }
+
+        .strategy-card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .strategy-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .strategy-info { flex: 1; }
+
+        .strategy-label {
+            font-size: 0.7rem;
+            color: var(--primary);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .strategy-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .strategy-desc {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .strategy-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .strategy-tag {
+            font-size: 0.7rem;
+            padding: 0.2rem 0.6rem;
+            background: var(--primary-light);
+            color: var(--primary-dark);
+            border-radius: 4px;
+        }
+
+        .strategy-arrow {
+            color: var(--primary);
+            font-size: 1.25rem;
+            margin-left: auto;
+        }
+
+        @media (max-width: 700px) {
+            .strategy-grid { grid-template-columns: 1fr; }
+        }
+
+        /* Focused Team Card */
+        .team-card.focused {
+            grid-column: span 2;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-light);
+        }
+
+        .team-card.focused .team-name {
+            color: var(--primary);
+        }
+
+        .team-card.focused .team-expectation {
+            display: block;
+        }
+
+        .team-card.focused .team-project-tag {
+            background: var(--primary-light);
+            color: var(--primary-dark);
+        }
+
+        /* Blurred Team Card */
+        .team-card.blurred {
+            opacity: 0.5;
+        }
+
+        .team-card.blurred:hover {
+            opacity: 0.8;
+        }
+
+        .team-card.blurred .team-projects {
+            display: none;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            border-top: 1px solid var(--border);
+            margin-top: 2rem;
+            background: var(--white);
+        }
+
+        .footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .quick-links { grid-template-columns: 1fr; }
+            .team-card.focused { grid-column: span 1; }
+        }
+
+        @media (max-width: 600px) {
+            .header-content { flex-direction: column; gap: 0.75rem; height: auto; padding: 0.75rem 0; }
+            .main { padding-top: 120px; }
+            .hero { padding: 1.5rem; }
+            .hero-title { font-size: 1.25rem; }
+            .hero-stats { flex-direction: column; gap: 1rem; }
+            .view-selector-container { position: static; margin-top: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <a href="index.html" class="logo">
+                <span class="logo-text">VALUE <span>BOOKS</span> OS</span>
+            </a>
+            <nav class="nav">
+                <a href="index.html" class="active">ダッシュボード</a>
+                <a href="teams.html">チーム</a>
+                <a href="members.html">メンバー</a>
+                <a href="projects.html">プロジェクト</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <div class="hero-eyebrow">📖 2026-2028 全社ビジョン</div>
+                <h2 class="hero-title">100億・100億・100億。<br>人間的幸福のリーダーへ</h2>
+                <p class="hero-subtitle">古本・新刊・MD。3つの柱で300億を達成し、本を通じて人間をアナログな幸せに引き戻す</p>
+                
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <div class="hero-stat-value">300<span>億</span></div>
+                        <div class="hero-stat-label">売上目標</div>
+                    </div>
+                    <div class="hero-stat">
+                        <div class="hero-stat-value">3<span>柱</span></div>
+                        <div class="hero-stat-label">古本・新刊・MD</div>
+                    </div>
+                    <div class="hero-stat">
+                        <div class="hero-stat-value">17</div>
+                        <div class="hero-stat-label">プロジェクト</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="view-selector-container">
+                <select class="view-selector" id="viewSelect" onchange="changeView()">
+                    <option value="all">全チーム概要</option>
+                    <option value="0-governance">0. ガバナンス & 文化</option>
+                    <option value="1-warehouse">1. 倉庫部門</option>
+                    <option value="2-purchase">2. 買取部門</option>
+                    <option value="3-logistics">3. ロジ・オペ</option>
+                    <option value="4-web-dev">4. Web開発</option>
+                    <option value="5-pro-account">5. Pro/MD</option>
+                </select>
+            </div>
+        </section>
+
+        <!-- Quick Links -->
+        <div class="quick-links">
+            <a href="teams.html" class="quick-link">
+                <div class="quick-link-icon">🏢</div>
+                <div class="quick-link-text">
+                    <div class="quick-link-label">チーム詳細</div>
+                    <div class="quick-link-count">6チーム × Founder's Expectation</div>
+                </div>
+                <span class="quick-link-arrow">→</span>
+            </a>
+            <a href="members.html" class="quick-link">
+                <div class="quick-link-icon">👥</div>
+                <div class="quick-link-text">
+                    <div class="quick-link-label">メンバー一覧</div>
+                    <div class="quick-link-count">17名のプロファイル</div>
+                </div>
+                <span class="quick-link-arrow">→</span>
+            </a>
+            <a href="projects.html" class="quick-link">
+                <div class="quick-link-icon">📂</div>
+                <div class="quick-link-text">
+                    <div class="quick-link-label">プロジェクト</div>
+                    <div class="quick-link-count">17プロジェクト</div>
+                </div>
+                <span class="quick-link-arrow">→</span>
+            </a>
+        </div>
+
+        <!-- 2026 Vision Banner -->
+        <a href="strategy-2026-vision.html" class="vision-banner" style="display: block; background: linear-gradient(135deg, #F59E0B 0%, #FBBF24 100%); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; color: white; text-decoration: none; transition: all 0.2s ease; box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <div style="font-size: 0.75rem; opacity: 0.9; margin-bottom: 0.25rem;">🎯 100億・100億・100億 構想</div>
+                    <div style="font-size: 1.25rem; font-weight: 700;">AI時代の「人間的幸福」を本とMDで実装する</div>
+                    <div style="font-size: 0.85rem; opacity: 0.9; margin-top: 0.25rem;">中村大樹の300億ビジョンを見る →</div>
+                </div>
+                <div style="font-family: 'Outfit', sans-serif; font-size: 3rem; font-weight: 700; opacity: 0.3;">300B</div>
+            </div>
+        </a>
+
+        <!-- Strategy Section -->
+        <section class="section strategy-section">
+            <div class="section-header">
+                <h2 class="section-title">📜 戦略構想文書</h2>
+            </div>
+            <div class="strategy-grid">
+                <a href="strategy-pro-account.html" class="strategy-card">
+                    <div class="strategy-card-header">
+                        <div class="strategy-icon">🎯</div>
+                        <div class="strategy-info">
+                            <div class="strategy-label">North Star</div>
+                            <h3 class="strategy-title">プロアカウント構想</h3>
+                        </div>
+                        <span class="strategy-arrow">→</span>
+                    </div>
+                    <p class="strategy-desc">作り手・売り手・ファンが自分たちの意思で流通を設計できる「ステークホルダー所有型プラットフォーム」</p>
+                    <div class="strategy-tags">
+                        <span class="strategy-tag">フェーズ1: 局地戦</span>
+                        <span class="strategy-tag">フェーズ2: ネットワーク化</span>
+                        <span class="strategy-tag">フェーズ3: プラットフォーム</span>
+                    </div>
+                </a>
+                <a href="strategy-cooperative.html" class="strategy-card">
+                    <div class="strategy-card-header">
+                        <div class="strategy-icon">🤝</div>
+                        <div class="strategy-info">
+                            <div class="strategy-label">技術実現性</div>
+                            <h3 class="strategy-title">協力型買取構想</h3>
+                        </div>
+                        <span class="strategy-arrow">→</span>
+                    </div>
+                    <p class="strategy-desc">画像認識・AI・自動化倉庫で「簡単なのに高い」新しい二次流通を実現する</p>
+                    <div class="strategy-tags">
+                        <span class="strategy-tag">本棚スキャン</span>
+                        <span class="strategy-tag">予測価格</span>
+                        <span class="strategy-tag">ポイント還元</span>
+                    </div>
+                </a>
+                <a href="strategy-bcorp.html" class="strategy-card" style="border-left-color: #7C3AED;">
+                    <div class="strategy-card-header">
+                        <div class="strategy-icon" style="background: #7C3AED;">🌱</div>
+                        <div class="strategy-info">
+                            <div class="strategy-label" style="color: #7C3AED;">経営思想</div>
+                            <h3 class="strategy-title">B Corp統合戦略</h3>
+                        </div>
+                        <span class="strategy-arrow">→</span>
+                    </div>
+                    <p class="strategy-desc">多様な弱さを抱えた人が長く、無理なく、誇りを持って働けるビジネス構造の設計</p>
+                    <div class="strategy-tags">
+                        <span class="strategy-tag" style="background: #F3E8FF; color: #7C3AED;">ジェンダーギャップ</span>
+                        <span class="strategy-tag" style="background: #F3E8FF; color: #7C3AED;">従業員満足度</span>
+                        <span class="strategy-tag" style="background: #F3E8FF; color: #7C3AED;">賃金構造</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Teams Grid -->
+        <section class="section">
+            <div class="section-header">
+                <h2 class="section-title">🏢 チーム（自チームを選択で詳細表示）</h2>
+            </div>
+            <div class="teams-grid" id="teamGrid"></div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>VALUE BOOKS OS | Organization as Code</p>
+        <p style="margin-top: 0.5rem;">Last updated: 2026-01-16 11:30</p>
+    </footer>
+
+    <style>
+        .hero-stat-value span {
+            font-size: 1rem;
+            margin-left: 0.2rem;
+            opacity: 0.8;
+        }
+    </style>
+
+    <script>
+        const teams = [
+            {
+                id: '0-governance',
+                name: 'ガバナンス & 文化',
+                icon: '🏛️',
+                mission: 'People（人）の健全な働きと尊厳を守り、組織の生態系を保つ',
+                projects: ['ジェンダーギャップ解消', 'B Corp浸透', 'ピープル・ガバナンス設計'],
+                expect: '「舗装道路」を作る裏方ではなく、人が健全に働ける「土壌」の守護者。プロフィットは現場に任せ、このチームは「構造的に誰かを排除しない」ピープル・ガバナンスに専念する。'
+            },
+            {
+                id: '1-warehouse',
+                name: '倉庫部門',
+                icon: '🏭',
+                mission: 'SKYPOD導入による「検品工数 1/4」への革命',
+                projects: ['SKYPOD導入', 'ダイレクト入庫', '外部コスト削減'],
+                expect: '自動化で外部コスト（派遣・タイミー）を削減し、本業拡大へリソースをシフト。希望する10〜20名のキャリア転換を全力でサポートする。'
+            },
+            {
+                id: '2-purchase',
+                name: '買取部門',
+                icon: '📦',
+                mission: 'スマート買取とポイント受取の最大化',
+                projects: ['スマート買取', 'ポイント受取率50%', 'CRM強化'],
+                expect: 'ポイント受取50%（将来的に80%）が必達目標。UIの工夫とインセンティブ設計で「迷わずポイント」を選ぶ体験を。ポイントは循環型経済圏の血流。'
+            },
+            {
+                id: '3-logistics',
+                name: 'ロジ・オペレーション',
+                icon: '🚚',
+                mission: '世界最高効率の物流工程の設計とスループット最大化',
+                projects: ['物流アルゴリズム最適化', '工程の標準化', 'スループット最大化'],
+                expect: '「通訳」ではなく「工程の設計者（アーキテクト）」。SKYPODと人の動きを最適化し、スループット最大化に全責任を持つ。1件あたりコスト30%削減が必達指標。'
+            },
+            {
+                id: '4-web-dev',
+                name: '自社サイト開発',
+                icon: '💻',
+                mission: 'ポイント経済圏の実装と自社サイト月商2億円への成長',
+                projects: ['本棚スキャン v2', 'ポイントシステム基盤', '月商2億円UX設計'],
+                expect: '買取（7,400万円/月）の80%をポイント化し、自社サイト売上を5,200万円から2億円に引き上げるエンジンを作る。機能ではなく「経済圏」を作ること。'
+            },
+            {
+                id: '5-pro-account',
+                name: 'Pro/MD',
+                icon: '🤝',
+                mission: '人間的幸福を実装するプロダクト開発とメディア運営',
+                projects: ['オリジナルMD開発', '名物書店員・ファンダム', '本の惑星'],
+                expect: '「100億・100億・100億」構想の牽引役。ファングッズではなく、本好きが唸る「本当に良い製品」を開発し、メディアの共鳴とAIの効率を掛け合わせ、人間をアナログな読書体験に引き戻す。'
+            }
+        ];
+
+        function render() {
+            const grid = document.getElementById('teamGrid');
+            const selected = document.getElementById('viewSelect').value;
+            grid.innerHTML = '';
+
+            teams.forEach(team => {
+                const link = document.createElement('a');
+                link.href = `teams.html#${team.id.split('-')[1] || team.id}`;
+                link.className = 'team-card-link';
+
+                const div = document.createElement('div');
+                div.className = 'team-card';
+
+                if (selected !== 'all') {
+                    if (team.id === selected) {
+                        div.classList.add('focused');
+                    } else {
+                        div.classList.add('blurred');
+                    }
+                }
+
+                div.innerHTML = `
+                    <div class="team-card-header">
+                        <div class="team-icon">${team.icon}</div>
+                        <div class="team-info">
+                            <span class="team-id">${team.id}</span>
+                            <h3 class="team-name">${team.name}</h3>
+                            <p class="team-mission">${team.mission}</p>
+                        </div>
+                    </div>
+                    <div class="team-expectation">
+                        <div class="team-expectation-label">💭 Founder's Expectation</div>
+                        <p>${team.expect}</p>
+                    </div>
+                    <div class="team-projects">
+                        ${team.projects.map(p => `<span class="team-project-tag">${p}</span>`).join('')}
+                    </div>
+                `;
+                link.appendChild(div);
+                grid.appendChild(link);
+            });
+        }
+
+        render();
+
+        function changeView() {
+            render();
+        }
+    </script>
+</body>
+</html>

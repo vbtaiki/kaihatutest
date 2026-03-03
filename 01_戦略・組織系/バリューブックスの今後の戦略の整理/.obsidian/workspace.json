@@ -1,0 +1,219 @@
+{
+  "main": {
+    "id": "6af9913491667b22",
+    "type": "split",
+    "children": [
+      {
+        "id": "b176d57175844a7e",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "3dc37a5aba62ada0",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "00_INDEX・管理/00_INDEX_バリューブックス2026.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "00_INDEX_バリューブックス2026"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "e40701fe9af3dcb5",
+    "type": "split",
+    "children": [
+      {
+        "id": "98718782409a4580",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "4394e5dab1afda2f",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "ファイルエクスプローラ"
+            }
+          },
+          {
+            "id": "4db0ebeddaeeaed9",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "検索"
+            }
+          },
+          {
+            "id": "89ad15667f58b606",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "ブックマーク"
+            }
+          }
+        ],
+        "currentTab": 1
+      }
+    ],
+    "direction": "horizontal",
+    "width": 204.5
+  },
+  "right": {
+    "id": "cbc2aff701beec76",
+    "type": "split",
+    "children": [
+      {
+        "id": "ca4500ba8b2cc90f",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "d2a3d5cac2a938df",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "00_INDEX・管理/00_INDEX_バリューブックス2026.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "00_INDEX_バリューブックス2026へのバックリンク"
+            }
+          },
+          {
+            "id": "ee2d3810f92188d3",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "アウトゴーイングリンク"
+            }
+          },
+          {
+            "id": "00b3e217c22b3d15",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "タグ"
+            }
+          },
+          {
+            "id": "1fa71db6545db2f7",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "すべてのプロパティ"
+            }
+          },
+          {
+            "id": "2bf79ec885962546",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "アウトライン"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 200
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:クイックスイッチャーを開く": false,
+      "graph:グラフビューを開く": false,
+      "canvas:新規キャンバスを作成": false,
+      "daily-notes:今日のデイリーノートを開く": false,
+      "templates:テンプレートを挿入": false,
+      "command-palette:コマンドパレットを開く": false,
+      "bases:Create new base": false
+    }
+  },
+  "active": "3dc37a5aba62ada0",
+  "lastOpenFiles": [
+    "01_プロジェクトシート/プロジェクト_03_グッズ販売.md",
+    "00_INDEX・管理/00_INDEX_バリューブックス2026.md",
+    "00_INDEX・管理/03_タグ・分類体系.md",
+    "00_INDEX・管理/01_プロジェクト関連マップ.md",
+    "00_INDEX・管理/00_全体戦略_みんなの作戦会議ノート.md",
+    "00_INDEX・管理/00_OBSIDIAN利用ガイド.md",
+    "00_INDEX・管理/_このフォルダについて.md",
+    "02_作戦ノート（詳細版）/06_メディア拡大_作戦ノート.md",
+    "02_作戦ノート（詳細版）/05_プロアカウント_作戦ノート.md",
+    "02_作戦ノート（詳細版）/04_本棚スキャン_作戦ノート.md",
+    "02_作戦ノート（詳細版）/03_SKYPOD倉庫革命_作戦ノート.md",
+    "02_作戦ノート（詳細版）/02_本のある暮らしグッズ_作戦ノート.md",
+    "02_作戦ノート（詳細版）/01_ポイント経済圏_作戦ノート.md",
+    "02_作戦ノート（詳細版）/_このフォルダについて.md",
+    "03_技術・開発資料/プロジェクトシート_テンプレート.md",
+    "03_技術・開発資料/07_協力型買取_完全ガイド.md",
+    "03_技術・開発資料/00_開発原則_全体ルール.md",
+    "03_技術・開発資料/_このフォルダについて.md",
+    "04_HTML（Web表示用）/プロジェクト_06_メディア拡大.html",
+    "04_HTML（Web表示用）/プロジェクト_05_プロアカウント.html",
+    "04_HTML（Web表示用）/プロジェクト_04_SKYPOD倉庫.html",
+    "04_HTML（Web表示用）/プロジェクト_03_グッズ販売.html",
+    "04_HTML（Web表示用）/プロジェクト_02_ポイント経済圏.html",
+    "04_HTML（Web表示用）/プロジェクト_01_協力型買取.html",
+    "プロジェクト_01_協力型買取.html",
+    "04_HTML（Web表示用）/index.html",
+    "04_HTML（Web表示用）/00_全体戦略_みんなの作戦会議ノート.html",
+    "04_HTML（Web表示用）/_このフォルダについて.md",
+    "00_INDEX・管理/02_ダッシュボード.md",
+    "04_HTML（Web表示用）",
+    "01_プロジェクトシート/_このフォルダについて.md",
+    "01_プロジェクトシート/プロジェクト_02_ポイント経済圏.md"
+  ]
+}

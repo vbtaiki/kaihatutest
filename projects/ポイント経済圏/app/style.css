@@ -1,0 +1,452 @@
+/* ===========================
+   バリューブックス ポイント経済圏
+   メインスタイルシート
+   =========================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sans JP', sans-serif;
+  background: #f5f5f0;
+  color: #333;
+  min-height: 100vh;
+}
+
+/* ヘッダー */
+.header {
+  background: #2c2c2c;
+  color: white;
+  padding: 16px 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-inner {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+}
+
+.point-badge {
+  background: #f0c040;
+  color: #333;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+/* メインコンテンツ */
+.main {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 24px 20px;
+}
+
+/* ポイント残高カード */
+.balance-card {
+  background: linear-gradient(135deg, #2c2c2c 0%, #4a4a4a 100%);
+  color: white;
+  border-radius: 16px;
+  padding: 32px 24px;
+  text-align: center;
+  margin-bottom: 24px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+}
+
+.balance-label {
+  font-size: 14px;
+  opacity: 0.8;
+  margin-bottom: 8px;
+}
+
+.balance-amount {
+  font-size: 48px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.balance-amount .unit {
+  font-size: 20px;
+  font-weight: 400;
+  opacity: 0.8;
+}
+
+.balance-yen {
+  font-size: 14px;
+  opacity: 0.6;
+  margin-top: 4px;
+}
+
+.balance-expire {
+  font-size: 12px;
+  opacity: 0.5;
+  margin-top: 12px;
+}
+
+/* アクションボタン */
+.actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.action-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  font-family: inherit;
+}
+
+.action-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+}
+
+.action-btn:active {
+  transform: translateY(0);
+}
+
+.action-btn.primary {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.action-btn.secondary {
+  background: #e3f2fd;
+  color: #1565c0;
+}
+
+.action-icon {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.action-label {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+/* お知らせバナー */
+.info-banner {
+  background: #fff8e1;
+  border: 1px solid #ffe082;
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin-bottom: 32px;
+}
+
+.info-icon {
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.info-text {
+  font-size: 13px;
+  line-height: 1.6;
+  color: #5d4037;
+}
+
+/* 取引履歴 */
+.section-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background: #e0e0e0;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.history-item {
+  background: white;
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.history-left {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.history-type {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.history-date {
+  font-size: 12px;
+  color: #999;
+}
+
+.history-detail {
+  font-size: 12px;
+  color: #666;
+}
+
+.history-amount {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.history-amount.plus {
+  color: #2e7d32;
+}
+
+.history-amount.minus {
+  color: #c62828;
+}
+
+/* モーダル */
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 200;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.modal.active {
+  display: flex;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 24px 24px 0 0;
+  width: 100%;
+  max-width: 480px;
+  max-height: 80vh;
+  overflow-y: auto;
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 24px 16px;
+  border-bottom: 1px solid #eee;
+}
+
+.modal-header h2 {
+  font-size: 18px;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+  color: #999;
+  padding: 0 4px;
+}
+
+.modal-body {
+  padding: 24px;
+}
+
+/* 買取フォーム */
+.buyback-estimate {
+  margin-bottom: 24px;
+}
+
+.buyback-estimate label,
+.receive-options label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.input-amount {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 24px;
+  font-weight: 700;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  text-align: center;
+  font-family: inherit;
+}
+
+.input-amount:focus {
+  outline: none;
+  border-color: #2c2c2c;
+}
+
+.option-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.option-card {
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.option-card.selected {
+  border-color: #2c2c2c;
+  background: #f8f8f8;
+}
+
+.option-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.bonus-tag {
+  background: #f0c040;
+  color: #333;
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.option-amount {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 16px;
+  background: #2c2c2c;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.2s;
+}
+
+.submit-btn:hover {
+  background: #444;
+}
+
+/* 購入 書籍リスト */
+.book-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.book-item {
+  display: flex;
+  gap: 16px;
+  padding: 16px;
+  background: #f8f8f8;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.book-item:hover {
+  background: #f0f0f0;
+}
+
+.book-cover {
+  font-size: 48px;
+  flex-shrink: 0;
+}
+
+.book-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+}
+
+.book-title {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.book-author {
+  font-size: 13px;
+  color: #666;
+}
+
+.book-price {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1565c0;
+}
+
+/* トースト通知 */
+.toast {
+  position: fixed;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: #333;
+  color: white;
+  padding: 14px 28px;
+  border-radius: 12px;
+  font-size: 14px;
+  z-index: 300;
+  transition: transform 0.3s ease;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+}
+
+.toast.show {
+  transform: translateX(-50%) translateY(0);
+}

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>プロジェクト⑤：プロアカウント | VALUE BOOKS 2026</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Sans", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif; line-height: 1.7; color: #333; background: #f5f5f5; }
+        .header { background: linear-gradient(135deg, #2c5f2d 0%, #1a4d2e 100%); color: white; padding: 40px 20px; }
+        .header-content { max-width: 1000px; margin: 0 auto; }
+        .project-number { display: inline-block; width: 50px; height: 50px; background: #00a99d; color: white; border-radius: 50%; text-align: center; line-height: 50px; font-weight: bold; font-size: 1.5rem; margin-bottom: 15px; }
+        .header h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        .header .subtitle { font-size: 1.1rem; opacity: 0.9; }
+        .nav { background: white; padding: 15px 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100; }
+        .nav a { color: #2c5f2d; text-decoration: none; margin-right: 20px; font-weight: 500; }
+        .nav a:hover { text-decoration: underline; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 40px 20px; }
+        .card { background: white; border-radius: 8px; padding: 30px; margin-bottom: 25px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        h2 { font-size: 1.8rem; color: #2c5f2d; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 3px solid #2c5f2d; }
+        h3 { font-size: 1.3rem; color: #333; margin: 20px 0 12px; }
+        .overview-box { background: linear-gradient(135deg, #FFE066 0%, #FFD700 100%); padding: 25px; border-radius: 8px; margin-bottom: 20px; }
+        .overview-box h3 { font-size: 1.5rem; margin-top: 0; margin-bottom: 15px; }
+        .overview-box p { font-size: 1.1rem; line-height: 1.8; }
+        .problem-solution { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-top: 15px; }
+        .problem-solution > div { padding: 15px; border-radius: 6px; }
+        .problem { background: #ffe6e6; border-left: 4px solid #e74c3c; }
+        .solution { background: #e6f7e6; border-left: 4px solid #2c5f2d; }
+        .effect { background: #e6f3ff; border-left: 4px solid #00a99d; }
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+        table th { background: #2c5f2d; color: white; padding: 12px; text-align: left; font-weight: 500; }
+        table td { padding: 12px; border-bottom: 1px solid #e0e0e0; }
+        table tr:hover { background: #f5f9f6; }
+        .flow-diagram { background: #f5f9f6; padding: 25px; border-radius: 8px; font-family: 'Courier New', monospace; white-space: pre-line; line-height: 2; border-left: 4px solid #00a99d; margin: 15px 0; }
+        .system-diagram { background: #f5f9f6; padding: 25px; border-radius: 8px; font-family: 'Courier New', monospace; white-space: pre; line-height: 1.6; border-left: 4px solid #2c5f2d; margin: 15px 0; overflow-x: auto; }
+        .tag { display: inline-block; background: #00a99d; color: white; padding: 4px 12px; border-radius: 3px; font-size: 0.85rem; margin-right: 8px; margin-bottom: 8px; }
+        .risk-card { background: #fff3cd; padding: 20px; border-radius: 8px; border-left: 4px solid #ffc107; margin-bottom: 15px; }
+        .risk-card h4 { color: #856404; margin-bottom: 10px; }
+        .success-criteria { background: #e8f5e9; padding: 20px; border-radius: 8px; border-left: 4px solid #2c5f2d; }
+        .success-criteria ul { list-style: none; padding-left: 0; }
+        .success-criteria li { padding: 8px 0; padding-left: 30px; position: relative; }
+        .success-criteria li:before { content: "✓"; position: absolute; left: 0; color: #2c5f2d; font-weight: bold; font-size: 1.2rem; }
+        .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px; }
+        .team-member { background: #f5f9f6; padding: 15px; border-radius: 6px; text-align: center; }
+        .team-member .role { font-weight: bold; color: #2c5f2d; margin-bottom: 5px; }
+        .cta-section { background: linear-gradient(135deg, #2c5f2d 0%, #1a4d2e 100%); color: white; padding: 35px; border-radius: 8px; text-align: center; margin-top: 30px; }
+        .cta-section h2 { color: white; border-bottom: none; margin-bottom: 15px; }
+        @media (max-width: 768px) { .header h1 { font-size: 1.8rem; } table { font-size: 0.85rem; } }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="project-number">⑤</div>
+            <h1>プロアカウント・エコシステム</h1>
+            <p class="subtitle">著者や本屋さんが自分の本を高収益で直販できるプラットフォーム</p>
+        </div>
+    </div>
+    
+    <div class="nav">
+        <a href="index.html">← トップに戻る</a>
+        <a href="00_全体戦略_みんなの作戦会議ノート.html">全体戦略</a>
+    </div>
+    
+    <div class="container">
+        <div class="card">
+            <h2>📋 プロジェクト概要</h2>
+            <div class="overview-box">
+                <h3>何を作る？（一言で）</h3>
+                <p><strong>著者や本屋さんが自分の本を高収益で直販できるプラットフォーム</strong></p>
+            </div>
+            
+            <h3>なぜ作る？</h3>
+            <div class="problem-solution">
+                <div class="problem">
+                    <strong>📉 課題</strong>
+                    <p>バリューブックス単体では成長に限界、パートナーと組みたい</p>
+                </div>
+                <div class="solution">
+                    <strong>💡 解決策</strong>
+                    <p>プロ向けアカウントで、みんなが儲かる仕組みを作る</p>
+                </div>
+                <div class="effect">
+                    <strong>✨ 効果</strong>
+                    <p>売上の新しい柱、エコシステム形成</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2>🎯 目標数値（KPI）</h2>
+            <table>
+                <thead>
+                    <tr><th>項目</th><th>現状</th><th>目標（6ヶ月後）</th><th>目標（12ヶ月後）</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>パートナー数</td><td>0</td><td>3組</td><td><strong>10組</strong></td></tr>
+                    <tr><td>月間売上</td><td>¥0</td><td>¥2,000,000</td><td><strong>¥5,000,000</strong></td></tr>
+                    <tr><td>手数料収入</td><td>¥0</td><td>¥600,000</td><td><strong>¥1,500,000</strong></td></tr>
+                    <tr><td>パートナー継続率</td><td>-</td><td>100%</td><td><strong>90%以上</strong></td></tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="card">
+            <h2>👥 誰が使う？（ターゲット）</h2>
+            <ul style="line-height: 2;">
+                <li><strong>メインユーザー:</strong> 著者、本屋、出版社</li>
+                <li><strong>利用シーン:</strong> 書籍の直販、イベント販売、在庫処分</li>
+                <li><strong>想定数:</strong> 1年で10組、3年で30組</li>
+            </ul>
+        </div>
+        
+        <div class="card">
+            <h2>🔄 パートナーの流れ</h2>
+            <div class="flow-diagram">【パートナー申込】
+  ↓ ヒアリング・契約
+【商品登録（社内で代行）】
+  ↓
+【Retoolダッシュボードで売上確認】
+  ↓ 商品が売れる
+【収益分配（70%がパートナーへ）】
+  ↓ 継続して販売
+【成功事例として発信】</div>
+        </div>
+        
+        <div class="card">
+            <h2>💻 システム構成</h2>
+            <div class="system-diagram">┌──────────────────────────┐
+│  パートナー               │
+│  ・商品情報提供           │
+│  ・ダッシュボード閲覧     │
+└─────────┬────────────────┘
+          │ データ入力（初期は代行）
+┌─────────▼────────────────┐
+│  Retool（管理画面）       │
+│  ・売上レポート           │
+│  ・在庫管理               │
+│  ・注文管理               │
+└─────────┬────────────────┘
+          │
+┌─────────▼────────────────┐
+│  バリューブックスDB       │
+│  商品・注文・売上         │
+└───────────────────────────┘</div>
+            
+            <h3>使う技術</h3>
+            <table>
+                <thead><tr><th>部分</th><th>技術</th><th>理由</th></tr></thead>
+                <tbody>
+                    <tr><td>管理画面</td><td><span class="tag">Retool</span></td><td>3日で構築可能、ローコード</td></tr>
+                    <tr><td>商品登録</td><td><span class="tag">人力（初期）</span></td><td>システム化は後回し</td></tr>
+                    <tr><td>在庫管理</td><td><span class="tag">既存システム</span></td><td>統合管理</td></tr>
+                    <tr><td>レポート</td><td><span class="tag">Retool → PDF</span></td><td>メール送付で簡単</td></tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="card">
+            <h2>📅 スケジュール</h2>
+            <h3>Phase 1: パイロット版（3ヶ月）</h3>
+            <ul>
+                <li>契約書類・規約整備（Month 1）</li>
+                <li>Retoolダッシュボード構築（Month 1-2）</li>
+                <li>第1号パートナー決定（Month 2）</li>
+                <li>商品登録・販売開始（Month 3）</li>
+            </ul>
+            
+            <h3>Phase 2: 拡大（3ヶ月）</h3>
+            <ul>
+                <li>第2号、第3号パートナー</li>
+                <li>フィードバック反映</li>
+                <li>成功事例発信</li>
+            </ul>
+            
+            <h3>Phase 3: スケール（6ヶ月〜）</h3>
+            <ul>
+                <li>10組まで拡大</li>
+                <li>セルフ登録機能検討</li>
+                <li>API提供（将来）</li>
+            </ul>
+        </div>
+        
+        <div class="card">
+            <h2>💰 コスト見積もり</h2>
+            <table>
+                <thead><tr><th>項目</th><th>金額</th></tr></thead>
+                <tbody>
+                    <tr><td>Retool構築</td><td>¥800,000</td></tr>
+                    <tr><td>契約書類整備（法務）</td><td>¥500,000</td></tr>
+                    <tr><td>プロモーション資料</td><td>¥300,000</td></tr>
+                    <tr style="background: #f5f9f6;"><td><strong>合計（初期）</strong></td><td><strong>¥1,600,000</strong></td></tr>
+                    <tr style="background: #f5f9f6;"><td><strong>合計（月額運用）</strong></td><td><strong>¥750,000</strong></td></tr>
+                </tbody>
+            </table>
+            <p style="margin-top: 10px; color: #666; font-size: 0.9rem;">※月額にはRetool利用料、サポート人件費を含む</p>
+        </div>
+        
+        <div class="card">
+            <h2>👨‍💻 チーム体制</h2>
+            <div class="team-grid">
+                <div class="team-member"><div class="role">PM</div><div>1名</div><small>全体管理、契約交渉</small></div>
+                <div class="team-member"><div class="role">パートナーマネージャー</div><div>1名</div><small>新規開拓・サポート</small></div>
+                <div class="team-member"><div class="role">エンジニア</div><div>1名</div><small>Retool構築、連携</small></div>
+                <div class="team-member"><div class="role">カスタマーサクセス</div><div>1名</div><small>運用サポート</small></div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2>⚠️ リスクと対策</h2>
+            <div class="risk-card">
+                <h4>リスク1: パートナーが売れなくて離脱</h4>
+                <strong>対策:</strong>
+                <ul><li>最初から手厚いサポート</li><li>一緒に売る施策を考える</li><li>最低保証も検討</li></ul>
+            </div>
+            <div class="risk-card">
+                <h4>リスク2: 広げすぎて質が落ちる</h4>
+                <strong>対策:</strong>
+                <ul><li>最初は10組まで</li><li>新規は慎重に選ぶ</li><li>「広さより深さ」を徹底</li></ul>
+            </div>
+            <div class="risk-card">
+                <h4>リスク3: 法的トラブル</h4>
+                <strong>対策:</strong>
+                <ul><li>弁護士監修の契約書</li><li>利用規約を明確に</li><li>問題が起きたら即対応</li></ul>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2>✅ 成功の条件</h2>
+            <div class="success-criteria">
+                <ul>
+                    <li>第1号パートナーが月¥500,000売上</li>
+                    <li>継続率 90%以上</li>
+                    <li>10組のパートナー獲得</li>
+                    <li>成功事例3つ作成</li>
+                    <li>メディアで紹介される</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="cta-section">
+            <h2>🚀 次のアクション</h2>
+            <h3 style="color: white; border: none; margin-bottom: 15px;">今週</h3>
+            <ul style="list-style: none; padding: 0; text-align: left; max-width: 600px; margin: 0 auto 30px;">
+                <li>☐ 契約書テンプレート作成依頼</li>
+                <li>☐ 第1号候補5名リストアップ</li>
+                <li>☐ Retoolアカウント作成</li>
+            </ul>
+            <h3 style="color: white; border: none; margin-bottom: 15px;">今月</h3>
+            <ul style="list-style: none; padding: 0; text-align: left; max-width: 600px; margin: 0 auto 30px;">
+                <li>☐ 第1号候補にアプローチ</li>
+                <li>☐ Retoolダッシュボード構築開始</li>
+                <li>☐ 収益モデル詳細確定</li>
+            </ul>
+            <p style="font-size: 1.3rem; font-weight: bold; margin-top: 30px;">深さで勝負！まずは3組の成功事例を作ろう🤝</p>
+        </div>
+    </div>
+</body>
+</html>
+

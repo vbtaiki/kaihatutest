@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>チーム | Value Books OS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00BFA5;
+            --primary-light: #E0F7F4;
+            --primary-dark: #00A896;
+            --bg: #FAFBFC;
+            --white: #FFFFFF;
+            --text: #1A1A1A;
+            --text-secondary: #666666;
+            --text-muted: #999999;
+            --border: #E8E8E8;
+            --shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            --shadow-hover: 0 4px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Noto Sans JP', sans-serif;
+            min-height: 100vh;
+            line-height: 1.7;
+        }
+
+        a { color: inherit; text-decoration: none; }
+
+        /* Header */
+        .header {
+            background: var(--white);
+            border-bottom: 1px solid var(--border);
+            padding: 0 2rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 64px;
+        }
+
+        .logo { display: flex; align-items: center; gap: 0.5rem; }
+
+        .logo-text {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .logo-text span { color: var(--primary); }
+
+        .nav { display: flex; gap: 0.5rem; }
+
+        .nav a {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            transition: all 0.2s ease;
+        }
+
+        .nav a:hover {
+            background: var(--primary-light);
+            color: var(--primary);
+        }
+
+        .nav a.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Main */
+        .main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 88px 2rem 2rem;
+        }
+
+        /* Page Header */
+        .page-header { margin-bottom: 2rem; }
+
+        .page-eyebrow {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .page-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .page-subtitle {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Team Cards */
+        .team-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .team-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.2s ease;
+        }
+
+        .team-card:hover {
+            border-color: var(--primary);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .team-card-header {
+            padding: 1.5rem;
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .team-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            background: var(--primary-light);
+            flex-shrink: 0;
+        }
+
+        .team-header-info { flex: 1; }
+
+        .team-id {
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-bottom: 0.1rem;
+        }
+
+        .team-name {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .team-mission {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* Expectation Block */
+        .team-expectation {
+            padding: 1.25rem 1.5rem;
+            background: linear-gradient(90deg, var(--primary-light) 0%, var(--white) 100%);
+            border-left: 4px solid var(--primary);
+        }
+
+        .team-expectation-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .team-expectation p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* Team Card Body */
+        .team-card-body {
+            padding: 1.5rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .team-section-title {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        /* Members */
+        .member-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .member-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.4rem 0.75rem;
+            background: #F5F5F5;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            transition: all 0.2s ease;
+        }
+
+        .member-chip:hover {
+            border-color: var(--primary);
+            background: var(--primary-light);
+        }
+
+        .member-chip.leader {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .member-chip.leader:hover {
+            background: var(--primary-dark);
+        }
+
+        .member-avatar {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: var(--primary-light);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.6rem;
+            font-weight: 600;
+        }
+
+        .member-chip.leader .member-avatar {
+            background: rgba(255,255,255,0.3);
+            color: white;
+        }
+
+        /* Projects */
+        .project-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .project-item {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.6rem 0.75rem;
+            background: #F9F9F9;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+        }
+
+        .project-item:hover {
+            background: var(--primary-light);
+        }
+
+        .project-status {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .project-status.planning { background: #FF9800; }
+        .project-status.progress { background: #2196F3; }
+        .project-status.done { background: #4CAF50; }
+
+        .project-item span { flex: 1; }
+
+        .project-item small {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            border-top: 1px solid var(--border);
+            margin-top: 2rem;
+            background: var(--white);
+        }
+
+        .footer a { color: var(--primary); }
+
+        @media (max-width: 768px) {
+            .team-card-body { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 600px) {
+            .header-content { flex-direction: column; gap: 0.75rem; height: auto; padding: 0.75rem 0; }
+            .main { padding-top: 120px; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <a href="index.html" class="logo">
+                <span class="logo-text">VALUE <span>BOOKS</span> OS</span>
+            </a>
+            <nav class="nav">
+                <a href="index.html">ダッシュボード</a>
+                <a href="teams.html" class="active">チーム</a>
+                <a href="members.html">メンバー</a>
+                <a href="projects.html">プロジェクト</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="page-header">
+            <div class="page-eyebrow">🏢 Organization</div>
+            <h1 class="page-title">チーム</h1>
+            <p class="page-subtitle">フラットな6チーム × Founder's Expectation</p>
+        </div>
+
+        <div class="team-list">
+            <!-- 0. ガバナンス & 文化 -->
+            <div class="team-card" id="governance">
+                <div class="team-card-header">
+                    <div class="team-icon">🏛️</div>
+                    <div class="team-header-info">
+                        <div class="team-id">0-governance</div>
+                        <h2 class="team-name">ガバナンス & 文化</h2>
+                        <p class="team-mission">People（人）の健全な働きと尊厳を守り、組織の生態系を保つ</p>
+                    </div>
+                </div>
+                <div class="team-expectation">
+                    <div class="team-expectation-label">💭 Founder's Expectation</div>
+                    <p>「舗装道路」を作る裏方ではなく、人が健全に働ける「土壌」の守護者。プロフィット（収益）は分散した各現場チームに任せ、このチームは「構造的に誰かを差別・排除しない」ピープル・ガバナンスの確立に専念すること。</p>
+                </div>
+                <div class="team-card-body">
+                    <div>
+                        <div class="team-section-title">👥 メンバー</div>
+                        <div class="member-list">
+                            <a href="members.html#torii" class="member-chip leader">
+                                <span class="member-avatar">鳥</span>
+                                鳥居
+                            </a>
+                            <a href="members.html#mizuno" class="member-chip">
+                                <span class="member-avatar">水</span>
+                                水野恵魅
+                            </a>
+                            <a href="members.html#aizawa" class="member-chip">
+                                <span class="member-avatar">相</span>
+                                相澤
+                            </a>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="team-section-title">📂 プロジェクト</div>
+                        <div class="project-list">
+                            <a href="projects.html#gender-gap" class="project-item">
+                                <span class="project-status progress"></span>
+                                <span>ジェンダーギャップ解消</span>
+                                <small>進行中</small>
+                            </a>
+                            <a href="projects.html#bcorp" class="project-item">
+                                <span class="project-status progress"></span>
+                                <span>B Corp社内浸透</span>
+                                <small>進行中</small>
+                            </a>
+                            <a href="projects.html" class="project-item">
+                                <span class="project-status planning"></span>
+                                <span>M&A憲法運用</span>
+                                <small>計画中</small>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 1. 倉庫部門 -->
+            <div class="team-card" id="warehouse">
+                <div class="team-card-header">
+                    <div class="team-icon">🏭</div>
+                    <div class="team-header-info">
+                        <div class="team-id">1-warehouse</div>
+                        <h2 class="team-name">倉庫部門</h2>
+                        <p class="team-mission">SKYPOD導入による「検品工数 1/4」への革命</p>
+                    </div>
+                </div>
+                <div class="team-expectation">
+                    <div class="team-expectation-label">💭 Founder's Expectation</div>
+                    <p>2026年の最優先事項はSKYPOD稼働。自動化で外部コスト（派遣・タイミー）を削減し、本業拡大へリソースをシフトすること。余った人は首にせず、希望する10〜20名の他部署へのキャリア転換を全力でサポートする。</p>
+                </div>
+                <div class="team-card-body">
+                    <div>
+                        <div class="team-section-title">👥 メンバー</div>
+                        <div class="member-list">
+                            <a href="members.html#shimizu" class="member-chip leader">
+                                <span class="member-avatar">清</span>
+                                清水（統括）
+                            </a>
+                            <a href="members.html#hayashi" class="member-chip">
+                                <span class="member-avatar">林</span>
+                                林（上田原）
+                            </a>
+                            <a href="members.html#seto" class="member-chip">
+                                <span class="member-avatar">セ</span>
+                                セト（ミヨシ）
+                            </a>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="team-section-title">📂 プロジェクト</div>
+                        <div class="project-list">
+                            <a href="projects.html#skypod" class="project-item">
+                                <span class="project-status planning"></span>
+                                <span>SKYPOD導入</span>
+                                <small>計画中</small>
+                            </a>
+                            <a href="projects.html#direct-inbound" class="project-item">
+                                <span class="project-status planning"></span>
+                                <span>ダイレクト入庫</span>
+                                <small>計画中</small>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. 買取部門 -->
+            <div class="team-card" id="purchase">
+                <div class="team-card-header">
+                    <div class="team-icon">📦</div>
+                    <div class="team-header-info">
+                        <div class="team-id">2-purchase</div>
+                        <h2 class="team-name">買取部門</h2>
+                        <p class="team-mission">スマート買取とポイント受取の最大化</p>
+                    </div>
+                </div>
+                <div class="team-expectation">
+                    <div class="team-expectation-label">💭 Founder's Expectation</div>
+                    <p>ポイント受取50%（将来的に80%）が必達目標。UIの工夫とインセンティブ設計で「迷わずポイント」を選ぶ体験を。ポイントは循環型経済圏の血流であり、自社サイト月商2億円への最大のエンジンである。</p>
+                </div>
+                <div class="team-card-body">
+                    <div>
+                        <div class="team-section-title">👥 メンバー</div>
+                        <div class="member-list">
+                            <a href="members.html#shotoku" class="member-chip">
+                                <span class="member-avatar">聖</span>
+                                聖徳（新規）
+                            </a>
+                            <a href="members.html#kodaira" class="member-chip">
+                                <span class="member-avatar">小</span>
+                                小平（リピート）
+                            </a>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="team-section-title">📂 プロジェクト</div>
+                        <div class="project-list">
+                            <a href="projects.html#smart-purchase" class="project-item">
+                                <span class="project-status planning"></span>
+                                <span>スマート買取（倍額還元）</span>
+                                <small>計画中</small>
+                            </a>
+                            <a href="projects.html#point-economy" class="project-item">
+                                <span class="project-status progress"></span>
+                                <span>ポイント受取率 20%</span>
+                                <small>進行中</small>
+                            </a>
+                            <a href="projects.html#crm" class="project-item">
+                                <span class="project-status planning"></span>
+                                <span>CRM強化</span>
+                                <small>計画中</small>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. ロジ・オペレーション -->
+            <div class="team-card" id="logistics">
+                <div class="team-card-header">
+                    <div class="team-icon">🚚</div>
+                    <div class="team-header-info">
+                        <div class="team-id">3-logistics</div>
+                        <h2 class="team-name">ロジ・オペレーション</h2>
+                        <p class="team-mission">世界最高効率の物流工程の設計とスループット最大化</p>
+                    </div>
+                </div>
+                <div class="team-expectation">
+                    <div class="team-expectation-label">💭 Founder's Expectation</div>
+                    <p>「通訳」や「調整役」で終わらないこと。SKYPOD、ベルトコンベア、そして人の動きを組み合わせ、世界最高の物流アルゴリズムを完成させる「工程の設計者（アーキテクト）」として、スループット最大化に全責任を持つこと。</p>
+                </div>
+                <div class="team-card-body">
+                    <div>
+                        <div class="team-section-title">👥 メンバー</div>
+                        <div class="member-list">
+                            <a href="members.html#sasaki" class="member-chip">
+                                <span class="member-avatar">サ</span>
+                                ササキ
+                            </a>
+                            <a href="members.html#kutsukake" class="member-chip">
+                                <span class="member-avatar">ク</span>
+                                クツカケ
+                            </a>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="team-section-title">📂 プロジェクト</div>
+                        <div class="project-list">
+                            <a href="projects.html" class="project-item">
+                                <span class="project-status planning"></span>
+                                <span>動線のデータ化</span>
+                                <small>計画中</small>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. Web開発 -->
+            <div class="team-card" id="web-dev">
+                <div class="team-card-header">
+                    <div class="team-icon">💻</div>
+                    <div class="team-header-info">
+                        <div class="team-id">4-web-dev</div>
+                        <h2 class="team-name">自社サイト開発</h2>
+                        <p class="team-mission">ポイント経済圏の実装と自社サイト月商2億円への成長</p>
+                    </div>
+                </div>
+                <div class="team-expectation">
+                    <div class="team-expectation-label">💭 Founder's Expectation</div>
+                    <p>買取（7,400万円/月）の80%をポイント化し、自社サイト売上を現在の5,200万円から2億円に引き上げるエンジンを構築すること。ユーザー確認後のデータ整合性を100%にするUI/UX設計が、倉庫自動化の成否を握る。</p>
+                </div>
+                <div class="team-card-body">
+                    <div>
+                        <div class="team-section-title">👥 メンバー</div>
+                        <div class="member-list">
+                            <a href="members.html#yoshida" class="member-chip">
+                                <span class="member-avatar">ヨ</span>
+                                ヨシダ
+                            </a>
+                            <a href="members.html#katayama" class="member-chip">
+                                <span class="member-avatar">片</span>
+                                片山
+                            </a>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="team-section-title">📂 プロジェクト</div>
+                        <div class="project-list">
+                            <a href="projects.html#point-economy" class="project-item">
+                                <span class="project-status progress"></span>
+                                <span>ポイント経済圏</span>
+                                <small>進行中</small>
+                            </a>
+                            <a href="projects.html#bookshelf-scan" class="project-item">
+                                <span class="project-status progress"></span>
+                                <span>本棚スキャン v2</span>
+                                <small>進行中</small>
+                            </a>
+                            <a href="projects.html#pro-dashboard" class="project-item">
+                                <span class="project-status planning"></span>
+                                <span>プロアカウント基盤</span>
+                                <small>計画中</small>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. Pro/MD -->
+            <div class="team-card" id="pro-account">
+                <div class="team-card-header">
+                    <div class="team-icon">🤝</div>
+                    <div class="team-header-info">
+                        <div class="team-id">5-pro-account</div>
+                        <h2 class="team-name">プロアカウント & MD</h2>
+                        <p class="team-mission">オリジナルMDと「深さ」のあるパートナー成功事例</p>
+                    </div>
+                </div>
+                <div class="team-expectation">
+                    <div class="team-expectation-label">💭 Founder's Expectation</div>
+                    <p>1社で数億規模のインパクトを生むトップランナーを3社作る。B&Bの物流全受託や、ゆる言語学ラジオとの1億規模の売上創出など、小規模な提携を増やすのではなく、一社との「深さ」で経営インパクトを作ること。</p>
+                </div>
+                <div class="team-card-body">
+                    <div>
+                        <div class="team-section-title">👥 メンバー</div>
+                        <div class="member-list">
+                            <a href="members.html#nakamura-kazuyoshi" class="member-chip leader">
+                                <span class="member-avatar">中</span>
+                                中村和義
+                            </a>
+                            <a href="members.html#uchinuma" class="member-chip">
+                                <span class="member-avatar">内</span>
+                                内沼
+                            </a>
+                            <a href="members.html#iida" class="member-chip">
+                                <span class="member-avatar">飯</span>
+                                飯田
+                            </a>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="team-section-title">📂 プロジェクト</div>
+                        <div class="project-list">
+                            <a href="projects.html#partnership" class="project-item">
+                                <span class="project-status progress"></span>
+                                <span>パートナーシップ深化</span>
+                                <small>進行中</small>
+                            </a>
+                            <a href="projects.html#original-md" class="project-item">
+                                <span class="project-status planning"></span>
+                                <span>オリジナルMD開発</span>
+                                <small>計画中</small>
+                            </a>
+                            <a href="projects.html#tsundoku" class="project-item">
+                                <span class="project-status progress"></span>
+                                <span>積読チャンネル収益化</span>
+                                <small>進行中</small>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>VALUE BOOKS OS | <a href="index.html">ダッシュボードに戻る</a></p>
+    </footer>
+
+    <script>
+        // チームカードのヘッダーをクリックで詳細ページに遷移
+        document.querySelectorAll('.team-card').forEach(card => {
+            const header = card.querySelector('.team-card-header');
+            header.style.cursor = 'pointer';
+            header.addEventListener('click', function(e) {
+                const teamId = card.id;
+                if (teamId) {
+                    window.location.href = `team-detail.html?id=${teamId}`;
+                }
+            });
+        });
+
+        // プロジェクトリンクを詳細ページに変更
+        document.querySelectorAll('.project-item').forEach(item => {
+            const href = item.getAttribute('href');
+            if (href && href.includes('#')) {
+                const projectId = href.split('#')[1];
+                if (projectId) {
+                    item.setAttribute('href', `project-detail.html?id=${projectId}`);
+                }
+            }
+        });
+
+        // メンバーリンクを詳細ページに変更
+        document.querySelectorAll('.member-chip').forEach(chip => {
+            const href = chip.getAttribute('href');
+            if (href && href.includes('#')) {
+                const memberId = href.split('#')[1];
+                if (memberId) {
+                    chip.setAttribute('href', `member-detail.html?id=${memberId}`);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

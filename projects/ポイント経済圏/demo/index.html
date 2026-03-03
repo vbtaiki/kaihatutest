@@ -1,0 +1,1755 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ポイント経済圏 — プロジェクトダッシュボード</title>
+  <style>
+    /* ===========================
+       リセット & ベース
+       =========================== */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sans JP', sans-serif;
+      background: #f0f2f5;
+      color: #333;
+      min-height: 100vh;
+    }
+
+    /* ===========================
+       トップバー
+       =========================== */
+    .top-bar {
+      background: #1a1a2e;
+      color: white;
+      padding: 0 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 56px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+    }
+    .top-bar-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .top-bar-logo {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .top-bar-divider {
+      width: 1px;
+      height: 24px;
+      background: rgba(255,255,255,0.2);
+    }
+    .top-bar-project {
+      font-size: 14px;
+      opacity: 0.85;
+    }
+    .top-bar-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 13px;
+    }
+    .status-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,0.1);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+    }
+    .status-dot {
+      width: 7px; height: 7px;
+      background: #4caf50;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    /* ===========================
+       タブナビゲーション
+       =========================== */
+    .tab-nav {
+      background: white;
+      border-bottom: 1px solid #e0e0e0;
+      display: flex;
+      padding: 0 24px;
+      gap: 0;
+      position: sticky;
+      top: 56px;
+      z-index: 999;
+    }
+    .tab-btn {
+      padding: 14px 24px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #888;
+      background: none;
+      border: none;
+      border-bottom: 3px solid transparent;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .tab-btn:hover {
+      color: #555;
+      background: #f8f8f8;
+    }
+    .tab-btn.active {
+      color: #1a1a2e;
+      border-bottom-color: #00897B;
+    }
+    .tab-badge {
+      background: #ff5722;
+      color: white;
+      font-size: 11px;
+      padding: 1px 7px;
+      border-radius: 10px;
+      font-weight: 700;
+    }
+
+    /* ===========================
+       タブコンテンツ
+       =========================== */
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+    .tab-content.active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===========================
+       共通カード
+       =========================== */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+    .card {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 1px 8px rgba(0,0,0,0.05);
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+    .card-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid #f0f0f0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .card-header h2 {
+      font-size: 17px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card-header .label {
+      font-size: 12px;
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-weight: 600;
+    }
+    .label-engineer {
+      background: #e3f2fd;
+      color: #1565c0;
+    }
+    .label-business {
+      background: #fff3e0;
+      color: #e65100;
+    }
+    .label-pilot {
+      background: #ede7f6;
+      color: #5e35b1;
+    }
+    .label-new {
+      background: #fce4ec;
+      color: #c62828;
+    }
+    .card-body {
+      padding: 24px;
+    }
+
+    /* ===========================
+       エンジニア最新版 - プレビュー
+       =========================== */
+    .preview-wrapper {
+      display: flex;
+      gap: 24px;
+      align-items: flex-start;
+    }
+    .preview-main {
+      flex: 1;
+      min-width: 0;
+    }
+    .preview-frame {
+      border: 2px solid #e0e0e0;
+      border-radius: 12px;
+      overflow: hidden;
+      max-width: 480px;
+      margin: 0 auto;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    }
+    .preview-frame iframe {
+      width: 100%;
+      height: 680px;
+      border: none;
+      display: block;
+    }
+    .preview-caption {
+      text-align: center;
+      padding: 10px;
+      background: #fafafa;
+      font-size: 12px;
+      color: #999;
+      border-top: 1px solid #eee;
+    }
+
+    /* サイドパネル（進捗情報） */
+    .side-panel {
+      width: 320px;
+      flex-shrink: 0;
+    }
+    .progress-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .progress-box {
+      background: #f8f9fa;
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+    }
+    .progress-box .num {
+      font-size: 28px;
+      font-weight: 700;
+    }
+    .progress-box .num.done { color: #2e7d32; }
+    .progress-box .num.wip { color: #f57c00; }
+    .progress-box .num.todo { color: #bbb; }
+    .progress-box .lbl {
+      font-size: 12px;
+      color: #999;
+      margin-top: 4px;
+    }
+    .feature-list {
+      list-style: none;
+    }
+    .feature-list li {
+      padding: 10px 0;
+      border-bottom: 1px solid #f0f0f0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+    }
+    .feature-list li:last-child { border-bottom: none; }
+
+    /* エンジニアからの報告 */
+    .report-card {
+      background: #f8f9fa;
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 20px;
+    }
+    .report-card h4 {
+      font-size: 14px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .report-card ul {
+      list-style: none;
+      font-size: 13px;
+      line-height: 1.8;
+      color: #555;
+    }
+    .report-card ul li::before {
+      content: '・';
+      color: #00897B;
+      font-weight: 700;
+    }
+
+    /* ===========================
+       ビジネス改善提案
+       =========================== */
+    .proposal-item {
+      border: 1px solid #f0f0f0;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+    .proposal-header {
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #fafafa;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .proposal-header:hover { background: #f0f0f0; }
+    .proposal-header-left h3 {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .proposal-meta {
+      font-size: 12px;
+      color: #999;
+      display: flex;
+      gap: 12px;
+    }
+    .proposal-toggle {
+      font-size: 20px;
+      color: #ccc;
+      transition: transform 0.3s;
+    }
+    .proposal-toggle.open {
+      transform: rotate(180deg);
+    }
+
+    /* 改善提案の本体 */
+    .proposal-body {
+      display: none;
+      padding: 0;
+    }
+    .proposal-body.open {
+      display: block;
+    }
+
+    /* フィードバックテキスト */
+    .proposal-feedback {
+      padding: 16px 20px;
+      background: #fffde7;
+      border-top: 1px solid #f0f0f0;
+      font-size: 14px;
+      line-height: 1.7;
+      color: #555;
+    }
+    .proposal-feedback strong {
+      color: #333;
+    }
+
+    /* Before/After 比較 */
+    .compare-area {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-top: 1px solid #f0f0f0;
+    }
+    .compare-side {
+      position: relative;
+      overflow: hidden;
+    }
+    .compare-side + .compare-side {
+      border-left: 1px solid #f0f0f0;
+    }
+    .compare-label {
+      text-align: center;
+      padding: 10px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .compare-label.before-label {
+      background: #f5f5f5;
+      color: #999;
+    }
+    .compare-label.after-label {
+      background: #e0f2f1;
+      color: #00695c;
+    }
+
+    /* 比較プレビュー内のアプリ描画 */
+    .mini-app {
+      font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', sans-serif;
+      background: #f5f5f0;
+    }
+    .mini-app .m-header {
+      background: #2c2c2c;
+      color: white;
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .mini-app .m-logo {
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .mini-app .m-user {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+    }
+    .mini-app .m-badge {
+      padding: 3px 10px;
+      border-radius: 16px;
+      font-weight: 600;
+      font-size: 11px;
+    }
+    .mini-app .m-main {
+      padding: 16px;
+    }
+    .mini-app .m-balance {
+      background: linear-gradient(135deg, #2c2c2c, #4a4a4a);
+      color: white;
+      border-radius: 12px;
+      padding: 20px 16px;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+    .mini-app .m-balance-num { font-size: 32px; font-weight: 700; }
+    .mini-app .m-balance-sub { font-size: 11px; opacity: 0.6; margin-top: 4px; }
+    .mini-app .m-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .mini-app .m-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 16px 8px;
+      border: none;
+      border-radius: 10px;
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 1.3;
+      text-align: center;
+    }
+    .mini-app .m-btn-icon { font-size: 24px; margin-bottom: 4px; }
+    .mini-app .m-btn-primary { background: #e8f5e9; color: #2e7d32; }
+    .mini-app .m-btn-secondary { background: #e3f2fd; color: #1565c0; }
+    .mini-app .m-info {
+      background: #fff8e1;
+      border: 1px solid #ffe082;
+      border-radius: 10px;
+      padding: 12px;
+      display: flex;
+      gap: 8px;
+      font-size: 12px;
+      line-height: 1.5;
+      color: #5d4037;
+    }
+
+    /* ハイライト */
+    .highlight-change {
+      position: relative;
+    }
+    .highlight-change::after {
+      content: '← ここが変更';
+      position: absolute;
+      right: -8px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: #00897B;
+      color: white;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 10px;
+      font-weight: 700;
+      white-space: nowrap;
+      animation: bounceArrow 1.5s ease-in-out infinite;
+    }
+    @keyframes bounceArrow {
+      0%, 100% { transform: translateY(-50%) translateX(0); }
+      50% { transform: translateY(-50%) translateX(-4px); }
+    }
+
+    /* CSSコード表示 */
+    .code-diff {
+      padding: 16px 20px;
+      background: #1e1e1e;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 12px;
+      line-height: 1.7;
+      color: #d4d4d4;
+      overflow-x: auto;
+    }
+    .code-diff .removed {
+      background: rgba(255, 0, 0, 0.15);
+      color: #f48771;
+      display: block;
+    }
+    .code-diff .added {
+      background: rgba(0, 255, 0, 0.1);
+      color: #89d185;
+      display: block;
+    }
+    .code-diff .comment { color: #6a9955; }
+
+    /* ===========================
+       ワークフローガイド
+       =========================== */
+    .workflow-section {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      border-radius: 16px;
+      padding: 32px;
+      color: white;
+      margin-bottom: 24px;
+    }
+    .workflow-section h2 {
+      font-size: 18px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .workflow-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .workflow-card {
+      background: rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 20px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .workflow-card h3 {
+      font-size: 14px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .workflow-card .role-tag {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 8px;
+      font-weight: 700;
+    }
+    .role-tag.eng { background: #1565c0; }
+    .role-tag.biz { background: #e65100; }
+    .role-tag.pilot { background: #5e35b1; }
+
+    /* ===========================
+       3ロール体制セクション
+       =========================== */
+    .roles-overview {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 1px 8px rgba(0,0,0,0.05);
+      padding: 28px;
+      margin-bottom: 24px;
+    }
+    .roles-overview h3 {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .roles-overview > p {
+      font-size: 14px;
+      color: #666;
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+    .roles-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .role-detail-card {
+      border-radius: 14px;
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    .role-detail-card h4 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .role-detail-card .role-subtitle {
+      font-size: 12px;
+      opacity: 0.7;
+      margin-bottom: 12px;
+    }
+    .role-detail-card ul {
+      list-style: none;
+      padding: 0;
+      font-size: 13px;
+      line-height: 2;
+    }
+    .role-detail-card .role-grow {
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(0,0,0,0.08);
+      font-size: 12px;
+      opacity: 0.8;
+      font-style: italic;
+    }
+    @media (max-width: 900px) {
+      .roles-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .workflow-card p {
+      font-size: 13px;
+      line-height: 1.7;
+      opacity: 0.8;
+    }
+    .workflow-card .example-prompt {
+      background: rgba(0,0,0,0.3);
+      border-radius: 8px;
+      padding: 10px 14px;
+      margin-top: 12px;
+      font-size: 12px;
+      line-height: 1.6;
+      font-family: inherit;
+      border-left: 3px solid #00897B;
+    }
+    .workflow-card .example-prompt strong {
+      color: #80cbc4;
+      display: block;
+      margin-bottom: 4px;
+      font-size: 11px;
+    }
+
+    /* ===========================
+       フッター
+       =========================== */
+    .page-footer {
+      text-align: center;
+      padding: 32px 24px;
+      font-size: 13px;
+      color: #999;
+    }
+    .page-footer a {
+      color: #00897B;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .page-footer a:hover { text-decoration: underline; }
+
+    /* ===========================
+       ヒストリーリンク
+       =========================== */
+    .history-link-card {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: white;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 1px 8px rgba(0,0,0,0.05);
+      margin-bottom: 24px;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .history-link-card:hover {
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      transform: translateY(-2px);
+    }
+    .history-link-left h3 {
+      font-size: 16px;
+      margin-bottom: 4px;
+    }
+    .history-link-left p {
+      font-size: 13px;
+      color: #999;
+    }
+    .history-link-arrow {
+      font-size: 24px;
+      color: #ccc;
+    }
+
+    /* ===========================
+       ブランチ状況タブ
+       =========================== */
+    .branch-current-banner {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      color: white;
+      border-radius: 16px;
+      padding: 24px 28px;
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 20px rgba(26,26,46,0.2);
+    }
+    .branch-current-info h2 {
+      font-size: 20px;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .branch-current-info p {
+      font-size: 13px;
+      opacity: 0.7;
+    }
+    .branch-name-tag {
+      background: #00897B;
+      color: white;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+    .branch-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    .branch-card {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 1px 8px rgba(0,0,0,0.05);
+      overflow: hidden;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .branch-card:hover {
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      transform: translateY(-2px);
+    }
+    .branch-card-head {
+      padding: 18px 20px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .branch-card-name {
+      font-size: 16px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .branch-card-name code {
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      background: #f0f2f5;
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: 14px;
+      color: #333;
+    }
+    .branch-role-tag {
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 10px;
+      font-weight: 600;
+    }
+    .branch-role-biz {
+      background: #fff3e0;
+      color: #e65100;
+    }
+    .branch-role-eng {
+      background: #e3f2fd;
+      color: #1565c0;
+    }
+    .branch-role-pilot {
+      background: #ede7f6;
+      color: #5e35b1;
+    }
+    .branch-card-body {
+      padding: 0 20px 18px;
+    }
+    .branch-card-meta {
+      display: flex;
+      gap: 14px;
+      font-size: 12px;
+      color: #999;
+      margin-bottom: 12px;
+    }
+    .branch-card-tasks {
+      list-style: none;
+      padding: 0;
+      font-size: 13px;
+      line-height: 1.9;
+      color: #555;
+    }
+    .branch-card-tasks li {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .branch-card-status {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid #f0f0f0;
+      font-size: 12px;
+    }
+    .branch-status-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+    }
+    .branch-status-active {
+      background: #4caf50;
+      box-shadow: 0 0 6px rgba(76,175,80,0.4);
+    }
+    .branch-status-review {
+      background: #ff9800;
+      box-shadow: 0 0 6px rgba(255,152,0,0.4);
+    }
+    .branch-status-merged {
+      background: #9e9e9e;
+    }
+    .branch-merge-flow {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 1px 8px rgba(0,0,0,0.05);
+      padding: 28px;
+      margin-bottom: 24px;
+    }
+    .branch-merge-flow h3 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .merge-flow-steps {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      padding: 8px 0;
+    }
+    .merge-flow-step {
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 600;
+      text-align: center;
+      line-height: 1.5;
+    }
+    .merge-flow-arrow {
+      font-size: 22px;
+      color: #ccc;
+    }
+    .branch-how-card {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 1px 8px rgba(0,0,0,0.05);
+      padding: 28px;
+      margin-bottom: 24px;
+    }
+    .branch-how-card h3 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .branch-prompt-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 12px;
+    }
+    .branch-prompt-item {
+      background: #f8f9fa;
+      border-radius: 10px;
+      padding: 14px 16px;
+      font-size: 13px;
+      line-height: 1.6;
+      border-left: 3px solid #00897B;
+    }
+    .branch-prompt-item strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 12px;
+      color: #00897B;
+    }
+
+    /* ===========================
+       レスポンシブ
+       =========================== */
+    @media (max-width: 900px) {
+      .preview-wrapper {
+        flex-direction: column;
+      }
+      .side-panel {
+        width: 100%;
+      }
+      .compare-area {
+        grid-template-columns: 1fr;
+      }
+      .compare-side + .compare-side {
+        border-left: none;
+        border-top: 1px solid #f0f0f0;
+      }
+      .workflow-grid {
+        grid-template-columns: 1fr;
+      }
+      .branch-grid {
+        grid-template-columns: 1fr;
+      }
+      .merge-flow-steps {
+        flex-direction: column;
+      }
+      .merge-flow-arrow {
+        transform: rotate(90deg);
+      }
+      .branch-current-banner {
+        flex-direction: column;
+        gap: 16px;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== トップバー ===== -->
+  <div class="top-bar">
+    <div class="top-bar-left">
+      <div class="top-bar-logo">📚 VALUE BOOKS</div>
+      <div class="top-bar-divider"></div>
+      <div class="top-bar-project">ポイント経済圏 プロジェクト</div>
+    </div>
+    <div class="top-bar-right">
+      <div class="status-badge" style="background: rgba(0,137,123,0.3); border: 1px solid rgba(0,137,123,0.5);">
+        🌿 <span style="font-weight: 600;">taiki</span>
+      </div>
+      <div class="status-badge">
+        <span class="status-dot"></span>
+        Phase 1 開発中
+      </div>
+      <span style="opacity: 0.6; font-size: 12px;">最終更新: 2026-02-10</span>
+    </div>
+  </div>
+
+  <!-- ===== タブナビゲーション ===== -->
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('engineer')">
+      💻 エンジニア最新版
+    </button>
+    <button class="tab-btn" onclick="switchTab('business')">
+      💡 ビジネス改善提案
+      <span class="tab-badge">2</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab('branches')">
+      🌿 ブランチ状況
+    </button>
+    <button class="tab-btn" onclick="switchTab('workflow')">
+      🔄 使い方ガイド
+    </button>
+  </div>
+
+  <!-- ========================================
+       タブ1: エンジニア最新版
+       ======================================== -->
+  <div id="tab-engineer" class="tab-content active">
+    <div class="container">
+
+      <!-- プロジェクト概要 -->
+      <div class="card">
+        <div class="card-header">
+          <h2>🪙 プロジェクト概要</h2>
+          <span class="label label-engineer">エンジニア管理</span>
+        </div>
+        <div class="card-body" style="padding: 20px 24px;">
+          <p style="font-size: 14px; line-height: 1.8; color: #555;">
+            本を売った人がポイントを受け取り、そのポイントでまた本を買う。
+            「売ったら終わり」の時代を終わらせ、循環する仕組みを作ります。<br>
+            <strong>ポイントで受け取ると10%おトク</strong> → リピート利用の促進 ／
+            <strong>目標:</strong> ポイント受取率 30% / 月間循環額 1,000万円
+          </p>
+        </div>
+      </div>
+
+      <!-- メインプレビュー + 進捗 -->
+      <div class="preview-wrapper">
+        <div class="preview-main">
+          <div class="card" style="margin-bottom: 0;">
+            <div class="card-header">
+              <h2>🖥️ 動作プレビュー（最新版）</h2>
+              <span class="label label-engineer">app/</span>
+            </div>
+            <div style="padding: 16px;">
+              <div class="preview-frame">
+                <iframe src="../app/index.html"></iframe>
+                <div class="preview-caption">
+                  ↑ 実際に操作できます — 「本を売ってポイント獲得」「ポイントで本を買う」を試してみてください
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="side-panel">
+          <!-- 進捗 -->
+          <div class="card">
+            <div class="card-header">
+              <h2>📊 開発進捗</h2>
+            </div>
+            <div class="card-body">
+              <div class="progress-grid">
+                <div class="progress-box">
+                  <div class="num done">3</div>
+                  <div class="lbl">完了</div>
+                </div>
+                <div class="progress-box">
+                  <div class="num wip">2</div>
+                  <div class="lbl">開発中</div>
+                </div>
+                <div class="progress-box">
+                  <div class="num todo">4</div>
+                  <div class="lbl">未着手</div>
+                </div>
+                <div class="progress-box">
+                  <div class="num wip">33%</div>
+                  <div class="lbl">全体進捗</div>
+                </div>
+              </div>
+
+              <ul class="feature-list">
+                <li>✅ ポイント残高の表示</li>
+                <li>✅ 買取→ポイント受取の画面</li>
+                <li>✅ +10%ボーナスの計算</li>
+                <li>🔄 ポイントで本を購入</li>
+                <li>🔄 取引履歴の表示</li>
+                <li>⬜ 有効期限の管理（1年）</li>
+                <li>⬜ 期限30日前の通知</li>
+                <li>⬜ 延長キャンペーン機能</li>
+                <li>⬜ 既存決済との統合</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- エンジニアの報告 -->
+          <div class="card">
+            <div class="card-header">
+              <h2>📝 エンジニアからの報告</h2>
+              <span style="font-size: 12px; color: #999;">2026-02-09</span>
+            </div>
+            <div class="card-body">
+              <div class="report-card" style="margin-top: 0;">
+                <h4>💬 来週の予定</h4>
+                <ul>
+                  <li>ポイント付与APIの実装開始</li>
+                  <li>ポイント残高照会のバックエンド</li>
+                  <li>ビジネスFBのカラー変更を反映</li>
+                </ul>
+              </div>
+              <div class="report-card">
+                <h4>⚠️ ビジネスへの質問</h4>
+                <ul>
+                  <li>ポイント有効期限 → <strong style="color: #2e7d32;">✅ 1年に決定</strong></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ========================================
+       タブ2: ビジネス改善提案
+       ======================================== -->
+  <div id="tab-business" class="tab-content">
+    <div class="container">
+
+      <div class="card">
+        <div class="card-header">
+          <h2>💡 ビジネスサイドからの改善提案</h2>
+          <span class="label label-business">business/</span>
+        </div>
+        <div class="card-body" style="padding: 16px 24px;">
+          <p style="font-size: 14px; color: #666; line-height: 1.7;">
+            ビジネスサイドのメンバーがCursorを使って作成した改善提案です。<br>
+            テキストでの指摘内容と、AIが反映したBefore/After比較を確認できます。
+          </p>
+        </div>
+      </div>
+
+      <!-- ===== 改善提案 #1: ポイントバッジの色変更 ===== -->
+      <div class="proposal-item" id="proposal-1">
+        <div class="proposal-header" onclick="toggleProposal('proposal-1')">
+          <div class="proposal-header-left">
+            <h3>🎨 ポイントバッジをティールグリーンに変更</h3>
+            <div class="proposal-meta">
+              <span>📅 2026-02-10</span>
+              <span>👤 中村</span>
+              <span class="label label-new" style="font-size: 11px; padding: 1px 8px;">NEW</span>
+            </div>
+          </div>
+          <span class="proposal-toggle" id="toggle-proposal-1">▼</span>
+        </div>
+        <div class="proposal-body open" id="body-proposal-1">
+          <!-- テキストフィードバック -->
+          <div class="proposal-feedback">
+            <strong>💬 指摘内容:</strong><br>
+            ヘッダー右上のポイント残高を囲んでいる<strong>黄色いバッジ</strong>（🪙 2,450 pt の部分）を、
+            バリューブックスのロゴカラーである<strong>ティールグリーン</strong>に変更してほしい。<br><br>
+            <strong>理由:</strong> 黄色は一般的すぎてブランドイメージに合わない。ロゴカラーと統一したい。
+          </div>
+
+          <!-- Before / After -->
+          <div class="compare-area">
+            <!-- Before -->
+            <div class="compare-side">
+              <div class="compare-label before-label">現状（Before）</div>
+              <div class="mini-app">
+                <div class="m-header">
+                  <span class="m-logo">📚 VALUE BOOKS</span>
+                  <div class="m-user">
+                    <span class="m-badge" style="background: #f0c040; color: #333;">🪙 2,450 pt</span>
+                    <span>中村さん</span>
+                  </div>
+                </div>
+                <div class="m-main">
+                  <div class="m-balance">
+                    <div class="m-balance-num">2,450 <span style="font-size: 16px; opacity: 0.7;">pt</span></div>
+                    <div class="m-balance-sub">ポイント残高（¥2,450相当）</div>
+                  </div>
+                  <div class="m-actions">
+                    <button class="m-btn m-btn-primary"><span class="m-btn-icon">📦</span>本を売って<br>ポイント獲得</button>
+                    <button class="m-btn m-btn-secondary"><span class="m-btn-icon">🛒</span>ポイントで<br>本を買う</button>
+                  </div>
+                  <div class="m-info">
+                    <span>💡</span>
+                    <span><strong>ポイントで受け取ると10%おトク！</strong></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- After -->
+            <div class="compare-side">
+              <div class="compare-label after-label">✨ 改善案（After）</div>
+              <div class="mini-app">
+                <div class="m-header">
+                  <span class="m-logo">📚 VALUE BOOKS</span>
+                  <div class="m-user">
+                    <span class="m-badge highlight-change" style="background: #00897B; color: #fff;">🪙 2,450 pt</span>
+                    <span>中村さん</span>
+                  </div>
+                </div>
+                <div class="m-main">
+                  <div class="m-balance">
+                    <div class="m-balance-num">2,450 <span style="font-size: 16px; opacity: 0.7;">pt</span></div>
+                    <div class="m-balance-sub">ポイント残高（¥2,450相当）</div>
+                  </div>
+                  <div class="m-actions">
+                    <button class="m-btn m-btn-primary"><span class="m-btn-icon">📦</span>本を売って<br>ポイント獲得</button>
+                    <button class="m-btn m-btn-secondary"><span class="m-btn-icon">🛒</span>ポイントで<br>本を買う</button>
+                  </div>
+                  <div class="m-info">
+                    <span>💡</span>
+                    <span><strong>ポイントで受け取ると10%おトク！</strong></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- コード差分 -->
+          <div class="code-diff">
+            <span class="comment">/* app/style.css  .point-badge */</span>
+            <span class="removed">- background: #f0c040;   /* 黄色 */</span>
+            <span class="removed">- color: #333;            /* 黒文字 */</span>
+            <span class="added">+ background: #00897B;   /* ティールグリーン（ロゴカラー） */</span>
+            <span class="added">+ color: #ffffff;         /* 白文字 */</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== 改善提案 #2: ボタンカラー変更 ===== -->
+      <div class="proposal-item" id="proposal-2">
+        <div class="proposal-header" onclick="toggleProposal('proposal-2')">
+          <div class="proposal-header-left">
+            <h3>🎨 アクションボタンをブランドカラーに変更</h3>
+            <div class="proposal-meta">
+              <span>📅 2026-02-09</span>
+              <span>👤 中村</span>
+            </div>
+          </div>
+          <span class="proposal-toggle" id="toggle-proposal-2">▼</span>
+        </div>
+        <div class="proposal-body" id="body-proposal-2">
+          <!-- テキストフィードバック -->
+          <div class="proposal-feedback">
+            <strong>💬 指摘内容:</strong><br>
+            ボタンの色が一般的すぎる（緑/青）。バリューブックスらしさがない。<br>
+            「本屋さんの温もり」を感じる配色にしたい。テラコッタ系（本棚の木の色）と落ち着いたグリーン（自然・森）を提案。<br><br>
+            <strong>良い点:</strong> ポイント残高の表示が分かりやすい、+10%おトクの表現が良い、買取フローがスムーズ
+          </div>
+
+          <!-- Before / After -->
+          <div class="compare-area">
+            <!-- Before -->
+            <div class="compare-side">
+              <div class="compare-label before-label">現状（Before）</div>
+              <div class="mini-app">
+                <div class="m-header">
+                  <span class="m-logo">📚 VALUE BOOKS</span>
+                  <div class="m-user">
+                    <span class="m-badge" style="background: #f0c040; color: #333;">🪙 2,450 pt</span>
+                    <span>中村さん</span>
+                  </div>
+                </div>
+                <div class="m-main">
+                  <div class="m-balance">
+                    <div class="m-balance-num">2,450 <span style="font-size: 16px; opacity: 0.7;">pt</span></div>
+                    <div class="m-balance-sub">ポイント残高（¥2,450相当）</div>
+                  </div>
+                  <div class="m-actions">
+                    <button class="m-btn m-btn-primary"><span class="m-btn-icon">📦</span>本を売って<br>ポイント獲得</button>
+                    <button class="m-btn m-btn-secondary"><span class="m-btn-icon">🛒</span>ポイントで<br>本を買う</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- After -->
+            <div class="compare-side">
+              <div class="compare-label after-label">✨ 改善案（After）</div>
+              <div class="mini-app">
+                <div class="m-header">
+                  <span class="m-logo">📚 VALUE BOOKS</span>
+                  <div class="m-user">
+                    <span class="m-badge" style="background: #f0c040; color: #333;">🪙 2,450 pt</span>
+                    <span>中村さん</span>
+                  </div>
+                </div>
+                <div class="m-main">
+                  <div class="m-balance">
+                    <div class="m-balance-num">2,450 <span style="font-size: 16px; opacity: 0.7;">pt</span></div>
+                    <div class="m-balance-sub">ポイント残高（¥2,450相当）</div>
+                  </div>
+                  <div class="m-actions">
+                    <button class="m-btn highlight-change" style="background: #fdf0e6; color: #c45e28; border: 2px solid #f0d4bc; display: flex; flex-direction: column; align-items: center; padding: 16px 8px; border-radius: 10px; font-family: inherit; font-size: 12px; font-weight: 600; line-height: 1.3; text-align: center;">
+                      <span class="m-btn-icon">📦</span>本を売って<br>ポイント獲得
+                    </button>
+                    <button class="m-btn" style="background: #eef3e8; color: #5a7247; border: 2px solid #d4dfca; display: flex; flex-direction: column; align-items: center; padding: 16px 8px; border-radius: 10px; font-family: inherit; font-size: 12px; font-weight: 600; line-height: 1.3; text-align: center;">
+                      <span class="m-btn-icon">🛒</span>ポイントで<br>本を買う
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- コード差分 -->
+          <div class="code-diff">
+            <span class="comment">/* app/style.css  .action-btn.primary */</span>
+            <span class="removed">- background: #e8f5e9;  color: #2e7d32;   /* 一般的な緑 */</span>
+            <span class="added">+ background: #fdf0e6;  color: #c45e28;   /* テラコッタ系 */</span>
+            <br>
+            <span class="comment">/* app/style.css  .action-btn.secondary */</span>
+            <span class="removed">- background: #e3f2fd;  color: #1565c0;   /* 一般的な青 */</span>
+            <span class="added">+ background: #eef3e8;  color: #5a7247;   /* 落ち着いたグリーン */</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 過去のやり取り履歴へのリンク -->
+      <a href="history.html" class="history-link-card">
+        <div class="history-link-left">
+          <h3>📋 過去のやり取り履歴を見る</h3>
+          <p>フィードバック・質問・意思決定ログなど、プロジェクトの全やり取りを確認</p>
+        </div>
+        <span class="history-link-arrow">→</span>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- ========================================
+       タブ3: 使い方ガイド
+       ======================================== -->
+  <div id="tab-workflow" class="tab-content">
+    <div class="container">
+
+      <div class="workflow-section">
+        <h2>🔄 このダッシュボードの使い方</h2>
+        <p style="font-size: 14px; opacity: 0.8; margin-bottom: 24px; line-height: 1.7;">
+          3つの役割のメンバーが、自分のCursorからこのダッシュボードの情報を確認し、<br>
+          AIと対話しながらプロジェクトを進めます。GitHubの使い方を知る必要はありません。
+        </p>
+
+        <div class="workflow-grid">
+          <!-- ビジネス: 最新を確認 -->
+          <div class="workflow-card">
+            <h3><span class="role-tag biz">ビジネス</span> 最新の状態を確認する</h3>
+            <p>エンジニアの最新コードやデモを確認し、フィードバックを返します。</p>
+            <div class="example-prompt">
+              <strong>💬 Cursorに話しかける例:</strong>
+              「最新の更新を教えて」<br>
+              「デモを確認したい」<br>
+              「エンジニアから何か報告ある？」
+            </div>
+          </div>
+
+          <!-- ビジネス: フィードバックを送る -->
+          <div class="workflow-card">
+            <h3><span class="role-tag biz">ビジネス</span> フィードバック & 改善案</h3>
+            <p>テキストでの指摘や、AIと一緒にコード改善案を作成してブランチに保存。</p>
+            <div class="example-prompt">
+              <strong>💬 Cursorに話しかける例:</strong>
+              「ポイントバッジの色をティールグリーンに変えたい」<br>
+              「このボタンのデザインを改善したコードを作って」<br>
+              「保存してGitHubに送って」
+            </div>
+          </div>
+
+          <!-- パイロット: レビュー＆統合 -->
+          <div class="workflow-card" style="border-left: 3px solid #5e35b1;">
+            <h3><span class="role-tag pilot">パイロット</span> レビュー & mainへ統合</h3>
+            <p>各ブランチの変更をレビューし、問題なければmainに統合します。全体の品質管理を担います。</p>
+            <div class="example-prompt">
+              <strong>💬 Cursorに話しかける例:</strong>
+              「各ブランチの変更内容を見せて」<br>
+              「taikiブランチの変更をmainに統合して」<br>
+              「レビュー結果を記録して」
+            </div>
+          </div>
+
+          <!-- エンジニア: コードを更新 -->
+          <div class="workflow-card">
+            <h3><span class="role-tag eng">エンジニア</span> コードを開発・更新する</h3>
+            <p>ビジネスのフィードバックや改善案を確認し、app/ のコードに反映します。</p>
+            <div class="example-prompt">
+              <strong>💬 Cursorに話しかける例:</strong>
+              「ビジネスからのフィードバックを確認したい」<br>
+              「改善案のコード差分を見せて」<br>
+              「進捗報告を書いて送りたい」
+            </div>
+          </div>
+
+          <!-- エンジニア: 質問する -->
+          <div class="workflow-card">
+            <h3><span class="role-tag eng">エンジニア</span> ビジネスに質問する</h3>
+            <p>技術的な判断が必要な時、ビジネスサイドに質問を投げます。</p>
+            <div class="example-prompt">
+              <strong>💬 Cursorに話しかける例:</strong>
+              「ポイント有効期限についてビジネスに聞きたい」<br>
+              「選択肢A/Bを提示して判断を仰ぎたい」<br>
+              「質問をまとめて送って」
+            </div>
+          </div>
+
+          <!-- パイロット: 進行管理 -->
+          <div class="workflow-card" style="border-left: 3px solid #5e35b1;">
+            <h3><span class="role-tag pilot">パイロット</span> プロジェクト進行管理</h3>
+            <p>全体の進捗を把握し、ビジネスとエンジニアの橋渡しをします。</p>
+            <div class="example-prompt">
+              <strong>💬 Cursorに話しかける例:</strong>
+              「プロジェクト全体の進捗をまとめて」<br>
+              「ビジネスの要望をエンジニアに整理して伝えて」<br>
+              「今週のブランチ状況を整理して」
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- フロー図 -->
+      <div class="card">
+        <div class="card-header">
+          <h2>🔁 やり取りの流れ</h2>
+        </div>
+        <div class="card-body">
+          <div style="display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; padding: 20px 0;">
+            <div style="background: #fff3e0; color: #e65100; padding: 14px 18px; border-radius: 12px; font-weight: 600; font-size: 13px; text-align: center;">
+              🏢 ビジネス<br>
+              <span style="font-size: 11px; font-weight: 400;">要望 & 改善案を作成</span>
+            </div>
+            <div style="font-size: 24px; color: #ccc;">→</div>
+            <div style="background: #f3f0ff; color: #5e35b1; padding: 14px 18px; border-radius: 12px; font-weight: 600; font-size: 13px; text-align: center; border: 2px solid #d1c4e9;">
+              🧭 パイロット<br>
+              <span style="font-size: 11px; font-weight: 400;">レビュー & main統合</span>
+            </div>
+            <div style="font-size: 24px; color: #ccc;">→</div>
+            <div style="background: #e3f2fd; color: #1565c0; padding: 14px 18px; border-radius: 12px; font-weight: 600; font-size: 13px; text-align: center;">
+              💻 エンジニア<br>
+              <span style="font-size: 11px; font-weight: 400;">コード開発 & 実装</span>
+            </div>
+          </div>
+          <div style="text-align: center; margin-top: 8px;">
+            <div style="font-size: 28px; color: #ccc;">↻</div>
+            <div style="font-size: 13px; color: #999;">
+              全員が自分のブランチで作業 → パイロットがレビューしてmainに統合 — 全てCursorで完結
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ブランチ運用の説明（3ロール体制） -->
+      <div class="card">
+        <div class="card-header">
+          <h2>🌿 ブランチ運用について</h2>
+        </div>
+        <div class="card-body">
+          <div style="font-size: 14px; line-height: 1.9; color: #555;">
+            <p style="margin-bottom: 16px;">
+              <strong>ブランチ</strong>とは、プロジェクトの「作業用コピー」です。<br>
+              各メンバーが自分専用のブランチを持ち、そこで安心して変更を行います。
+            </p>
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px;">
+              <div style="background: #f8f9fa; padding: 16px; border-radius: 10px; border-left: 3px solid #2e7d32;">
+                <strong style="color: #2e7d32;">👑 main（本番）</strong><br>
+                パイロットが管理する安定版
+              </div>
+              <div style="background: #f8f9fa; padding: 16px; border-radius: 10px; border-left: 3px solid #e65100;">
+                <strong style="color: #e65100;">🧑‍💼 taiki 等</strong><br>
+                ビジネス側の作業用
+              </div>
+              <div style="background: #f8f9fa; padding: 16px; border-radius: 10px; border-left: 3px solid #5e35b1;">
+                <strong style="color: #5e35b1;">🧭 pilot/review</strong><br>
+                パイロットの統合作業用
+              </div>
+              <div style="background: #f8f9fa; padding: 16px; border-radius: 10px; border-left: 3px solid #1565c0;">
+                <strong style="color: #1565c0;">👨‍💻 feature/xxx</strong><br>
+                エンジニアの開発用
+              </div>
+            </div>
+            <p style="margin-top: 16px; color: #999; font-size: 13px;">
+              💡 「ブランチ状況」タブで各メンバーの作業状況をいつでも確認できます。<br>
+              🧭 パイロットがmainへの統合を判断し、プロジェクト全体の品質を守ります。
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ファイル構造の説明 -->
+      <div class="card">
+        <div class="card-header">
+          <h2>📁 プロジェクトのファイル構成</h2>
+        </div>
+        <div class="card-body">
+          <div style="font-family: 'SF Mono', 'Fira Code', monospace; font-size: 13px; line-height: 2; color: #555; background: #f8f9fa; border-radius: 8px; padding: 16px 20px;">
+            <span style="color: #999;">projects/ポイント経済圏/</span><br>
+            ├── <strong style="color: #1565c0;">app/</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: #999;">← エンジニアが開発するコード</span><br>
+            ├── <strong style="color: #2e7d32;">demo/</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: #999;">← このダッシュボード</span><br>
+            ├── <strong style="color: #e65100;">business/</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: #999;">← ビジネスサイドの領域</span><br>
+            │&nbsp;&nbsp; ├── フィードバック.md &nbsp;<span style="color: #999;">← テキストでの指摘</span><br>
+            │&nbsp;&nbsp; └── コード改善案/ &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #999;">← AI作成の改善コード</span><br>
+            ├── <strong style="color: #1565c0;">engineering/</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #999;">← エンジニアの領域</span><br>
+            │&nbsp;&nbsp; ├── 進捗報告.md &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #999;">← 進捗レポート</span><br>
+            │&nbsp;&nbsp; └── 質問・相談.md &nbsp;&nbsp;&nbsp;<span style="color: #999;">← ビジネスへの質問</span><br>
+            └── <strong>shared/</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #999;">← 共有エリア</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ========================================
+       タブ4: ブランチ状況
+       ======================================== -->
+  <div id="tab-branches" class="tab-content">
+    <div class="container">
+
+      <!-- 現在のブランチ表示 -->
+      <div class="branch-current-banner">
+        <div class="branch-current-info">
+          <h2>🌿 あなたの作業ブランチ</h2>
+          <p>あなたは現在、以下のブランチで作業しています。変更はまずここに保存され、確認後に本番（main）に統合されます。</p>
+        </div>
+        <span class="branch-name-tag" id="current-branch-name">taiki</span>
+      </div>
+
+      <!-- 3ロール体制の説明 -->
+      <div class="roles-overview">
+        <h3>🎯 プロジェクトの3つの役割</h3>
+        <p>
+          このプロジェクトでは3つの役割でチームを構成します。<br>
+          ビジネスとエンジニアが自分のブランチで作業し、パイロットが全体を見て本番に統合します。
+        </p>
+        <div class="roles-grid">
+          <!-- ビジネス -->
+          <div class="role-detail-card" style="background: #fff8f0; border: 1px solid #ffe0b2;">
+            <h4>🏢 ビジネスサイド</h4>
+            <div class="role-subtitle">プロダクトの方向性を決め、フィードバックを返す</div>
+            <ul>
+              <li>📋 要件・方針の策定</li>
+              <li>💬 コードへのフィードバック</li>
+              <li>💻 AIと改善コードを作成</li>
+              <li>✅ 意思決定の最終判断</li>
+            </ul>
+            <div class="role-grow">
+              🚀 成長パス: パイロットも兼ねられるようになる
+            </div>
+          </div>
+          <!-- パイロット -->
+          <div class="role-detail-card" style="background: #f3f0ff; border: 1px solid #d1c4e9;">
+            <h4>🧭 プロジェクトパイロット</h4>
+            <div class="role-subtitle">全体を操縦し、mainへの統合を判断する</div>
+            <ul>
+              <li>🔍 各ブランチの変更をレビュー</li>
+              <li>🔀 mainへの統合を実行</li>
+              <li>⚖️ ビジネスとエンジニアの橋渡し</li>
+              <li>🛡️ 品質とプロジェクト進行の管理</li>
+            </ul>
+            <div class="role-grow">
+              💡 エンジニアでもビジネスでも担える役割
+            </div>
+          </div>
+          <!-- エンジニア -->
+          <div class="role-detail-card" style="background: #f0f5ff; border: 1px solid #bbdefb;">
+            <h4>💻 エンジニア</h4>
+            <div class="role-subtitle">コードを開発し、技術的な課題を解決する</div>
+            <ul>
+              <li>🔧 app/ のコード開発</li>
+              <li>📊 進捗報告・技術設計</li>
+              <li>❓ ビジネスへの質問・相談</li>
+              <li>🔄 改善案の本番反映</li>
+            </ul>
+            <div class="role-grow">
+              🚀 パイロットも兼ねる場合あり
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- アクティブなブランチ一覧 -->
+      <div class="card" style="margin-bottom: 24px;">
+        <div class="card-header">
+          <h2>📋 アクティブなブランチ一覧</h2>
+          <span style="font-size: 12px; color: #999;">最終更新: 2026-02-10</span>
+        </div>
+        <div class="card-body" style="padding: 16px 24px;">
+          <p style="font-size: 14px; color: #666; line-height: 1.7; margin-bottom: 8px;">
+            ビジネスとエンジニアが自分のブランチで作業 → パイロットがレビューしてmainに統合。<br>
+            <strong>main は誰も直接変更しない</strong>ため、安全にプロジェクトを進められます。
+          </p>
+        </div>
+      </div>
+
+      <div class="branch-grid">
+
+        <!-- main ブランチ -->
+        <div class="branch-card">
+          <div class="branch-card-head">
+            <div class="branch-card-name">
+              👑 <code>main</code>
+            </div>
+            <span class="branch-role-tag branch-role-pilot">パイロット管理</span>
+          </div>
+          <div class="branch-card-body">
+            <div class="branch-card-meta">
+              <span>🔒 パイロットのみが統合を実行</span>
+            </div>
+            <ul class="branch-card-tasks">
+              <li>✅ プロジェクト初期セットアップ完了</li>
+              <li>✅ ポイント経済圏 Phase1 基本画面</li>
+              <li>✅ ダッシュボード＆ヒストリー</li>
+            </ul>
+            <div class="branch-card-status">
+              <span class="branch-status-dot branch-status-active"></span>
+              <span style="color: #4caf50; font-weight: 600;">安定版 — パイロットがレビュー済み</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- taiki ブランチ -->
+        <div class="branch-card" style="border: 2px solid #00897B;">
+          <div class="branch-card-head">
+            <div class="branch-card-name">
+              🧑‍💼 <code>taiki</code>
+            </div>
+            <span class="branch-role-tag branch-role-biz">ビジネス</span>
+          </div>
+          <div class="branch-card-body">
+            <div class="branch-card-meta">
+              <span>👤 中村（ビジネス）</span>
+              <span>📅 2026-02-10 〜</span>
+            </div>
+            <ul class="branch-card-tasks">
+              <li>🔄 ポイントバッジのティールグリーン化を提案</li>
+              <li>🔄 ボタンカラーのブランド統一を提案</li>
+              <li>🔄 ダッシュボードに3ロール体制を導入</li>
+            </ul>
+            <div class="branch-card-status">
+              <span class="branch-status-dot branch-status-active"></span>
+              <span style="color: #4caf50; font-weight: 600;">作業中 — あなたのブランチ</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- パイロット用ブランチ例 -->
+        <div class="branch-card" style="opacity: 0.6; border: 2px dashed #d1c4e9;">
+          <div class="branch-card-head">
+            <div class="branch-card-name">
+              🧭 <code>pilot/review</code>
+            </div>
+            <span class="branch-role-tag branch-role-pilot">パイロット</span>
+          </div>
+          <div class="branch-card-body">
+            <div class="branch-card-meta">
+              <span>👤 （シニアエンジニア名）</span>
+              <span>📅 未作成</span>
+            </div>
+            <ul class="branch-card-tasks">
+              <li>⬜ 各ブランチの変更をレビュー</li>
+              <li>⬜ テスト・品質チェック</li>
+              <li>⬜ mainへの統合判断</li>
+            </ul>
+            <div class="branch-card-status">
+              <span class="branch-status-dot" style="background: #ccc;"></span>
+              <span style="color: #999;">まだ作成されていません</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- エンジニア用ブランチ例 -->
+        <div class="branch-card" style="opacity: 0.6; border: 2px dashed #bbdefb;">
+          <div class="branch-card-head">
+            <div class="branch-card-name">
+              👨‍💻 <code>feature/point-api</code>
+            </div>
+            <span class="branch-role-tag branch-role-eng">エンジニア</span>
+          </div>
+          <div class="branch-card-body">
+            <div class="branch-card-meta">
+              <span>👤 （エンジニア名）</span>
+              <span>📅 未作成</span>
+            </div>
+            <ul class="branch-card-tasks">
+              <li>⬜ ポイント付与APIの実装</li>
+              <li>⬜ ポイント残高照会のバックエンド</li>
+              <li>⬜ ビジネスFBのカラー変更を反映</li>
+            </ul>
+            <div class="branch-card-status">
+              <span class="branch-status-dot" style="background: #ccc;"></span>
+              <span style="color: #999;">まだ作成されていません</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- マージフロー解説（パイロット中心） -->
+      <div class="branch-merge-flow">
+        <h3>🔁 ブランチからmainへの流れ</h3>
+        <div class="merge-flow-steps">
+          <div class="merge-flow-step" style="background: #fff3e0; color: #e65100;">
+            ① ビジネス/エンジニア<br>自分のブランチで作業
+          </div>
+          <span class="merge-flow-arrow">→</span>
+          <div class="merge-flow-step" style="background: #e3f2fd; color: #1565c0;">
+            ② GitHubに送る<br>
+            <span style="font-size: 11px; font-weight: 400;">「保存して送って」とCursorに言う</span>
+          </div>
+          <span class="merge-flow-arrow">→</span>
+          <div class="merge-flow-step" style="background: #f3f0ff; color: #5e35b1;">
+            ③ 🧭 パイロットがレビュー<br>
+            <span style="font-size: 11px; font-weight: 400;">内容を確認・テスト</span>
+          </div>
+          <span class="merge-flow-arrow">→</span>
+          <div class="merge-flow-step" style="background: #e8f5e9; color: #2e7d32;">
+            ④ 🧭 パイロットがmainに統合<br>
+            <span style="font-size: 11px; font-weight: 400;">OKなら本番に反映</span>
+          </div>
+        </div>
+        <p style="text-align: center; font-size: 13px; color: #999; margin-top: 16px;">
+          💡 ビジネス・エンジニアは「保存して送って」だけ。レビューと統合はパイロットが責任を持って行います。
+        </p>
+      </div>
+
+      <!-- Cursorでの操作ガイド（ロール別） -->
+      <div class="branch-how-card">
+        <h3>💬 ロール別 Cursorでの操作ガイド</h3>
+        <div class="branch-prompt-list">
+          <div class="branch-prompt-item" style="border-left-color: #e65100;">
+            <strong style="color: #e65100;">🏢 ビジネスサイド</strong>
+            「フィードバックを書いて送りたい」<br>
+            「この部分の改善コードを作って」<br>
+            「保存してGitHubに送って」
+          </div>
+          <div class="branch-prompt-item" style="border-left-color: #1565c0;">
+            <strong style="color: #1565c0;">💻 エンジニア</strong>
+            「ビジネスからのFBを確認したい」<br>
+            「改善案のコードを取り込んで反映して」<br>
+            「進捗報告を書いて送りたい」
+          </div>
+          <div class="branch-prompt-item" style="border-left-color: #5e35b1;">
+            <strong style="color: #5e35b1;">🧭 パイロット</strong>
+            「各ブランチの変更内容を見せて」<br>
+            「taikiブランチの変更をmainに統合して」<br>
+            「全ブランチの状況を整理して」
+          </div>
+          <div class="branch-prompt-item">
+            <strong>共通の操作</strong>
+            「mainの最新を取り込んで」<br>
+            「他の人のブランチ状況を教えて」<br>
+            「デモを確認したい」
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== フッター ===== -->
+  <div class="page-footer">
+    <a href="history.html">📋 過去のやり取り履歴</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+    <span>ポイント経済圏プロジェクト — VALUE BOOKS</span>
+  </div>
+
+  <!-- ===========================
+       JavaScript
+       =========================== -->
+  <script>
+    // タブ切り替え
+    function switchTab(tabName) {
+      // タブコンテンツの切り替え
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.getElementById('tab-' + tabName).classList.add('active');
+
+      // タブボタンの切り替え
+      document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+      event.currentTarget.classList.add('active');
+    }
+
+    // 改善提案の展開/折りたたみ
+    function toggleProposal(id) {
+      const body = document.getElementById('body-' + id);
+      const toggle = document.getElementById('toggle-' + id);
+      body.classList.toggle('open');
+      toggle.classList.toggle('open');
+    }
+  </script>
+
+</body>
+</html>
