@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>買取広告AI自動化 — バリューブックス</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ヘッダー -->
+<header class="app-header">
+  <div class="header-left">
+    <div class="header-logo">📚 VALUE BOOKS</div>
+    <div class="header-divider"></div>
+    <div class="header-project">買取広告 AI 自動化</div>
+  </div>
+  <div class="header-right">
+    <div class="ai-status">
+      <span class="ai-dot"></span>
+      AI エンジン 稼働中
+    </div>
+    <span id="now-date" style="opacity:0.7;"></span>
+  </div>
+</header>
+
+<!-- タブナビゲーション -->
+<nav class="tab-nav" id="tab-nav">
+  <button class="tab-btn active" onclick="switchTab('dashboard')">📊 ダッシュボード</button>
+  <button class="tab-btn" onclick="switchTab('plan')">💰 予算配分プラン</button>
+  <button class="tab-btn" onclick="switchTab('analysis')">🔍 クリエイティブ分析</button>
+  <button class="tab-btn" onclick="switchTab('generate')">✨ クリエイティブ生成</button>
+  <button class="tab-btn" onclick="switchTab('compete')">⚔️ 人間 vs AI コンペ</button>
+  <button class="tab-btn" onclick="switchTab('queue')">📬 入稿キュー</button>
+</nav>
+
+<div class="main-content">
+
+  <!-- ===== TAB 1: ダッシュボード ===== -->
+  <div class="tab-panel active" id="tab-dashboard">
+
+    <div class="ai-recommend">
+      <div class="ai-recommend-icon">🤖</div>
+      <div class="ai-recommend-body">
+        <div class="ai-recommend-title">AIからの今月の推奨アクション</div>
+        <div class="ai-recommend-text">
+          Meta Ads の「お得感訴求」クリエイティブが先月比 CTR +38% を記録しています。同訴求軸で Google Ads 向けバナーを3案生成・追加配信することを推奨します。また、YDA の CPA が目標を22%上回っているため、配分を一時的に Google へ移動することを提案します。
+          <br>→ <a href="#" onclick="switchTab('plan'); return false;" style="color:var(--primary-dark);font-weight:700;">予算配分を見直す</a>
+          &nbsp;|&nbsp; <a href="#" onclick="switchTab('generate'); return false;" style="color:var(--primary-dark);font-weight:700;">クリエイティブを生成する</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- KPI -->
+    <div class="grid-4" style="margin-bottom:20px;">
+      <div class="kpi-card">
+        <div class="kpi-label">今月の獲得目標</div>
+        <div class="kpi-value">1,200</div>
+        <div class="kpi-sub">新規買取申込数（件）</div>
+      </div>
+      <div class="kpi-card success">
+        <div class="kpi-label">現在の獲得数</div>
+        <div class="kpi-value">847</div>
+        <div class="kpi-sub">達成率 70.6%</div>
+        <div class="progress-wrap" style="margin-top:6px;">
+          <div class="progress-bar"><div class="progress-fill success" style="width:70.6%"></div></div>
+        </div>
+      </div>
+      <div class="kpi-card accent">
+        <div class="kpi-label">現在のCPA</div>
+        <div class="kpi-value">¥1,840</div>
+        <div class="kpi-sub">目標 ¥2,000 <span class="kpi-delta up">▼8% 目標内</span></div>
+      </div>
+      <div class="kpi-card info">
+        <div class="kpi-label">今月の残予算</div>
+        <div class="kpi-value">¥68.4万</div>
+        <div class="kpi-sub">月初予算 ¥180万 の残り</div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <!-- 媒体別パフォーマンス -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">📡 媒体別パフォーマンス</div>
+          <span style="font-size:12px;color:var(--text-secondary);">今月累計</span>
+        </div>
+        <div class="card-body" style="padding:0;">
+          <table class="media-table">
+            <thead>
+              <tr>
+                <th>媒体</th>
+                <th>獲得数</th>
+                <th>CPA</th>
+                <th>消化率</th>
+                <th>ステータス</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="media-badge google">🔵 Google</span></td>
+                <td><strong>312</strong></td>
+                <td>¥1,520</td>
+                <td>
+                  <div class="progress-bar" style="height:6px;"><div class="progress-fill success" style="width:68%"></div></div>
+                  <div style="font-size:11px;color:var(--text-secondary);margin-top:2px;">68%</div>
+                </td>
+                <td><span class="status-tag approved">良好</span></td>
+              </tr>
+              <tr>
+                <td><span class="media-badge meta">🟣 Meta</span></td>
+                <td><strong>298</strong></td>
+                <td>¥1,680</td>
+                <td>
+                  <div class="progress-bar" style="height:6px;"><div class="progress-fill success" style="width:74%"></div></div>
+                  <div style="font-size:11px;color:var(--text-secondary);margin-top:2px;">74%</div>
+                </td>
+                <td><span class="status-tag approved">良好</span></td>
+              </tr>
+              <tr>
+                <td><span class="media-badge line">🟢 LINE</span></td>
+                <td><strong>127</strong></td>
+                <td>¥2,100</td>
+                <td>
+                  <div class="progress-bar" style="height:6px;"><div class="progress-fill" style="width:55%"></div></div>
+                  <div style="font-size:11px;color:var(--text-secondary);margin-top:2px;">55%</div>
+                </td>
+                <td><span class="status-tag pending">要観察</span></td>
+              </tr>
+              <tr>
+                <td><span class="media-badge yda">🟡 YDA</span></td>
+                <td><strong>62</strong></td>
+                <td>¥2,440</td>
+                <td>
+                  <div class="progress-bar" style="height:6px;"><div class="progress-fill danger" style="width:82%"></div></div>
+                  <div style="font-size:11px;color:var(--text-secondary);margin-top:2px;">82%</div>
+                </td>
+                <td><span class="status-tag rejected">CPA超過</span></td>
+              </tr>
+              <tr>
+                <td><span class="media-badge flyer">📮 チラシ</span></td>
+                <td><strong>48</strong></td>
+                <td>¥1,250</td>
+                <td>
+                  <div class="progress-bar" style="height:6px;"><div class="progress-fill" style="width:100%"></div></div>
+                  <div style="font-size:11px;color:var(--text-secondary);margin-top:2px;">完了</div>
+                </td>
+                <td><span class="status-tag live">配信完了</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 先週の獲得数推移（疑似チャート） -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">📈 直近7日間の獲得数推移</div>
+        </div>
+        <div class="card-body">
+          <div class="bar-chart" id="trend-chart">
+            <!-- JS で描画 -->
+          </div>
+          <div style="margin-top:14px;">
+            <div style="font-size:12px;color:var(--text-secondary);margin-bottom:6px;">AIによるトレンド分析</div>
+            <div style="font-size:13px;line-height:1.6;">
+              週末（土・日）に獲得数が <strong style="color:var(--success);">+35%</strong> 増加する傾向があります。週末に向けて金曜の午前中に新クリエイティブを投入するタイミングが最適です。
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 今月のクリエイティブ勝者 -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">🏆 今月の勝ちクリエイティブ TOP 3</div>
+        <button class="btn btn-outline btn-sm" onclick="switchTab('analysis')">全クリエイティブを見る</button>
+      </div>
+      <div class="card-body">
+        <div class="grid-3" id="top-creatives-dashboard">
+          <!-- JS で描画 -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ===== TAB 2: 予算配分プラン ===== -->
+  <div class="tab-panel" id="tab-plan">
+
+    <div class="ai-recommend">
+      <div class="ai-recommend-icon">🤖</div>
+      <div class="ai-recommend-body">
+        <div class="ai-recommend-title">AIによる今月の配分提案</div>
+        <div class="ai-recommend-text">
+          目標獲得数 1,200件・予算 ¥180万 に基づき、過去12ヶ月のCPAデータから最適な配分を算出しました。
+          YDA のCPAが目標を超えているため配分を減らし、Google に集中させることを推奨します。スライダーで手動調整も可能です。
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <!-- 目標設定 -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">🎯 今月の目標設定</div>
+        </div>
+        <div class="card-body">
+          <div class="form-group">
+            <label class="form-label">目標獲得数（件）</label>
+            <input type="number" class="form-control" id="target-acquisitions" value="1200" oninput="recalcBudget()">
+          </div>
+          <div class="form-group">
+            <label class="form-label">月間予算合計（万円）</label>
+            <input type="number" class="form-control" id="total-budget" value="180" oninput="recalcBudget()">
+          </div>
+          <div class="form-group">
+            <label class="form-label">目標CPA（円/件）</label>
+            <input type="number" class="form-control" id="target-cpa" value="2000" oninput="recalcBudget()">
+          </div>
+          <button class="btn btn-primary" onclick="runAIPlanCalc()" style="width:100%;">
+            🤖 AIが最適配分を計算する
+          </button>
+        </div>
+      </div>
+
+      <!-- 配分スライダー -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">📊 媒体別予算配分</div>
+          <div id="plan-total-label" style="font-size:13px;font-weight:700;color:var(--primary);">合計: ¥180万</div>
+        </div>
+        <div class="card-body" id="budget-sliders">
+          <!-- JS で描画 -->
+        </div>
+      </div>
+    </div>
+
+    <!-- 配分結果テーブル -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">📋 媒体別配分計画表</div>
+        <button class="btn btn-accent btn-sm" onclick="approveAndSubmitPlan()">✅ この配分で確定・入稿キューへ</button>
+      </div>
+      <div class="card-body" style="padding:0;">
+        <table class="media-table" id="plan-table">
+          <thead>
+            <tr>
+              <th>媒体</th>
+              <th>配分予算</th>
+              <th>配分率</th>
+              <th>予測獲得数</th>
+              <th>予測CPA</th>
+              <th>理由（AI）</th>
+            </tr>
+          </thead>
+          <tbody id="plan-table-body">
+            <!-- JS で描画 -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ===== TAB 3: クリエイティブ分析 ===== -->
+  <div class="tab-panel" id="tab-analysis">
+
+    <div class="section-header">
+      <div>
+        <div class="section-title">🔍 クリエイティブ分析 & 勝ち筋レコメンド</div>
+        <div class="section-sub">過去のデータをAIが分析し、次に強化すべきクリエイティブを推薦します</div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="switchTab('generate')">✨ 新規クリエイティブを生成する</button>
+    </div>
+
+    <div class="ai-recommend">
+      <div class="ai-recommend-icon">🤖</div>
+      <div class="ai-recommend-body">
+        <div class="ai-recommend-title">AIの勝ち筋分析（今月）</div>
+        <div class="ai-recommend-text">
+          <strong>「お得感・損失回避」訴求</strong> が最もCVRが高い（平均3.2%）。特に「今なら査定額+10%」「〇〇円もらえる」のコピーパターンが強い。<br>
+          <strong>「簡単・手間なし」訴求</strong>（CVR 2.8%）が2位。スマホから申込の画像を使ったビジュアルが有効。<br>
+          <strong>要注意:</strong> 「本を売ろう」のような抽象的なコピーのCTRは低迷（0.4%）。今後の生成では使用を控えることを推奨。
+        </div>
+      </div>
+    </div>
+
+    <!-- フィルター -->
+    <div class="card" style="margin-bottom:16px;">
+      <div class="card-body" style="padding:14px 20px;">
+        <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
+          <div>
+            <span style="font-size:12px;font-weight:600;color:var(--text-secondary);">媒体：</span>
+            <select class="form-control" id="filter-media" style="width:auto;display:inline-block;padding:5px 10px;" onchange="filterCreatives()">
+              <option value="all">すべて</option>
+              <option value="Google">Google</option>
+              <option value="Meta">Meta</option>
+              <option value="LINE">LINE</option>
+              <option value="YDA">YDA</option>
+              <option value="チラシ">チラシ</option>
+            </select>
+          </div>
+          <div>
+            <span style="font-size:12px;font-weight:600;color:var(--text-secondary);">訴求軸：</span>
+            <select class="form-control" id="filter-appeal" style="width:auto;display:inline-block;padding:5px 10px;" onchange="filterCreatives()">
+              <option value="all">すべて</option>
+              <option value="お得感">お得感・損失回避</option>
+              <option value="簡単">簡単・手間なし</option>
+              <option value="スピード">スピード</option>
+              <option value="信頼">信頼・実績</option>
+            </select>
+          </div>
+          <div>
+            <span style="font-size:12px;font-weight:600;color:var(--text-secondary);">並び替え：</span>
+            <select class="form-control" id="sort-creatives" style="width:auto;display:inline-block;padding:5px 10px;" onchange="filterCreatives()">
+              <option value="cpa">CPA（低い順）</option>
+              <option value="cvr">CVR（高い順）</option>
+              <option value="ctr">CTR（高い順）</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-3" id="creative-grid">
+      <!-- JS で描画 -->
+    </div>
+  </div>
+
+
+  <!-- ===== TAB 4: クリエイティブ生成 ===== -->
+  <div class="tab-panel" id="tab-generate">
+    <div class="section-header">
+      <div>
+        <div class="section-title">✨ クリエイティブ自動生成</div>
+        <div class="section-sub">訴求軸・ターゲット・媒体を指定するだけでAIが複数案を生成します</div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <!-- 生成フォーム -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">⚙️ 生成条件を設定</div>
+        </div>
+        <div class="card-body">
+          <div class="form-group">
+            <label class="form-label">訴求軸（複数選択可）</label>
+            <div class="chip-group" id="appeal-chips">
+              <div class="chip selected" data-appeal="お得感" onclick="toggleChip(this)">💰 お得感・損失回避</div>
+              <div class="chip" data-appeal="簡単" onclick="toggleChip(this)">🙌 簡単・手間なし</div>
+              <div class="chip" data-appeal="スピード" onclick="toggleChip(this)">⚡ スピード</div>
+              <div class="chip" data-appeal="信頼" onclick="toggleChip(this)">🛡️ 信頼・実績</div>
+              <div class="chip" data-appeal="驚き" onclick="toggleChip(this)">😲 驚き・意外性</div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">ターゲット属性</label>
+            <div class="chip-group" id="target-chips">
+              <div class="chip selected" data-target="20-30代女性" onclick="toggleChip(this)">👩 20-30代女性</div>
+              <div class="chip" data-target="30-40代男性" onclick="toggleChip(this)">👨 30-40代男性</div>
+              <div class="chip" data-target="シニア" onclick="toggleChip(this)">🧓 シニア層</div>
+              <div class="chip" data-target="本好き" onclick="toggleChip(this)">📚 本好き</div>
+              <div class="chip" data-target="引越し検討" onclick="toggleChip(this)">🏠 引越し検討中</div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">掲載媒体</label>
+            <select class="form-control" id="gen-media">
+              <option value="Google">Google Ads（バナー 300x250）</option>
+              <option value="Meta">Meta Ads（フィード 1080x1080）</option>
+              <option value="LINE">LINE Ads（バナー 728x90）</option>
+              <option value="YDA">Yahoo!ディスプレイ（336x280）</option>
+              <option value="チラシ">チラシ同梱（A4縦）</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">追加指示 <span class="optional">任意</span></label>
+            <textarea class="form-control" id="gen-instruction" rows="3" placeholder="例：春らしい明るいビジュアルで。CTAは「今すぐ申し込む」にして。"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">デザインシステム準拠チェック</label>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <input type="checkbox" id="check-design-system" checked style="width:16px;height:16px;accent-color:var(--primary);">
+              <label for="check-design-system" style="font-size:13px;cursor:pointer;">バリューブックス ブランドガイドラインに準拠させる</label>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:10px;">
+            <button class="btn btn-primary" style="flex:1;" onclick="generateCreatives()">
+              🤖 AIが生成する
+            </button>
+            <div>
+              <label class="form-label" style="font-size:11px;margin-bottom:2px;">生成数</label>
+              <select class="form-control" id="gen-count" style="padding:9px 10px;">
+                <option value="3">3案</option>
+                <option value="5" selected>5案</option>
+                <option value="8">8案</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 生成結果 -->
+      <div>
+        <div id="generate-result-area">
+          <div class="empty-state" style="background:var(--surface);border-radius:var(--radius);box-shadow:var(--shadow);">
+            <div class="empty-state-icon">🎨</div>
+            <div class="empty-state-title">条件を設定して「AIが生成する」を押してください</div>
+            <div style="font-size:13px;color:var(--text-secondary);margin-top:6px;">5案を数秒で生成します</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ===== TAB 5: 人間 vs AI コンペ ===== -->
+  <div class="tab-panel" id="tab-compete">
+    <div class="section-header">
+      <div>
+        <div class="section-title">⚔️ 人間 vs AI クリエイティブコンペ</div>
+        <div class="section-sub">同じ広告枠で人間とAIのクリエイティブを競わせ、勝者を次回生成のシードに昇格させます</div>
+      </div>
+      <button class="btn btn-outline btn-sm" onclick="openUploadHuman()">📤 人間制作案を追加</button>
+    </div>
+
+    <div class="ai-recommend">
+      <div class="ai-recommend-icon">🤖</div>
+      <div class="ai-recommend-body">
+        <div class="ai-recommend-title">コンペ結果サマリ（今月）</div>
+        <div class="ai-recommend-text">
+          今月のコンペ勝率: <strong>AI 9勝 / 人間 6勝</strong>（AI勝率 60%）。
+          人間が勝利したケースは「季節感・タイムリー訴求」「新しい切り口のコピー」が多い傾向。
+          AIはデータに基づく最適化が強みですが、人間の感性・創造性との組み合わせが最も高い成果を出しています。
+          人間が勝ったクリエイティブは自動的に次回生成のシードとして学習に組み込まれました。
+        </div>
+      </div>
+    </div>
+
+    <div id="compete-list">
+      <!-- JS で描画 -->
+    </div>
+  </div>
+
+
+  <!-- ===== TAB 6: 入稿キュー ===== -->
+  <div class="tab-panel" id="tab-queue">
+    <div class="section-header">
+      <div>
+        <div class="section-title">📬 入稿キュー & 承認フロー</div>
+        <div class="section-sub">承認済みクリエイティブが各媒体のAPIに自動入稿されます。承認前に内容を確認してください。</div>
+      </div>
+      <div style="display:flex;gap:10px;">
+        <button class="btn btn-outline btn-sm" onclick="approveAll()">✅ 全て承認</button>
+        <button class="btn btn-primary btn-sm" onclick="runAutoSubmit()">🚀 自動入稿を実行</button>
+      </div>
+    </div>
+
+    <!-- 入稿ステータスサマリ -->
+    <div class="grid-4" style="margin-bottom:20px;">
+      <div class="kpi-card">
+        <div class="kpi-label">承認待ち</div>
+        <div class="kpi-value" id="q-pending-count">5</div>
+        <div class="kpi-sub">件のクリエイティブ</div>
+      </div>
+      <div class="kpi-card success">
+        <div class="kpi-label">承認済み</div>
+        <div class="kpi-value" id="q-approved-count">3</div>
+        <div class="kpi-sub">件（入稿待ち）</div>
+      </div>
+      <div class="kpi-card info">
+        <div class="kpi-label">入稿完了</div>
+        <div class="kpi-value" id="q-submitted-count">12</div>
+        <div class="kpi-sub">件（配信中）</div>
+      </div>
+      <div class="kpi-card danger">
+        <div class="kpi-label">差戻し</div>
+        <div class="kpi-value" id="q-rejected-count">2</div>
+        <div class="kpi-sub">件（要修正）</div>
+      </div>
+    </div>
+
+    <div id="queue-list">
+      <!-- JS で描画 -->
+    </div>
+  </div>
+
+</div><!-- /main-content -->
+
+<!-- トースト通知コンテナ -->
+<div class="toast-container" id="toast-container"></div>
+
+<!-- 人間クリエイティブ追加モーダル -->
+<div id="upload-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:2000;align-items:center;justify-content:center;">
+  <div style="background:var(--surface);border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);padding:28px;max-width:480px;width:90%;margin:20px;">
+    <div style="font-size:17px;font-weight:700;margin-bottom:16px;">📤 人間制作クリエイティブを追加</div>
+    <div class="form-group">
+      <label class="form-label">クリエイティブ名</label>
+      <input type="text" class="form-control" id="upload-name" placeholder="例：春の買取キャンペーン_手書きPOP風">
+    </div>
+    <div class="form-group">
+      <label class="form-label">コピーテキスト</label>
+      <textarea class="form-control" id="upload-copy" rows="3" placeholder="例：春の大掃除！本を売ってお小遣いをゲット。今なら査定額+5%！"></textarea>
+    </div>
+    <div class="form-group">
+      <label class="form-label">訴求軸</label>
+      <select class="form-control" id="upload-appeal">
+        <option>お得感・損失回避</option>
+        <option>簡単・手間なし</option>
+        <option>スピード</option>
+        <option>信頼・実績</option>
+        <option>季節感・タイムリー</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">対象媒体</label>
+      <select class="form-control" id="upload-media">
+        <option>Google</option>
+        <option>Meta</option>
+        <option>LINE</option>
+        <option>YDA</option>
+        <option>チラシ</option>
+      </select>
+    </div>
+    <div style="display:flex;gap:10px;margin-top:20px;">
+      <button class="btn btn-primary" style="flex:1;" onclick="submitHumanCreative()">コンペに参戦させる</button>
+      <button class="btn btn-ghost" onclick="closeUploadModal()">キャンセル</button>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
