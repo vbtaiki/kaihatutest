@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>買取広告AI自動化 — プロジェクトダッシュボード</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sans JP', sans-serif;
+      background: #f0f4f3;
+      color: #1a2621;
+      min-height: 100vh;
+    }
+
+    /* ── トップバー ── */
+    .top-bar {
+      background: linear-gradient(135deg, #004d40 0%, #00695c 100%);
+      color: white;
+      padding: 0 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 56px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+    }
+    .top-bar-left { display: flex; align-items: center; gap: 16px; }
+    .top-bar-logo { font-size: 15px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+    .top-bar-divider { width: 1px; height: 24px; background: rgba(255,255,255,0.25); }
+    .top-bar-project { font-size: 13px; opacity: 0.85; font-weight: 500; }
+    .top-bar-right { display: flex; align-items: center; gap: 12px; font-size: 13px; }
+    .status-badge {
+      display: flex; align-items: center; gap: 6px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      padding: 4px 12px; border-radius: 20px; font-size: 12px;
+    }
+    .status-dot {
+      width: 7px; height: 7px;
+      background: #69f0ae; border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+    /* ── タブ ── */
+    .tab-bar {
+      background: white;
+      border-bottom: 2px solid #d8e4e2;
+      display: flex;
+      overflow-x: auto;
+      scrollbar-width: none;
+      position: sticky; top: 56px; z-index: 900;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+    .tab-bar::-webkit-scrollbar { display: none; }
+    .tab-btn {
+      flex-shrink: 0;
+      padding: 14px 22px;
+      background: none; border: none;
+      cursor: pointer; font-size: 13px; font-weight: 500;
+      color: #5a6e6a;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .tab-btn:hover { color: #00897b; background: #e0f2f1; }
+    .tab-btn.active { color: #00897b; border-bottom-color: #00897b; font-weight: 700; }
+
+    /* ── コンテンツ ── */
+    .content { max-width: 1100px; margin: 0 auto; padding: 24px 20px; }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* ── カード ── */
+    .card {
+      background: white; border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      overflow: hidden; margin-bottom: 20px;
+    }
+    .card-header {
+      padding: 16px 20px; border-bottom: 1px solid #d8e4e2;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    }
+    .card-title { font-size: 15px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+    .card-body { padding: 20px; }
+
+    /* ── グリッド ── */
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    @media (max-width: 760px) {
+      .grid-3, .grid-2 { grid-template-columns: 1fr; }
+    }
+
+    /* ── KPI ── */
+    .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 20px; }
+    @media (max-width: 760px) { .kpi-row { grid-template-columns: 1fr 1fr; } }
+    .kpi-card {
+      background: white; border-radius: 12px; padding: 16px 18px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      border-left: 4px solid #00897b;
+    }
+    .kpi-card.accent { border-left-color: #ff6f00; }
+    .kpi-card.success { border-left-color: #2e7d32; }
+    .kpi-card.info { border-left-color: #1565c0; }
+    .kpi-label { font-size: 11px; color: #5a6e6a; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+    .kpi-value { font-size: 26px; font-weight: 800; line-height: 1.2; }
+    .kpi-sub { font-size: 11px; color: #5a6e6a; margin-top: 2px; }
+
+    /* ── プログレスバー ── */
+    .progress-bar { height: 8px; background: #d8e4e2; border-radius: 4px; overflow: hidden; margin-top: 6px; }
+    .progress-fill { height: 100%; border-radius: 4px; background: #00897b; }
+    .progress-fill.accent { background: #ff6f00; }
+    .progress-fill.success { background: #2e7d32; }
+
+    /* ── ステータスバッジ ── */
+    .tag {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 4px 10px; border-radius: 20px;
+      font-size: 11px; font-weight: 700;
+    }
+    .tag.active { background: #e0f2f1; color: #00695c; }
+    .tag.pending { background: #fff3e0; color: #e65100; }
+    .tag.done { background: #e8f5e9; color: #2e7d32; }
+
+    /* ── AI ハイライト ── */
+    .ai-box {
+      background: linear-gradient(135deg, #e0f7fa, #e8f5e9);
+      border: 1px solid #80cbc4;
+      border-radius: 12px; padding: 16px 20px; margin-bottom: 20px;
+      display: flex; gap: 14px; align-items: flex-start;
+    }
+    .ai-box-icon { font-size: 28px; flex-shrink: 0; margin-top: 2px; }
+    .ai-box-title { font-weight: 700; color: #00695c; font-size: 14px; margin-bottom: 4px; }
+    .ai-box-text { color: #004d40; font-size: 13px; line-height: 1.7; }
+
+    /* ── 媒体バッジ ── */
+    .mb { display: inline-flex; align-items: center; gap: 4px; padding: 3px 9px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+    .mb.google { background: #e8f0fe; color: #1a73e8; }
+    .mb.meta { background: #e8eaf6; color: #3f51b5; }
+    .mb.line { background: #e8f5e9; color: #00897b; }
+    .mb.yda { background: #fff3e0; color: #ef6c00; }
+    .mb.flyer { background: #fce4ec; color: #c2185b; }
+
+    /* ── テーブル ── */
+    table { width: 100%; border-collapse: collapse; }
+    th { text-align: left; padding: 10px 14px; font-size: 11px; font-weight: 700; color: #5a6e6a; text-transform: uppercase; letter-spacing: 0.5px; background: #f5f7f6; border-bottom: 2px solid #d8e4e2; }
+    td { padding: 12px 14px; border-bottom: 1px solid #d8e4e2; font-size: 13px; vertical-align: middle; }
+    tr:last-child td { border-bottom: none; }
+
+    /* ── iframe ── */
+    .app-frame {
+      width: 100%; border: none; border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+      min-height: 700px;
+    }
+
+    /* ── 使い方チップ ── */
+    .phrase-box {
+      background: #f5f7f6; border-radius: 8px; padding: 10px 14px;
+      font-size: 13px; border-left: 3px solid #00897b; margin-bottom: 10px;
+    }
+
+    /* ── フォルダ構成 ── */
+    pre {
+      background: #1a2621; color: #69f0ae;
+      border-radius: 8px; padding: 18px;
+      font-size: 12px; line-height: 1.8; overflow-x: auto;
+    }
+
+    /* ── ボタン ── */
+    .btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 600;
+      border: none; cursor: pointer; transition: all 0.18s; text-decoration: none;
+    }
+    .btn-primary { background: #00897b; color: white; }
+    .btn-primary:hover { background: #00695c; transform: translateY(-1px); }
+    .btn-outline { background: transparent; color: #00897b; border: 2px solid #00897b; }
+    .btn-outline:hover { background: #e0f2f1; }
+    .btn-sm { padding: 5px 12px; font-size: 12px; }
+  </style>
+</head>
+<body>
+
+<!-- トップバー -->
+<div class="top-bar">
+  <div class="top-bar-left">
+    <div class="top-bar-logo">📚 VALUE BOOKS</div>
+    <div class="top-bar-divider"></div>
+    <div class="top-bar-project">買取広告AI自動化 — プロジェクトダッシュボード</div>
+  </div>
+  <div class="top-bar-right">
+    <div class="status-badge">
+      <div class="status-dot"></div>
+      <span>🟡 計画中</span>
+    </div>
+    <span style="opacity:0.7;font-size:12px;" id="today"></span>
+  </div>
+</div>
+
+<!-- タブ -->
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="showTab('engineer')">💻 エンジニア最新版</button>
+  <button class="tab-btn" onclick="showTab('business')">💡 ビジネス改善提案</button>
+  <button class="tab-btn" onclick="showTab('guide')">🔄 使い方ガイド</button>
+</div>
+
+<div class="content">
+
+  <!-- ===== 💻 エンジニア最新版 ===== -->
+  <div class="tab-panel active" id="panel-engineer">
+
+    <div class="ai-box">
+      <div class="ai-box-icon">🤖</div>
+      <div>
+        <div class="ai-box-title">Phase 1 プロトタイプが完成しました</div>
+        <div class="ai-box-text">
+          6つの画面（ダッシュボード・予算配分・クリエイティブ分析・自動生成・コンペ・入稿キュー）を持つブラウザで動くプロトタイプが完成しています。
+          <strong>下のプレビューで実際の画面を触れます。</strong> フィードバックは「💡 ビジネス改善提案」タブから送れます。
+        </div>
+      </div>
+    </div>
+
+    <!-- KPI -->
+    <div class="kpi-row">
+      <div class="kpi-card success">
+        <div class="kpi-label">実装済み画面</div>
+        <div class="kpi-value">6</div>
+        <div class="kpi-sub">全画面プロトタイプ完成</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">対応媒体</div>
+        <div class="kpi-value">5</div>
+        <div class="kpi-sub">Google / Meta / LINE / YDA / チラシ</div>
+      </div>
+      <div class="kpi-card accent">
+        <div class="kpi-label">API連携</div>
+        <div class="kpi-value">Phase 2</div>
+        <div class="kpi-sub">現在はモックデータ</div>
+      </div>
+      <div class="kpi-card info">
+        <div class="kpi-label">プロジェクト進捗</div>
+        <div class="kpi-value">Phase 1</div>
+        <div class="kpi-sub">プロトタイプ・要件確定</div>
+      </div>
+    </div>
+
+    <!-- 機能実装ステータス -->
+    <div class="card" style="margin-bottom:20px;">
+      <div class="card-header">
+        <div class="card-title">📋 機能実装ステータス</div>
+      </div>
+      <div class="card-body" style="padding:0;">
+        <table>
+          <thead>
+            <tr>
+              <th>機能</th>
+              <th>Phase 1（プロトタイプ）</th>
+              <th>Phase 2（API連携）</th>
+              <th>Phase 3（高度化）</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>ダッシュボード・KPI表示</td>
+              <td><span class="tag done">✅ 完成</span></td>
+              <td><span class="tag pending">実データ連携</span></td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td>AI媒体別予算配分</td>
+              <td><span class="tag done">✅ 完成</span></td>
+              <td><span class="tag pending">機械学習モデル化</span></td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td>クリエイティブ分析・レコメンド</td>
+              <td><span class="tag done">✅ 完成</span></td>
+              <td><span class="tag pending">実広告データ連携</span></td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td>クリエイティブ自動生成</td>
+              <td><span class="tag done">✅ 完成</span></td>
+              <td><span class="tag pending">画像生成AIモデル</span></td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td>人間 vs AI コンペ</td>
+              <td><span class="tag done">✅ 完成</span></td>
+              <td><span class="tag pending">自動結果判定</span></td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td>入稿キュー・承認フロー</td>
+              <td><span class="tag done">✅ 完成</span></td>
+              <td><span class="tag pending">Google/Meta API連携</span></td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td>Google Ads 自動入稿</td>
+              <td>—</td>
+              <td><span class="tag active">🔵 Phase 2</span></td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td>Meta Ads 自動入稿</td>
+              <td>—</td>
+              <td><span class="tag active">🔵 Phase 2</span></td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td>デザインシステム準拠チェック</td>
+              <td>—</td>
+              <td>—</td>
+              <td><span class="tag active">🔵 Phase 3</span></td>
+            </tr>
+            <tr>
+              <td>チラシ自動印刷入稿</td>
+              <td>—</td>
+              <td>—</td>
+              <td><span class="tag active">🔵 Phase 3</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- プレビュー -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">📱 アプリ プレビュー（触れます）</div>
+        <a href="../app/index.html" target="_blank" class="btn btn-outline btn-sm">🔗 新しいタブで開く</a>
+      </div>
+      <div class="card-body" style="padding:0;">
+        <iframe src="../app/index.html" class="app-frame"></iframe>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ===== 💡 ビジネス改善提案 ===== -->
+  <div class="tab-panel" id="panel-business">
+
+    <div class="ai-box">
+      <div class="ai-box-icon">💡</div>
+      <div>
+        <div class="ai-box-title">ビジネスサイドからフィードバックを送る方法</div>
+        <div class="ai-box-text">
+          CursorのAIに「このアプリのここをこう変えたい」と話しかけると、AIが <code>business/フィードバック.md</code> に記録し、エンジニアに共有します。
+          コードの改善案も一緒に作れます。
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <!-- 最新フィードバック -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">💬 ビジネスからのフィードバック</div>
+        </div>
+        <div class="card-body">
+          <div style="color:#5a6e6a;font-size:13px;padding:24px;text-align:center;">
+            <div style="font-size:32px;margin-bottom:8px;">📝</div>
+            まだフィードバックがありません。<br>
+            Cursorで「フィードバックを書きたい」と話しかけてください。
+          </div>
+        </div>
+      </div>
+
+      <!-- 意思決定ログ -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">📌 意思決定ログ（最新）</div>
+        </div>
+        <div class="card-body">
+          <div style="margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid #d8e4e2;">
+            <div style="font-size:12px;color:#5a6e6a;margin-bottom:4px;">2026-04-28</div>
+            <div style="font-weight:700;font-size:13px;margin-bottom:4px;">AI主導・人間は最終承認と方向性策定</div>
+            <div style="font-size:12px;color:#5a6e6a;line-height:1.6;">定型判断はAIに任せ、デザイン方向性と最終承認のみ人間が担う。段階的に自動承認に移行していく方針。</div>
+          </div>
+          <div style="margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid #d8e4e2;">
+            <div style="font-size:12px;color:#5a6e6a;margin-bottom:4px;">2026-04-28</div>
+            <div style="font-weight:700;font-size:13px;margin-bottom:4px;">初期スコープは5媒体に絞る</div>
+            <div style="font-size:12px;color:#5a6e6a;line-height:1.6;">Google / Meta / LINE / YDA / チラシ同梱。Twitter・TikToksはPhase 3以降。</div>
+          </div>
+          <div>
+            <div style="font-size:12px;color:#5a6e6a;margin-bottom:4px;">2026-04-28</div>
+            <div style="font-weight:700;font-size:13px;margin-bottom:4px;">人間 vs AIコンペを標準機能として組み込む</div>
+            <div style="font-size:12px;color:#5a6e6a;line-height:1.6;">人間の感性とAIの最適化を組み合わせる。勝者が自動でAIの学習シードになる。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- やりたいこと要約 -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">🎯 このプロジェクトでやること</div>
+      </div>
+      <div class="card-body">
+        <div class="grid-3">
+          <div style="background:#e0f2f1;border-radius:10px;padding:16px;">
+            <div style="font-size:22px;margin-bottom:8px;">🔍</div>
+            <div style="font-weight:700;font-size:13px;margin-bottom:6px;">クリエイティブ分析</div>
+            <div style="font-size:12px;color:#5a6e6a;line-height:1.6;">過去の広告データをAIが自動分析。「この訴求軸を強化すべき」「このクリエイティブは伸ばすべき」をレコメンド。</div>
+          </div>
+          <div style="background:#e8f5e9;border-radius:10px;padding:16px;">
+            <div style="font-size:22px;margin-bottom:8px;">💰</div>
+            <div style="font-weight:700;font-size:13px;margin-bottom:6px;">予算配分の自動化</div>
+            <div style="font-size:12px;color:#5a6e6a;line-height:1.6;">目標獲得数を入力するだけで、AIが媒体ごとの予算配分案を自動算出。スライダーで手動調整も可能。</div>
+          </div>
+          <div style="background:#fff3e0;border-radius:10px;padding:16px;">
+            <div style="font-size:22px;margin-bottom:8px;">✨</div>
+            <div style="font-weight:700;font-size:13px;margin-bottom:6px;">クリエイティブ自動生成</div>
+            <div style="font-size:12px;color:#5a6e6a;line-height:1.6;">訴求軸・ターゲット・媒体を指定すると、AIが数秒で複数の広告案（コピー＋ビジュアル）を生成。</div>
+          </div>
+          <div style="background:#fce4ec;border-radius:10px;padding:16px;">
+            <div style="font-size:22px;margin-bottom:8px;">⚔️</div>
+            <div style="font-weight:700;font-size:13px;margin-bottom:6px;">人間 vs AI コンペ</div>
+            <div style="font-size:12px;color:#5a6e6a;line-height:1.6;">人間制作とAI生成を同じ枠で競わせる。勝者が次の生成のシードに自動昇格。</div>
+          </div>
+          <div style="background:#e8eaf6;border-radius:10px;padding:16px;">
+            <div style="font-size:22px;margin-bottom:8px;">🚀</div>
+            <div style="font-weight:700;font-size:13px;margin-bottom:6px;">自動入稿</div>
+            <div style="font-size:12px;color:#5a6e6a;line-height:1.6;">承認したクリエイティブが各媒体（Google / Meta / LINE / YDA）に自動で入稿される。</div>
+          </div>
+          <div style="background:#e3f2fd;border-radius:10px;padding:16px;">
+            <div style="font-size:22px;margin-bottom:8px;">🛡️</div>
+            <div style="font-weight:700;font-size:13px;margin-bottom:6px;">デザインシステム準拠</div>
+            <div style="font-size:12px;color:#5a6e6a;line-height:1.6;">人間が用意したブランドガイドラインに沿っているかをAIが自動チェック（Phase 3）。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ===== 🔄 使い方ガイド ===== -->
+  <div class="tab-panel" id="panel-guide">
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">🗣️ Cursorで話しかけるフレーズ集</div>
+      </div>
+      <div class="card-body">
+        <div style="margin-bottom:20px;">
+          <div style="font-weight:700;font-size:13px;color:#00897b;margin-bottom:10px;">📊 現状を確認したい時</div>
+          <div class="phrase-box">「最新の状態に更新して」</div>
+          <div class="phrase-box">「今月のCPAと獲得数を教えて」</div>
+          <div class="phrase-box">「デモを確認したい」</div>
+        </div>
+        <div style="margin-bottom:20px;">
+          <div style="font-weight:700;font-size:13px;color:#00897b;margin-bottom:10px;">✨ クリエイティブを作りたい時</div>
+          <div class="phrase-box">「お得感訴求で20-30代女性向けにGoogle Ads用バナーを5案作って」</div>
+          <div class="phrase-box">「先月一番成績が良かったクリエイティブをシードに新しい案を作って」</div>
+          <div class="phrase-box">「春の大掃除をテーマにしたチラシを生成して」</div>
+        </div>
+        <div style="margin-bottom:20px;">
+          <div style="font-weight:700;font-size:13px;color:#00897b;margin-bottom:10px;">💰 予算を見直したい時</div>
+          <div class="phrase-box">「今月の獲得目標を1500件に変えた場合の予算配分を計算して」</div>
+          <div class="phrase-box">「YDAのCPAが悪いからGoogleに配分を移して」</div>
+          <div class="phrase-box">「AIが最適配分を計算してほしい」</div>
+        </div>
+        <div style="margin-bottom:20px;">
+          <div style="font-weight:700;font-size:13px;color:#00897b;margin-bottom:10px;">👤 自分のアイデアを試したい時</div>
+          <div class="phrase-box">「このコピー『今すぐ本を売ってください』をAIと戦わせてみたい」</div>
+          <div class="phrase-box">「私が作ったバナーをコンペに追加して」</div>
+          <div class="phrase-box">「GWテーマのクリエイティブを人間案として登録したい」</div>
+        </div>
+        <div>
+          <div style="font-weight:700;font-size:13px;color:#00897b;margin-bottom:10px;">📬 入稿・承認したい時</div>
+          <div class="phrase-box">「今日生成したクリエイティブを全部入稿キューに入れて」</div>
+          <div class="phrase-box">「入稿キューの確認をしたい」</div>
+          <div class="phrase-box">「Meta Ads に今すぐ入稿して」</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">📁 フォルダ構成</div>
+      </div>
+      <div class="card-body">
+        <pre>買取広告AI自動化/
+├── README.md                ← プロジェクト概要
+│
+├── app/                     ← 🔧 動くプロトタイプ（ブラウザで確認）
+│   ├── index.html           ← メインアプリ（6画面タブ切替）
+│   ├── style.css            ← スタイル
+│   └── app.js               ← ロジック（モックAI）
+│
+├── demo/                    ← 🖥️ このダッシュボード
+│
+├── business/                ← 🏢 ビジネスサイドの領域
+│   ├── 要件・方針.md        ← やりたいこと・ゴール
+│   ├── フィードバック.md    ← AIに話しかけると追記される
+│   ├── 意思決定ログ.md      ← 決定事項の記録
+│   └── コード改善案/        ← Cursorで作った改善提案
+│
+├── engineering/             ← 💻 エンジニアの領域
+│   ├── 技術設計.md          ← アーキテクチャ・技術仕様
+│   ├── 進捗報告.md          ← エンジニアからの報告
+│   └── 質問・相談.md        ← エンジニアからの質問
+│
+└── shared/                  ← 🤝 共有エリア
+    ├── 議事録/
+    └── 参考資料/</pre>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">🔗 クイックリンク</div>
+      </div>
+      <div class="card-body">
+        <div style="display:flex;gap:12px;flex-wrap:wrap;">
+          <a href="../app/index.html" target="_blank" class="btn btn-primary">📱 アプリを開く</a>
+          <a href="../business/要件・方針.md" target="_blank" class="btn btn-outline">📋 要件・方針を見る</a>
+          <a href="../business/意思決定ログ.md" target="_blank" class="btn btn-outline">📌 意思決定ログを見る</a>
+          <a href="../engineering/技術設計.md" target="_blank" class="btn btn-outline">⚙️ 技術設計を見る</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  function showTab(name) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(`panel-${name}`).classList.add('active');
+    event.currentTarget.classList.add('active');
+  }
+
+  const todayEl = document.getElementById('today');
+  if (todayEl) {
+    todayEl.textContent = new Date().toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' });
+  }
+</script>
+</body>
+</html>
